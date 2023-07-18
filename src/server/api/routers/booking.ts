@@ -7,11 +7,11 @@ import {
 
 export const bookingRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
-        return ctx.prisma.gCHBooking.findMany();
+        return ctx.prisma.booking.findMany();
     }),
 
     getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
-        const bookedArr = await ctx.prisma.gCHBooking.findMany();
+        const bookedArr = await ctx.prisma.booking.findMany();
 
         return bookedArr.map((el) => el.date);
     }),
@@ -19,7 +19,7 @@ export const bookingRouter = createTRPCRouter({
     getByDate: publicProcedure
         .input(z.date().optional())
         .query(({ input, ctx }) => {
-            return ctx.prisma.gCHBooking.findFirst({
+            return ctx.prisma.booking.findFirst({
                 where: { date: input },
             });
         }),
@@ -27,7 +27,7 @@ export const bookingRouter = createTRPCRouter({
     getByUserId: protectedProcedure
         .input(z.string())
         .query(({ input, ctx }) => {
-            return ctx.prisma.gCHBooking.findMany({ where: { userId: input } });
+            return ctx.prisma.booking.findMany({ where: { userId: input } });
         }),
 
     create: protectedProcedure
@@ -40,7 +40,7 @@ export const bookingRouter = createTRPCRouter({
         .mutation(async ({ input, ctx }) => {
             if (ctx.session.user.id === input.userId) {
                 const data = { ...input, status: "pending", type: "test" };
-                const newBooking = await ctx.prisma.gCHBooking.create({
+                const newBooking = await ctx.prisma.booking.create({
                     data,
                 });
 
@@ -62,7 +62,7 @@ export const bookingRouter = createTRPCRouter({
         )
         .mutation(async ({ input, ctx }) => {
             if (ctx.session.user.id === input.userId) {
-                const updatedBooking = await ctx.prisma.gCHBooking.update({
+                const updatedBooking = await ctx.prisma.booking.update({
                     where: {
                         id: input.id,
                     },
@@ -79,7 +79,7 @@ export const bookingRouter = createTRPCRouter({
         .input(z.object({ id: z.string(), userId: z.string() }))
         .mutation(async ({ input, ctx }) => {
             if (ctx.session.user.id === input.userId) {
-                await ctx.prisma.gCHBooking.delete({
+                await ctx.prisma.booking.delete({
                     where: { id: input.id },
                 });
 
