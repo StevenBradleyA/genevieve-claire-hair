@@ -15,8 +15,8 @@ export default function NavBar() {
             </h1>
             <ul className="flex flex-grow justify-around text-2xl">
                 <li>
-                    <Link href="/posts" aria-label="Posts">
-                        Posts
+                    <Link href="/feature" aria-label="Feature">
+                        Feature
                     </Link>
                 </li>
                 <li>

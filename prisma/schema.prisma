@@ -1,45 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
     provider = "sqlite"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
-}
-
-model Post {
-    id        String   @id @default(cuid())
-    title     String
-    text      String
-    price     Int
-    stock     Int
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    userId String
-
-    user     User      @relation(fields: [userId], references: [id])
-    comments Comment[]
-    reviews  Review[]
-}
-
-model Comment {
-    id   String @id @default(cuid())
-    text String
-
-    userId String
-    postId String
-
-    user User @relation(fields: [userId], references: [id])
-    post Post @relation(fields: [postId], references: [id])
 }
 
 model Review {
@@ -49,14 +14,14 @@ model Review {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
-    userId String
-    postId String
+    userId    String
+    bookingId String
 
-    user User @relation(fields: [userId], references: [id])
-    post Post @relation(fields: [postId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
+    booking Booking @relation(fields: [bookingId], references: [id])
 }
 
-model GCHBooking {
+model Booking {
     id        String   @id @default(cuid())
     date      DateTime
     status    String
@@ -66,11 +31,12 @@ model GCHBooking {
 
     userId String
 
-    user           User             @relation(fields: [userId], references: [id])
-    GCHTransaction GCHTransaction[]
+    user        User          @relation(fields: [userId], references: [id])
+    review      Review[]
+    transaction Transaction[]
 }
 
-model GCHTransaction {
+model Transaction {
     id     String @id @default(cuid())
     cost   Int
     type   String
@@ -79,8 +45,8 @@ model GCHTransaction {
     userId    String
     bookingId String
 
-    user    User       @relation(fields: [userId], references: [id])
-    booking GCHBooking @relation(fields: [bookingId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
+    booking Booking @relation(fields: [bookingId], references: [id])
 }
 
 model Images {
@@ -134,12 +100,10 @@ model User {
 
     accounts     Account[]
     sessions     Session[]
-    posts        Post[]
-    comments     Comment[]
     reviews      Review[]
-    bookings     GCHBooking[]
-    transactions GCHTransaction[]
-    GCHImages    Images[]
+    bookings     Booking[]
+    transactions Transaction[]
+    images       Images[]
 }
 
 model VerificationToken {

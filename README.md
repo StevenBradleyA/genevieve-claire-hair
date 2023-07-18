@@ -28,8 +28,6 @@ View current database and manually update data
 
 ### **_`main`_**
 
--   ### **_`staging`_**
-
 -   ### **_dev_**
 
     -   ### feature/name_of_feature
