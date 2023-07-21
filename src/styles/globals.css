@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+
+/* -------------       Fonts       ------------- */
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Quattrocento&family=Cookie&family=Grand+Hotel&family=Dancing+Script&display=swap");
+
+.dm-serif-display {
+    font-family: "DM Serif Display", serif;
+}
+
+.quattrocento {
+    font-family: "Quattrocento", serif;
+}
+
+.cookie {
+    font-family: "Cookie", cursive;
+}
+
+.grand-hotel {
+    font-family: "Grand Hotel", cursive;
+}
+
+.dancing-script {
+    font-family: "Dancing Script", cursive;
+}
+
+
+/* -------------       Pricing Page       ------------- */
+
+
+.triangle-background {
+    position: absolute;
+    top: 0;
+    left: 10rem;
+    width: 110%;
+    height: 200%;
+    background-color: #fecdd3;
+    transform-origin: top left;
+    transform: rotate(30deg) translateY(-100%);
+    opacity: 0.6;
+    overflow: hidden;
+}
