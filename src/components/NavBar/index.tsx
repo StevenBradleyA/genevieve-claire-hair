@@ -1,18 +1,21 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
+import scissors from "../../../public/scissors.png";
 
 export default function NavBar() {
+
+// Todo my work page (links to here insta photos rendered)
+
     return (
         <nav
             className="sticky top-0 z-10 mb-10 flex items-center justify-between 
-            rounded-b-3xl  bg-black bg-opacity-40 py-4 text-white backdrop-blur-md"
+            rounded-b-3xl py-4 text-white"
             aria-label="Main Navigation"
         >
-            <h1 className="rounded-md border-r-2 px-10 py-6 text-3xl">
-                <Link href="/" aria-label="Home">
-                    Starter Clone Jutsu
-                </Link>
-            </h1>
+            <Link href="/" aria-label="Home">
+                <Image alt="home" src={scissors} className="h-10 w-10" />
+            </Link>
             <ul className="flex flex-grow justify-around text-2xl">
                 <li>
                     <Link href="/feature" aria-label="Feature">
@@ -27,6 +30,11 @@ export default function NavBar() {
                 <li>
                     <Link href="/images" aria-label="Images">
                         Images
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/pricing" aria-label="Pricing">
+                        Pricing
                     </Link>
                 </li>
             </ul>
