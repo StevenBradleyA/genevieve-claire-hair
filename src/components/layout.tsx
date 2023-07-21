@@ -5,14 +5,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <Head>
-                <title>Starter Clone Jutsu</title>
+                <title>Genevieve Claire Hair</title>
                 <meta
                     name="description"
                     content="The one clone to rule them all"
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="min-h-screen bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+            <div className="min-h-screen bg-rose-100">
                 <NavBar />
                 <main className="flex  flex-col items-center justify-center">
                     {children}
