@@ -25,3 +25,29 @@
   .dancing-script {
     font-family: 'Dancing Script', cursive;
   }
+
+
+
+.triangle-background {
+    position: absolute;
+    top: 0;
+    left: 10rem;
+    width: 110%; 
+    height: 200%;
+    background-color: #fecdd3;
+    transform-origin: top left;
+    transform: rotate(30deg) translateY(-100%);
+    overflow: hidden;
+}
+/* 
+.triangle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fecdd3;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+    transform-origin: top left;
+    transform: rotate(50deg) translateY(-100%);
+} */

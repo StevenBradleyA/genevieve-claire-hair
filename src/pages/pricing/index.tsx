@@ -1,7 +1,12 @@
+
+
+
 export default function Pricing() {
     return (
         // todo want Geni to be able to change these prices
-        <>
+        <div className="bg-rose-100 absolute top-0 h-full w-full overflow-hidden">
+            <div className="triangle-background"></div>
+            <div className="relative top-40 h-full">
             <h1>Pricing</h1>
             <h2>
                 All pricing is considered a starting point and are subject to
@@ -13,8 +18,8 @@ export default function Pricing() {
                 <li>Transformative H/C - $90</li>
                 <li>
                     All Over Color - $115+
-                    <li>Roots Only- $80</li>
                 </li>
+                    <li>Roots Only- $80</li>
                 <li>Partial Blonding - $170+</li>
                 <li>Full Blonding - $220+</li>
                 <li>Vivid Colors - $135 an hour*</li>
@@ -23,6 +28,8 @@ export default function Pricing() {
             <p>
                 I do not offer Perms, Relaxers, or Keratin Smoothing Treatments
             </p>
-        </>
+
+            </div>
+        </div>
     );
 }
