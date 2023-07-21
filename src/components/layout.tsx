@@ -14,7 +14,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Head>
             <div className="min-h-screen bg-rose-100">
                 <NavBar />
-                <main className="flex  flex-col items-center justify-center">
+                <div className="absolute top-0 left-0 h-full w-4/12 bg-rose-200 opacity-75"></div>
+                <main className="relative flex  flex-col items-center justify-center">
                     {children}
                 </main>
             </div>
