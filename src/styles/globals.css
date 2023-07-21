@@ -37,6 +37,7 @@
     background-color: #fecdd3;
     transform-origin: top left;
     transform: rotate(30deg) translateY(-100%);
+    opacity: .6;
     overflow: hidden;
 }
 /* 
