@@ -24,12 +24,12 @@ export default function NavBar() {
                 </li>
                 <li>
                     <Link href="/bookings" aria-label="Bookings">
-                        Bookings
+                        Book Your Appointment
                     </Link>
                 </li>
                 <li>
                     <Link href="/images" aria-label="Images">
-                        Images
+                        My Work
                     </Link>
                 </li>
                 <li>
