@@ -5,7 +5,7 @@ import Image from "next/image";
 interface InstagramFeedItem {
     id: string;
     media_url: string;
-    caption: string;
+    caption: string | null;
 }
 
 interface InstagramApiResponse {
@@ -32,12 +32,23 @@ export default function Portfolio() {
 
     return (
         <>
-            <h1>Instagram Feed</h1>
-            <div>
+            <h1 className="text-white text-6xl">Insta </h1>
+            <div className="grid grid-cols-3 gap-4">
                 {instaFeed.map((post) => (
-                    <div key={post.id}>
-                        <Image src={post.media_url} alt={post.caption} />
-                        <p>{post.caption}</p>
+                    <div key={post.id} className="group relative">
+                        <Image
+                            src={post.media_url}
+                            alt={post.caption || ""}
+                            width={300}
+                            height={300}
+                        />
+                        {/* <img src={post.media_url} alt={post.caption || ""} /> */}
+
+                        {/* <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <div className="rounded-md bg-gray-800 p-2 text-center text-white">
+                                {post.caption || "No caption"}
+                            </div>
+                        </div> */}
                     </div>
                 ))}
             </div>
