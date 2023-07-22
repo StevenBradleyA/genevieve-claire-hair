@@ -6,7 +6,9 @@ export default function Pricing() {
             <div className="triangle-background"></div>
             <div className="relative top-28 h-full">
                 <div className="flex justify-center">
-                    <div className=" mr-48 mt-80">
+                    {/* <div className=" mr-48 mt-80"> */}
+                    <div className=" mr-48 mt-10">
+
                         <h1 className=" text-9xl">Pricing 💅</h1>
 
                         <h2 className=" mt-1 w-96 text-xl">
@@ -15,7 +17,7 @@ export default function Pricing() {
                             time
                         </h2>
                     </div>
-                    <ul className="text-4xl  text-white">
+                    <ul className="text-4xl  text-white mt-36">
                         <li className=" mb-1">Short Length H/C - $35</li>
                         <li className=" mb-1">Long Length H/C - $60</li>
                         <li className=" mb-1">Transformative H/C - $90</li>

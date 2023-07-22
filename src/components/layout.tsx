@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <Head>
-                <title>Genevieve Claire Hair</title>
+                <title>Genevieve Clare Hair</title>
                 <meta
                     name="description"
                     content="The one clone to rule them all"
