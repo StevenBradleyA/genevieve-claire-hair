@@ -31,7 +31,7 @@ export default function NavBar() {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/feature" aria-label="Feature">
+                    <Link href="/reviews" aria-label="Feature">
                         Reviews
                     </Link>
                 </li>

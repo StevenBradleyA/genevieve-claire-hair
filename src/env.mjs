@@ -27,6 +27,9 @@ export const env = createEnv({
         NEXT_PUBLIC_AWS_ACCESS_KEY_ID: z.string(),
         NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: z.string(),
         NEXT_PUBLIC_REGION: z.string(),
+        INSTA_TOKEN: z.string(),
+        INSTA_SECRET: z.string(),
+        INSTA_APP_ID: z.string(),
     },
 
     /**
@@ -59,6 +62,9 @@ export const env = createEnv({
             process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
         NEXT_PUBLIC_BUCKET_NAME: process.env.NEXT_PUBLIC_BUCKET_NAME,
         NEXT_PUBLIC_REGION: process.env.NEXT_PUBLIC_REGION,
+        INSTA_TOKEN: process.env.INSTA_TOKEN,
+        INSTA_SECRET: process.env.INSTA_SECRET,
+        INSTA_APP_ID: process.env.INSTA_APP_ID,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
