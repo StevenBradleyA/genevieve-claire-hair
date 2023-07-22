@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { env } from "~/env.mjs";
 import Image from "next/image";
+import instagramLogo from "../../../public/temp-insta-logo.png";
+import { useRouter } from "next/router";
 
 interface InstagramFeedItem {
     id: string;
@@ -27,7 +29,7 @@ interface InstagramApiResponse {
 export default function Portfolio() {
     const instaToken = env.NEXT_PUBLIC_INSTA_TOKEN;
     const [instaFeed, setInstaFeed] = useState<InstagramFeedItem[]>([]);
-
+    const router = useRouter();
     useEffect(() => {
         if (instaToken) {
             fetchInstagramFeed(instaToken)
@@ -38,33 +40,88 @@ export default function Portfolio() {
         }
     }, [instaToken]);
 
+    // todo decide if we want a redirect or new tab open
+
+    // const handleInstaClick = () => {
+    //     router.push('https://www.instagram.com/genevieveclare.hair/')
+    //       .then(() => {
+    //         // You can perform any additional actions here if needed
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error navigating to Instagram:', error);
+    //       });
+    //   };
+
+    // new tab
+    const handleInstaClick = (e: React.FormEvent) => {
+        e.preventDefault();
+        const url = "https://www.instagram.com/genevieveclare.hair/";
+        window.open(url, "_blank");
+    };
+
     return (
         <>
-            <h1 className="text-6xl text-white">Insta </h1>
-
-            <div className="flex flex-wrap">
-                {instaFeed.map((post) => (
-                    <div
-                        key={post.id}
-                        className="w-full overflow-hidden sm:w-1/2 md:w-1/3 lg:w-1/4"
-                        style={{ width: "300px", height: "300px" }}
-                    >
-                        <div className="zoom-effect h-full w-full rounded-lg object-cover">
+            <div className="grid grid-cols-1 gap-4 p-8 sm:grid-cols-2">
+                {/* Left half*/}
+                <div className="w-full">
+                    <div className="flex items-center justify-center">
+                        <h1 className="mb-8 flex gap-5 text-6xl text-white">
+                            Insta
                             <Image
-                                src={post.media_url}
-                                alt={post.caption || ""}
-                                width={300}
-                                height={300}
-                                className="h-full w-full"
+                                alt="instagram"
+                                src={instagramLogo}
+                                className=" w-14 cursor-pointer"
+                                onClick={handleInstaClick}
                             />
-                        </div>
+                        </h1>
                     </div>
-                ))}
+                    <div className="flex flex-wrap">
+                        {instaFeed.map((post) => (
+                            <div
+                                key={post.id}
+                                className="w-full overflow-hidden sm:w-1/2 md:w-1/3 lg:w-1/4"
+                                style={{ width: "300px", height: "300px" }}
+                            >
+                                <div className="zoom-effect h-full w-full rounded-lg object-cover">
+                                    <Image
+                                        src={post.media_url}
+                                        alt={post.caption || ""}
+                                        width={300}
+                                        height={300}
+                                        className="h-full w-full"
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Right half of the page with h1 tags */}
+                <div className="w-full">
+                    <div>
+                        <h1 className="text-6xl text-white">Blonding</h1>
+                    </div>
+                    <div>
+                        <h1 className="text-6xl text-white">Vivids</h1>
+                    </div>
+                    <div>
+                        <h1 className="text-6xl text-white">
+                            Color Correction
+                        </h1>
+                    </div>
+                    <div>
+                        <h1 className="text-6xl text-white">
+                            Short Length Cut
+                        </h1>
+                    </div>
+                </div>
             </div>
         </>
     );
 }
+
 // caption hover idea
+
 {
     /* <div className="grid grid-cols-3 gap-4">
                 {instaFeed.map((post) => (
