@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-
 /* -------------       Fonts       ------------- */
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Quattrocento&family=Cookie&family=Grand+Hotel&family=Dancing+Script&display=swap");
 
@@ -29,9 +25,16 @@
     font-family: "Dancing Script", cursive;
 }
 
+/* -------------       Portfolio       ------------- */
 
-/* -------------       Pricing Page       ------------- */
+.zoom-effect {
+    transition: transform 0.3s ease;
+}
+.zoom-effect:hover {
+    transform: scale(1.1);
+}
 
+/* -------------       Pricing       ------------- */
 
 .triangle-background {
     position: absolute;
