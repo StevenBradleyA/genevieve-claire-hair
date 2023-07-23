@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { env } from "~/env.mjs";
 import Image from "next/image";
 import instagramLogo from "../../../public/temp-insta-logo.png";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
+import { fetchInstagramFeed } from "../api/insta/utils";
 
 interface InstagramFeedItem {
     id: string;
@@ -10,26 +11,10 @@ interface InstagramFeedItem {
     caption: string | null;
 }
 
-interface InstagramCarouselItem {
-    id: string;
-    media_url: string;
-    media_type: "IMAGE" | "CAROUSEL_ALBUM";
-}
-
-interface InstagramApiResponse {
-    data: {
-        id: string;
-        media_type: "IMAGE" | "CAROUSEL_ALBUM";
-        media_url: string;
-        caption: string | null;
-        children?: { data: InstagramCarouselItem[] };
-    }[];
-}
-
 export default function Portfolio() {
     const instaToken = env.NEXT_PUBLIC_INSTA_TOKEN;
     const [instaFeed, setInstaFeed] = useState<InstagramFeedItem[]>([]);
-    const router = useRouter();
+    // const router = useRouter();
     useEffect(() => {
         if (instaToken) {
             fetchInstagramFeed(instaToken)
@@ -96,92 +81,30 @@ export default function Portfolio() {
                     </div>
                 </div>
 
-                {/* Right half of the page with h1 tags */}
-                <div className="w-full">
-                    <div>
-                        <h1 className="text-6xl text-white">Blonding</h1>
+                {/* Right half*/}
+                <div className="flex w-full flex-col items-center">
+                    <div className=" mb-40">
+                        <h1 className="text-6xl text-white ">Blonding</h1>
+                        <h3>this will be a custom graphic </h3>
                     </div>
-                    <div>
+                    <div className=" mb-40">
                         <h1 className="text-6xl text-white">Vivids</h1>
+                        <h3>this will be a custom graphic </h3>
                     </div>
-                    <div>
+                    <div className=" mb-40">
                         <h1 className="text-6xl text-white">
                             Color Correction
                         </h1>
+                        <h3>this will be a custom graphic </h3>
                     </div>
-                    <div>
+                    <div className=" mb-40">
                         <h1 className="text-6xl text-white">
                             Short Length Cut
                         </h1>
+                        <h3>this will be a custom graphic </h3>
                     </div>
                 </div>
             </div>
         </>
     );
-}
-
-// caption hover idea
-
-{
-    /* <div className="grid grid-cols-3 gap-4">
-                {instaFeed.map((post) => (
-                    <div key={post.id} className="group relative">
-                        <Image
-                            src={post.media_url}
-                            alt={post.caption || ""}
-                            width={300}
-                            height={300}
-                        />
-                        <img src={post.media_url} alt={post.caption || ""} />
-
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                            <div className="rounded-md bg-gray-800 p-2 text-center text-white">
-                                {post.caption || "No caption"}
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div> */
-}
-
-async function fetchInstagramFeed(
-    accessToken: string
-): Promise<InstagramFeedItem[]> {
-    try {
-        const response = await fetch(
-            `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,children{media_type,media_url}&access_token=${accessToken}`
-        );
-        const data = (await response.json()) as InstagramApiResponse;
-
-        const filteredData = data.data.filter(
-            (post) =>
-                post.media_type === "IMAGE" ||
-                post.media_type === "CAROUSEL_ALBUM"
-        );
-
-        const feedItems: InstagramFeedItem[] = [];
-        for (const post of filteredData) {
-            if (post.media_type === "IMAGE") {
-                feedItems.push({
-                    id: post.id,
-                    media_url: post.media_url,
-                    caption: post.caption ? post.caption : "No caption",
-                });
-            } else if (post.media_type === "CAROUSEL_ALBUM" && post.children) {
-                for (const child of post.children.data) {
-                    if (child.media_type === "IMAGE") {
-                        feedItems.push({
-                            id: child.id,
-                            media_url: child.media_url,
-                            caption: post.caption ? post.caption : "No caption",
-                        });
-                    }
-                }
-            }
-        }
-
-        return feedItems;
-    } catch (error) {
-        throw new Error("Error fetching Instagram feed");
-    }
 }
