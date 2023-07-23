@@ -6,10 +6,8 @@ import type { ReviewWithUser } from ".";
 
 export default function ReviewCard({
     review,
-    postId,
 }: {
     review: ReviewWithUser;
-    postId: string;
 }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
@@ -32,7 +30,6 @@ export default function ReviewCard({
                     {!showDelete && (
                         <UpdateReview
                             review={review}
-                            postId={postId}
                             session={session}
                             showUpdate={showUpdate}
                             setShowUpdate={setShowUpdate}
@@ -42,7 +39,6 @@ export default function ReviewCard({
                     {!showUpdate && (
                         <DeleteReview
                             id={review.id}
-                            postId={postId}
                             session={session}
                             showDelete={showDelete}
                             setShowDelete={setShowDelete}
