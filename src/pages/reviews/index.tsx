@@ -8,8 +8,14 @@ import DisplayReviews from "~/components/Reviews/Display";
 export default function Reviews() {
     // TODO Decide if we want create review to be linked to a booking
     // could display type of booking on each review
+    // positive can see type of booking -- adds credibility
+    // negative some clients book over text exclusive lose sample size
+    // 
+
+
 
     // TODO Add total Star Rating 
+
     // TODO Give admin god power to delete a review 
     // TODO Add Date to Review  Month/Year
 
