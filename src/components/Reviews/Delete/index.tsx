@@ -3,7 +3,6 @@ import type { Session } from "next-auth";
 
 interface DeleteProps {
     id: string;
-    postId: string;
     session: Session;
     showDelete: boolean;
     setShowDelete: (show: boolean) => void;
@@ -11,7 +10,6 @@ interface DeleteProps {
 
 export default function DeleteReview({
     id,
-    postId,
     session,
     showDelete,
     setShowDelete,
@@ -20,7 +18,7 @@ export default function DeleteReview({
 
     const { mutate } = api.review.delete.useMutation({
         onSuccess: () => {
-            void ctx.review.getByPostId.invalidate();
+            void ctx.review.getAll.invalidate();
             void ctx.review.hasReviewed.invalidate();
         },
     });
@@ -30,7 +28,6 @@ export default function DeleteReview({
         if (session.user) {
             const data = {
                 id,
-                postId,
                 userId: session.user.id,
             };
             return mutate(data);

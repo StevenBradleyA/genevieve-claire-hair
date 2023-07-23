@@ -30,7 +30,7 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
     );
 };
 
-export default function CreateReview({ postId }: { postId: string }) {
+export default function CreateReview() {
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -40,7 +40,7 @@ export default function CreateReview({ postId }: { postId: string }) {
 
     const { mutate } = api.review.create.useMutation({
         onSuccess: () => {
-            void ctx.review.getByPostId.invalidate();
+            void ctx.review.getAll.invalidate();
             void ctx.review.hasReviewed.invalidate();
         },
     });
@@ -60,7 +60,6 @@ export default function CreateReview({ postId }: { postId: string }) {
             const data = {
                 text,
                 starRating,
-                postId,
                 userId: session.user.id,
             };
 

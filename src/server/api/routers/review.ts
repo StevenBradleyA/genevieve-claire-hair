@@ -5,10 +5,12 @@ import {
     protectedProcedure,
 } from "~/server/api/trpc";
 
+
+// TODO want to refactor review router to work with bookings once it is finished :D
+
 export const reviewRouter = createTRPCRouter({
-    getByPostId: publicProcedure.input(z.string()).query(({ input, ctx }) => {
+    getAll: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.review.findMany({
-            where: { postId: input },
             include: {
                 user: { select: { name: true } },
             },
@@ -20,11 +22,12 @@ export const reviewRouter = createTRPCRouter({
     }),
 
     hasReviewed: publicProcedure
-        .input(z.object({ postId: z.string(), userId: z.string().optional() }))
-        .query(({ input: { postId, userId }, ctx }) => {
+        .input(z.object({ userId: z.string().optional() }))
+        .query(({ input: { userId }, ctx }) => {
             if (!userId) return null;
-            return ctx.prisma.review.findFirst({ where: { postId, userId } });
+            return ctx.prisma.review.findFirst({ where: { userId } });
         }),
+
 
     create: protectedProcedure
         .input(
@@ -32,7 +35,6 @@ export const reviewRouter = createTRPCRouter({
                 text: z.string(),
                 starRating: z.number(),
                 userId: z.string(),
-                postId: z.string(),
             })
         )
         .mutation(async ({ input, ctx }) => {
@@ -53,7 +55,6 @@ export const reviewRouter = createTRPCRouter({
             z.object({
                 id: z.string(),
                 userId: z.string(),
-                postId: z.string(),
                 text: z.string().optional(),
                 starRating: z.number().optional(),
             })

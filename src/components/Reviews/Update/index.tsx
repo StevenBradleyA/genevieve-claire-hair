@@ -8,7 +8,6 @@ import type { Session } from "next-auth";
 //? --------------------------------------------------------------------
 
 interface UpdateProps {
-    postId: string;
     review: Review;
     session: Session;
     showUpdate: boolean;
@@ -16,7 +15,6 @@ interface UpdateProps {
 }
 
 export default function UpdateReview({
-    postId,
     review,
     session,
     showUpdate,
@@ -30,7 +28,7 @@ export default function UpdateReview({
 
     const { mutate } = api.review.update.useMutation({
         onSuccess: () => {
-            void ctx.review.getByPostId.invalidate();
+            void ctx.review.getAll.invalidate();
             setShowUpdate(false);
         },
     });
@@ -42,7 +40,6 @@ export default function UpdateReview({
             const data = {
                 text,
                 starRating,
-                postId,
                 userId: session.user.id,
                 id: review.id,
             };
