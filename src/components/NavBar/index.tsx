@@ -1,40 +1,38 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import scissors from "../../../public/scissors.png";
+import homeLogo from "../../../public/home-logo.png";
 
 export default function NavBar() {
-
-// Todo my work page (links to here insta photos rendered)
-
     return (
         <nav
             className="sticky top-0 z-10 mb-10 flex items-center justify-between 
-            rounded-b-3xl py-4 text-white"
+            rounded-b-3xl py-2 text-white"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
-                <Image alt="home" src={scissors} className="h-10 w-10" />
+                <Image alt="home" src={homeLogo} className=" w-48 mb-2" />
             </Link>
-            <ul className="flex flex-grow justify-around text-2xl">
-                <li>
-                    <Link href="/feature" aria-label="Feature">
-                        Feature
-                    </Link>
-                </li>
+
+            <ul className="flex flex-grow items-center justify-around text-2xl">
                 <li>
                     <Link href="/bookings" aria-label="Bookings">
                         Book Your Appointment
                     </Link>
                 </li>
                 <li>
-                    <Link href="/images" aria-label="Images">
-                        My Work
+                    <Link href="/portfolio" aria-label="Images">
+                        Portfolio
                     </Link>
                 </li>
                 <li>
                     <Link href="/pricing" aria-label="Pricing">
                         Pricing
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/reviews" aria-label="Feature">
+                        Reviews
                     </Link>
                 </li>
             </ul>

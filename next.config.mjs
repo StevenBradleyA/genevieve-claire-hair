@@ -18,6 +18,10 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  images: {
+    domains: ["scontent-sea1-1.cdninstagram.com"],
+  },
 };
 
 export default config;
