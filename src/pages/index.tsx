@@ -50,12 +50,12 @@ export default function Home() {
                 Genevieve Clare Hair
             </h1>
             <div className="flex items-center">
-                <div className="ml-auto flex w-1/2 justify-center">
-                    <h1 className="hover-complex -rotate-12 transform font-cookie text-8xl text-white">
+                <div className=" ml-auto flex w-1/2 justify-center pl-10">
+                    <h1 className="hover-complex -rotate-12 transform font-quattrocento text-8xl text-white">
                         No bad Hair days
                     </h1>
                 </div>
-                <div className="ml-auto flex w-1/2 justify-center">
+                <div className="ml-auto flex w-1/2 justify-center pr-10">
                     <Image
                         src={greenLogo}
                         alt="geni"
@@ -63,7 +63,7 @@ export default function Home() {
                     />
                 </div>
             </div>
-            <div className="container relative mx-auto flex h-screen items-center justify-center">
+            <div className="container relative mx-auto mb-40 flex h-96 w-3/4 items-center justify-center">
                 {images.map((image, index) => {
                     const distanceFromCenter = index - currentIndex;
                     let translateX = 0;
@@ -90,7 +90,7 @@ export default function Home() {
                             key={index}
                             src={image}
                             alt={`review photo ${index + 1}`}
-                            className={`w-40 cursor-pointer transition-transform duration-300 hover:scale-110 ${
+                            className={`w-96 cursor-pointer transition-transform duration-300 hover:scale-110 ${
                                 distanceFromCenter === 0 ? "active" : ""
                             }`}
                             style={{
@@ -109,6 +109,10 @@ export default function Home() {
                     );
                 })}
             </div>
+            <h1 className="m-20 font-quattrocento text-8xl text-white">
+                {" "}
+                hi, im geni and I do hair stuff
+            </h1>
         </div>
     );
 }
