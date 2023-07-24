@@ -11,7 +11,7 @@ export default function NavBar() {
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
-                <Image alt="home" src={homeLogo} className=" w-48 mb-2" />
+                <Image alt="home" src={homeLogo} className=" mb-2 w-48" />
             </Link>
 
             <ul className="flex flex-grow items-center justify-around text-2xl">
@@ -53,7 +53,12 @@ function AuthController() {
                 aria-label={sessionData ? "Sign out" : "Sign in"}
                 className="rounded-full bg-white/10 px-4 py-2 font-semibold no-underline transition hover:bg-white/20"
                 onClick={
-                    sessionData ? () => void signOut() : () => void signIn()
+                    sessionData
+                        ? () => void signOut()
+                        : () =>
+                              void signIn(undefined, {
+                                  callbackUrl: "/first-time-client",
+                              })
                 }
             >
                 {sessionData ? "Sign out" : "Sign in"}
