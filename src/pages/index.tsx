@@ -32,16 +32,10 @@ export default function Home() {
 
     // ----------------------------------------------------------------------------------------------------------------
 
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
 
-    // const handleClick = (index) => {
-    //     if (index !== currentIndex) {
-    //         setCurrentIndex(index);
-    //     }
-    // };
-
-    const handleClick = (index) => {
+    const handleCarouselClick = (index: number): void => {
         if (index !== currentIndex) {
             setCurrentIndex(index);
         }
@@ -53,9 +47,9 @@ export default function Home() {
             <div className="container relative mx-auto flex h-screen items-center justify-center">
                 {images.map((image, index) => {
                     const distanceFromCenter = index - currentIndex;
-                    let translateX;
+                    let translateX = 0;
                     if (distanceFromCenter === 0) {
-                        translateX = 0;
+                        translateX = -33;
                     } else if (
                         distanceFromCenter === 1 ||
                         distanceFromCenter === -2
@@ -88,10 +82,10 @@ export default function Home() {
                                 left: "50%",
                                 top: "50%",
                                 marginLeft:
-                                    distanceFromCenter === 0 ? "0" : "-20%",
+                                    distanceFromCenter === 0 ? "-10%" : "-20%",
                                 transformOrigin: "center center",
                             }}
-                            onClick={() => handleClick(index)}
+                            onClick={() => handleCarouselClick(index)}
                         />
                     );
                 })}
