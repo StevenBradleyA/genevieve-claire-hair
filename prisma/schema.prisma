@@ -15,10 +15,10 @@ model Review {
     updatedAt  DateTime @updatedAt
 
     userId    String
-    // bookingId String
+    bookingId String
 
     user    User    @relation(fields: [userId], references: [id])
-    // booking Booking @relation(fields: [bookingId], references: [id])
+    booking Booking @relation(fields: [bookingId], references: [id])
 }
 
 model Booking {
@@ -32,7 +32,7 @@ model Booking {
     userId String
 
     user        User          @relation(fields: [userId], references: [id])
-    // review      Review[]
+    review      Review[]
     transaction Transaction[]
 }
 
@@ -93,10 +93,14 @@ model Session {
 model User {
     id            String    @id @default(cuid())
     name          String?
+    firstName     String?
+    lastName      String?
     email         String?   @unique
     emailVerified DateTime?
     image         String?
     notes         String?
+    isAdmin       Boolean   @default(false)
+    isNew         Boolean   @default(true)
 
     accounts     Account[]
     sessions     Session[]
