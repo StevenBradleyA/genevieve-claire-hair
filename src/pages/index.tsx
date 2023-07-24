@@ -1,7 +1,7 @@
 import Image from "next/image";
-import greenLogo from "../../public/gch-green-logo.png";
-import whiteLogo from "../../public/gch-white-logo.png";
-import scissors from "../../public/scissors.png";
+import lsp1 from "../../public/1.png";
+import lsp2 from "../../public/2.png";
+import lsp3 from "../../public/3.png";
 import { useState } from "react";
 
 export default function Home() {
@@ -33,36 +33,63 @@ export default function Home() {
     // ----------------------------------------------------------------------------------------------------------------
 
     const [currentIndex, setCurrentIndex] = useState(0);
-    const images = [greenLogo, whiteLogo, scissors];
+    const images = [lsp1, lsp2, lsp3];
+
+    // const handleClick = (index) => {
+    //     if (index !== currentIndex) {
+    //         setCurrentIndex(index);
+    //     }
+    // };
 
     const handleClick = (index) => {
-        setCurrentIndex(index);
+        if (index !== currentIndex) {
+            setCurrentIndex(index);
+        }
     };
 
     return (
         <div className="bg-red-200">
             <h1 className="text-6xl text-red-300">Genevieve Clare Hair</h1>
-
             <div className="container relative mx-auto flex h-screen items-center justify-center">
                 {images.map((image, index) => {
-                    const position =
-                        (index - currentIndex + 1 + images.length) %
-                        images.length;
-                    const scale = position === 1 ? 1 : 0.8;
+                    const distanceFromCenter = index - currentIndex;
+                    let translateX;
+                    if (distanceFromCenter === 0) {
+                        translateX = 0;
+                    } else if (
+                        distanceFromCenter === 1 ||
+                        distanceFromCenter === -2
+                    ) {
+                        translateX = 50;
+                    } else if (
+                        distanceFromCenter === -1 ||
+                        distanceFromCenter === 2
+                    ) {
+                        translateX = -50;
+                    }
+
+                    const zIndex = distanceFromCenter === 0 ? 1 : 0;
+                    const scale = distanceFromCenter === 0 ? 1 : 0.8;
+                    const opacity = scale === 1 ? 1 : 0.4;
+
                     return (
                         <Image
                             key={index}
                             src={image}
                             alt={`review photo ${index + 1}`}
                             className={`w-40 cursor-pointer transition-transform duration-300 hover:scale-110 ${
-                                index === currentIndex ? "active" : ""
+                                distanceFromCenter === 0 ? "active" : ""
                             }`}
                             style={{
-                                transform: `translateX(${
-                                    (position - 1) * 100
-                                }%) scale(${scale})`,
-                                zIndex: images.length - position,
-                                opacity: scale === 1 ? 1 : 0.4,
+                                transform: `translateX(${translateX}%) scale(${scale})`,
+                                zIndex,
+                                opacity,
+                                position: "absolute",
+                                left: "50%",
+                                top: "50%",
+                                marginLeft:
+                                    distanceFromCenter === 0 ? "0" : "-20%",
+                                transformOrigin: "center center",
                             }}
                             onClick={() => handleClick(index)}
                         />
