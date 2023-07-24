@@ -2,9 +2,12 @@ import Image from "next/image";
 import lsp1 from "../../public/1.png";
 import lsp2 from "../../public/2.png";
 import lsp3 from "../../public/3.png";
+import greenLogo from "../../public/gch-green-logo.png";
 import { useState } from "react";
 
 export default function Home() {
+    // TODO should we use Webfont Loader??? Might load google fonts asynchronously and be more optimized
+
     // photo of geni right side
     // sign in graphic style
 
@@ -42,8 +45,24 @@ export default function Home() {
     };
 
     return (
-        <div className="bg-red-200">
-            <h1 className="text-6xl text-red-300">Genevieve Clare Hair</h1>
+        <div className=" flex w-full flex-col items-center">
+            <h1 className="mb-5 font-grand-hotel text-9xl text-white">
+                Genevieve Clare Hair
+            </h1>
+            <div className="flex items-center">
+                <div className="ml-auto flex w-1/2 justify-center">
+                    <h1 className="hover-complex -rotate-12 transform font-cookie text-8xl text-white">
+                        No bad Hair days
+                    </h1>
+                </div>
+                <div className="ml-auto flex w-1/2 justify-center">
+                    <Image
+                        src={greenLogo}
+                        alt="geni"
+                        className="h-auto max-w-full"
+                    />
+                </div>
+            </div>
             <div className="container relative mx-auto flex h-screen items-center justify-center">
                 {images.map((image, index) => {
                     const distanceFromCenter = index - currentIndex;

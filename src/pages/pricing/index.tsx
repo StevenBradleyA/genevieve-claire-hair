@@ -2,7 +2,7 @@ export default function Pricing() {
     return (
         // todo want Geni to be able to change these prices
         // todo needs mobile text adjustments. sm: is affecting all screen sizes for some reason
-        <div className="absolute top-0 h-full w-full overflow-hidden bg-rose-100">
+        <div className="absolute top-0 h-full w-full overflow-hidden bg-peach">
             <div className="triangle-background"></div>
             <div className="relative top-28 h-full">
                 <div className="flex justify-center">
