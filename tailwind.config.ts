@@ -5,9 +5,19 @@ export default {
     theme: {
         extend: {
             colors: {
-                peach: "#FFDAB9",
+                beigeLlama: "#EEDBCE",
                 cream: "#efe0d4",
-                coral: "#FF7F50",
+                creamPuff: "#EEE9DC",
+                peach: "#FFDAB9",
+                toastedMarshmallow: "#EAE1D6",
+                chillPurple: "#E3D4F4",
+            },
+            fontFamily: {
+                "dm-serif-display": ['"DM Serif Display"', "serif"],
+                quattrocento: ['"Quattrocento"', "serif"],
+                cookie: ['"Cookie"', "cursive"],
+                "grand-hotel": ['"Grand Hotel"', "cursive"],
+                "dancing-script": ['"Dancing Script"', "cursive"],
             },
         },
     },

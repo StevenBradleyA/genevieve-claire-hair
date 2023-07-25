@@ -25,6 +25,10 @@
     font-family: "Dancing Script", cursive;
 }
 
+/* -------------       Home       ------------- */
+
+
+
 /* -------------       Portfolio       ------------- */
 
 .zoom-effect {
@@ -36,15 +40,15 @@
 
 /* -------------       Pricing       ------------- */
 
-.triangle-background {
+/* .triangle-background {
     position: absolute;
     top: 0;
     left: 10rem;
     width: 110%;
     height: 200%;
-    background-color: #fecdd3;
+    background-color: #dbbae1;
     transform-origin: top left;
     transform: rotate(30deg) translateY(-100%);
     opacity: 0.6;
     overflow: hidden;
-}
+} */
