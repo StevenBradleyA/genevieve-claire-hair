@@ -25,6 +25,35 @@
     font-family: "Dancing Script", cursive;
 }
 
+
+/* -------------       NavBar       ------------- */
+
+.diagonal-image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .diagonal-image {
+    position: absolute;
+    top: -140px; 
+    left: 40px;
+    transform: rotate(90deg);
+    opacity: .5; 
+    z-index: -1;
+  }
+
+  .diagonal-image-small {
+    position: absolute;
+    top: -52px; 
+    left: -10px;
+    transform: rotate(90deg);
+    opacity: .5; 
+    z-index: -1;
+  }
+
+
+
+
 /* -------------       Home       ------------- */
 
 
