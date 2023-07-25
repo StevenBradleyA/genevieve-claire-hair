@@ -57,7 +57,7 @@ function AuthController() {
                         ? () => void signOut()
                         : () =>
                               void signIn(undefined, {
-                                  callbackUrl: "/first-time-client",
+                                  callbackUrl: "/first-time-client/check",
                               })
                 }
             >
