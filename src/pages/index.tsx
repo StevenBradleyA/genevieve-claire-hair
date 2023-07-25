@@ -44,6 +44,9 @@ export default function Home() {
         }
     };
 
+
+    
+
     return (
         <div className=" flex w-full flex-col items-center">
             <h1 className="mb-5 font-grand-hotel text-9xl text-white">
@@ -51,7 +54,10 @@ export default function Home() {
             </h1>
             <div className="flex items-center">
                 <div className=" ml-auto flex w-1/2 justify-center pl-10">
-                    <h1 className="hover-complex -rotate-12 transform font-quattrocento text-8xl text-white">
+                    {/* <h1 className="hover-complex -rotate-12 transform font-quattrocento text-8xl text-white">
+                        No bad Hair days
+                    </h1> */}
+                    <h1 className="pog font-quattrocento text-8xl text-white animate-glitch">
                         No bad Hair days
                     </h1>
                 </div>

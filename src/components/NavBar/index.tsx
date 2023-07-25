@@ -11,7 +11,7 @@ export default function NavBar() {
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
-                <Image alt="home" src={homeLogo} className=" w-48 mb-2" />
+                <Image alt="home" src={homeLogo} className=" mb-2 w-48" />
             </Link>
 
             <ul className="flex flex-grow items-center justify-around text-2xl">
