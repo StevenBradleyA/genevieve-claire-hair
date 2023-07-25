@@ -1,11 +1,11 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { format } from "date-fns";
-import type { GCHBooking } from "@prisma/client";
+import type { Booking } from "@prisma/client";
 import UpdateBooking from "../Update";
 import DeleteBooking from "../Delete";
 
-export default function BookingCard({ booking }: { booking: GCHBooking }) {
+export default function BookingCard({ booking }: { booking: Booking }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
