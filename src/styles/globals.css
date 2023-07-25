@@ -25,38 +25,32 @@
     font-family: "Dancing Script", cursive;
 }
 
-
 /* -------------       NavBar       ------------- */
 
 .diagonal-image-container {
     position: relative;
     display: inline-block;
-  }
-  
-  .diagonal-image {
+}
+
+.diagonal-image {
     position: absolute;
-    top: -140px; 
+    top: -123px;
     left: 40px;
     transform: rotate(90deg);
-    opacity: .5; 
+    opacity: 0.3;
     z-index: -1;
-  }
+}
 
-  .diagonal-image-small {
+.diagonal-image-small {
     position: absolute;
-    top: -52px; 
-    left: -10px;
+    top: -51px;
+    left: -15px;
     transform: rotate(90deg);
-    opacity: .5; 
+    opacity: 0.3;
     z-index: -1;
-  }
-
-
-
+}
 
 /* -------------       Home       ------------- */
-
-
 
 /* -------------       Portfolio       ------------- */
 

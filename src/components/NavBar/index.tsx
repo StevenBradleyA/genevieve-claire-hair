@@ -18,11 +18,11 @@ export default function NavBar() {
             <ul className="flex flex-grow items-center justify-around text-2xl">
                 <li>
                     <Link href="/bookings" aria-label="Bookings">
-                        <div className="diagonal-image-container hidden md:block">
+                        <div className="diagonal-image-container">
                             <Image
                                 alt="holo column graphic"
                                 src={holoColumn}
-                                className="diagonal-image h-72 w-10 object-cover"
+                                className="diagonal-image h-64 w-10 object-cover"
                             />
                             <span className="relative z-10">
                                 Book Your Appointment
@@ -32,45 +32,37 @@ export default function NavBar() {
                 </li>
                 <li>
                     <Link href="/portfolio" aria-label="Images">
-                    <div className="diagonal-image-container hidden md:block">
+                        <div className="diagonal-image-container">
                             <Image
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
                             />
-                            <span className="relative z-10">
-                                Portfolio
-                            </span>
+                            <span className="relative z-10">Portfolio</span>
                         </div>
                     </Link>
                 </li>
                 <li>
                     <Link href="/pricing" aria-label="Pricing">
-                    <div className="diagonal-image-container ">
+                        <div className="diagonal-image-container ">
                             <Image
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
-
                             />
-                            <span className="relative z-10">
-                                Pricing
-                            </span>
+                            <span className="relative z-10">Pricing</span>
                         </div>
                     </Link>
                 </li>
                 <li>
                     <Link href="/reviews" aria-label="Feature">
-                    <div className="diagonal-image-container">
+                        <div className="diagonal-image-container">
                             <Image
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
-
                             />
-                            <span className="relative z-10">
-                                Reviews
-                            </span>
+                            <span className="relative z-10">Reviews</span>
                         </div>
                     </Link>
                 </li>
