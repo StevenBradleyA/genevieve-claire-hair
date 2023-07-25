@@ -1,10 +1,6 @@
 import Image from "next/image";
 import firstTime from "@public/first-time.png";
 
-// export async function getStaticProps() {
-//     const
-// }
-
 export default function FirstTimeClient() {
     return (
         <div>
