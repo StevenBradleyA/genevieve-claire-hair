@@ -3,22 +3,22 @@ import Link from "next/link";
 import Image from "next/image";
 import homeLogo from "../../../public/home-logo.png";
 import holoColumn from "../../../public/Holographic/holo-column.png";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+// import { useRouter } from "next/router";
+// import { useEffect } from "react";
 export default function NavBar() {
-    const { data: session, status } = useSession();
-    const router = useRouter();
+    // const { data: session, status } = useSession();
+    // const router = useRouter();
 
-    // TODO: Prevent extra fetch call to "/"
-    useEffect(() => {
-        if (!session) return;
+    // // TODO: Prevent extra fetch call to "/"
+    // useEffect(() => {
+    //     if (!session) return;
 
-        if (status === "authenticated" && session.user.isNew)
-            void router.push("/first-time-client");
+    //     if (status === "authenticated" && session.user.isNew)
+    //         void router.push("/first-time-client");
 
-        if (status === "authenticated" && !session.user.isNew)
-            void router.push("/");
-    }, [status, session, router]);
+    //     if (status === "authenticated" && !session.user.isNew)
+    //         void router.push("/");
+    // }, [status, session, router]);
 
     return (
         <nav
