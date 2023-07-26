@@ -20,7 +20,10 @@ const config = {
     },
 
     images: {
-        domains: ["scontent-sea1-1.cdninstagram.com"],
+        domains: [
+            "scontent-sea1-1.cdninstagram.com",
+            "scontent.cdninstagram.com",
+        ],
     },
 };
 
