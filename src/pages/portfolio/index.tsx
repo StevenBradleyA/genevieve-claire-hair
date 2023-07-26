@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { env } from "~/env.mjs";
 import Image from "next/image";
-import instagramLogo from "../../../public/temp-insta-logo.png";
+import instagramLogo from "../../../public/insta.png";
+import holographic from "../../../public/Holographic/holo-crinkle.png"
 // import { useRouter } from "next/router";
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -84,16 +85,17 @@ export default function Portfolio() {
         >
             {/* Left half*/}
             <div className="w-full">
-                <div className="flex items-center justify-center">
-                    <h1 className="mb-8 flex gap-5 text-6xl text-white">
-                        Insta
-                        <Image
-                            alt="instagram"
-                            src={instagramLogo}
-                            className=" w-14 cursor-pointer"
-                            onClick={handleInstaClick}
-                        />
+                <div className=" mb-12 flex items-center justify-center instagram-header h-20"
+                >
+                    <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
+                        Instagram
                     </h1>
+                    <Image
+                        alt="instagram"
+                        src={instagramLogo}
+                        className=" w-40 cursor-pointer object-cover"
+                        onClick={handleInstaClick}
+                    />
                 </div>
                 <div className="flex flex-wrap">
                     <AnimatePresence>
