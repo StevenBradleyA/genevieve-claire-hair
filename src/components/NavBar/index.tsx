@@ -16,7 +16,7 @@ export default function NavBar() {
             </Link>
 
             <ul className="flex flex-grow items-center justify-around text-2xl">
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/bookings" aria-label="Bookings">
                         <div className="diagonal-image-container">
                             <Image
@@ -29,8 +29,9 @@ export default function NavBar() {
                             </span>
                         </div>
                     </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/portfolio" aria-label="Images">
                         <div className="diagonal-image-container">
                             <Image
@@ -41,8 +42,9 @@ export default function NavBar() {
                             <span className="relative z-10">Portfolio</span>
                         </div>
                     </Link>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/pricing" aria-label="Pricing">
                         <div className="diagonal-image-container ">
                             <Image
@@ -53,8 +55,9 @@ export default function NavBar() {
                             <span className="relative z-10">Pricing</span>
                         </div>
                     </Link>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/reviews" aria-label="Feature">
                         <div className="diagonal-image-container">
                             <Image
@@ -65,6 +68,7 @@ export default function NavBar() {
                             <span className="relative z-10">Reviews</span>
                         </div>
                     </Link>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
             </ul>
             <AuthController />

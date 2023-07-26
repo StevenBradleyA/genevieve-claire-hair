@@ -50,6 +50,12 @@
     z-index: -1;
 }
 
+
+
+
+
+
+
 /* -------------       Home       ------------- */
 
 /* -------------       Portfolio       ------------- */
@@ -75,3 +81,13 @@
     opacity: 0.6;
     overflow: hidden;
 } */
+
+
+.blurblur {
+    position: absolute;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(40px);
+    border-radius: 40px;
+  }

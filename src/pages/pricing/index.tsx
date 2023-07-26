@@ -3,11 +3,11 @@ export default function Pricing() {
         // todo want Geni to be able to change these prices
         // todo needs mobile text adjustments. sm: is affecting all screen sizes for some reason
 
-        <div className="relative h-full overflow-hidden">
-            <div className="absolute inset-0 scale-150 transform bg-white opacity-20 blur-3xl filter"></div>
+        <div className="relative h-full overflow-hidden p-20">
+            <div className="blurblur absolute inset-0"></div>
 
-            <div className="flex justify-center  ">
-                <div className=" mr-48 mt-10">
+            <div className="relative flex h-full items-center justify-center">
+                <div className=" relative mr-48 mt-10">
                     <h1 className=" text-9xl">Pricing 💅</h1>
 
                     <h2 className=" mt-1 w-96 text-2xl">
@@ -38,8 +38,9 @@ export default function Pricing() {
                     <li className=" mb-1">Color Corrections- $150 an hour*</li>
                 </ul>
             </div>
-            <h2 className=" mt-8 flex justify-center text-2xl text-white">
-                * Deposit of 2 hours required upon booking. Non-Refundable will go towards your final total
+            <h2 className="relative mt-8 flex justify-center text-2xl text-white">
+                * Deposit of 2 hours required upon booking. Non-Refundable will
+                go towards your final total
             </h2>
         </div>
     );
