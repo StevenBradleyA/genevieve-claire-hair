@@ -2,6 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import homeLogo from "../../../public/home-logo.png";
+import holoColumn from "../../../public/Holographic/holo-column.png";
 
 export default function NavBar() {
     return (
@@ -15,25 +16,59 @@ export default function NavBar() {
             </Link>
 
             <ul className="flex flex-grow items-center justify-around text-2xl">
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/bookings" aria-label="Bookings">
-                        Book Your Appointment
+                        <div className="diagonal-image-container">
+                            <Image
+                                alt="holo column graphic"
+                                src={holoColumn}
+                                className="diagonal-image h-64 w-10 object-cover"
+                            />
+                            <span className="relative z-10">
+                                Book Your Appointment
+                            </span>
+                        </div>
                     </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/portfolio" aria-label="Images">
-                        Portfolio
+                        <div className="diagonal-image-container">
+                            <Image
+                                alt="holo column graphic"
+                                src={holoColumn}
+                                className="diagonal-image-small h-28 w-10 object-cover"
+                            />
+                            <span className="relative z-10">Portfolio</span>
+                        </div>
                     </Link>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/pricing" aria-label="Pricing">
-                        Pricing
+                        <div className="diagonal-image-container ">
+                            <Image
+                                alt="holo column graphic"
+                                src={holoColumn}
+                                className="diagonal-image-small h-28 w-10 object-cover"
+                            />
+                            <span className="relative z-10">Pricing</span>
+                        </div>
                     </Link>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
-                <li>
+                <li className="group relative mr-4">
                     <Link href="/reviews" aria-label="Feature">
-                        Reviews
+                        <div className="diagonal-image-container">
+                            <Image
+                                alt="holo column graphic"
+                                src={holoColumn}
+                                className="diagonal-image-small h-28 w-10 object-cover"
+                            />
+                            <span className="relative z-10">Reviews</span>
+                        </div>
                     </Link>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
             </ul>
             <AuthController />

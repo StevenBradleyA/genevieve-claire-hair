@@ -3,6 +3,7 @@ import lsp1 from "../../public/1.png";
 import lsp2 from "../../public/2.png";
 import lsp3 from "../../public/3.png";
 import greenLogo from "../../public/gch-green-logo.png";
+import holo from "../../public/Holographic/holo-wavy.png";
 import { useState } from "react";
 
 export default function Home() {
@@ -51,18 +52,15 @@ export default function Home() {
             </h1>
             <div className="flex items-center">
                 <div className=" ml-auto flex w-1/2 justify-center pl-10">
-                    {/* <h1 className="hover-complex -rotate-12 transform font-quattrocento text-8xl text-white">
-                        No bad Hair days
-                    </h1> */}
                     <h1 className="pog animate-glitch font-quattrocento text-8xl text-white">
                         No bad Hair days
                     </h1>
                 </div>
-                <div className="ml-auto flex w-1/2 justify-center pr-10">
+                <div className="ml-auto flex h-96 w-1/2 justify-center pr-10">
                     <Image
-                        src={greenLogo}
+                        src={holo}
                         alt="geni"
-                        className="h-auto max-w-full"
+                        className="h-auto max-w-full object-cover"
                     />
                 </div>
             </div>
