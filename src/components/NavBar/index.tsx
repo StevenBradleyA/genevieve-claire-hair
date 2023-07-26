@@ -3,8 +3,23 @@ import Link from "next/link";
 import Image from "next/image";
 import homeLogo from "../../../public/home-logo.png";
 import holoColumn from "../../../public/Holographic/holo-column.png";
-
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 export default function NavBar() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    // TODO: Prevent extra fetch call to "/"
+    useEffect(() => {
+        if (!session) return;
+
+        if (status === "authenticated" && session.user.isNew)
+            void router.push("/first-time-client");
+
+        if (status === "authenticated" && !session.user.isNew)
+            void router.push("/");
+    }, [status, session, router]);
+
     return (
         <nav
             className="sticky top-0 z-10 mb-10 flex items-center justify-between 
@@ -29,7 +44,7 @@ export default function NavBar() {
                             </span>
                         </div>
                     </Link>
-                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                 </li>
                 <li className="group relative mr-4">
                     <Link href="/portfolio" aria-label="Images">
@@ -88,12 +103,8 @@ function AuthController() {
                 aria-label={sessionData ? "Sign out" : "Sign in"}
                 className="rounded-full bg-white/10 px-4 py-2 font-semibold no-underline transition hover:bg-white/20"
                 onClick={
-                    sessionData
-                        ? () => void signOut()
-                        : () =>
-                              void signIn(undefined, {
-                                  callbackUrl: "/first-time-client/check",
-                              })
+                    sessionData ? () => void signOut() : () => void signIn()
+                    // undefined, {callbackUrl: "/first-time-client/check",}
                 }
             >
                 {sessionData ? "Sign out" : "Sign in"}
