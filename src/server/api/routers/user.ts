@@ -5,8 +5,8 @@ import {
     protectedProcedure,
 } from "~/server/api/trpc";
 
-export const clientRouter = createTRPCRouter({
-    updateNewClient: protectedProcedure.mutation(({ ctx }) => {
+export const userRouter = createTRPCRouter({
+    updateNewUser: protectedProcedure.mutation(({ ctx }) => {
         return ctx.prisma.user.update({
             where: { id: ctx.session.user.id },
             data: { isNew: false },
