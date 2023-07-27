@@ -66,9 +66,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-
-  }
-
+}
 
 /* -------------       Pricing       ------------- */
 
@@ -97,18 +95,17 @@
     border-radius: 40px;
 }
 
-
 /* .text-gradient {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
   } */
 
-  /* className=" mb-1 text-gradient bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" */
+/* className=" mb-1 text-gradient bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" */
 
-  .text-image {
+.text-image {
     background-image: url("../../public/Holographic/holo-crinkle.png");
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-  }
+}

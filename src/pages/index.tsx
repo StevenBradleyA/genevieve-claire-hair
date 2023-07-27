@@ -47,7 +47,7 @@ export default function Home() {
 
     // Spline zoom function
     // const handleSceneLoad = (spline) => {
-    //     spline.setZoom(0.5); 
+    //     spline.setZoom(0.5);
     // };
 
     return (
@@ -55,21 +55,16 @@ export default function Home() {
             <h1 className="mb-6 font-grand-hotel text-9xl text-white">
                 Genevieve Clare Hair
             </h1>
-
-            <div className="flex w-full flex-wrap bg-rose-100 px-10 gap-10">
-                <div className=" w-full md:w-3/4">
-                    <Spline
-                        scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode"
-                        // onLoad={handleSceneLoad}
-                    />
-                </div>
-                <div className="">
-                    <Image
-                        src={holo}
-                        alt="geni"
-                        className="object-cover w-1/4"
-                    />
-                </div>
+            <div className="flex gap-5 bg-lightPurple p-10 rounded-2xl">
+                <Spline
+                    scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode"
+                    // onLoad={handleSceneLoad}
+                />
+                <Image
+                    src={holo}
+                    alt="geni"
+                    className="flex w-96 justify-center object-cover"
+                />
             </div>
             <div className="container relative mx-auto mb-40 flex h-96 w-3/4 items-center justify-center">
                 {images.map((image, index) => {
