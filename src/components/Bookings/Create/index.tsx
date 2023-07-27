@@ -5,15 +5,18 @@ import "react-day-picker/dist/style.css";
 import { useSession } from "next-auth/react";
 import { isEqual } from "date-fns";
 import type { CalendarOptions } from "~/pages/bookings";
+import TimeSlotPicker from "./TimeSlotPicker";
 
 export default function CreateBooking(options: CalendarOptions) {
     const { data: session } = useSession();
     const [date, setDate] = useState<Date>();
+    const [timeSlot, setTimeSlot] = useState<number>();
     const { data: check } = api.booking.getByDate.useQuery(date);
 
     const checkConflicts = () => {
         if (!date) return true;
         if (date && check && isEqual(check.date, date)) return true;
+        if (!timeSlot) return true;
         return false;
     };
 
@@ -46,21 +49,24 @@ export default function CreateBooking(options: CalendarOptions) {
     return (
         <form
             onSubmit={book}
-            className="container flex flex-col items-center justify-center px-4 py-16"
+            className="container flex items-center justify-center px-4 py-16"
         >
             <DayPicker
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="shadow-3xl  rounded-lg bg-white p-1"
+                className="rounded-lg  bg-white p-1 shadow-2xl"
                 {...options}
             />
-            <button
-                disabled={checkConflicts()}
-                className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 hover:scale-105 hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
-            >
-                Book now!
-            </button>
+            <div className="flex w-60 flex-col">
+                <TimeSlotPicker timeSlot={timeSlot} setTimeSlot={setTimeSlot} />
+                <button
+                    disabled={checkConflicts()}
+                    className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 hover:scale-105 hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
+                >
+                    Book now!
+                </button>
+            </div>
         </form>
     );
 }
