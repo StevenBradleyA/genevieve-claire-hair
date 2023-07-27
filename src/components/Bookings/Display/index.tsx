@@ -1,5 +1,5 @@
 import { api } from "~/utils/api";
-import type { GCHBooking } from "@prisma/client";
+import type { Booking } from "@prisma/client";
 import type { Session } from "next-auth";
 import BookingCard from "./BookingCard";
 
@@ -16,7 +16,7 @@ export default function DisplayBookings({ session }: { session: Session }) {
 
     return (
         <>
-            {bookings.map((booking: GCHBooking, i: number) => {
+            {bookings.map((booking: Booking, i: number) => {
                 return <BookingCard key={i} booking={booking} />;
             })}
         </>

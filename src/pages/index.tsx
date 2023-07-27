@@ -3,6 +3,7 @@ import lsp1 from "../../public/1.png";
 import lsp2 from "../../public/2.png";
 import lsp3 from "../../public/3.png";
 import greenLogo from "../../public/gch-green-logo.png";
+import holo from "../../public/Holographic/holo-wavy.png";
 import { useState } from "react";
 import Spline from '@splinetool/react-spline';
 
@@ -36,6 +37,8 @@ export default function Home() {
 
     // ----------------------------------------------------------------------------------------------------------------
 
+
+
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
 
@@ -45,31 +48,29 @@ export default function Home() {
         }
     };
 
-
-    
-
     return (
         <div className=" flex w-full flex-col items-center">
             <h1 className="mb-5 font-grand-hotel text-9xl text-white">
                 Genevieve Clare Hair
             </h1>
             <div className=" w-full">
-    <Spline scene="https://prod.spline.design/bunTWGtXBDALSsjq/scene.splinecode" />
-
+    {/* <Spline scene="https://prod.spline.design/bunTWGtXBDALSsjq/scene.splinecode" /> */}
+  <Spline scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode" />
             </div>
 
             <div className="flex items-center">
                 <div className=" ml-auto flex w-1/2 justify-center pl-10">
                   
-                    <h1 className="pog font-quattrocento text-8xl text-white animate-glitch">
+                    {/* <h1 className="pog font-quattrocento text-8xl text-white animate-glitch">
+                    <h1 className="pog animate-glitch font-quattrocento text-8xl text-white">
                         No bad Hair days
-                    </h1>
+                    </h1> */}
                 </div>
-                <div className="ml-auto flex w-1/2 justify-center pr-10">
+                <div className="ml-auto flex h-96 w-1/2 justify-center pr-10">
                     <Image
-                        src={greenLogo}
+                        src={holo}
                         alt="geni"
-                        className="h-auto max-w-full"
+                        className="h-auto max-w-full object-cover"
                     />
                 </div>
             </div>

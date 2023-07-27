@@ -25,9 +25,32 @@
     font-family: "Dancing Script", cursive;
 }
 
+/* -------------       NavBar       ------------- */
+
+.diagonal-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.diagonal-image {
+    position: absolute;
+    top: -123px;
+    left: 40px;
+    transform: rotate(90deg);
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.diagonal-image-small {
+    position: absolute;
+    top: -51px;
+    left: -15px;
+    transform: rotate(90deg);
+    opacity: 0.3;
+    z-index: -1;
+}
+
 /* -------------       Home       ------------- */
-
-
 
 /* -------------       Portfolio       ------------- */
 
@@ -37,6 +60,15 @@
 .zoom-effect:hover {
     transform: scale(1.1);
 }
+
+.instagram-header {
+    background-image: url("../../public/Holographic/holo-rainbow.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+
 
 /* -------------       Pricing       ------------- */
 
@@ -52,3 +84,31 @@
     opacity: 0.6;
     overflow: hidden;
 } */
+
+.blurblur {
+    position: absolute;
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.1)
+    );
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(40px);
+    border-radius: 40px;
+}
+
+
+/* .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  } */
+
+  /* className=" mb-1 text-gradient bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" */
+
+  .text-image {
+    background-image: url("../../public/Holographic/holo-crinkle.png");
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }

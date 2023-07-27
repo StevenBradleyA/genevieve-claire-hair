@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { api } from "~/utils/api";
 import { DayPicker } from "react-day-picker";
-import type { GCHBooking } from "@prisma/client";
+import type { Booking } from "@prisma/client";
 import type { Session } from "next-auth";
 import { isEqual } from "date-fns";
 
 interface UpdateProps {
-    booking: GCHBooking;
+    booking: Booking;
     session: Session;
     showUpdate: boolean;
     setShowUpdate: (show: boolean) => void;

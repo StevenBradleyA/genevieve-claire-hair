@@ -19,14 +19,14 @@ declare module "next-auth" {
     interface Session extends DefaultSession {
         user: {
             id: string;
-            // ...other properties
-            // role: UserRole;
+            isAdmin: boolean;
+            isNew: boolean;
         } & DefaultSession["user"];
     }
 
     // interface User {
-    //   // ...other properties
-    //   // role: UserRole;
+    //     isAdmin: boolean;
+    //     isNew: boolean;
     // }
 }
 
@@ -37,13 +37,21 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
     callbacks: {
-        session: ({ session, user }) => ({
-            ...session,
-            user: {
-                ...session.user,
-                id: user.id,
-            },
-        }),
+        session: ({ session, user }) => {
+            return {
+                ...session,
+                user: {
+                    ...user,
+                },
+            };
+        },
+        redirect({ url, baseUrl }) {
+            // Allows relative callback URLs
+            if (url.startsWith("/")) return `${baseUrl}${url}`;
+            // Allows callback URLs on the same origin
+            else if (new URL(url).origin === baseUrl) return url;
+            return baseUrl;
+        },
     },
     adapter: PrismaAdapter(prisma),
     providers: [
