@@ -63,6 +63,8 @@ export default function Booking() {
     const { data: session } = useSession();
 
     let { data: booked } = api.booking.getAllBookedDates.useQuery();
+    const { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
+    console.log(pfBangs);
     if (!booked) booked = [];
 
     return (

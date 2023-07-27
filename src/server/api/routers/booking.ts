@@ -16,6 +16,24 @@ export const bookingRouter = createTRPCRouter({
         return bookedArr.map((el) => el.date);
     }),
 
+    getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
+        const bookedArr = await ctx.prisma.booking.findMany({
+            where: {
+                date: {
+                    gte: new Date(),
+                },
+            },
+            select: {
+                date: true,
+            },
+            orderBy: {
+                date: "asc",
+            },
+        });
+
+        return bookedArr;
+    }),
+
     getByDate: publicProcedure
         .input(z.date().optional())
         .query(({ input, ctx }) => {
