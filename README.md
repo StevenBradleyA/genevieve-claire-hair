@@ -51,6 +51,7 @@ Zaviar's
   <a href="https://www.linkedin.com/in/stevenanderson-dev/">
     <img src="./public/devs/hackerman.png" alt="Steven Anderson" height="100" width="100" />
   </a>
+                    
   <a href="https://www.linkedin.com/in/caleb-cleghorn-31843b189/">
     <img src="./public/devs/burgerman.png" alt="Zaviar Brown" height="100" width="100" />
   </a>
@@ -63,6 +64,7 @@ Zaviar's
   <a href="https://github.com/StevenBradleyA">
     <img src="https://skillicons.dev/icons?i=github&perline=1" alt="Steven Anderson's GitHub Profile" height="50" />
   </a>
+                      
   <a href="https://www.linkedin.com/in/zaviar-brown-9a1b581b9/">
     <img src="https://skillicons.dev/icons?i=linkedin&perline=1" alt="Zaviar Brown's LinkedIn Profile" height="50" />
   </a>
