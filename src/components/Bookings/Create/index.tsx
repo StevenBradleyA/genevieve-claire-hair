@@ -54,12 +54,18 @@ export default function CreateBooking(options: CalendarOptions) {
             <DayPicker
                 mode="single"
                 selected={date}
-                onSelect={setDate}
+                onSelect={(e) => {
+                    setDate(e);
+                }}
                 className="rounded-lg  bg-white p-1 shadow-2xl"
                 {...options}
             />
             <div className="flex w-60 flex-col">
-                <TimeSlotPicker timeSlot={timeSlot} setTimeSlot={setTimeSlot} />
+                <TimeSlotPicker
+                    date={date}
+                    timeSlot={timeSlot}
+                    setTimeSlot={setTimeSlot}
+                />
                 <button
                     disabled={checkConflicts()}
                     className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 hover:scale-105 hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
