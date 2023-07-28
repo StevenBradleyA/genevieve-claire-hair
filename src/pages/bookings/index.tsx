@@ -57,6 +57,8 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
     return options;
 };
 
+// Redirect to sign up & new client form
+
 export default function Booking() {
     const { data: session } = useSession();
 
