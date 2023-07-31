@@ -1,4 +1,9 @@
-import { eachHourOfInterval, endOfDay } from "date-fns";
+import {
+    eachHourOfInterval,
+    endOfDay,
+    isToday,
+    roundToNearestMinutes,
+} from "date-fns";
 import { useEffect, useState } from "react";
 
 /**
@@ -24,7 +29,6 @@ export default function TimeSlotPicker({
     timeSlot: number | undefined;
     setTimeSlot: React.Dispatch<React.SetStateAction<number | undefined>>;
 }) {
-    // const timeInterval = 60;
     const [currTime, setCurrTime] = useState(
         eachHourOfInterval({ start: new Date(), end: endOfDay(new Date()) })
     );
@@ -34,12 +38,17 @@ export default function TimeSlotPicker({
             const [startTime, endTime] = schedule[date.getDay()] as number[];
 
             if (startTime && endTime) {
-                const start = new Date(date.getTime());
+                let start = new Date(date.getTime());
                 const end = new Date(date.getTime());
-                start.setHours(startTime);
+                if (isToday(date)) {
+                    start = roundToNearestMinutes(new Date(), {
+                        nearestTo: 30,
+                        roundingMethod: "ceil",
+                    });
+                } else {
+                    start.setHours(startTime);
+                }
                 end.setHours(endTime);
-
-                console.log(start, end);
                 setCurrTime(eachHourOfInterval({ start, end }));
             }
         } else setCurrTime([]);
