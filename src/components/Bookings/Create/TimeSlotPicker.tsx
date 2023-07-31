@@ -1,6 +1,20 @@
 import { eachHourOfInterval, endOfDay } from "date-fns";
 import { useEffect, useState } from "react";
 
+/**
+ * Monday: 9am - 1pm
+ * Tuesday: 9am - 5pm
+ * Wed-Fri: 10am - 7pm
+ */
+
+const schedule: { [key: number]: number[] } = {
+    1: [9, 13],
+    2: [9, 17],
+    3: [10, 19],
+    4: [10, 19],
+    5: [10, 19],
+};
+
 export default function TimeSlotPicker({
     date,
     timeSlot,
@@ -16,11 +30,19 @@ export default function TimeSlotPicker({
     );
 
     useEffect(() => {
-        if (date)
-            setCurrTime(
-                eachHourOfInterval({ start: date, end: endOfDay(date) })
-            );
-        else setCurrTime([]);
+        if (date) {
+            const [startTime, endTime] = schedule[date.getDay()] as number[];
+
+            if (startTime && endTime) {
+                const start = new Date(date.getTime());
+                const end = new Date(date.getTime());
+                start.setHours(startTime);
+                end.setHours(endTime);
+
+                console.log(start, end);
+                setCurrTime(eachHourOfInterval({ start, end }));
+            }
+        } else setCurrTime([]);
     }, [date]);
 
     return (
