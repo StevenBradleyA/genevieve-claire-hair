@@ -61,17 +61,15 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
 
 export default function Booking() {
     const { data: session } = useSession();
+    let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
 
-    let { data: booked } = api.booking.getAllBookedDates.useQuery();
-    const { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
-    console.log(pfBangs);
-    if (!booked) booked = [];
+    if (!pfBangs) pfBangs = [];
 
     return (
         <>
             {session && (
                 <>
-                    <CreateBooking {...createCalendarOptions(booked)} />
+                    <CreateBooking {...createCalendarOptions(pfBangs)} />
                     <DisplayBookings session={session} />
                 </>
             )}

@@ -31,7 +31,7 @@ export const bookingRouter = createTRPCRouter({
             },
         });
 
-        return bookedArr;
+        return bookedArr.map((el) => el.date);
     }),
 
     getByDate: publicProcedure
