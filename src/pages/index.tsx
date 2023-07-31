@@ -55,15 +55,21 @@ export default function Home() {
             <h1 className="mb-6 font-grand-hotel text-9xl text-white">
                 Genevieve Clare Hair
             </h1>
-            <div className="flex gap-5 bg-lightPurple p-10 rounded-2xl">
-                <Spline
-                    scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode"
-                    // onLoad={handleSceneLoad}
-                />
+            <div className="mx-5 mb-60 flex justify-between gap-5 rounded-2xl bg-lightPurple p-10 ">
+                <div className=" flex items-center justify-center">
+                    <Spline
+                        scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode"
+                        // onLoad={handleSceneLoad}
+                        style={{ transform: "scale(0.8)", marginLeft: "-20%"}}
+                    />
+
+
+                </div>
                 <Image
                     src={holo}
                     alt="geni"
-                    className="flex w-96 justify-center object-cover"
+                    // className="flex w-96 justify-center object-cover mr-5"
+                    className="flex w-full sm:w-1/2 md:w-1/3 lg:w-1/4 justify-center object-cover mr-5"
                 />
             </div>
             <div className="container relative mx-auto mb-40 flex h-96 w-3/4 items-center justify-center">
