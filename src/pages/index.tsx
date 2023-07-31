@@ -7,18 +7,6 @@ import { useState } from "react";
 import Spline from "@splinetool/react-spline";
 
 export default function Home() {
-    // TODO should we use Webfont Loader??? Might load google fonts asynchronously and be more optimized
-
-    // photo of geni right side
-    // sign in graphic style
-
-    // still need photo can use a template for now.
-
-    // No bad hair days on left
-
-    // Below that page scroll
-    // left side
-
     // TODO 3D 3 picture carosuel that has a review under it
     // as each photo is click review under it changes
 
@@ -60,16 +48,14 @@ export default function Home() {
                     <Spline
                         scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode"
                         // onLoad={handleSceneLoad}
-                        style={{ transform: "scale(0.8)", marginLeft: "-20%"}}
+                        style={{ transform: "scale(0.8)", marginLeft: "-20%" }}
                     />
-
-
                 </div>
                 <Image
                     src={holo}
                     alt="geni"
                     // className="flex w-96 justify-center object-cover mr-5"
-                    className="flex w-full sm:w-1/2 md:w-1/3 lg:w-1/4 justify-center object-cover mr-5"
+                    className="mr-5 flex w-full justify-center object-cover sm:w-1/2 md:w-1/3 lg:w-1/4"
                 />
             </div>
             <div className="container relative mx-auto mb-40 flex h-96 w-3/4 items-center justify-center">
