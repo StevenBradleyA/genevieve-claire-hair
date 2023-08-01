@@ -1,8 +1,10 @@
 import {
+    addHours,
     eachHourOfInterval,
     endOfDay,
+    isBefore,
     isToday,
-    roundToNearestMinutes,
+    startOfHour,
 } from "date-fns";
 import { useEffect, useState } from "react";
 
@@ -34,25 +36,30 @@ export default function TimeSlotPicker({
     );
 
     useEffect(() => {
+        // TODO: Reset time slot if new selection doesn't have that time slot
+        setTimeSlot(undefined);
+
         if (date) {
             const [startTime, endTime] = schedule[date.getDay()] as number[];
 
             if (startTime && endTime) {
                 let start = new Date(date.getTime());
-                const end = new Date(date.getTime());
+                const end = new Date(date.getTime()).setHours(endTime);
+
                 if (isToday(date)) {
-                    start = roundToNearestMinutes(new Date(), {
-                        nearestTo: 30,
-                        roundingMethod: "ceil",
-                    });
+                    start = startOfHour(addHours(new Date(), 1));
                 } else {
                     start.setHours(startTime);
                 }
-                end.setHours(endTime);
-                setCurrTime(eachHourOfInterval({ start, end }));
+
+                if (isBefore(start, end))
+                    setCurrTime(eachHourOfInterval({ start, end }));
+                else setCurrTime([]);
             }
-        } else setCurrTime([]);
-    }, [date]);
+
+            return;
+        }
+    }, [date, setTimeSlot]);
 
     return (
         <div className="flex flex-wrap justify-between gap-1 align-top">
