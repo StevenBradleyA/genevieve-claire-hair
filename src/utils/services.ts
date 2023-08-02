@@ -11,6 +11,7 @@
  * All choices shown
  */
 
+
 const allServices: { [key: string]: any } = {
     haircut: {
         name: "Haircut",
