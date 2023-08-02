@@ -1,6 +1,7 @@
 export default function AdminPage() {
 
 // TODO add admin only viewing or redirect if user is not admin 
+// TODO Going to need services db setup fixed cost optional rate optional 
 
 
 // Want ability to change pricing page
@@ -25,8 +26,17 @@ export default function AdminPage() {
 
 
     return (
-        <>
-            <div> hello </div>
-        </>
+        <div>
+            <div>Client Checkout</div>
+            <div className="mb-20"> Product Checkout dropdown </div>
+
+            <div> Calendar that shows schedule </div>
+            <div className="mb-20"> Ability to change calendar availability</div>
+
+            <div className="mb-20"> Ability to change pricing </div>
+
+            <div> List of all clients with search </div>
+            <div> </div>
+        </div>
     );
 }
