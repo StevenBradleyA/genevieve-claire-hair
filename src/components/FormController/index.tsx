@@ -2,11 +2,17 @@ import { useState } from "react";
 import ServiceOptions from "../NewClientForm/ServiceOptions";
 import ColorHistory from "../NewClientForm/ColorHistory";
 import ChemHair from "../NewClientForm/ChemHair";
+import CurrentColor from "../NewClientForm/CurrentColor";
+import TimeSlots from "../NewClientForm/TimeSlots";
+import ExtraDetails from "../NewClientForm/ExtraDetails";
 
 const NewClient = [
     <ServiceOptions key={0} />,
     <ColorHistory key={1} />,
     <ChemHair key={2} />,
+    <CurrentColor key={3} />,
+    <TimeSlots key={4} />,
+    <ExtraDetails key={5} />,
 ];
 
 export default function FormController() {
