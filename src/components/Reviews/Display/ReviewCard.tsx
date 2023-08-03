@@ -4,27 +4,31 @@ import UpdateReview from "../Update";
 import DeleteReview from "../Delete";
 import type { ReviewWithUser } from ".";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import type { MotionValue } from "framer-motion";
+
 import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
 
 // attempt to delay
 
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
-    const [showDelete, setShowDelete] = useState(false);
-    const [showUpdate, setShowUpdate] = useState(false);
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    const [showDelete, setShowDelete] = useState<boolean>(false);
+    const [showUpdate, setShowUpdate] = useState<boolean>(false);
+    const mouseX: MotionValue<number> = useMotionValue(0);
+    const mouseY: MotionValue<number> = useMotionValue(0);
 
-    const handleMouseMove = (event: MouseEvent) => {
-        const cardCenterX = window.innerWidth / 2;
-        const cardCenterY = window.innerHeight / 2;
-        const offsetX = event.pageX - cardCenterX;
-        const offsetY = event.pageY - cardCenterY;
-        const rotateXValue =
+    const handleMouseMove = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        const cardCenterX: number = window.innerWidth / 2;
+        const cardCenterY: number = window.innerHeight / 2;
+        const offsetX: number = event.pageX - cardCenterX;
+        const offsetY: number = event.pageY - cardCenterY;
+        const rotateXValue: number =
             offsetY > 0
                 ? (-offsetY / cardCenterY) * 20
                 : (-offsetY / cardCenterY) * 20;
-        const rotateYValue = (offsetX / cardCenterX) * 40;
+        const rotateYValue: number = (offsetX / cardCenterX) * 40;
 
         mouseX.set(offsetX);
         mouseY.set(offsetY);
@@ -32,27 +36,39 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         rotateY.set(rotateYValue);
     };
 
-    const handleMouseLeave = async () => {
+    const handleMouseLeave = () => {
         // Add a delay before starting the animations
-        void setTimeout(() => {
+        setTimeout(() => {
             animate(mouseX, 0, { duration: 0.3 });
             animate(mouseY, 0, { duration: 0.3 });
             animate(rotateX, 0, { duration: 0.3 });
             animate(rotateY, 0, { duration: 0.3 });
         }, 500);
     };
-
-    const rotateX = useMotionValue(0);
-    const rotateY = useMotionValue(0);
-    const shadowX = useTransform(rotateY, [-10, 10], [-25, 25]);
-    const shadowY = useTransform(rotateX, [-10, 10], [-25, 25]);
-    const shadowBlur = useTransform(rotateX, [-10, 10], [10, 30]);
+    
+    const rotateX: MotionValue<number> = useMotionValue(0);
+    const rotateY: MotionValue<number> = useMotionValue(0);
+    const shadowX: MotionValue<number> = useTransform(
+        rotateY,
+        [-10, 10],
+        [-25, 25]
+    );
+    const shadowY: MotionValue<number> = useTransform(
+        rotateX,
+        [-10, 10],
+        [-25, 25]
+    );
+    const shadowBlur: MotionValue<number> = useTransform(
+        rotateX,
+        [-10, 10],
+        [10, 30]
+    );
 
     return (
         <motion.div
             className="card-wrap cursor-pointer rounded-md border p-4 transition-all"
             onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
+            onMouseLeave= {handleMouseLeave}
             style={{
                 perspective: "800px",
                 transformStyle: "preserve-3d",
@@ -71,7 +87,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     ),
                 }}
             >
-                <motion.div className="card-info absolute bottom-4 left-4 text-white">
+                <motion.div className="absolute bottom-4 left-4 text-white">
                     {!showUpdate && (
                         <>
                             <div>@{review.user.name}</div>
