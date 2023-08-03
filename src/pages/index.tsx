@@ -48,7 +48,7 @@ export default function Home() {
                     <Spline
                         scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode"
                         // onLoad={handleSceneLoad}
-                        style={{ transform: "scale(0.8)", marginLeft: "-10%" }}
+                        style={{ transform: "scale(1)", marginLeft: "-5%" }}
                     />
                 </div>
                 <Image
