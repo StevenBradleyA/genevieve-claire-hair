@@ -1,10 +1,12 @@
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UpdateReview from "../Update";
 import DeleteReview from "../Delete";
 import type { ReviewWithUser } from ".";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
+
+// attempt to delay
 
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
@@ -30,11 +32,14 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         rotateY.set(rotateYValue);
     };
 
-    const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
-        rotateX.set(0);
-        rotateY.set(0);
+    const handleMouseLeave = async () => {
+        // Add a delay before starting the animations
+        void setTimeout(() => {
+            animate(mouseX, 0, { duration: 0.3 });
+            animate(mouseY, 0, { duration: 0.3 });
+            animate(rotateX, 0, { duration: 0.3 });
+            animate(rotateY, 0, { duration: 0.3 });
+        }, 500);
     };
 
     const rotateX = useMotionValue(0);
