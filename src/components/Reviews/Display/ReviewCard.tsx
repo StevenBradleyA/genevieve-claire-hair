@@ -13,23 +13,18 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const [showUpdate, setShowUpdate] = useState(false);
     const isHovered = useMotionValue(0);
     const cardRotateX = useTransform(isHovered, [-100, 100], [-10, 10]);
-    const cardRotateY = useTransform(isHovered, [-100, 100], [10, -10]);
-    const cardBgTranslateX = useTransform(isHovered, [-100, 100], [-20, 20]);
-    const cardBgTranslateY = useTransform(isHovered, [-100, 100], [-20, 20]);
-    const cardBgOpacity = useTransform(isHovered, [-100, 100], [0.8, 0.5]);
-    const cardShadow = useTransform(isHovered, (value) => {
-        const boxShadow = [
-            `rgba(255, 255, 255, ${0.2 - value * 0.002}) 0 0 40px 5px`,
-            `rgba(255, 255, 255, 1) 0 0 0 1px`,
-            `rgba(0, 0, 0, 0.66) 0 30px 60px 0`,
-            `inset #333 0 0 0 5px`,
-            `inset white 0 0 0 6px`,
-        ];
-        return boxShadow.join(",");
-    });
+    const cardRotateY = useTransform(isHovered, [-100, 100], [-10, 10]);
+    const cardShadow = useTransform(
+        isHovered,
+        [-100, 100],
+        [
+            "rgba(255, 255, 255, 0.2) 0 0 40px 5px, rgba(255, 255, 255, 1) 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px",
+            "rgba(255, 255, 255, 0.2) 0 0 40px 5px, rgba(255, 255, 255, 1) 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset rgba(255, 255, 255, 0.5) 0 0 0 6px",
+        ]
+    );
 
     const handleMouseEnter = () => {
-        isHovered.set(1);
+        isHovered.set(100);
     };
 
     const handleMouseLeave = () => {
@@ -55,14 +50,6 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     boxShadow: cardShadow,
                 }}
             >
-                <motion.div
-                    className="card-bg absolute inset-0 h-full w-full bg-cover bg-center"
-                    style={{
-                        opacity: cardBgOpacity,
-                        translateX: cardBgTranslateX,
-                        translateY: cardBgTranslateY,
-                    }}
-                ></motion.div>
                 <motion.div className="card-info duration-600 translate-y-40 transform text-white transition-all ease-in">
                     {!showUpdate && (
                         <>
