@@ -5,9 +5,7 @@ import DeleteReview from "../Delete";
 import type { ReviewWithUser } from ".";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
-import Image from "next/image";
 
-// new rect
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
@@ -20,8 +18,12 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         const cardCenterY = window.innerHeight / 2;
         const offsetX = event.pageX - cardCenterX;
         const offsetY = event.pageY - cardCenterY;
-        const rotateXValue = (offsetY / cardCenterY) * 10;
-        const rotateYValue = (offsetX / cardCenterX) * 10;
+        const rotateXValue =
+            offsetY > 0
+                ? (-offsetY / cardCenterY) * 20
+                : (-offsetY / cardCenterY) * 20;
+        const rotateYValue = (offsetX / cardCenterX) * 40;
+
         mouseX.set(offsetX);
         mouseY.set(offsetY);
         rotateX.set(rotateXValue);
@@ -60,7 +62,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     boxShadow: useTransform(
                         shadowBlur,
                         (value) =>
-                            `rgba(0, 0, 0, 0.3) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
+                            `rgba(0, 0, 0, 0.4) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
                     ),
                 }}
             >
