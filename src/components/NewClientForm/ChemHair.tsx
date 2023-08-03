@@ -30,8 +30,7 @@ export default function ChemHair() {
                 Have you had any chemical treatments done on your hair?
                 <div>
                     <label>
-                        {" "}
-                        Yes{" "}
+                        Yes
                         <input
                             type="checkbox"
                             name="yes"
@@ -39,8 +38,7 @@ export default function ChemHair() {
                             onChange={() => toggle("yes")}
                         ></input>
                         <label>
-                            {" "}
-                            No{" "}
+                            No
                             <input
                                 type="checkbox"
                                 name="no"
@@ -53,7 +51,7 @@ export default function ChemHair() {
                 {formData.yes && (
                     <div>
                         <label>
-                            Keratin Treatment{" "}
+                            Keratin Treatment
                             <input
                                 type="checkbox"
                                 name="keratin"
@@ -62,8 +60,7 @@ export default function ChemHair() {
                             ></input>
                         </label>
                         <label>
-                            {" "}
-                            Permanent waves{" "}
+                            Permanent waves
                             <input
                                 type="checkbox"
                                 name="waves"
@@ -72,8 +69,7 @@ export default function ChemHair() {
                             ></input>
                         </label>
                         <label>
-                            {" "}
-                            Relaxers{" "}
+                            Relaxers
                             <input
                                 type="checkbox"
                                 name="relaxers"
