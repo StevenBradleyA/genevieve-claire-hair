@@ -10,19 +10,17 @@ export default function Reviews() {
     // could display type of booking on each review
     // positive can see type of booking -- adds credibility
     // negative some clients book over text exclusive lose sample size
-    // 
+    //
 
+    // TODO Add total Star Rating
 
-
-    // TODO Add total Star Rating 
-
-    // TODO Give admin god power to delete a review 
+    // TODO Give admin god power to delete a review
     // TODO Add Date to Review  Month/Year
 
-    // TODO First name and Last Name on Review 
+    // TODO First name and Last Name on Review
     // TODO First Letter of name display if no profile pic if that's optional. How does this work with OAUTH????
 
-    // could make cool progress bar for review have a logo fill up all the way at a five star total etc... 
+    // could make cool progress bar for review have a logo fill up all the way at a five star total etc...
 
     const { data: session } = useSession();
 
@@ -31,7 +29,7 @@ export default function Reviews() {
     });
 
     return (
-        <div className="flex flex-col items-center bg-rose-400">
+        <div className="flex flex-col items-center">
             <h1>Reviews</h1>
             {/* <div>
                 {session && session.user && !hasReviewed && <CreateReview />}
