@@ -33,9 +33,9 @@ export default function Reviews() {
     return (
         <div className="flex flex-col items-center bg-rose-400">
             <h1>Reviews</h1>
-            <div>
+            {/* <div>
                 {session && session.user && !hasReviewed && <CreateReview />}
-            </div>
+            </div> */}
 
             <DisplayReviews />
 
