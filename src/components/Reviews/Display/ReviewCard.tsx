@@ -11,11 +11,12 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
-    const isHovered = useMotionValue(0);
-    const cardRotateX = useTransform(isHovered, [-100, 100], [-10, 10]);
-    const cardRotateY = useTransform(isHovered, [-100, 100], [-10, 10]);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const cardRotateX = useTransform(mouseY, [-100, 100], [-10, 10]);
+    const cardRotateY = useTransform(mouseX, [-100, 100], [10, -10]);
     const cardShadow = useTransform(
-        isHovered,
+        mouseX,
         [-100, 100],
         [
             "rgba(255, 255, 255, 0.2) 0 0 40px 5px, rgba(255, 255, 255, 1) 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px",
@@ -23,18 +24,20 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         ]
     );
 
-    const handleMouseEnter = () => {
-        isHovered.set(100);
+    const handleMouseMove = (event: MouseEvent) => {
+        mouseX.set(event.pageX - window.innerWidth / 2);
+        mouseY.set(event.pageY - window.innerHeight / 2);
     };
 
     const handleMouseLeave = () => {
-        isHovered.set(0);
+        mouseX.set(0);
+        mouseY.set(0);
     };
 
     return (
         <motion.div
             className="card-wrap cursor-pointer rounded-md border p-4 transition-all"
-            onMouseEnter={handleMouseEnter}
+            onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{
                 perspective: "800px",
