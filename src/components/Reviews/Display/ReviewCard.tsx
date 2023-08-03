@@ -20,43 +20,50 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         const cardCenterY = window.innerHeight / 2;
         const offsetX = event.pageX - cardCenterX;
         const offsetY = event.pageY - cardCenterY;
-        const rotateXValue = offsetY / cardCenterY * 10;
-        const rotateYValue = offsetX / cardCenterX * 10;
+        const rotateXValue = (offsetY / cardCenterY) * 10;
+        const rotateYValue = (offsetX / cardCenterX) * 10;
         mouseX.set(offsetX);
         mouseY.set(offsetY);
         rotateX.set(rotateXValue);
         rotateY.set(rotateYValue);
-      };
-    
-      const handleMouseLeave = () => {
+    };
+
+    const handleMouseLeave = () => {
         mouseX.set(0);
         mouseY.set(0);
         rotateX.set(0);
         rotateY.set(0);
-      };
-    
-      const rotateX = useMotionValue(0);
-      const rotateY = useMotionValue(0);
-    
+    };
+
+    const rotateX = useMotionValue(0);
+    const rotateY = useMotionValue(0);
+    const shadowX = useTransform(rotateY, [-10, 10], [-25, 25]);
+    const shadowY = useTransform(rotateX, [-10, 10], [-25, 25]);
+    const shadowBlur = useTransform(rotateX, [-10, 10], [10, 30]);
 
     return (
         <motion.div
-      className="card-wrap cursor-pointer rounded-md border p-4 transition-all"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        perspective: "800px",
-        transformStyle: "preserve-3d",
-      }}
-    >
-      <motion.div
-        className="card relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
-        style={{
-          backgroundImage: `url(${reviewBackgroundImage.src})`,
-          rotateX: rotateX,
-          rotateY: rotateY,
-        }}
-      >
+            className="card-wrap cursor-pointer rounded-md border p-4 transition-all"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                perspective: "800px",
+                transformStyle: "preserve-3d",
+            }}
+        >
+            <motion.div
+                className="card relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
+                style={{
+                    backgroundImage: `url(${reviewBackgroundImage.src})`,
+                    rotateX: rotateX,
+                    rotateY: rotateY,
+                    boxShadow: useTransform(
+                        shadowBlur,
+                        (value) =>
+                            `rgba(0, 0, 0, 0.3) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
+                    ),
+                }}
+            >
                 <motion.div className="card-info absolute bottom-4 left-4 text-white">
                     {!showUpdate && (
                         <>
