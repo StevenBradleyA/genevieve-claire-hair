@@ -7,6 +7,7 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
 import Image from "next/image";
 
+// new rect
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
@@ -35,7 +36,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
             }}
         >
             <motion.div
-                className="card relative flex h-80 w-60 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
+                className="card relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
                 style={{
                     backgroundImage: `url(${reviewBackgroundImage.src})`,
                     rotateX: useTransform(mouseY, [-100, 100], [10, -10]),
@@ -44,13 +45,13 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                         mouseX,
                         [-100, 100],
                         [
-                            "rgba(255, 255, 255, 0.2) 0 0 40px 5px, rgba(255, 255, 255, 1) 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px",
-                            "rgba(255, 255, 255, 0.2) 0 0 40px 5px, rgba(255, 255, 255, 1) 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset rgba(255, 255, 255, 0.5) 0 0 0 6px",
+                            "rgba(0, 0, 0, 0.2) 0px 20px 40px -10px",
+                            "rgba(0, 0, 0, 0.5) 0px 30px 60px -20px",
                         ]
                     ),
                 }}
             >
-                <motion.div className="card-info duration-600 translate-y-40 transform text-white transition-all ease-in">
+                <motion.div className="card-info absolute bottom-4 left-4 text-white">
                     {!showUpdate && (
                         <>
                             <div>@{review.user.name}</div>
