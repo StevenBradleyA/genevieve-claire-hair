@@ -20,6 +20,8 @@ export default function NavBar() {
     //         void router.push("/");
     // }, [status, session, router]);
 
+    // TODO make admin  admin only
+
     return (
         <nav
             className="sticky top-0 z-10 mb-10 flex items-center justify-between 
@@ -81,6 +83,19 @@ export default function NavBar() {
                                 className="diagonal-image-small h-28 w-10 object-cover"
                             />
                             <span className="relative z-10">Reviews</span>
+                        </div>
+                    </Link>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                </li>
+                <li className="group relative mr-4">
+                    <Link href="/admin" aria-label="Feature">
+                        <div className="diagonal-image-container">
+                            <Image
+                                alt="holo column graphic"
+                                src={holoColumn}
+                                className="diagonal-image-small h-28 w-10 object-cover"
+                            />
+                            <span className="relative z-10">Admin</span>
                         </div>
                     </Link>
                     <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>

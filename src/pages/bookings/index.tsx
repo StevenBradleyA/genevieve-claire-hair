@@ -3,14 +3,10 @@ import CreateBooking from "../../components/Bookings/Create";
 import DisplayBookings from "../../components/Bookings/Display";
 import { useSession } from "next-auth/react";
 
+import type { Matcher } from "react-day-picker";
+
 export interface CalendarOptions {
-    disabled: (
-        | Date
-        | {
-              from: Date;
-              to: Date;
-          }
-    )[];
+    disabled: Matcher[];
     fromYear: number;
     fromMonth: Date;
     modifiers: {
@@ -36,7 +32,11 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
         today.getDate() - 1
     );
 
-    const disabled = [...booked, { from: startOfMonth, to: yesterday }];
+    const disabled = [
+        ...booked,
+        { from: startOfMonth, to: yesterday },
+        { dayOfWeek: [0, 6] },
+    ];
 
     const options = {
         disabled,
@@ -61,15 +61,15 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
 
 export default function Booking() {
     const { data: session } = useSession();
+    let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
 
-    let { data: booked } = api.booking.getAllBookedDates.useQuery();
-    if (!booked) booked = [];
+    if (!pfBangs) pfBangs = [];
 
     return (
         <>
             {session && (
                 <>
-                    <CreateBooking {...createCalendarOptions(booked)} />
+                    <CreateBooking {...createCalendarOptions(pfBangs)} />
                     <DisplayBookings session={session} />
                 </>
             )}

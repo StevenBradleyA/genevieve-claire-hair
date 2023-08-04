@@ -95,7 +95,7 @@ export default function CreateImage() {
 
     return (
         <form
-            onSubmit={handleFormSubmit}
+            onSubmit={void handleFormSubmit}
             encType="multipart/form-data"
             className="create-listing-form-container"
         >
