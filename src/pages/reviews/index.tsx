@@ -12,7 +12,7 @@ export default function Reviews() {
     // positive can see type of booking -- adds credibility
     // negative some clients book over text exclusive lose sample size
     //
-
+    // TODO make modal for creating and editing a review.
     // TODO Add total Star Rating
 
     // TODO Give admin god power to delete a review
@@ -44,12 +44,14 @@ export default function Reviews() {
         "ya know, this actually works",
         "when you're qualified to review",
     ];
-    const [buttonText, setButtonText] = useState(buttonScript[0]);
+    const [buttonText, setButtonText] = useState<string | undefined>(buttonScript[0]);
 
     const handleButtonClick = () => {
-        const nextPosition =
-            (buttonScript.indexOf(buttonText) + 1) % buttonScript.length;
-        setButtonText(buttonScript[nextPosition]);
+        if (buttonText) {
+            const nextPosition =
+                (buttonScript.indexOf(buttonText) + 1) % buttonScript.length;
+            setButtonText(buttonScript[nextPosition]);
+        }
     };
 
     return (
@@ -59,12 +61,18 @@ export default function Reviews() {
                     Reviews
                 </h1>
                 <div className="flex w-[400px] justify-center">
-                    <button
-                        className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-purple-300 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105"
-                        onClick={handleButtonClick}
-                    >
-                        {buttonText}
-                    </button>
+                    {session && session.user && !hasReviewed ? (
+                        <button className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105">
+                            Leave me a review
+                        </button>
+                    ) : (
+                        <button
+                            className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105"
+                            onClick={handleButtonClick}
+                        >
+                            {buttonText}
+                        </button>
+                    )}
                 </div>
             </div>
             {/* <div>
