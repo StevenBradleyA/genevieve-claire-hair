@@ -3,6 +3,11 @@ import { env } from "~/env.mjs";
 import Image from "next/image";
 import instagramLogo from "../../../public/insta.png";
 // import { useRouter } from "next/router";
+import blonding from "../../../public/portfolio/blonding.png";
+import vivids from "../../../public/portfolio/vivids.png";
+import colorCorrection from "../../../public/portfolio/color-correction.png";
+import slc from "../../../public/portfolio/slc.png";
+
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -130,44 +135,48 @@ export default function Portfolio() {
                         animate="visible"
                         custom={0}
                         variants={contentStaggerVariants}
-                        className="mb-40"
+                        className="mb-10 flex flex-col items-center"
                     >
-                        <h1 className="text-6xl text-white ">Blonding</h1>
-                        <h3>this will be a custom graphic </h3>
+                        <h1 className="mb-5 text-8xl text-white font-grand-hotel">Blonding</h1>
+                        <Image
+                            src={blonding}
+                            alt="blonding"
+                            className=" w-auto"
+                        />
                     </motion.div>
                     <motion.div
                         initial="hidden"
                         animate="visible"
                         custom={1}
                         variants={contentStaggerVariants}
-                        className="mb-40"
+                        className="mb-10 flex flex-col items-center"
                     >
-                        <h1 className="text-6xl text-white">Vivids</h1>
-                        <h3>this will be a custom graphic </h3>
+                        <h1 className="mb-5 text-8xl text-white font-grand-hotel">Vivids</h1>
+                        <Image src={vivids} alt="blonding" />
                     </motion.div>
                     <motion.div
                         initial="hidden"
                         animate="visible"
                         custom={2}
                         variants={contentStaggerVariants}
-                        className="mb-40"
+                        className="mb-10 flex flex-col items-center "
                     >
-                        <h1 className="text-6xl text-white">
+                        <h1 className="mb-5 text-8xl text-white font-grand-hotel">
                             Color Correction
                         </h1>
-                        <h3>this will be a custom graphic </h3>
+                        <Image src={colorCorrection} alt="blonding" />
                     </motion.div>
                     <motion.div
                         initial="hidden"
                         animate="visible"
                         custom={3}
                         variants={contentStaggerVariants}
-                        className="mb-40"
+                        className="mb-10 flex flex-col items-center"
                     >
-                        <h1 className="text-6xl text-white">
+                        <h1 className="mb-5 text-8xl text-white font-grand-hotel">
                             Short Length Cut
                         </h1>
-                        <h3>this will be a custom graphic </h3>
+                        <Image src={slc} alt="blonding" />
                     </motion.div>
                 </AnimatePresence>
             </div>

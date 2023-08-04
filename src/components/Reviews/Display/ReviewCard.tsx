@@ -6,7 +6,7 @@ import type { ReviewWithUser } from ".";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import type { MotionValue } from "framer-motion";
 
-import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
+import reviewBackgroundImage from "../../../../public/glass-1.png";
 
 // TODO refactor update review to a modal
 // TODO change background to glass morphism to match pricing page and update review color
@@ -77,15 +77,16 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                 }}
             >
                 <motion.div
-                    className="card relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
+                    className="relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
                     style={{
-                        backgroundImage: `url(${reviewBackgroundImage.src})`,
+                        // backgroundImage: `url(${reviewBackgroundImage.src})`,
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
                         rotateX: rotateX,
                         rotateY: rotateY,
                         boxShadow: useTransform(
                             shadowBlur,
                             (value) =>
-                                `rgba(0, 0, 0, 0.4) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
+                                `rgba(0, 0, 0, 0.1) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
                         ),
                     }}
                 >
@@ -117,7 +118,6 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     </motion.div>
                 </motion.div>
             </motion.div>
-
             {session && session.user.id === review.userId && (
                 <div className="flex justify-center">
                     {!showDelete && (
