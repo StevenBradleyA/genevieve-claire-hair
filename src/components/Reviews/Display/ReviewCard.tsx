@@ -45,7 +45,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
             animate(rotateY, 0, { duration: 0.3 });
         }, 500);
     };
-    
+
     const rotateX: MotionValue<number> = useMotionValue(0);
     const rotateY: MotionValue<number> = useMotionValue(0);
     const shadowX: MotionValue<number> = useTransform(
@@ -68,7 +68,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         <motion.div
             className="card-wrap cursor-pointer rounded-md border p-4 transition-all"
             onMouseMove={handleMouseMove}
-            onMouseLeave= {handleMouseLeave}
+            onMouseLeave={handleMouseLeave}
             style={{
                 perspective: "800px",
                 transformStyle: "preserve-3d",
@@ -87,18 +87,30 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     ),
                 }}
             >
-                <motion.div className="absolute bottom-4 left-4 text-white">
+                <motion.div className="w-96 px-5 text-white flex flex-col gap-2">
                     {!showUpdate && (
                         <>
-                            <div>@{review.user.name}</div>
-                            <div>{review.text}</div>
-                            <div className="flex gap-1">
-                                {Array(review.starRating).fill("⭐️")}
+                            <div className="flex gap-5">
+                                <div className=" flex h-14 w-14 items-center justify-center rounded-full bg-lightPurple text-4xl">
+                                    {review.user.name? review.user.name[0]: null}
+                                </div>
+                                <div>
+                                    <div className="relative text-2xl font-semibold">
+                                        {review.user.name}
+                                    </div>
+                                    <div className="flex gap-1">
+                                        {Array(review.starRating).fill("⭐️")}
+                                    </div>
+                                </div>
                             </div>
+                            <p className="h-28 flex-wrap break-words  text-white">
+                                {review.text}
+                                {` pogs i hada great time geni is the best ever woowowowwolaskdjfl;askjdfowwowowowowolskdjfl;askjdfl;aksjdflkjsdfkjasldfkj`}
+                            </p>
                         </>
                     )}
 
-                    {session && session.user.id === review.userId && (
+                    {/* {session && session.user.id === review.userId && (
                         <>
                             {!showDelete && (
                                 <UpdateReview
@@ -118,7 +130,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                 />
                             )}
                         </>
-                    )}
+                    )} */}
                 </motion.div>
             </motion.div>
         </motion.div>
