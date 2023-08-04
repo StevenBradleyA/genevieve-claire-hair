@@ -2,10 +2,11 @@ import Image from "next/image";
 import firstTime from "@public/first-time.png";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
+import FormController from "~/components/FormController";
 
 export default function FirstTimeClient() {
     const router = useRouter();
-    const { mutate } = api.client.updateNewClient.useMutation({
+    const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: () => router.push("/"),
     });
 
@@ -18,7 +19,7 @@ export default function FirstTimeClient() {
                 alt="First time?"
             />
 
-            <button onClick={() => mutate()}>Not anymore 😎</button>
+            <FormController />
         </div>
     );
 }
