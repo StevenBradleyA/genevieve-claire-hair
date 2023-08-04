@@ -13,10 +13,10 @@ export default function DisplayReviews() {
     if (!reviews) return <div>Oops</div>;
 
     return (
-        <>
+        <div className="">
             {reviews.map((review: ReviewWithUser, i: number) => {
                 return <ReviewCard key={i} review={review} />;
             })}
-        </>
+        </div>
     );
 }

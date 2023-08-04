@@ -8,9 +8,8 @@ import type { MotionValue } from "framer-motion";
 
 import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
 
-// attempt to delay
 // TODO refactor update review to a modal
-//
+// TODO change background to glass morphism to match pricing page and update review color
 
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
