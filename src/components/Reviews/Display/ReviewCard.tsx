@@ -9,6 +9,8 @@ import type { MotionValue } from "framer-motion";
 import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
 
 // attempt to delay
+// TODO refactor update review to a modal
+//
 
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
@@ -65,74 +67,80 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     );
 
     return (
-        <motion.div
-            className="card-wrap cursor-pointer rounded-md border p-4 transition-all"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-                perspective: "800px",
-                transformStyle: "preserve-3d",
-            }}
-        >
+        <div className="flex flex-col">
             <motion.div
-                className="card relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
+                className="card-wrap cursor-pointer rounded-md border p-4 transition-all"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
                 style={{
-                    backgroundImage: `url(${reviewBackgroundImage.src})`,
-                    rotateX: rotateX,
-                    rotateY: rotateY,
-                    boxShadow: useTransform(
-                        shadowBlur,
-                        (value) =>
-                            `rgba(0, 0, 0, 0.4) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
-                    ),
+                    perspective: "800px",
+                    transformStyle: "preserve-3d",
                 }}
             >
-                <motion.div className="w-96 px-5 text-white flex flex-col gap-2">
-                    {!showUpdate && (
-                        <>
-                            <div className="flex gap-5">
-                                <div className=" flex h-14 w-14 items-center justify-center rounded-full bg-lightPurple text-4xl">
-                                    {review.user.name? review.user.name[0]: null}
-                                </div>
-                                <div>
-                                    <div className="relative text-2xl font-semibold">
-                                        {review.user.name}
+                <motion.div
+                    className="card relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
+                    style={{
+                        backgroundImage: `url(${reviewBackgroundImage.src})`,
+                        rotateX: rotateX,
+                        rotateY: rotateY,
+                        boxShadow: useTransform(
+                            shadowBlur,
+                            (value) =>
+                                `rgba(0, 0, 0, 0.4) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
+                        ),
+                    }}
+                >
+                    <motion.div className="flex w-96 flex-col gap-2 px-5 text-white">
+                        {!showUpdate && (
+                            <>
+                                <div className="flex gap-5">
+                                    <div className=" flex h-14 w-14 items-center justify-center rounded-full bg-lightPurple text-4xl">
+                                        {review.user.name
+                                            ? review.user.name[0]
+                                            : null}
                                     </div>
-                                    <div className="flex gap-1">
-                                        {Array(review.starRating).fill("⭐️")}
+                                    <div>
+                                        <div className="relative text-2xl font-semibold">
+                                            {review.user.name}
+                                        </div>
+                                        <div className="flex gap-1">
+                                            {Array(review.starRating).fill(
+                                                "⭐️"
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <p className="h-28 flex-wrap break-words  text-white">
-                                {review.text}
-                                {` pogs i hada great time geni is the best ever woowowowwolaskdjfl;askjdfowwowowowowolskdjfl;askjdfl;aksjdflkjsdfkjasldfkj`}
-                            </p>
-                        </>
-                    )}
-
-                    {/* {session && session.user.id === review.userId && (
-                        <>
-                            {!showDelete && (
-                                <UpdateReview
-                                    review={review}
-                                    session={session}
-                                    showUpdate={showUpdate}
-                                    setShowUpdate={setShowUpdate}
-                                />
-                            )}
-
-                            {!showUpdate && (
-                                <DeleteReview
-                                    id={review.id}
-                                    session={session}
-                                    showDelete={showDelete}
-                                    setShowDelete={setShowDelete}
-                                />
-                            )}
-                        </>
-                    )} */}
+                                <p className="h-28 flex-wrap break-words  text-white">
+                                    {review.text}
+                                    {` pogs i hada great time geni is the best ever woowowowwolaskdjfl;askjdfowwowowowowolskdjfl;askjdfl;aksjdflkjsdfkjasldfkj`}
+                                </p>
+                            </>
+                        )}
+                    </motion.div>
                 </motion.div>
             </motion.div>
-        </motion.div>
+
+            {session && session.user.id === review.userId && (
+                <div className="flex justify-center">
+                    {!showDelete && (
+                        <UpdateReview
+                            review={review}
+                            session={session}
+                            showUpdate={showUpdate}
+                            setShowUpdate={setShowUpdate}
+                        />
+                    )}
+
+                    {!showUpdate && (
+                        <DeleteReview
+                            id={review.id}
+                            session={session}
+                            showDelete={showDelete}
+                            setShowDelete={setShowDelete}
+                        />
+                    )}
+                </div>
+            )}
+        </div>
     );
 }
