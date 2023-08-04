@@ -100,7 +100,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                             : null}
                                     </div>
                                     <div>
-                                        <div className="relative text-2xl font-semibold">
+                                        <div className="text-2xl font-semibold">
                                             {review.user.name}
                                         </div>
                                         <div className="flex gap-1">
@@ -110,9 +110,8 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                         </div>
                                     </div>
                                 </div>
-                                <p className="h-28 flex-wrap break-words  text-white">
+                                <p className="h-32 flex-wrap overflow-y-auto  break-words text-white">
                                     {review.text}
-                                    {` pogs i hada great time geni is the best ever woowowowwolaskdjfl;askjdfowwowowowowolskdjfl;askjdfl;aksjdflkjsdfkjasldfkj`}
                                 </p>
                             </>
                         )}
