@@ -104,18 +104,6 @@
 
 /* -------------       Reviews       ------------- */
 
-.blur-bg {
-    position: absolute;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.1)
-    );
-    width: 250px;
-    height: 250px;
-    backdrop-filter: blur(40px);
-    border-radius: 40px;
-}
-
 .card-wrap {
     margin: 10px;
     transform: perspective(800px);
