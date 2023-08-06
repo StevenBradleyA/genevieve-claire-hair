@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const defaultState: { [name: string]: boolean } = {
     haircuts: false,
@@ -21,18 +22,19 @@ export default function ServiceOptions() {
 
     return (
         <form>
-            <div>
+            <div className="font-quattrocento text-3xl text-white ">
                 Which services do you see yourself using?
                 <label>(Select all that you might want)</label>
                 <div>
-                    <label>
+                    <label className=" cursor-pointer">
                         Haircuts
-                        <input
-                            type="checkbox"
-                            name="haircuts"
-                            checked={formData.haircuts}
-                            onChange={(e) => toggle(e.target.name)}
-                        ></input>
+                            <input
+                                type="checkbox"
+                                name="haircuts"
+                                checked={formData.haircuts}
+                                onChange={(e) => toggle(e.target.name)}
+                                className="custom-checkbox"
+                            />
                     </label>
                     <label>
                         Color

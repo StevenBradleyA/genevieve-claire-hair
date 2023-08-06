@@ -111,3 +111,42 @@
     cursor: pointer;
     border-style: none;
 }
+
+/* -------------       first-time-client       ------------- */
+
+
+.custom-checkbox {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .custom-checkbox::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0; /* Start as invisible */
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Checked state */
+  .custom-checkbox:checked::before {
+    opacity: 1; /* Show the checkmark when checked */
+  }
+  
+  /* Optional: Glass effect on checked state */
+  .custom-checkbox:checked {
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
