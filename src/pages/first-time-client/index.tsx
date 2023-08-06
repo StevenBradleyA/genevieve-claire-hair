@@ -19,7 +19,7 @@ export default function FirstTimeClient() {
                 alt="First time?"
             />
 
-            <FormController />
+            <FormController name="NewClient" />
         </div>
     );
 }

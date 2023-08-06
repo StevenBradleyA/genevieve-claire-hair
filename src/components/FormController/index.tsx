@@ -1,24 +1,32 @@
 import { useState } from "react";
-import ServiceOptions from "../NewClientForm/ServiceOptions";
-import ColorHistory from "../NewClientForm/ColorHistory";
-import ChemHair from "../NewClientForm/ChemHair";
-import CurrentColor from "../NewClientForm/CurrentColor";
-import TimeSlots from "../NewClientForm/TimeSlots";
-import ExtraDetails from "../NewClientForm/ExtraDetails";
+import {
+    ServiceOptions,
+    ColorHistory,
+    ChemHair,
+    CurrentColor,
+    TimeSlots,
+    ExtraDetails,
+} from "../NewClientForm";
 
-const NewClient = [
-    <ServiceOptions key={0} />,
-    <ColorHistory key={1} />,
-    <ChemHair key={2} />,
-    <CurrentColor key={3} />,
-    <TimeSlots key={4} />,
-    <ExtraDetails key={5} />,
-];
+type FormType = "NewClient" | "NewBooking";
 
-export default function FormController() {
+const forms: { [key in FormType]: JSX.Element[] } = {
+    NewClient: [
+        <ServiceOptions key={0} />,
+        <ColorHistory key={1} />,
+        <ChemHair key={2} />,
+        <CurrentColor key={3} />,
+        <TimeSlots key={4} />,
+        <ExtraDetails key={5} />,
+    ],
+
+    NewBooking: [<ServiceOptions key={0} />],
+};
+
+export default function FormController({ name }: { name: FormType }) {
     const [page, setPage] = useState(0);
 
-    const form = NewClient;
+    const form = forms[name];
 
     const changePages = (num: number) => {
         const newNum = page + num;

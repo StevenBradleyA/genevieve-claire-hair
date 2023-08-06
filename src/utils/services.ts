@@ -138,7 +138,6 @@ const allServices: { [key: string]: any } = {
             price: 70,
         },
     },
-
     quiet: {
         name: "Quiet Appointment",
         select: false,

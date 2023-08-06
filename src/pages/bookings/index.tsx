@@ -2,7 +2,7 @@ import { api } from "~/utils/api";
 import CreateBooking from "../../components/Bookings/Create";
 import DisplayBookings from "../../components/Bookings/Display";
 import { useSession } from "next-auth/react";
-
+import FormController from "~/components/FormController";
 import type { Matcher } from "react-day-picker";
 
 export interface CalendarOptions {
@@ -69,6 +69,7 @@ export default function Booking() {
         <>
             {session && (
                 <>
+                    <FormController name="NewBooking" />
                     <CreateBooking {...createCalendarOptions(pfBangs)} />
                     <DisplayBookings session={session} />
                 </>
