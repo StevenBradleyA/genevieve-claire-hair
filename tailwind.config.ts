@@ -11,7 +11,8 @@ export default {
                 peach: "#FFDAB9",
                 toastedMarshmallow: "#EAE1D6",
                 chillPurple: "#E3D4F4",
-                lightPurple: "#E5DFFF"
+                lightPurple: "#E5DFFF",
+                glass: "rgba(255, 255, 255, 0.2)",
             },
             fontFamily: {
                 "dm-serif-display": ['"DM Serif Display"', "serif"],

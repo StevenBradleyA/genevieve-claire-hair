@@ -26,7 +26,7 @@ export default function ServiceOptions() {
                 <div>Which services do you see yourself using? </div>
                 <div className="text-2xl">(Select all that you might want)</div>
             </div>
-            <div className="flex gap-10">
+            <div className="flex gap-10 mt-5">
                 <label className="flex cursor-pointer items-center justify-center gap-5">
                     Haircuts
                     <input
