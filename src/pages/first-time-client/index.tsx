@@ -11,13 +11,8 @@ export default function FirstTimeClient() {
     });
 
     return (
-        <div className="flex flex-col justify-center gap-5">
-            <Image
-                src={firstTime.src}
-                width={firstTime.width}
-                height={firstTime.height}
-                alt="First time?"
-            />
+        <div className="flex flex-col justify-center gap-5 items-center">
+           <h1 className="text-white font-grand-hotel text-8xl"> First Time Client</h1>
 
             <FormController />
         </div>

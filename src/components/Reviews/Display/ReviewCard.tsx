@@ -6,7 +6,7 @@ import type { ReviewWithUser } from ".";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import type { MotionValue } from "framer-motion";
 
-import reviewBackgroundImage from "../../../../public/Holographic/holo-swirl.png";
+import reviewBackgroundImage from "../../../../public/glass-1.png";
 
 // TODO refactor update review to a modal
 // TODO change background to glass morphism to match pricing page and update review color
@@ -77,15 +77,16 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                 }}
             >
                 <motion.div
-                    className="card relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
+                    className="relative flex h-60 w-96 flex-col items-center justify-end rounded-md bg-cover bg-center p-6 shadow-md"
                     style={{
-                        backgroundImage: `url(${reviewBackgroundImage.src})`,
+                        // backgroundImage: `url(${reviewBackgroundImage.src})`,
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
                         rotateX: rotateX,
                         rotateY: rotateY,
                         boxShadow: useTransform(
                             shadowBlur,
                             (value) =>
-                                `rgba(0, 0, 0, 0.4) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
+                                `rgba(0, 0, 0, 0.1) ${shadowX.get()}px ${shadowY.get()}px ${value}px`
                         ),
                     }}
                 >
@@ -102,22 +103,24 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                         <div className="text-2xl font-semibold">
                                             {review.user.name}
                                         </div>
-                                        <div className="flex gap-1">
+                                        <div className="text-image flex gap-1">
                                             {Array(review.starRating).fill(
                                                 "⭐️"
                                             )}
                                         </div>
                                     </div>
                                 </div>
-                                <p className="h-32 flex-wrap overflow-y-auto  break-words text-white">
-                                    {review.text}
-                                </p>
+                                <div className="h-32 overflow-y-auto break-words">
+                                    <p className="bg-gradient-to-r from-violet-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">
+                                        {review.text}{" "}
+                                        {`holy ; asfjkl; djkl; l; as even longer aslkdfj al;ksdfj lsjkal; djkl ;fjkl; jkl; asdjk;l fjkl; ljk asdlj kfl jkasdjkl fjkl asdjkl; asdfjkl adfjkl sajkl sdfjkl dasl jk a fjkl asdf jkl adfs jkl dasf jkl dfs jkl dsf jkl sdfajkl dfas jkl asdf jkl dfas jkl asdf jkl asdf jkl; sadf jkl asdf jkl sadf jkl; asdf jkl adjkl adfjkl asdf jl kasdf jkl a dfsjkl a dfslajl sdfjkal jkl; dfjkl asdf ljkl sdf jkl  sdfjkl asdf jkl asdfjkldfjkl;s  jkl; f ajkl dsafjkl  asdfjkl  fdsjkl; asdf jkl asdf jkl asdf jkl asdf jkl dfas jkl; asdf jkl asdf jkl df asjkl asdf jkl df asjkl asdf jkl adf sjkl adfs jl asdf jkl adfs jkl df jkl dfs ajkl dfas jkl asdf jlk df sjkl sdfa jkl asdf jkl asdf jkl df jkl sdf ajkl asdf jkl; asdf ;kasdj f;lkjas;ldkf j;laksjd fl;kasjdkl; fjkl; asdjkl; fkl jsfadjkl; l;dfsajkldfjkl; sajkl; asdfjkl; ;jl f; jasfdjkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jl;k jkl; jkl; jkl; jkl; jkl; lj k;lj; ljk; jkl ljk jkl jkl; jkl jkl jkl jkl jkl jkl jkl  jkl jkljkl jkl; jkl jkl ;jkl; jkl; asdlflljkajkls; djkl;f jkl; asdjkl; fjkl; asdlfk;j asl;kdfjlkasjdfl;kjsadlkfjlsdjfljweoiruwoeiru oweiru weoiru oweiur oiweu roweiu roiwue roiwueoriuw eoiruwoeiru woeiru weoiru df;asdfl;j jl; that was soooo werid wtd skadfl;jkfasld; j;asfdjl; ksfjkl; dajl; asdfjl;jfkjkl; big poggies woggy als;kdjf al;skdjf lkasjdf ;kljas dfl;kjas dl;fkj asl;dkfj l; jsda asdfjkl; fjkl; asdjkl; asdfjl; kasdfj ;jf`}
+                                    </p>
+                                </div>
                             </>
                         )}
                     </motion.div>
                 </motion.div>
             </motion.div>
-
             {session && session.user.id === review.userId && (
                 <div className="flex justify-center">
                     {!showDelete && (

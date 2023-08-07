@@ -62,26 +62,26 @@
 }
 
 .instagram-header {
-    background-image: url("../../public/Holographic/holo-rainbow.png");
+    background-image: url("../../public/glass-1.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    opacity: 0.5;
+}
+
+.blurInsta {
+    position: absolute;
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.1)
+    );
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(40px);
+    border-radius: 40px;
 }
 
 /* -------------       Pricing       ------------- */
-
-/* .triangle-background {
-    position: absolute;
-    top: 0;
-    left: 10rem;
-    width: 110%;
-    height: 200%;
-    background-color: #dbbae1;
-    transform-origin: top left;
-    transform: rotate(30deg) translateY(-100%);
-    opacity: 0.6;
-    overflow: hidden;
-} */
 
 .blurblur {
     position: absolute;
@@ -95,14 +95,6 @@
     border-radius: 40px;
 }
 
-/* .text-gradient {
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  } */
-
-/* className=" mb-1 text-gradient bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" */
-
 .text-image {
     background-image: url("../../public/Holographic/holo-crinkle.png");
     background-clip: text;
@@ -112,19 +104,6 @@
 
 /* -------------       Reviews       ------------- */
 
-.blur-bg {
-    position: absolute;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.1)
-    );
-    width: 250px;
-    height: 250px;
-    backdrop-filter: blur(40px);
-    border-radius: 40px;
-}
-
-
 .card-wrap {
     margin: 10px;
     transform: perspective(800px);
@@ -132,3 +111,41 @@
     cursor: pointer;
     border-style: none;
 }
+
+/* -------------       first-time-client       ------------- */
+
+  .custom-checkbox {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: 2px solid #f0f0f0;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .custom-checkbox::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #baa5ef;
+    opacity: 0;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+  
+  .custom-checkbox:checked::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  
+  .custom-checkbox:checked {
+    background-color: #d4e9fc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
