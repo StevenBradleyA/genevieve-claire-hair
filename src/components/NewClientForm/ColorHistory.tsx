@@ -34,7 +34,7 @@ export default function ColorHistory() {
 
     return (
         <form className="flex flex-col items-center  font-quattrocento text-3xl text-white">
-            <div className="flex justify-center">
+            <div className="flex justify-center text-4xl">
                 Have you had color before?
             </div>
             <div>

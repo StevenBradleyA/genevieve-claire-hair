@@ -26,7 +26,7 @@ export default function ChemHair() {
 
     return (
         <form className="flex flex-col items-center justify-center font-quattrocento text-3xl text-white">
-            <div>Have you had any chemical treatments done on your hair?</div>
+            <div className="text-4xl">Have you had any chemical treatments done on your hair?</div>
 
             <div className=" mb-5 mt-5 flex justify-center gap-10">
                 <label className="flex cursor-pointer items-center justify-center gap-5">

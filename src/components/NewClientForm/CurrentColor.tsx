@@ -38,66 +38,75 @@ export default function CurrentColor() {
     };
 
     return (
-        <form>
-            <div>
+        <form className="flex flex-col items-center  font-quattrocento text-3xl text-white">
+            <div className="mb-5 flex justify-center text-4xl">
                 What is your current hair color?
-                <label>
+            </div>
+            <div className="flex flex-col text-3xl">
+                <label className="flex cursor-pointer items-center gap-5">
                     Black/Dark Brown
                     <input
                         type="checkbox"
                         name="blackBrown"
                         checked={formData.blackBrown}
                         onChange={() => singleToggle("blackBrown")}
+                        className="custom-checkbox"
                     ></input>
                 </label>
-                <label>
+                <label className="flex cursor-pointer items-center gap-5">
                     Brown
                     <input
                         type="checkbox"
                         name="brown"
                         checked={formData.brown}
                         onChange={() => singleToggle("brown")}
+                        className="custom-checkbox"
                     ></input>
                 </label>
-                <label>
+                <label className="flex cursor-pointer items-center gap-5">
                     Light Brown/Dark Blonde
                     <input
                         type="checkbox"
                         name="brownBlonde"
                         checked={formData.brownBlonde}
                         onChange={() => singleToggle("brownBlonde")}
+                        className="custom-checkbox"
                     ></input>
                 </label>
-                <label>
+                <label className="flex cursor-pointer items-center gap-5">
                     Blonde
                     <input
                         type="checkbox"
                         name="blonde"
                         checked={formData.blonde}
                         onChange={() => singleToggle("blonde")}
+                        className="custom-checkbox"
                     ></input>
                 </label>
-                <label>
+                <label className="flex cursor-pointer items-center gap-5">
                     Gray/White
                     <input
                         type="checkbox"
                         name="white"
                         checked={formData.white}
                         onChange={() => singleToggle("white")}
+                        className="custom-checkbox"
                     ></input>
                 </label>
-                <label>
+                <label className="flex cursor-pointer items-center gap-5">
                     Other (Please Specify)
                     <input
                         type="checkbox"
                         name="other"
                         checked={formData.other}
                         onChange={() => singleToggle("other")}
+                        className="custom-checkbox"
                     ></input>
                     <input
                         name="input"
                         value={formData.input}
                         onChange={(e) => setInput(e.target.value)}
+                        className=" rounded-md p-2 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                     ></input>
                 </label>
             </div>

@@ -22,11 +22,13 @@ export default function ServiceOptions() {
 
     return (
         <form className="flex flex-col items-center justify-center font-quattrocento text-3xl text-white">
-            <div className="flex gap-5">
-                <div>Which services do you see yourself using? </div>
+            <div className="flex items-center gap-5">
+                <div className="text-4xl">
+                    Which services do you see yourself using?{" "}
+                </div>
                 <div className="text-2xl">(Select all that you might want)</div>
             </div>
-            <div className="flex gap-10 mt-5">
+            <div className="mt-5 flex gap-10">
                 <label className="flex cursor-pointer items-center justify-center gap-5">
                     Haircuts
                     <input
