@@ -68,13 +68,13 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                         }}
                         onClick={handleModalClick}
                     >
-                        {children}
                         <button
-                            className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                            onClick={handleClose}
-                        >
-                            Close
-                        </button>
+                      className="absolute top-2 right-4 text-lg text-gray-600 hover:text-purple-500 transform transition-transform duration-300 ease-in-out hover:scale-110 hover:rotate-45"
+                    onClick={handleClose}
+                    >
+                    &times; 
+                    </button>
+                        {children}
                     </motion.div>
                 </motion.div>
             )}

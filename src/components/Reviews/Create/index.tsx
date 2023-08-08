@@ -106,7 +106,7 @@ export default function CreateReview() {
             <button
                 disabled={starRating && text ? false : true}
                 className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
-                    starRating && text ? "text-purple-300" : "text-blue-300"
+                    starRating && text ? "text-purple-300" : "text-slate-300"
                 }`}
             >
                 Submit Review
