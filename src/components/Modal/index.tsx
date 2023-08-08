@@ -33,17 +33,19 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
     if (isOpen) {
         return (
             <motion.dialog
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : 50 }}
+                className="fixed inset-0 z-50 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
             >
-                <motion.div
-                    className="overlay"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: isOpen ? 1 : 0 }}
-                ></motion.div>
-                <div>
+                <div className="rounded bg-white p-4 shadow-lg">
                     {children}
-                    <button onClick={handleClose}>Close</button>
+                    <button
+                        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                        onClick={handleClose}
+                    >
+                        Close
+                    </button>
                 </div>
             </motion.dialog>
         );
@@ -53,3 +55,20 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
 };
 
 export default ModalDialog;
+
+// return (
+//     <motion.dialog
+//         initial={{ opacity: 0, y: 50 }}
+//         animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : 50 }}
+//     >
+//         <motion.div
+//             className="overlay"
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: isOpen ? 1 : 0 }}
+//         ></motion.div>
+//         <div>
+//             {children}
+//             <button onClick={handleClose}>Close</button>
+//         </div>
+//     </motion.dialog>
+// );

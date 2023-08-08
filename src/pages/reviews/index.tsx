@@ -5,6 +5,7 @@ import DisplayImages from "../../components/Images/Display";
 import CreateReview from "~/components/Reviews/Create";
 import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
+import ModalDialog from "~/components/Modal";
 
 export default function Reviews() {
     // TODO Decide if we want create review to be linked to a booking
@@ -44,7 +45,9 @@ export default function Reviews() {
         "ya know, this actually works",
         "when you're qualified to review",
     ];
-    const [buttonText, setButtonText] = useState<string | undefined>(buttonScript[0]);
+    const [buttonText, setButtonText] = useState<string | undefined>(
+        buttonScript[0]
+    );
 
     const handleButtonClick = () => {
         if (buttonText) {
@@ -52,6 +55,17 @@ export default function Reviews() {
                 (buttonScript.indexOf(buttonText) + 1) % buttonScript.length;
             setButtonText(buttonScript[nextPosition]);
         }
+    };
+
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+
+    const openModal = () => {
+        console.log('Opening modal');
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -75,9 +89,13 @@ export default function Reviews() {
                     )}
                 </div>
             </div>
-            {/* <div>
-                {session && session.user && !hasReviewed && <CreateReview />}
-            </div> */}
+            <div>
+                {/* {session && session.user && !hasReviewed && ( */}
+                <button onClick={openModal}>Open Create Review Modal</button>
+                <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                    <CreateReview />
+                </ModalDialog>
+            </div>
 
             <DisplayReviews />
 

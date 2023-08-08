@@ -112,6 +112,18 @@
     border-style: none;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
 /* -------------       first-time-client       ------------- */
 
   .custom-checkbox {
@@ -149,3 +161,6 @@
     background-color: #d4e9fc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+
+  
