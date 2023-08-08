@@ -57,7 +57,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                     />
                     <motion.div
-                        className="relative rounded bg-white p-4 shadow-lg"
+                        className="relative rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 shadow-lg"
                         initial={{ scale: 0.8, y: -20, opacity: 0 }}
                         animate={{ scale: 1, y: 0, opacity: 1 }}
                         exit={{ scale: 0.8, y: 20, opacity: 0 }}
@@ -83,19 +83,3 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
 };
 
 export default ModalDialog;
-// return (
-//     <motion.dialog
-//         initial={{ opacity: 0, y: 50 }}
-//         animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : 50 }}
-//     >
-//         <motion.div
-//             className="overlay"
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: isOpen ? 1 : 0 }}
-//         ></motion.div>
-//         <div>
-//             {children}
-//             <button onClick={handleClose}>Close</button>
-//         </div>
-//     </motion.dialog>
-// );

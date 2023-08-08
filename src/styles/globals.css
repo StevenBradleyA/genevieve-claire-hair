@@ -121,7 +121,12 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-
+.star-image {
+    background-image: url("../../public/Holographic/holo-rainbow.png");
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
 
 
 /* -------------       first-time-client       ------------- */
