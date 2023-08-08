@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { api } from "~/utils/api";
 import React from "react";
+import CreateImage from "~/components/Images/Create";
 
 interface StarProps {
     rating: number;
@@ -35,6 +36,8 @@ export default function CreateReview() {
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
     const { data: session } = useSession();
+    const [hasSubmittedImages, setHasSubmittedImages] =
+        useState<boolean>(false);
 
     const ctx = api.useContext();
 
@@ -102,7 +105,14 @@ export default function CreateReview() {
                     ))}
                 </div>
             </div>
-
+            <div className="flex justify-center font-grand-hotel text-6xl">
+                Show Off Your Awesome Hair!
+            </div>
+            {!hasSubmittedImages ? (
+                <CreateImage setHasSubmittedImages={setHasSubmittedImages} />
+            ) : (
+                <div>{`You're a star! Now submit that review and shine ⭐️`}</div>
+            )}
             <button
                 disabled={starRating && text ? false : true}
                 className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
