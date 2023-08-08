@@ -7,9 +7,6 @@ interface ModalDialogProps {
     children: React.ReactNode;
 }
 
-// close now working
-// bounce
-
 const ModalDialog: React.FC<ModalDialogProps> = ({
     isOpen,
     onClose,
@@ -21,6 +18,10 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
 
     const handleBackgroundClick = () => {
         handleClose();
+    };
+
+    const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.stopPropagation();
     };
 
     useEffect(() => {
@@ -65,6 +66,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                             damping: 15,
                             stiffness: 250,
                         }}
+                        onClick={handleModalClick}
                     >
                         {children}
                         <button
@@ -81,7 +83,6 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
 };
 
 export default ModalDialog;
-
 // return (
 //     <motion.dialog
 //         initial={{ opacity: 0, y: 50 }}
