@@ -8,6 +8,7 @@ interface ModalDialogProps {
 }
 
 // close now working
+// bounce
 
 const ModalDialog: React.FC<ModalDialogProps> = ({
     isOpen,
@@ -45,6 +46,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
+                    onClick={handleBackgroundClick}
                 >
                     <motion.div
                         className="fixed inset-0 bg-gray-800 bg-opacity-50"
@@ -52,9 +54,18 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        onClick={handleBackgroundClick}
                     />
-                    <div className="relative rounded bg-white p-4 shadow-lg">
+                    <motion.div
+                        className="relative rounded bg-white p-4 shadow-lg"
+                        initial={{ scale: 0.8, y: -20, opacity: 0 }}
+                        animate={{ scale: 1, y: 0, opacity: 1 }}
+                        exit={{ scale: 0.8, y: 20, opacity: 0 }}
+                        transition={{
+                            type: "spring",
+                            damping: 15,
+                            stiffness: 250,
+                        }}
+                    >
                         {children}
                         <button
                             className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
@@ -62,7 +73,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                         >
                             Close
                         </button>
-                    </div>
+                    </motion.div>
                 </motion.div>
             )}
         </AnimatePresence>
