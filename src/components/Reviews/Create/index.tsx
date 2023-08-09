@@ -4,7 +4,7 @@ import { api } from "~/utils/api";
 import React from "react";
 import CreateImage from "~/components/Images/Create";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
-import Image from "next/image"
+import Image from "next/image";
 
 interface StarProps {
     rating: number;
@@ -21,6 +21,18 @@ interface ErrorsObj {
 
 interface CreateImageProps {
     setHasSubmittedImages: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface Image {
+    link: string;
+}
+
+interface ReviewData {
+    text: string;
+    starRating: number;
+    userId: string;
+    bookingId: string;
+    images?: Image[];
 }
 
 const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
@@ -43,11 +55,6 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
 };
 
 export default function CreateReview() {
-    // TODO feeling tired but how can I access the review Id before it is created? Should the image upload be a second part of the modal? they submit the review then add the images? idk
-    // TODO will need to be refactored to where images and review submit at same time so that reviewId can be created first maybe? idk
-    // TODO may want separate image component and limit files to 3
-    // TODO does the backend API have to return the reviewID then I can access it?
-
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -56,8 +63,8 @@ export default function CreateReview() {
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-    const [imageReview, setImageReview] = useState<boolean>(false)
-
+    // const [imageReview, setImageReview] = useState<boolean>(false)
+    // test
     const ctx = api.useContext();
 
     const handleInputErrors = () => {
@@ -90,84 +97,79 @@ export default function CreateReview() {
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-// lets handle submit plain review with no images and handle submit with images
-
-        if (!Object.values(errors).length && !isSubmitting && imageFiles.length > 0) {
-            setIsSubmitting(true);
-            const imagePromises = imageFiles.map((file) => {
-                return new Promise<string>((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onloadend = () => {
-                        if (typeof reader.result === "string") {
-                            const base64Data = reader.result.split(",")[1];
-                            if (base64Data) {
-                                resolve(base64Data);
-                            }
-                        } else {
-                            reject(new Error("Failed to read file"));
-                        }
-                    };
-                    reader.onerror = () => {
-                        reject(new Error("Failed to read file"));
-                    };
-                });
-            });
-
+        console.log("hello, submit");
+        if (!Object.values(errors).length && !isSubmitting) {
             try {
-                const base64DataArray = await Promise.all(imagePromises);
-                const imageUrlArr: string[] = [];
+                const sessionUserId = session?.user?.id;
 
-                for (const base64Data of base64DataArray) {
-                    const buffer = Buffer.from(base64Data, "base64");
-                    const imageUrl = await uploadFileToS3(buffer);
-                    imageUrlArr.push(imageUrl);
+                if (!sessionUserId) {
+                    throw new Error("Session expired");
                 }
-                // create payload without resourceType and resourceId 
-                // we won't send 
-                const payload = {
-                    images: imageUrlArr.map((imageUrl) => ({
-                        link: imageUrl || "",
-                    })),
+
+                const data: ReviewData = {
+                    text,
+                    starRating,
+                    userId: sessionUserId,
+                    bookingId: "123",
                 };
 
-                mutate(payload);
+                setIsSubmitting(true);
+
+                if (imageFiles.length > 0) {
+                    console.log("hello, we have more than one image");
+                    const imagePromises = imageFiles.map((file) => {
+                        return new Promise<string>((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(file);
+                            reader.onloadend = () => {
+                                if (typeof reader.result === "string") {
+                                    const base64Data =
+                                        reader.result.split(",")[1];
+                                    if (base64Data) {
+                                        resolve(base64Data);
+                                    }
+                                } else {
+                                    reject(new Error("Failed to read file"));
+                                }
+                            };
+                            reader.onerror = () => {
+                                reject(new Error("Failed to read file"));
+                            };
+                        });
+                    });
+
+                    const base64DataArray = await Promise.all(imagePromises);
+                    const imageUrlArr: string[] = [];
+
+                    for (const base64Data of base64DataArray) {
+                        const buffer = Buffer.from(base64Data, "base64");
+                        const imageUrl = await uploadFileToS3(buffer);
+                        imageUrlArr.push(imageUrl);
+                    }
+
+                    data.images = imageUrlArr.map((imageUrl) => ({
+                        link: imageUrl || "",
+                    }));
+                }
+                console.log("data", data);
+                setText("");
+                setStarRating(0);
+                setHover(0);
+                mutate(data);
+
                 setImageFiles([]);
                 setHasSubmitted(true);
                 setIsSubmitting(false);
-
-
             } catch (error) {
-                console.error("Upload failed:", error);
+                console.error("Submission failed:", error);
                 setIsSubmitting(false);
             }
-        }
-    };
-
-
-        if (session && session.user && session.user.id) {
-            const data = {
-                text,
-                starRating,
-                userId: session.user.id,
-                images: payload
-            };
-
-            setText("");
-            setStarRating(0);
-            setHover(0);
-
-            console.log(mutate(data));
-        } else {
-            throw new Error("Session expired");
         }
     };
 
     return (
         <form
             className="flex flex-col items-center gap-5 text-white"
-            onSubmit={submit}
             encType="multipart/form-data"
         >
             <div className="font-grand-hotel text-6xl text-white">
@@ -241,10 +243,25 @@ export default function CreateReview() {
             </div>
 
             <button
-                disabled={(hasSubmitted && Object.values(errors).length > 0) ||
-                    isSubmitting && starRating && text ? false : true}
+                onClick={(e) => {
+                    e.preventDefault();
+                    console.log("submit button clicked");
+                    void submit(e);
+                }}
+                disabled={
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    (isSubmitting && starRating && text) ||
+                    (imageFiles.length > 0 &&
+                        hasSubmitted &&
+                        Object.values(errors).length > 0) ||
+                    (!isSubmitting && (!starRating || !text))
+                }
                 className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
-                    starRating && text ? "text-purple-300" : "text-slate-300"
+                    starRating && text
+                        ? isSubmitting
+                            ? "text-slate-300"
+                            : "text-purple-300"
+                        : "text-slate-300"
                 }`}
             >
                 {isSubmitting ? "Uploading..." : "Submit Review"}
