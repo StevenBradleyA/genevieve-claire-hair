@@ -60,9 +60,6 @@ export default function CreateReview({
     closeModal,
     bookingId,
 }: CreateReviewProps) {
-    // TODO integrate booking selection first which booking are you reviewing?
-    // TODO one booking can only have one review association
-    // want to pass the booking as a prop to Create Review
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -266,14 +263,6 @@ export default function CreateReview({
                     console.log("submit button clicked");
                     void submit(e);
                 }}
-                // disabled={
-                //     (hasSubmitted && Object.values(errors).length > 0) ||
-                //     (isSubmitting && starRating && text) ||
-                //     (imageFiles.length > 0 &&
-                //         hasSubmitted &&
-                //         Object.values(errors).length > 0) ||
-                //     (!isSubmitting && (!starRating || !text))
-                // }
                 disabled={
                     (hasSubmitted && Object.values(errors).length > 0) ||
                     isSubmitting ||
