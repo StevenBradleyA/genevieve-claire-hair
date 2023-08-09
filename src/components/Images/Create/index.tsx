@@ -8,11 +8,14 @@ interface ErrorsObj {
     imageExcess?: string;
 }
 interface CreateImageProps {
-    setHasSubmittedImages: React.Dispatch<React.SetStateAction<boolean>>;
+    setHasSubmittedImages: React.Dispatch<React.SetStateAction<boolean>>,
+    resourceType: string,
+    resourceId: string,
 }
 
 export default function CreateImage({
     setHasSubmittedImages,
+    resourceType
 }: CreateImageProps) {
     const { data: session } = useSession();
     const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -27,8 +30,8 @@ export default function CreateImage({
         if (imageFiles.length < 1) {
             errorsObj.image = "Provide at least 1 Photo";
         }
-        if (imageFiles.length > 50) {
-            errorsObj.imageExcess = "Cannot provide more than 50 photos";
+        if (imageFiles.length > 10) {
+            errorsObj.imageExcess = "Cannot provide more than 10 photos";
         }
         setErrors(errorsObj);
     };
@@ -81,7 +84,7 @@ export default function CreateImage({
                 const payload = {
                     images: imageUrlArr.map((imageUrl) => ({
                         link: imageUrl || "",
-                        resourceType: "USER",
+                        resourceType: resourceType,
                         resourceId: session?.user.id ?? "",
                         userId: session?.user.id ?? "",
                     })),

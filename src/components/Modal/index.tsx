@@ -38,6 +38,9 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
         };
     }, [isOpen, handleClose]);
 
+    // TODO if a user has multiple reviews how will we know which review images to grab??
+    // ? The resourceID? 
+
     return (
         <AnimatePresence>
             {isOpen && (

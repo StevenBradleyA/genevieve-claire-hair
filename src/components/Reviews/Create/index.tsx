@@ -31,7 +31,11 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
     );
 };
 
+
+
 export default function CreateReview() {
+// TODO feeling tired but how can I access the review Id before it is created? Should the image upload be a second part of the modal? they submit the review then add the images? idk
+
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -45,6 +49,7 @@ export default function CreateReview() {
         onSuccess: () => {
             void ctx.review.getAll.invalidate();
             void ctx.review.hasReviewed.invalidate();
+            // const reviewId = ctx.review.id
         },
     });
 
@@ -109,7 +114,11 @@ export default function CreateReview() {
                 Show Off Your Awesome Hair!
             </div>
             {!hasSubmittedImages ? (
-                <CreateImage setHasSubmittedImages={setHasSubmittedImages} />
+                <CreateImage
+                    setHasSubmittedImages={setHasSubmittedImages}
+                    resourceType={"REVIEW"}
+                    resourceId=""
+                />
             ) : (
                 <div>{`You're a star! Now submit that review and shine ⭐️`}</div>
             )}
