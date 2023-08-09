@@ -15,7 +15,7 @@ export const reviewRouter = createTRPCRouter({
             },
         });
     }),
-
+    // need to include booking type and Images with resource type review
     getByUserId: publicProcedure.input(z.string()).query(({ input, ctx }) => {
         return ctx.prisma.review.findMany({ where: { userId: input } });
     }),
@@ -34,11 +34,13 @@ export const reviewRouter = createTRPCRouter({
                 starRating: z.number(),
                 userId: z.string(),
                 bookingId: z.string(),
-                images: z.array(
-                    z.object({
-                        link: z.string(),
-                    })
-                ),
+                images: z
+                    .array(
+                        z.object({
+                            link: z.string(),
+                        })
+                    )
+                    .optional(),
             })
         )
         .mutation(async ({ input, ctx }) => {
@@ -47,21 +49,23 @@ export const reviewRouter = createTRPCRouter({
                 const newReview = await ctx.prisma.review.create({
                     data: { text, starRating, userId, bookingId },
                 });
-
-                const createdImages = images.map(async (image) => {
-                    return ctx.prisma.images.create({
-                        data: {
-                            link: image.link,
-                            resourceType: "REVIEW",
-                            resourceId: newReview.id,
-                            userId: newReview.userId,
-                        },
+                if (images) {
+                    const createdImages = images.map(async (image) => {
+                        return ctx.prisma.images.create({
+                            data: {
+                                link: image.link,
+                                resourceType: "REVIEW",
+                                resourceId: newReview.id,
+                                userId: newReview.userId,
+                            },
+                        });
                     });
-                });
-                return {
-                    newReview,
-                    createdImages,
-                };
+                    return {
+                        newReview,
+                        createdImages,
+                    };
+                }
+                return { newReview };
             }
 
             throw new Error("Invalid userId");
