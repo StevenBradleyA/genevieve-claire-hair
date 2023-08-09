@@ -80,7 +80,8 @@ export default function CreateImage({
                     const imageUrl = await uploadFileToS3(buffer);
                     imageUrlArr.push(imageUrl);
                 }
-
+                // create payload without resourceType and resourceId 
+                // we won't send 
                 const payload = {
                     images: imageUrlArr.map((imageUrl) => ({
                         link: imageUrl || "",

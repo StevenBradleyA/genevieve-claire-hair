@@ -1,20 +1,21 @@
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UpdateReview from "../Update";
 import DeleteReview from "../Delete";
 import type { ReviewWithUser } from ".";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import type { MotionValue } from "framer-motion";
-
-import reviewBackgroundImage from "../../../../public/glass-1.png";
 import ModalDialog from "~/components/Modal";
 
 // TODO refactor update review to a modal
 // TODO change background to glass morphism to match pricing page and update review color
+// TODO click me to see images on back of review card
+// messed up with multiple reviews will fix once everything is working with booking and images
 
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState<boolean>(false);
+    const [cardClick, setCardClick] = useState<boolean>(false);
     const mouseX: MotionValue<number> = useMotionValue(0);
     const mouseY: MotionValue<number> = useMotionValue(0);
 

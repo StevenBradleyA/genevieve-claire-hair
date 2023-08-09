@@ -3,6 +3,10 @@ import { useState } from "react";
 import { api } from "~/utils/api";
 import React from "react";
 import CreateImage from "~/components/Images/Create";
+import { uploadFileToS3 } from "~/pages/api/aws/utils";
+
+
+
 
 interface StarProps {
     rating: number;
@@ -37,6 +41,7 @@ export default function CreateReview() {
     // TODO may want separate image component and limit files to 3
     // TODO does the backend API have to return the reviewID then I can access it?
 
+    
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -48,10 +53,9 @@ export default function CreateReview() {
 
     const { mutate } = api.review.create.useMutation({
         onSuccess: () => {
+            // api.image.create.useMutation()
             void ctx.review.getAll.invalidate();
             void ctx.review.hasReviewed.invalidate();
-            // const reviewId = ctx.review.id
-            // not sure how to access the newReview.id
         },
     });
 
@@ -71,13 +75,14 @@ export default function CreateReview() {
                 text,
                 starRating,
                 userId: session.user.id,
+                // images: ImageURL[]
             };
 
             setText("");
             setStarRating(0);
             setHover(0);
 
-            return mutate(data);
+            console.log(mutate(data));
         } else {
             throw new Error("Session expired");
         }
