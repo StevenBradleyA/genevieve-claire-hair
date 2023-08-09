@@ -39,7 +39,10 @@ export default function DeleteReview({
     return (
         <>
             {!showDelete && (
-                <button onClick={() => setShowDelete(true)}>🗑️</button>
+                <button onClick={() => setShowDelete(true)} className="">
+                    {" "}
+                    Delete Review
+                </button>
             )}
             {showDelete && (
                 <div>

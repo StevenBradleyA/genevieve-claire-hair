@@ -38,9 +38,6 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
         };
     }, [isOpen, handleClose]);
 
-    // TODO if a user has multiple reviews how will we know which review images to grab??
-    // ? The resourceID? 
-
     return (
         <AnimatePresence>
             {isOpen && (
@@ -72,11 +69,11 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                         onClick={handleModalClick}
                     >
                         <button
-                      className="absolute top-2 right-4 text-lg text-gray-600 hover:text-purple-500 transform transition-transform duration-300 ease-in-out hover:scale-110 hover:rotate-45"
-                    onClick={handleClose}
-                    >
-                    &times; 
-                    </button>
+                            className="absolute right-4 top-2 transform text-lg text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-purple-500"
+                            onClick={handleClose}
+                        >
+                            &times;
+                        </button>
                         {children}
                     </motion.div>
                 </motion.div>

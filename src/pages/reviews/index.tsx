@@ -60,7 +60,6 @@ export default function Reviews() {
     const [isModalOpen, setIsModalOpen] = useState(false); 
 
     const openModal = () => {
-        console.log('Opening modal');
         setIsModalOpen(true);
     };
 

@@ -31,10 +31,11 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
     );
 };
 
-
-
 export default function CreateReview() {
-// TODO feeling tired but how can I access the review Id before it is created? Should the image upload be a second part of the modal? they submit the review then add the images? idk
+    // TODO feeling tired but how can I access the review Id before it is created? Should the image upload be a second part of the modal? they submit the review then add the images? idk
+    // TODO will need to be refactored to where images and review submit at same time so that reviewId can be created first maybe? idk
+    // TODO may want separate image component and limit files to 3
+    // TODO does the backend API have to return the reviewID then I can access it?
 
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
@@ -50,6 +51,7 @@ export default function CreateReview() {
             void ctx.review.getAll.invalidate();
             void ctx.review.hasReviewed.invalidate();
             // const reviewId = ctx.review.id
+            // not sure how to access the newReview.id
         },
     });
 
