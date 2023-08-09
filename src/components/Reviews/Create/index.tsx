@@ -30,6 +30,10 @@ interface ReviewData {
     images?: Image[];
 }
 
+interface CreateReviewProps {
+    closeModal: () => void;
+}
+
 const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
     const filled = "cursor-pointer text-image";
     const empty = "cursor-pointer star-image opacity-50";
@@ -49,7 +53,7 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
     );
 };
 
-export default function CreateReview() {
+export default function CreateReview({ closeModal }: CreateReviewProps) {
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -75,6 +79,7 @@ export default function CreateReview() {
 
     const { mutate } = api.review.create.useMutation({
         onSuccess: () => {
+            closeModal();
             void ctx.review.getAll.invalidate();
             void ctx.review.hasReviewed.invalidate();
         },
@@ -227,14 +232,15 @@ export default function CreateReview() {
                             height={100}
                         />
                         <button
-                            className="absolute right-0 top-0 p-1 text-red-500 hover:text-red-700"
-                            onClick={() => {
+                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-red-500"
+                            onClick={(e) => {
+                                e.preventDefault();
                                 const newImageFiles = [...imageFiles];
                                 newImageFiles.splice(i, 1);
                                 setImageFiles(newImageFiles);
                             }}
                         >
-                            ❌
+                            &times;
                         </button>
                     </div>
                 ))}

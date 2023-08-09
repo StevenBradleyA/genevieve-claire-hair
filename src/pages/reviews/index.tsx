@@ -92,7 +92,7 @@ export default function Reviews() {
                 {/* {session && session.user && !hasReviewed && ( */}
                 <button onClick={openModal}>Open Create Review Modal</button>
                 <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                    <CreateReview />
+                    <CreateReview closeModal={closeModal}/>
                 </ModalDialog>
             </div>
 
