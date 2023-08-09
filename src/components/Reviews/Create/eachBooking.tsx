@@ -27,7 +27,7 @@ export default function EachBookingCard({
                 <CreateReview bookingId={booking.id} closeModal={closeModal} />
             ) : (
                 <button
-                    className="flex w-96 justify-between bg-glass text-white"
+                    className="flex w-64 p-3 rounded-xl justify-between bg-glass text-white transform  px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95"
                     onClick={toggleBooking}
                 >
                     <div>{booking.type}</div>

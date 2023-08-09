@@ -10,7 +10,9 @@ interface SelectReviewProps {
 
 export default function SelectReview({ closeModal }: SelectReviewProps) {
     const { data: session } = useSession();
-    const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+    const [selectedBooking, setSelectedBooking] = useState<Booking | null>(
+        null
+    );
 
     if (!session) return <div>Please login to see bookings</div>;
 
@@ -19,7 +21,7 @@ export default function SelectReview({ closeModal }: SelectReviewProps) {
 
     if (isLoading) return <div>Loading All Reviews...</div>;
 
-    if (!bookings) return <div>Oops</div>;
+    if (!bookings) return <div>You have no bookings to review </div>;
 
     const handleBookingClick = (booking: Booking) => {
         setSelectedBooking(booking);
@@ -30,26 +32,32 @@ export default function SelectReview({ closeModal }: SelectReviewProps) {
             <div className="mb-10 font-grand-hotel text-6xl text-white">
                 Select a Service to Review{" "}
             </div>
-            <div className="flex flex-col gap-5">
-                {selectedBooking ? (
-                    <EachBookingCard
-                        booking={selectedBooking}
-                        closeModal={closeModal}
-                        isSelected={true}
-                        toggleBooking={() => setSelectedBooking(null)}
-                    />
-                ) : (
-                    bookings.map((booking: Booking, i: number) => (
+            {bookings ? (
+                <div className="flex flex-col gap-5">
+                    {selectedBooking ? (
                         <EachBookingCard
-                            key={i}
-                            booking={booking}
+                            booking={selectedBooking}
                             closeModal={closeModal}
-                            isSelected={false}
-                            toggleBooking={() => handleBookingClick(booking)}
+                            isSelected={true}
+                            toggleBooking={() => setSelectedBooking(null)}
                         />
-                    ))
-                )}
-            </div>
+                    ) : (
+                        bookings.map((booking: Booking, i: number) => (
+                            <EachBookingCard
+                                key={i}
+                                booking={booking}
+                                closeModal={closeModal}
+                                isSelected={false}
+                                toggleBooking={() =>
+                                    handleBookingClick(booking)
+                                }
+                            />
+                        ))
+                    )}
+                </div>
+            ) : (
+                <div>Hey Gurl, you have no services to review</div>
+            )}
         </div>
     );
 }
