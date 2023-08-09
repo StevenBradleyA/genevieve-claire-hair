@@ -34,6 +34,7 @@ interface ReviewData {
 
 interface CreateReviewProps {
     closeModal: () => void;
+    bookingId: string;
 }
 
 const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
@@ -55,9 +56,11 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
     );
 };
 
-export default function CreateReview({ closeModal }: CreateReviewProps) {
-
-    // TODO integrate booking selection first which booking are you reviewing? 
+export default function CreateReview({
+    closeModal,
+    bookingId,
+}: CreateReviewProps) {
+    // TODO integrate booking selection first which booking are you reviewing?
     // TODO one booking can only have one review association
     // want to pass the booking as a prop to Create Review
     const [text, setText] = useState("");
@@ -114,7 +117,7 @@ export default function CreateReview({ closeModal }: CreateReviewProps) {
                     text,
                     starRating,
                     userId: sessionUserId,
-                    bookingId: "cll438l010000ov76uzpgxsqh",
+                    bookingId: bookingId,
                 };
 
                 setIsSubmitting(true);
