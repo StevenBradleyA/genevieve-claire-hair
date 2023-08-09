@@ -8,6 +8,8 @@ import {
     ExtraDetails,
 } from "../NewClientForm";
 
+import { Services, Specifications } from "../NewBookingForm";
+
 type FormType = "NewClient" | "NewBooking";
 
 const forms: { [key in FormType]: JSX.Element[] } = {
@@ -20,7 +22,7 @@ const forms: { [key in FormType]: JSX.Element[] } = {
         <ExtraDetails key={5} />,
     ],
 
-    NewBooking: [<ServiceOptions key={0} />],
+    NewBooking: [<Services key={0} />, <Specifications key={1} />],
 };
 
 export default function FormController({ name }: { name: FormType }) {
