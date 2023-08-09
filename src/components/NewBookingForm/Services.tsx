@@ -1,147 +1,72 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-interface ServiceProps {
-    name: string;
-}
+export type FormInputType =
+    | "Haircut"
+    | "All Over Color"
+    | "Blonding"
+    | "Vivids"
+    | "Color Corrections"
+    | "Styling"
+    | "Quiet";
 
-const defaultState = {
-    haircut: false,
-    allOverColor: false,
-    vivids: false,
-    colorCorrections: false,
-    styling: false,
-    quiet: false,
+export type FormDataType = { [key in FormInputType]: boolean };
+
+const defaultState: FormDataType = {
+    Haircut: false,
+    "All Over Color": false,
+    Blonding: false,
+    Vivids: false,
+    "Color Corrections": false,
+    Styling: false,
+    Quiet: false,
 };
 
-const options = Object.keys(defaultState);
-
-const Services = (props: ServiceProps) => {
+const Services = () => {
     const [formData, setFormData] = useState(defaultState);
-    const [max, setMax]: [string[], any] = useState([]);
-
-    console.log(formData);
-
-    /** //! New implementation
-     * Services can be true, false, or null
-     * true === 'selected'
-     * false === 'notSelected'
-     * null === 'cantSelect'
-     *
-     * ? First function: toggle(e.target)
-     * if class === 'cantSelect', return
-     *
-     * input.val = !input.val
-     * if input has disabled,
-     * 	if input.val, each disabled.val = null
-     * 	else each disabled.val = false
-     *
-     * if "quiet", setForm && return
-     *
-     * Find all true in newData
-     * if true >= 3 (ignoring "quiet")
-     * 	setMax([names of all false])
-     * else
-     * 	set.includes(newData null), turn to false
-     *
-     * ? Second function: color()
-     * for each formData
-     * true = 'selected'
-     * false = 'notSelected'
-     * null = 'cantSelect'
-     *
-     * ? Third function: useEffect()
-     * Update local storage on formData change
-     */
-
-    const toggle = (name: string) => {
-        if (formData[name] === null) return false;
-
-        const newData = { ...formData };
-        newData[name] = !newData[name];
-
-        if (name === "quiet") return setFormData(newData);
-
-        const disable = allServices[name].disable;
-
-        if (disable) {
-            disable.forEach(
-                (el: string) => (newData[el] = newData[name] ? null : false)
-            );
-        }
-
-        const selected = options.filter((el) => el !== "quiet" && newData[el]);
-        if (selected.length >= 3) {
-            const limit: string[] = [];
-
-            options.forEach((el) => {
-                if (el !== "quiet" && newData[el] === false) {
-                    limit.push(el);
-                    newData[el] = null;
-                }
-            });
-
-            setMax(limit);
-        }
-        //! Something is happening here, not really sure what but keep it going
-        // else {
-        //     if (max.length) {
-        //         max.forEach((el) => (newData[el] = false));
-        //         setMax([]);
-        //     } else {
-        //         if (disable) {
-        //             for (const val in newData) {
-        //                 if (!newData[val]) newData[val] = false;
-        //             }
-        //         }
-        //     }
-        // }
-
-        setFormData(newData);
-    };
-
-    const color = () => {
-        options.forEach((el) => {
-            const service = document.querySelector(`[data-name="${el}"]`);
-
-            if (service)
-                switch (formData[el]) {
-                    case null:
-                        service.className = "cantSelect";
-                        break;
-
-                    case false:
-                        service.className = "notSelected";
-                        break;
-
-                    case true:
-                        service.className = "selected";
-                        break;
-
-                    default:
-                        break;
-                }
-        });
-    };
-
-    useEffect(color, [formData]);
-
-    useEffect(() => restoreLocal(props.name, setFormData), [props.name]);
 
     useEffect(() => {
-        saveLocal(defaultState, formData, props.name);
-    }, [formData, props.name]);
+        const restoredData = localStorage.getItem("Services");
+
+        if (restoredData) setFormData(JSON.parse(restoredData) as FormDataType);
+    }, []);
+
+    const toggle = (type: FormInputType) => {
+        const newData = { ...formData };
+
+        if (allowSelection(type)) {
+            newData[type] = !newData[type];
+            localStorage.setItem("Services", JSON.stringify(newData));
+            setFormData(newData);
+        } else {
+            console.log("Hot Toast Incoming!!!");
+        }
+    };
+
+    const allowSelection = (type: FormInputType) => {
+        if (type === "Vivids" && formData["Color Corrections"]) return false;
+        if (type === "Color Corrections" && formData["Vivids"]) return false;
+        return true;
+    };
 
     return (
-        <div className="services">
-            {options.map((type: any) => (
+        <div className="flex cursor-pointer justify-center gap-2">
+            {Object.keys(defaultState).map((type) => (
                 <div
-                    id="option"
-                    className="notSelected"
+                    className={`rounded-lg p-2 text-white ${
+                        formData[type as FormInputType]
+                            ? "bg-violet-500"
+                            : "bg-violet-300"
+                    } 
+                    ${
+                        allowSelection(type as FormInputType)
+                            ? ""
+                            : "cursor-not-allowed"
+                    }
+                    `}
                     key={type}
-                    data-name={type}
-                    onClick={() => toggle(type)}
+                    onClick={() => toggle(type as FormInputType)}
                 >
-                    {allServices[type].name}
+                    {type}
                 </div>
             ))}
         </div>
