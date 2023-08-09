@@ -6,6 +6,7 @@ import CreateReview from "~/components/Reviews/Create";
 import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
 import ModalDialog from "~/components/Modal";
+import SelectReview from "~/components/Reviews/Create/selectReview";
 
 export default function Reviews() {
     // TODO Decide if we want create review to be linked to a booking
@@ -92,6 +93,7 @@ export default function Reviews() {
                 {/* {session && session.user && !hasReviewed && ( */}
                 <button onClick={openModal}>Open Create Review Modal</button>
                 <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                    <SelectReview />
                     <CreateReview closeModal={closeModal}/>
                 </ModalDialog>
             </div>

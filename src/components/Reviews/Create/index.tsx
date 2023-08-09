@@ -1,4 +1,6 @@
 import { useSession } from "next-auth/react";
+import type { Session } from "next-auth";
+
 import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import React from "react";
@@ -54,6 +56,10 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
 };
 
 export default function CreateReview({ closeModal }: CreateReviewProps) {
+
+    // TODO integrate booking selection first which booking are you reviewing? 
+    // TODO one booking can only have one review association
+    // want to pass the booking as a prop to Create Review
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);

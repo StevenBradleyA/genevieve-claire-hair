@@ -47,7 +47,13 @@ export const bookingRouter = createTRPCRouter({
         .query(({ input, ctx }) => {
             return ctx.prisma.booking.findMany({ where: { userId: input } });
         }),
-
+    getAllByUserIdWithNoReview: protectedProcedure
+        .input(z.string())
+        .query(({ input, ctx }) => {
+            return ctx.prisma.booking.findMany({
+                where: { userId: input, review: { none: {} } },
+            });
+        }),
     create: protectedProcedure
         .input(
             z.object({
