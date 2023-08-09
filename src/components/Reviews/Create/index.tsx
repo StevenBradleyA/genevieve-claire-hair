@@ -2,7 +2,6 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import React from "react";
-import CreateImage from "~/components/Images/Create";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import Image from "next/image";
 
@@ -17,10 +16,6 @@ interface StarProps {
 interface ErrorsObj {
     image?: string;
     imageExcess?: string;
-}
-
-interface CreateImageProps {
-    setHasSubmittedImages: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Image {
@@ -63,8 +58,6 @@ export default function CreateReview() {
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-    // const [imageReview, setImageReview] = useState<boolean>(false)
-    // test
     const ctx = api.useContext();
 
     const handleInputErrors = () => {
@@ -199,9 +192,7 @@ export default function CreateReview() {
             <div className="flex justify-center font-grand-hotel text-6xl">
                 Show Off Your Awesome Hair!
             </div>
-            {hasSubmitted && errors.imageExcess && (
-                <p className="create-listing-errors">{errors.imageExcess}</p>
-            )}
+
             <div className="py-4">
                 <label className="relative inline-block h-40 w-40">
                     <input
@@ -226,21 +217,33 @@ export default function CreateReview() {
                 </label>
             </div>
             <div className="mb-5 flex w-full flex-wrap justify-center gap-10">
-                {imageFiles.map((e, i) => {
-                    return (
-                        <>
-                            <Image
-                                className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
-                                alt={`listing-${i}`}
-                                src={URL.createObjectURL(e)}
-                                key={i}
-                                width={100}
-                                height={100}
-                            />
-                        </>
-                    );
-                })}
+                {imageFiles.map((e, i) => (
+                    <div key={i} className="relative">
+                        <Image
+                            className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
+                            alt={`listing-${i}`}
+                            src={URL.createObjectURL(e)}
+                            width={100}
+                            height={100}
+                        />
+                        <button
+                            className="absolute right-0 top-0 p-1 text-red-500 hover:text-red-700"
+                            onClick={() => {
+                                const newImageFiles = [...imageFiles];
+                                newImageFiles.splice(i, 1);
+                                setImageFiles(newImageFiles);
+                            }}
+                        >
+                            ❌
+                        </button>
+                    </div>
+                ))}
             </div>
+            {errors.imageExcess && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageExcess}
+                </p>
+            )}
 
             <button
                 onClick={(e) => {
@@ -248,20 +251,29 @@ export default function CreateReview() {
                     console.log("submit button clicked");
                     void submit(e);
                 }}
+                // disabled={
+                //     (hasSubmitted && Object.values(errors).length > 0) ||
+                //     (isSubmitting && starRating && text) ||
+                //     (imageFiles.length > 0 &&
+                //         hasSubmitted &&
+                //         Object.values(errors).length > 0) ||
+                //     (!isSubmitting && (!starRating || !text))
+                // }
                 disabled={
                     (hasSubmitted && Object.values(errors).length > 0) ||
-                    (isSubmitting && starRating && text) ||
+                    isSubmitting ||
                     (imageFiles.length > 0 &&
-                        hasSubmitted &&
-                        Object.values(errors).length > 0) ||
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
                     (!isSubmitting && (!starRating || !text))
                 }
                 className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
-                    starRating && text
-                        ? isSubmitting
-                            ? "text-slate-300"
-                            : "text-purple-300"
-                        : "text-slate-300"
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!starRating || !text))
+                        ? "text-slate-300"
+                        : "text-purple-300"
                 }`}
             >
                 {isSubmitting ? "Uploading..." : "Submit Review"}
