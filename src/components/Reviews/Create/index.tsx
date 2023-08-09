@@ -110,7 +110,7 @@ export default function CreateReview() {
                     text,
                     starRating,
                     userId: sessionUserId,
-                    bookingId: "123",
+                    bookingId: "cll438l010000ov76uzpgxsqh",
                 };
 
                 setIsSubmitting(true);
