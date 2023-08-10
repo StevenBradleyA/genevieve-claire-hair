@@ -13,7 +13,7 @@ export default function DisplayReviews() {
     if (!reviews) return <div>Oops</div>;
 
     return (
-        <div className="">
+        <div className="flex flex-wrap justify-center gap-10 px-10 mx-10 w-full">
             {reviews.map((review: ReviewWithUser, i: number) => {
                 return <ReviewCard key={i} review={review} />;
             })}
