@@ -165,8 +165,8 @@
   
   .card {
     position: relative;
-    width: 240px;
-    height: 320px;
+    width: 400px;
+    height: 230px;
     background-color: #333;
     overflow: hidden;
     border-radius: 10px;

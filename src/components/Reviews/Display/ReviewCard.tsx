@@ -42,7 +42,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
     const { clientX, clientY } = e;
     
-    const xOffset = -(clientX - left - width / 2) / 10; // Reverse the sign
+    const xOffset = -(clientX - left - width / 2) / 20; 
     const yOffset = -(clientY - top - height / 2) / 10;
 
     const sideTilt = {
@@ -64,13 +64,13 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
   };
 
   return (
-    <motion.div
+    <div
       className="card-wrap"
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <motion.div
+      <div
         className="card"
         style={{
           transform: `
@@ -81,12 +81,12 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
           `,
         }}
       >
-        <motion.div className="card-bg" style={{ backgroundColor: 'rgba(1,1,1,0.2)' }} />
-        <motion.div className="card-info">
+        <div className="card-bg" style={{ backgroundColor: 'rgba(1,1,1,0.2)' }} />
+        <div className="card-info">
           <h1>Title</h1>
           <p>Content goes here.</p>
-        </motion.div>
-      </motion.div>
-    </motion.div>
+        </div>
+      </div>
+    </div>
     );
 }
