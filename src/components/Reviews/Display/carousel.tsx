@@ -20,23 +20,22 @@ export default function ReviewCarousel({
 }: ReviewCarouselProps) {
     const imageStyles: Record<number, ImageStyles> = {
         1: {
-            minWidth: "240px",
-            minHeight: "240px",
-            width: "240px",
-            height: "240px",
+            minWidth: "220px",
+            minHeight: "220px",
+            width: "220px",
+            height: "220px",
         },
         2: {
-            minWidth: "220px",
-            minHeight: "240px",
-            width: "220px",
-            height: "240px",
-            margin: "0 6px",
+            minWidth: "195px",
+            minHeight: "220px",
+            width: "195px",
+            height: "220px",
         },
         3: {
-            minWidth: "155px",
-            minHeight: "240px",
-            width: "150px",
-            height: "240px",
+            minWidth: "130px",
+            minHeight: "220px",
+            width: "130px",
+            height: "220px",
         },
     };
 
@@ -46,7 +45,7 @@ export default function ReviewCarousel({
         <Image
             src={image.link}
             alt="review"
-            className="relative top-6 object-cover"
+            className="object-cover"
             style={style}
             height={200}
             width={200}

@@ -81,7 +81,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     }}
                 >
                     {cardClick && images && images.length > 0 ? (
-                        <div className="flex">
+                        <div className="flex pt-1 justify-center">
                             {images.map((image: Images, i: number) => {
                                 return (
                                     <ReviewCarousel
