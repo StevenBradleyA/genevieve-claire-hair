@@ -59,8 +59,12 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     };
 
     return (
+        <div>
+
+
+
         <div
-            className="card-wrap text-white"
+            className="card-poggers text-white"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={handleCardClick}
@@ -104,9 +108,13 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                     </div>
                                 </div>
                                 {images && images.length > 0 && (
-                                    <div className=" card-info ">
-                                        <p className="bg-gradient-to-r from-violet-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">Review Images</p>
-                                        <h1 className="text-4xl font-grand-hotel ">Click me</h1>
+                                    <div className=" click-me-dropdown ">
+                                        <p className="bg-gradient-to-r from-violet-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">
+                                            View Images
+                                        </p>
+                                        <h1 className="font-grand-hotel text-4xl ">
+                                            Click me
+                                        </h1>
                                     </div>
                                 )}
                             </div>
@@ -119,12 +127,29 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                         </div>
                     </div>
                 )}
-
-                {/* <div className="card-info">
-                    <h1>Title</h1>
-                    <p>Content goes here.</p>
-                </div> */}
             </div>
+        </div>
+
+
+        {session && session.user.id === review.userId && (
+                <div className="flex justify-center gap-5">
+                    <div>
+                        <button onClick={openModal} className="flex justify-centerp-3 rounded-xl bg-glass text-violet-300 transform  px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95">Edit Review</button>
+                        <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                            <UpdateReview review={review} session={session} />
+                        </ModalDialog>
+                    </div>
+
+                    <DeleteReview
+                        id={review.id}
+                        session={session}
+                        showDelete={showDelete}
+                        setShowDelete={setShowDelete}
+                    />
+                </div>
+            )}
+
+
         </div>
     );
 }

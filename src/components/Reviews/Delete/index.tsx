@@ -39,15 +39,28 @@ export default function DeleteReview({
     return (
         <>
             {!showDelete && (
-                <button onClick={() => setShowDelete(true)} className="">
+                <button
+                    onClick={() => setShowDelete(true)}
+                    className="flex transform justify-center rounded-xl bg-glass p-3 px-4  py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                >
                     {" "}
                     Delete Review
                 </button>
             )}
             {showDelete && (
-                <div>
-                    <button onClick={deleteReview}>🔥</button>
-                    <button onClick={() => setShowDelete(false)}>❎</button>
+                <div className="flex gap-5">
+                    <button
+                        onClick={() => setShowDelete(false)}
+                        className="flex transform justify-center rounded-xl bg-glass p-3 px-4  py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={deleteReview}
+                        className="flex transform justify-center rounded-xl bg-glass p-3 px-4  py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                    >
+                        Goodbye forever 🫡
+                    </button>
                 </div>
             )}
         </>
