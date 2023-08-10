@@ -1,7 +1,11 @@
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import type { Session } from "next-auth";
+
+import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import React from "react";
+import { uploadFileToS3 } from "~/pages/api/aws/utils";
+import Image from "next/image";
 
 interface StarProps {
     rating: number;
@@ -11,9 +15,31 @@ interface StarProps {
     onClick: (rating: number) => void;
 }
 
+interface ErrorsObj {
+    image?: string;
+    imageExcess?: string;
+}
+
+interface Image {
+    link: string;
+}
+
+interface ReviewData {
+    text: string;
+    starRating: number;
+    userId: string;
+    bookingId: string;
+    images?: Image[];
+}
+
+interface CreateReviewProps {
+    closeModal: () => void;
+    bookingId: string;
+}
+
 const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
-    const filled = "cursor-pointer";
-    const empty = "cursor-pointer text-transparent";
+    const filled = "cursor-pointer text-image";
+    const empty = "cursor-pointer star-image opacity-50";
 
     const starClasses = rating <= starRating ? filled : empty;
     const hoverClasses = hover ? (rating <= hover ? filled : empty) : false;
@@ -30,16 +56,36 @@ const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
     );
 };
 
-export default function CreateReview() {
+export default function CreateReview({
+    closeModal,
+    bookingId,
+}: CreateReviewProps) {
     const [text, setText] = useState("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
     const { data: session } = useSession();
-
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [errors, setErrors] = useState<ErrorsObj>({});
+    const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const ctx = api.useContext();
+
+    const handleInputErrors = () => {
+        const errorsObj: ErrorsObj = {};
+        // ! should implement max file size upload could cap at like 50mb
+        if (imageFiles.length > 3) {
+            errorsObj.imageExcess = "Cannot provide more than 3 photos";
+        }
+        setErrors(errorsObj);
+    };
+
+    useEffect(() => {
+        handleInputErrors();
+    }, [imageFiles]);
 
     const { mutate } = api.review.create.useMutation({
         onSuccess: () => {
+            closeModal();
             void ctx.review.getAll.invalidate();
             void ctx.review.hasReviewed.invalidate();
         },
@@ -53,39 +99,94 @@ export default function CreateReview() {
         setStarRating(rating);
     };
 
-    const submit = (e: React.FormEvent) => {
+    const submit = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log("hello, submit");
+        if (!Object.values(errors).length && !isSubmitting) {
+            try {
+                const sessionUserId = session?.user?.id;
 
-        if (session && session.user && session.user.id) {
-            const data = {
-                text,
-                starRating,
-                userId: session.user.id,
-            };
+                if (!sessionUserId) {
+                    throw new Error("Session expired");
+                }
 
-            setText("");
-            setStarRating(0);
-            setHover(0);
+                const data: ReviewData = {
+                    text,
+                    starRating,
+                    userId: sessionUserId,
+                    bookingId: bookingId,
+                };
 
-            return mutate(data);
-        } else {
-            throw new Error("Session expired");
+                setIsSubmitting(true);
+
+                if (imageFiles.length > 0) {
+                    console.log("hello, we have more than one image");
+                    const imagePromises = imageFiles.map((file) => {
+                        return new Promise<string>((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(file);
+                            reader.onloadend = () => {
+                                if (typeof reader.result === "string") {
+                                    const base64Data =
+                                        reader.result.split(",")[1];
+                                    if (base64Data) {
+                                        resolve(base64Data);
+                                    }
+                                } else {
+                                    reject(new Error("Failed to read file"));
+                                }
+                            };
+                            reader.onerror = () => {
+                                reject(new Error("Failed to read file"));
+                            };
+                        });
+                    });
+
+                    const base64DataArray = await Promise.all(imagePromises);
+                    const imageUrlArr: string[] = [];
+
+                    for (const base64Data of base64DataArray) {
+                        const buffer = Buffer.from(base64Data, "base64");
+                        const imageUrl = await uploadFileToS3(buffer);
+                        imageUrlArr.push(imageUrl);
+                    }
+
+                    data.images = imageUrlArr.map((imageUrl) => ({
+                        link: imageUrl || "",
+                    }));
+                }
+                console.log("data", data);
+                setText("");
+                setStarRating(0);
+                setHover(0);
+                mutate(data);
+
+                setImageFiles([]);
+                setHasSubmitted(true);
+                setIsSubmitting(false);
+            } catch (error) {
+                console.error("Submission failed:", error);
+                setIsSubmitting(false);
+            }
         }
     };
 
     return (
-        <form className="flex flex-col items-center gap-5" onSubmit={submit}>
-            <label className="text-slate-200">
-                Review
-                <textarea
-                    className="m-2 rounded border bg-transparent p-1"
-                    value={text}
-                    placeholder="What did you think of this post?"
-                    onChange={(e) => setText(e.target.value)}
-                />
-            </label>
-            <div className="flex items-center text-slate-200">
-                <span>Star Rating</span>
+        <form
+            className="flex flex-col items-center gap-5 text-white"
+            encType="multipart/form-data"
+        >
+            <div className="font-grand-hotel text-6xl text-white">
+                Leave a Review
+            </div>
+            <textarea
+                value={text}
+                placeholder="What did you think of my work?"
+                onChange={(e) => setText(e.target.value)}
+                className=" h-40 w-96 rounded-md bg-glass p-2 text-xl text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+            />
+            <div className="flex items-center text-white ">
+                <span className="font-quattrocento text-3xl">Star Rating</span>
                 <div className="m-2 flex items-center">
                     {[1, 2, 3, 4, 5].map((rating) => (
                         <Star
@@ -99,14 +200,87 @@ export default function CreateReview() {
                     ))}
                 </div>
             </div>
+            <div className="flex justify-center font-grand-hotel text-6xl">
+                Show Off Your Awesome Hair!
+            </div>
+
+            <div className="py-4">
+                <label className="relative inline-block h-40 w-40">
+                    <input
+                        className="absolute h-full w-full cursor-pointer opacity-0"
+                        type="file"
+                        multiple
+                        // accept="image/png, image/jpg, image/jpeg"
+                        accept="image/*"
+                        onChange={(e) => {
+                            if (e.target.files)
+                                setImageFiles([
+                                    ...imageFiles,
+                                    ...e.target.files,
+                                ]);
+                        }}
+                    />
+                    <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                        <span className="text-center font-quattrocento">
+                            Choose Files
+                        </span>
+                    </div>
+                </label>
+            </div>
+            <div className="mb-5 flex w-full flex-wrap justify-center gap-10">
+                {imageFiles.map((e, i) => (
+                    <div key={i} className="relative">
+                        <Image
+                            className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
+                            alt={`listing-${i}`}
+                            src={URL.createObjectURL(e)}
+                            width={100}
+                            height={100}
+                        />
+                        <button
+                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-red-500"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const newImageFiles = [...imageFiles];
+                                newImageFiles.splice(i, 1);
+                                setImageFiles(newImageFiles);
+                            }}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                ))}
+            </div>
+            {errors.imageExcess && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageExcess}
+                </p>
+            )}
 
             <button
-                disabled={starRating && text ? false : true}
-                className={`rounded-md border px-2 py-1 text-slate-200 ${
-                    starRating && text ? "" : "opacity-50"
+                onClick={(e) => {
+                    e.preventDefault();
+                    console.log("submit button clicked");
+                    void submit(e);
+                }}
+                disabled={
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!starRating || !text))
+                }
+                className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!starRating || !text))
+                        ? "text-slate-300"
+                        : "text-purple-300"
                 }`}
             >
-                Submit Review
+                {isSubmitting ? "Uploading..." : "Submit Review"}
             </button>
         </form>
     );

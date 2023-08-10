@@ -10,16 +10,9 @@ import type { Session } from "next-auth";
 interface UpdateProps {
     review: Review;
     session: Session;
-    showUpdate: boolean;
-    setShowUpdate: (show: boolean) => void;
 }
 
-export default function UpdateReview({
-    review,
-    session,
-    showUpdate,
-    setShowUpdate,
-}: UpdateProps) {
+export default function UpdateReview({ review, session }: UpdateProps) {
     const [text, setText] = useState(review.text);
     const [starRating, setStarRating] = useState(review.starRating);
     const [hover, setHover] = useState(0);
@@ -29,7 +22,6 @@ export default function UpdateReview({
     const { mutate } = api.review.update.useMutation({
         onSuccess: () => {
             void ctx.review.getAll.invalidate();
-            setShowUpdate(false);
         },
     });
 
@@ -52,60 +44,54 @@ export default function UpdateReview({
 
     return (
         <>
-            {!showUpdate && (
-                <button onClick={() => setShowUpdate(true)}>✏️</button>
-            )}
-            {showUpdate && (
-                <form
-                    className="flex flex-col justify-between gap-5"
-                    onSubmit={submit}
-                >
-                    <label className="text-slate-200">
-                        Review
-                        <textarea
-                            className="m-2 rounded border bg-transparent p-1"
-                            value={text}
-                            placeholder="Update your review"
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                    </label>
-                    <label className="text-slate-200">
-                        Star Rating
-                        <div className="m-2 flex items-center">
-                            {[1, 2, 3, 4, 5].map((rating) => (
-                                <Star
-                                    key={rating}
-                                    rating={rating}
-                                    starRating={starRating}
-                                    hover={hover}
-                                    setHover={setHover}
-                                    setStarRating={setStarRating}
-                                />
-                            ))}
-                        </div>
-                    </label>
-                    <div className="">
-                        <button
-                            disabled={starRating && text ? false : true}
-                            className={`rounded-md border px-2 py-1 text-slate-200 ${
-                                starRating && text ? "" : "opacity-50"
-                            }`}
-                        >
-                            Update
-                        </button>
-                        <button
-                            className={`rounded-md border px-2 py-1 text-slate-200`}
-                            onClick={() => {
-                                setShowUpdate(false);
-                                setText(review.text);
-                                setStarRating(review.starRating);
-                            }}
-                        >
-                            Cancel
-                        </button>
+            <form
+                className="flex flex-col justify-between gap-5"
+                onSubmit={submit}
+            >
+                <label className="text-slate-200">
+                    Review
+                    <textarea
+                        className="m-2 rounded border bg-transparent p-1"
+                        value={text}
+                        placeholder="Update your review"
+                        onChange={(e) => setText(e.target.value)}
+                    />
+                </label>
+                <label className="text-slate-200">
+                    Star Rating
+                    <div className="m-2 flex items-center">
+                        {[1, 2, 3, 4, 5].map((rating) => (
+                            <Star
+                                key={rating}
+                                rating={rating}
+                                starRating={starRating}
+                                hover={hover}
+                                setHover={setHover}
+                                setStarRating={setStarRating}
+                            />
+                        ))}
                     </div>
-                </form>
-            )}
+                </label>
+                <div className="">
+                    <button
+                        disabled={starRating && text ? false : true}
+                        className={`rounded-md border px-2 py-1 text-slate-200 ${
+                            starRating && text ? "" : "opacity-50"
+                        }`}
+                    >
+                        Update
+                    </button>
+                    <button
+                        className={`rounded-md border px-2 py-1 text-slate-200`}
+                        onClick={() => {
+                            setText(review.text);
+                            setStarRating(review.starRating);
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </>
     );
 }

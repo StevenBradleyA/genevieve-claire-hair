@@ -23,7 +23,10 @@ export default function ExtraDetails() {
                 (this will only be seen by me )
             </div>
             {!hasSubmittedImages ? (
-                <CreateImage setHasSubmittedImages={setHasSubmittedImages} />
+                <CreateImage
+                    setHasSubmittedImages={setHasSubmittedImages}
+                    resourceType={"USER"}
+                />
             ) : (
                 <div>thank you!</div>
             )}
