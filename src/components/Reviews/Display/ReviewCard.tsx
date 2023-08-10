@@ -10,22 +10,12 @@ import { api } from "~/utils/api";
 import ReviewCarousel from "./carousel";
 import type { Images } from "@prisma/client";
 
-
-// TODO refactor update review to a modal
-// TODO change background to glass morphism to match pricing page and update review color
-// TODO click me to see images on back of review card
-// messed up with multiple reviews will fix once everything is working with booking and images
-
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState<boolean>(false);
     const [cardClick, setCardClick] = useState<boolean>(false);
     const mouseX: MotionValue<number> = useMotionValue(0);
     const mouseY: MotionValue<number> = useMotionValue(0);
-
-
-
-
 
     const handleMouseMove = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -88,10 +78,6 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         setCardClick(!cardClick);
     };
 
-    // TODO need to get all images for a specific review Id
-    // const { data: bookings, isLoading } =
-    // api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id);
-
     const { data: images, isLoading } = api.image.getAllByResourceId.useQuery({
         resourceType: "REVIEW",
         resourceId: review.id,
@@ -126,7 +112,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                 >
                     <motion.div className="flex flex-col gap-2 px-5 text-white">
                         <>
-                            {cardClick && images ? (
+                            {cardClick && images && images.length > 0 ? (
                                 <div className="flex">
                                     {images.map((image: Images, i: number) => {
                                         return (
@@ -157,12 +143,11 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                                     ).fill("⭐️")}
                                                 </div>
                                             </div>
-                                            {images && (
+                                            {images && images.length > 0 && (
                                                 <div className="bg-gradient-to-r from-violet-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">
                                                     click me
                                                 </div>
                                             )}
-                                            {/* TODO if card has photos show click me */}
                                         </div>
                                     </div>
                                     <div className="h-32 overflow-y-auto break-words">
