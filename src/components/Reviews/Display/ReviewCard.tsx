@@ -24,11 +24,6 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const mouseY: MotionValue<number> = useMotionValue(0);
 
 
-    const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-    const handleImageChange = (index: number) => {
-        setActiveImageIndex(index);
-    };
 
 
 
@@ -132,18 +127,16 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     <motion.div className="flex flex-col gap-2 px-5 text-white">
                         <>
                             {cardClick && images ? (
-                                <div className="flex gap-5 pb-1">
-                                    {images.map((image: Images, i: number) => (
-                                       <div
-                                       key={i}
-                                       className={`carousel-item ${
-                                           i === activeImageIndex ? 'active' : ''
-                                       }`}
-                                       onClick={() => handleImageChange(i)}
-                                   >
-                                       <ReviewCarousel image={image} />
-                                   </div>
-                                    ))}
+                                <div className="flex">
+                                    {images.map((image: Images, i: number) => {
+                                        return (
+                                            <ReviewCarousel
+                                                key={i}
+                                                image={image}
+                                                totalImages={images.length}
+                                            />
+                                        );
+                                    })}
                                 </div>
                             ) : (
                                 <>
