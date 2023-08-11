@@ -4,13 +4,68 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useSession } from "next-auth/react";
 import { isEqual } from "date-fns";
-import type { CalendarOptions } from "~/pages/bookings";
 import TimeSlotPicker from "./TimeSlotPicker";
+import type { Matcher } from "react-day-picker";
 
-export default function CreateBooking(options: CalendarOptions) {
+export interface CalendarOptions {
+    disabled: Matcher[];
+    fromYear: number;
+    fromMonth: Date;
+    modifiers: {
+        booked: Date[];
+    };
+    modifiersStyles: {
+        booked: {
+            color: string;
+            fontWeight: string;
+            textDecoration: string;
+        };
+    };
+    fixedWeeks: boolean;
+    showOutsideDays: boolean;
+}
+
+const createCalendarOptions = (booked: Date[]): CalendarOptions => {
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const yesterday = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() - 1
+    );
+
+    const disabled = [
+        ...booked,
+        { from: startOfMonth, to: yesterday },
+        { dayOfWeek: [0, 6] },
+    ];
+
+    const options = {
+        disabled,
+        fromYear: today.getFullYear(),
+        fromMonth: today,
+        modifiers: { booked },
+        modifiersStyles: {
+            booked: {
+                color: "red",
+                fontWeight: "bolder",
+                textDecoration: "line-through",
+            },
+        },
+        fixedWeeks: true,
+        showOutsideDays: true,
+    };
+
+    return options;
+};
+
+export default function CreateBooking() {
     const { data: session } = useSession();
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<number>();
+    let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
+
+    if (!pfBangs) pfBangs = [];
     const { data: check } = api.booking.getByDate.useQuery(date);
 
     const checkConflicts = () => {
@@ -58,7 +113,7 @@ export default function CreateBooking(options: CalendarOptions) {
                     setDate(e);
                 }}
                 className="rounded-lg  bg-white p-1 shadow-2xl"
-                {...options}
+                {...createCalendarOptions(pfBangs)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
