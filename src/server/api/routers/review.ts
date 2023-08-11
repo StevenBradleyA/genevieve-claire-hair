@@ -76,13 +76,67 @@ export const reviewRouter = createTRPCRouter({
                 userId: z.string(),
                 text: z.string().optional(),
                 starRating: z.number().optional(),
+                bookingId: z.string(),
+                deleteImageIds: z.array(z.string()).optional(),
+                images: z
+                    .array(
+                        z.object({
+                            link: z.string(),
+                        })
+                    )
+                    .optional(),
             })
         )
         .mutation(async ({ input, ctx }) => {
+            const { id, userId, deleteImageIds, images } = input;
+
             if (ctx.session.user.id === input.userId) {
+                if (images) {
+                    const createdImages = images.map(async (image) => {
+                        return ctx.prisma.images.create({
+                            data: {
+                                link: image.link,
+                                resourceType: "REVIEW",
+                                resourceId: id,
+                                userId: userId,
+                            },
+                        });
+                    });
+                    return {
+                        createdImages,
+                    };
+                }
+                if (deleteImageIds && deleteImageIds.length > 0) {
+                    const images = await ctx.prisma.images.findMany({
+                        where: {
+                            id: { in: deleteImageIds },
+                        },
+                    });
+                    const removeFilePromises = images.map(async (image) => {
+                        try {
+                            await removeFileFromS3(image.link);
+                        } catch (err) {
+                            console.error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                            throw new Error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                        }
+                    });
+
+                    await Promise.all(removeFilePromises);
+
+                    await ctx.prisma.images.deleteMany({
+                        where: {
+                            id: { in: deleteImageIds },
+                        },
+                    });
+                }
+
                 const updatedReview = await ctx.prisma.review.update({
                     where: {
-                        id: input.id,
+                        id: id,
                     },
                     data: input,
                 });

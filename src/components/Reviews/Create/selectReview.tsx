@@ -19,7 +19,7 @@ export default function SelectReview({ closeModal }: SelectReviewProps) {
     const { data: bookings, isLoading } =
         api.booking.getAllByUserIdWithNoReview.useQuery(session.user.id);
 
-    if (isLoading) return <div>Loading All Reviews...</div>;
+    if (isLoading) return <div>Loading All Bookings...</div>;
 
     if (!bookings) return <div>You have no bookings to review </div>;
 

@@ -145,7 +145,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                             Edit Review
                         </button>
                         <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                            <UpdateReview review={review} session={session} />
+                            <UpdateReview review={review} session={session} closeModal={closeModal} />
                         </ModalDialog>
                     </div>
 
