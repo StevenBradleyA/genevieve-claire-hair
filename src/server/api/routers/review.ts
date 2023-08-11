@@ -88,9 +88,10 @@ export const reviewRouter = createTRPCRouter({
             })
         )
         .mutation(async ({ input, ctx }) => {
-            const { id, userId, deleteImageIds, images } = input;
+            const { id, userId, text, starRating, deleteImageIds, images } =
+                input;
 
-            if (ctx.session.user.id === input.userId) {
+            if (ctx.session.user.id === userId) {
                 if (images) {
                     const createdImages = images.map(async (image) => {
                         return ctx.prisma.images.create({
@@ -138,7 +139,7 @@ export const reviewRouter = createTRPCRouter({
                     where: {
                         id: id,
                     },
-                    data: input,
+                    data: { text, starRating },
                 });
 
                 return updatedReview;

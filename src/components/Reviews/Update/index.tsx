@@ -61,6 +61,9 @@ export default function UpdateReview({
     session,
     closeModal,
 }: UpdateProps) {
+
+
+    // TODO update error handling so it detects imageFiles length plus image length
     const [text, setText] = useState(review.text);
     const [starRating, setStarRating] = useState(review.starRating);
     const [hover, setHover] = useState(0);
@@ -326,26 +329,3 @@ export default function UpdateReview({
         </form>
     );
 }
-
-// const { mutate } = api.review.update.useMutation({
-//     onSuccess: () => {
-//         void ctx.review.getAll.invalidate();
-//     },
-// });
-
-// const submit = (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     if (session.user) {
-//         const data = {
-//             text,
-//             starRating,
-//             userId: session.user.id,
-//             id: review.id,
-//         };
-
-//         return mutate(data);
-//     } else {
-//         throw new Error("Hot Toast Incoming!!!");
-//     }
-// };
