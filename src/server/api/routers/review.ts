@@ -5,7 +5,6 @@ import {
     protectedProcedure,
 } from "~/server/api/trpc";
 
-
 // TODO want to refactor review router to work with bookings once it is finished :D
 
 export const reviewRouter = createTRPCRouter({
@@ -16,7 +15,7 @@ export const reviewRouter = createTRPCRouter({
             },
         });
     }),
-
+    // need to include booking type and Images with resource type review
     getByUserId: publicProcedure.input(z.string()).query(({ input, ctx }) => {
         return ctx.prisma.review.findMany({ where: { userId: input } });
     }),
@@ -28,23 +27,45 @@ export const reviewRouter = createTRPCRouter({
             return ctx.prisma.review.findFirst({ where: { userId } });
         }),
 
-
     create: protectedProcedure
         .input(
             z.object({
                 text: z.string(),
                 starRating: z.number(),
                 userId: z.string(),
+                bookingId: z.string(),
+                images: z
+                    .array(
+                        z.object({
+                            link: z.string(),
+                        })
+                    )
+                    .optional(),
             })
         )
         .mutation(async ({ input, ctx }) => {
-            //TODO: Add extra check that user has purchased this product
-            if (ctx.session.user.id === input.userId) {
+            const { text, starRating, userId, bookingId, images } = input;
+            if (ctx.session.user.id === userId) {
                 const newReview = await ctx.prisma.review.create({
-                    data: input,
+                    data: { text, starRating, userId, bookingId },
                 });
-
-                return newReview;
+                if (images) {
+                    const createdImages = images.map(async (image) => {
+                        return ctx.prisma.images.create({
+                            data: {
+                                link: image.link,
+                                resourceType: "REVIEW",
+                                resourceId: newReview.id,
+                                userId: newReview.userId,
+                            },
+                        });
+                    });
+                    return {
+                        newReview,
+                        createdImages,
+                    };
+                }
+                return { newReview };
             }
 
             throw new Error("Invalid userId");

@@ -41,9 +41,19 @@ export default function FormController({ name }: { name: FormType }) {
         <div>
             <div>{form[page]}</div>
 
-            <div>
-                <button onClick={() => changePages(-1)}>Back</button>
-                <button onClick={() => changePages(1)}>Next</button>
+            <div className="mt-5 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                <button
+                    onClick={() => changePages(-1)}
+                    className="transform rounded-md bg-glass px-4 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                >
+                    Back
+                </button>
+                <button
+                    onClick={() => changePages(1)}
+                    className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                >
+                    Next
+                </button>
             </div>
             {/* Submit using local storage check */}
         </div>

@@ -5,6 +5,8 @@ import DisplayImages from "../../components/Images/Display";
 import CreateReview from "~/components/Reviews/Create";
 import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
+import ModalDialog from "~/components/Modal";
+import SelectReview from "~/components/Reviews/Create/selectReview";
 
 export default function Reviews() {
     // TODO Decide if we want create review to be linked to a booking
@@ -24,9 +26,8 @@ export default function Reviews() {
 
     const { data: session } = useSession();
 
-    const { data: hasReviewed } = api.review.hasReviewed.useQuery({
-        userId: session?.user.id,
-    });
+    const { data: bookings, isLoading } =
+        api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id);
 
     const buttonScript: string[] = [
         "Leave me a review",
@@ -44,7 +45,9 @@ export default function Reviews() {
         "ya know, this actually works",
         "when you're qualified to review",
     ];
-    const [buttonText, setButtonText] = useState<string | undefined>(buttonScript[0]);
+    const [buttonText, setButtonText] = useState<string | undefined>(
+        buttonScript[0]
+    );
 
     const handleButtonClick = () => {
         if (buttonText) {
@@ -54,6 +57,18 @@ export default function Reviews() {
         }
     };
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    if (isLoading) return <div>Loading All Bookings...</div>;
+
     return (
         <div className="flex w-full flex-col items-center">
             <div className="flex items-center gap-32">
@@ -61,10 +76,21 @@ export default function Reviews() {
                     Reviews
                 </h1>
                 <div className="flex w-[400px] justify-center">
-                    {session && session.user && !hasReviewed ? (
-                        <button className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105">
-                            Leave me a review
-                        </button>
+                    {session && session.user && bookings ? (
+                        <div>
+                            <button
+                                onClick={openModal}
+                                className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105"
+                            >
+                                Leave me a review
+                            </button>
+                            <ModalDialog
+                                isOpen={isModalOpen}
+                                onClose={closeModal}
+                            >
+                                <SelectReview closeModal={closeModal} />
+                            </ModalDialog>
+                        </div>
                     ) : (
                         <button
                             className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105"
@@ -75,14 +101,8 @@ export default function Reviews() {
                     )}
                 </div>
             </div>
-            {/* <div>
-                {session && session.user && !hasReviewed && <CreateReview />}
-            </div> */}
 
             <DisplayReviews />
-
-            {/* <CreateImage />
-            <DisplayImages userId="cljyl59i90000ov93qhw2ujsd" /> */}
         </div>
     );
 }

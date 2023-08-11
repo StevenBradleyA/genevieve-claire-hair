@@ -7,8 +7,16 @@ interface ErrorsObj {
     image?: string;
     imageExcess?: string;
 }
+interface CreateImageProps {
+    setHasSubmittedImages: React.Dispatch<React.SetStateAction<boolean>>,
+    resourceType: string,
+    resourceId: string,
+}
 
-export default function CreateImage() {
+export default function CreateImage({
+    setHasSubmittedImages,
+    resourceType
+}: CreateImageProps) {
     const { data: session } = useSession();
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [errors, setErrors] = useState<ErrorsObj>({});
@@ -22,8 +30,8 @@ export default function CreateImage() {
         if (imageFiles.length < 1) {
             errorsObj.image = "Provide at least 1 Photo";
         }
-        if (imageFiles.length > 50) {
-            errorsObj.imageExcess = "Cannot provide more than 50 photos";
+        if (imageFiles.length > 10) {
+            errorsObj.imageExcess = "Cannot provide more than 10 photos";
         }
         setErrors(errorsObj);
     };
@@ -72,11 +80,12 @@ export default function CreateImage() {
                     const imageUrl = await uploadFileToS3(buffer);
                     imageUrlArr.push(imageUrl);
                 }
-
+                // create payload without resourceType and resourceId 
+                // we won't send 
                 const payload = {
                     images: imageUrlArr.map((imageUrl) => ({
                         link: imageUrl || "",
-                        resourceType: "USER",
+                        resourceType: resourceType,
                         resourceId: session?.user.id ?? "",
                         userId: session?.user.id ?? "",
                     })),
@@ -86,6 +95,7 @@ export default function CreateImage() {
                 setImageFiles([]);
                 setHasSubmitted(true);
                 setIsSubmitting(false);
+                setHasSubmittedImages(true);
             } catch (error) {
                 console.error("Upload failed:", error);
                 setIsSubmitting(false);
@@ -95,14 +105,9 @@ export default function CreateImage() {
 
     return (
         <form
-            onSubmit={void handleFormSubmit}
             encType="multipart/form-data"
-            className="create-listing-form-container"
+            className="flex flex-col items-center justify-center font-quattrocento"
         >
-            <div className="create-listing-upload-title">
-                Upload Images of your hair!
-            </div>
-
             {hasSubmitted && errors.image && (
                 <p className="create-listing-errors">{errors.image}</p>
             )}
@@ -125,12 +130,14 @@ export default function CreateImage() {
                                 ]);
                         }}
                     />
-                    <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-gray-400 font-bold text-white hover:bg-gray-700">
-                        Choose Files
+                    <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                        <span className="text-center font-quattrocento">
+                            Choose Files
+                        </span>
                     </div>
                 </label>
             </div>
-            <div className="mb-20 flex w-full flex-wrap justify-center gap-10">
+            <div className="mb-5 flex w-full flex-wrap justify-center gap-10">
                 {imageFiles.map((e, i) => {
                     return (
                         <>
@@ -146,8 +153,12 @@ export default function CreateImage() {
             </div>
 
             <button
-                className="rounded-lg bg-purple-500 px-4 py-2 font-semibold text-white shadow-md hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
+                className="] rounded-lg bg-glass px-4 py-2 font-quattrocento text-white shadow-md hover:bg-purple-300"
                 type="submit"
+                onClick={(e) => {
+                    e.preventDefault();
+                    void handleFormSubmit(e);
+                }}
                 disabled={
                     (hasSubmitted && Object.values(errors).length > 0) ||
                     isSubmitting
