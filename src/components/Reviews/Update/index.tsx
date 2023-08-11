@@ -61,9 +61,8 @@ export default function UpdateReview({
     session,
     closeModal,
 }: UpdateProps) {
-
-
     // TODO update error handling so it detects imageFiles length plus image length
+    // TODO may need to invalidate the photos too worked on refresh 
     const [text, setText] = useState(review.text);
     const [starRating, setStarRating] = useState(review.starRating);
     const [hover, setHover] = useState(0);
@@ -85,7 +84,13 @@ export default function UpdateReview({
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
         // ! should implement max file size upload could cap at like 50mb
-        if (imageFiles.length > 3) {
+
+        const totalImageCount =
+            (imageFiles.length ?? 0) +
+            (images?.length ?? 0) -
+            (activeDeletedImageIds.length ?? 0);
+
+        if (totalImageCount > 3) {
             errorsObj.imageExcess = "Cannot provide more than 3 photos";
         }
         setErrors(errorsObj);
