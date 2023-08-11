@@ -4,8 +4,7 @@ import {
     publicProcedure,
     protectedProcedure,
 } from "~/server/api/trpc";
-
-// TODO want to refactor review router to work with bookings once it is finished :D
+import { removeFileFromS3 } from "../utils";
 
 export const reviewRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
@@ -15,7 +14,6 @@ export const reviewRouter = createTRPCRouter({
             },
         });
     }),
-    // need to include booking type and Images with resource type review
     getByUserId: publicProcedure.input(z.string()).query(({ input, ctx }) => {
         return ctx.prisma.review.findMany({ where: { userId: input } });
     }),
@@ -96,9 +94,44 @@ export const reviewRouter = createTRPCRouter({
         }),
 
     delete: protectedProcedure
-        .input(z.object({ id: z.string(), userId: z.string() }))
+        .input(
+            z.object({
+                id: z.string(),
+                userId: z.string(),
+                imageIds: z.array(z.string()),
+            })
+        )
         .mutation(async ({ input, ctx }) => {
-            if (ctx.session.user.id === input.userId) {
+            const { imageIds, userId } = input;
+            if (ctx.session.user.id === userId) {
+                if (imageIds.length > 0) {
+                    const images = await ctx.prisma.images.findMany({
+                        where: {
+                            id: { in: imageIds },
+                        },
+                    });
+                    const removeFilePromises = images.map(async (image) => {
+                        try {
+                            await removeFileFromS3(image.link);
+                        } catch (err) {
+                            console.error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                            throw new Error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                        }
+                    });
+
+                    await Promise.all(removeFilePromises);
+
+                    await ctx.prisma.images.deleteMany({
+                        where: {
+                            id: { in: imageIds },
+                        },
+                    });
+                }
+
                 await ctx.prisma.review.delete({ where: { id: input.id } });
 
                 return "Successfully deleted";
@@ -107,3 +140,48 @@ export const reviewRouter = createTRPCRouter({
             throw new Error("Invalid userId");
         }),
 });
+
+// delete: protectedProcedure
+// .input(
+//     z.object({
+//         imageIds: z.array(z.string()),
+//         userId: z.string(),
+//     })
+// )
+// .mutation(async ({ input, ctx }) => {
+//     const { imageIds, userId } = input;
+
+//     if (ctx.session.user.id === userId) {
+//         const images = await ctx.prisma.images.findMany({
+//             where: {
+//                 id: { in: imageIds },
+//             },
+//         });
+
+//         const removeFilePromises = images.map(async (image) => {
+//             try {
+//                 await removeFileFromS3(image.link);
+//             } catch (err) {
+//                 console.error(`Failed to remove file from S3: ${err}`);
+//                 throw new Error(
+//                     `Failed to remove file from S3: ${err}`
+//                 );
+//             }
+//         });
+
+//         await Promise.all(removeFilePromises);
+
+//         await ctx.prisma.images.deleteMany({
+//             where: {
+//                 id: { in: imageIds },
+//             },
+//         });
+
+//         return "Successfully deleted";
+//     } else {
+//         throw new Error(
+//             "You do not have permission to delete these images"
+//         );
+//     }
+// }),
+// });

@@ -60,6 +60,8 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const handleMouseLeave = () => {
         setHoveredArea(null);
     };
+    if (isLoading) return <div>Loading All Review Images...</div>;
+
 
     return (
         <div>
@@ -153,6 +155,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                         session={session}
                         showDelete={showDelete}
                         setShowDelete={setShowDelete}
+                        images={images}
                     />
                 </div>
             )}

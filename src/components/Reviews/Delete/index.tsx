@@ -1,11 +1,13 @@
 import { api } from "~/utils/api";
 import type { Session } from "next-auth";
+import type { Images } from "@prisma/client";
 
 interface DeleteProps {
     id: string;
     session: Session;
     showDelete: boolean;
     setShowDelete: (show: boolean) => void;
+    images: Images[];
 }
 
 export default function DeleteReview({
@@ -13,8 +15,12 @@ export default function DeleteReview({
     session,
     showDelete,
     setShowDelete,
+    images,
 }: DeleteProps) {
     const ctx = api.useContext();
+
+    const imageIdsArr: string[] =
+        images.length > 0 ? images.map((image: Images) => image.id) : [];
 
     const { mutate } = api.review.delete.useMutation({
         onSuccess: () => {
@@ -29,6 +35,7 @@ export default function DeleteReview({
             const data = {
                 id,
                 userId: session.user.id,
+                imageIds: imageIdsArr,
             };
             return mutate(data);
         } else {
