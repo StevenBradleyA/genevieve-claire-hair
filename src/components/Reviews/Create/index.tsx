@@ -100,7 +100,6 @@ export default function CreateReview({
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("hello, submit");
         if (!Object.values(errors).length && !isSubmitting) {
             try {
                 const sessionUserId = session?.user?.id;
@@ -154,7 +153,6 @@ export default function CreateReview({
                         link: imageUrl || "",
                     }));
                 }
-                console.log("data", data);
                 setText("");
                 setStarRating(0);
                 setHover(0);

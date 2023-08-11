@@ -62,7 +62,8 @@ export default function UpdateReview({
     closeModal,
 }: UpdateProps) {
     // TODO update error handling so it detects imageFiles length plus image length
-    // TODO may need to invalidate the photos too worked on refresh 
+    // TODO may need to invalidate the photos too worked on refresh
+    // TODO update route needs refactoring when new image is added and text/star rating dont get updated.
     const [text, setText] = useState(review.text);
     const [starRating, setStarRating] = useState(review.starRating);
     const [hover, setHover] = useState(0);
@@ -104,6 +105,7 @@ export default function UpdateReview({
         onSuccess: () => {
             closeModal();
             void ctx.review.getAll.invalidate();
+            void ctx.image.getAllByResourceId.invalidate();
         },
     });
 

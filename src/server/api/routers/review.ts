@@ -92,8 +92,8 @@ export const reviewRouter = createTRPCRouter({
                 input;
 
             if (ctx.session.user.id === userId) {
-                if (images) {
-                    const createdImages = images.map(async (image) => {
+                if (images && images.length > 0) {
+                    const createdImages = await Promise.all(images.map(async (image) => {
                         return ctx.prisma.images.create({
                             data: {
                                 link: image.link,
@@ -102,7 +102,7 @@ export const reviewRouter = createTRPCRouter({
                                 userId: userId,
                             },
                         });
-                    });
+                    }));
                     return {
                         createdImages,
                     };
