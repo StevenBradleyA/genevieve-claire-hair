@@ -8,24 +8,55 @@ import {
     ExtraDetails,
 } from "../NewClientForm";
 
-import { Services, Specifications } from "../NewBookingForm";
+import { Services, ConsultMessage, Specifications } from "../NewBookingForm";
 
-type FormType = "NewClient" | "NewBooking";
+type FormCategoryType = "NewClient" | "NewBooking";
 
-const forms: { [key in FormType]: JSX.Element[] } = {
-    NewClient: [
-        <ServiceOptions key={0} />,
-        <ColorHistory key={1} />,
-        <ChemHair key={2} />,
-        <CurrentColor key={3} />,
-        <TimeSlots key={4} />,
-        <ExtraDetails key={5} />,
-    ],
-
-    NewBooking: [<Services key={0} />, <Specifications key={1} />],
+type FormTypes = {
+    [key in FormCategoryType]: {
+        (props: {
+            page: number;
+            setPage: React.Dispatch<React.SetStateAction<number>>;
+        }): JSX.Element;
+        displayName: string;
+    }[];
 };
 
-export default function FormController({ name }: { name: FormType }) {
+export type FormControlProps = {
+    page: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const createComponentWithProps = (
+    Component: React.FC<FormControlProps>,
+    key: number
+) => {
+    const Wrapper = (props: FormControlProps) => (
+        <Component key={key} {...props} />
+    );
+    Wrapper.displayName = Component.displayName ?? `FormComponent_${key}`;
+
+    return Wrapper;
+};
+
+const forms: FormTypes = {
+    NewClient: [
+        createComponentWithProps(ServiceOptions, 0),
+        createComponentWithProps(ColorHistory, 1),
+        createComponentWithProps(ChemHair, 2),
+        createComponentWithProps(CurrentColor, 3),
+        createComponentWithProps(TimeSlots, 4),
+        createComponentWithProps(ExtraDetails, 5),
+    ],
+
+    NewBooking: [
+        createComponentWithProps(Services, 0),
+        createComponentWithProps(ConsultMessage, 1),
+        createComponentWithProps(Specifications, 2),
+    ],
+};
+
+export default function FormController({ name }: { name: FormCategoryType }) {
     const [page, setPage] = useState(0);
 
     const form = forms[name];
@@ -39,7 +70,7 @@ export default function FormController({ name }: { name: FormType }) {
 
     return (
         <div>
-            <div>{form[page]}</div>
+            <div>{form[page]?.({ page, changePages })}</div>
 
             <div>
                 <button onClick={() => changePages(-1)}>Back</button>

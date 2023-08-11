@@ -14,213 +14,207 @@
 /**
  * Blonding includes highlights, balayage, baby lights, bleach and tone (User input for more info)
  * Full - $220 => 360, Partial - $170 => 310
- * 
+ *
  * Any bundles are - $10
  */
 
-const allServices: { [key: string]: any } = {
-    haircut: {
-        name: "Haircut",
-        select: false,
-        rate: 60,
-        bundleTime: 30,
+export const allServices = {
+    Haircut: {
         buzz: {
             name: "Buzz",
-            select: false,
+            selected: false,
             time: 20,
+            bundleTime: 20,
             price: 20,
         },
         short: {
             name: "Short - Shoulder and up",
-            select: false,
+            selected: false,
             time: 35,
+            bundleTime: 30,
             price: 35,
         },
         long: {
             name: "Long - Collarbone and down",
-            select: false,
+            selected: false,
             time: 60,
+            bundleTime: 30,
             price: 60,
         },
         creative: {
             name: "Creative/Transformation",
-            select: false,
+            selected: false,
             time: 90,
-            price: 90,
             bundleTime: 60,
+            price: 90,
         },
     },
-    allOverColor: {
-        name: "All Over Color",
-        select: false,
-        rate: 80,
-        bundleTime: 30,
+    "All Over Color": {
         glossTonerOnly: {
             name: "Gloss and toner only",
-            select: false,
+            selected: false,
             time: 60,
+            bundleTime: null,
             price: 50,
         },
         rootsOnly: {
             name: "Roots only",
-            select: false,
+            selected: false,
             time: 90,
+            bundleTime: 30,
             price: 80,
-            allow: true,
         },
         rootsToEnds: {
             name: "Roots to ends",
-            select: false,
+            selected: false,
             time: 120,
+            bundleTime: null,
             price: 115,
         },
     },
-    vivids: {
+    Blonding: {
+        
+    },
+
+    Vivids: {
         name: "Vivids",
-        select: false,
-        rate: 110, // per hour
         price: 135,
         requireConsult: true,
     },
-    colorCorrections: {
+    "Color Corrections": {
         name: "Color Corrections",
-        select: false,
-        rate: 150, // per hour
         price: 150,
         requireConsult: true,
     },
-    styling: {
+    Styling: {
         name: "Styling",
-        select: false,
-        rate: 61,
-        bundleTime: 60,
         blowout: {
             name: "Blowout",
-            select: false,
+            selected: false,
             time: 40,
-            price: 45, // starting at
+            bundleTime: 60,
+            price: 45,
         },
         specialEvent: {
             name: "Special Event - Prom, Homecoming, Senior pics, Formal",
-            select: false,
+            selected: false,
             time: 90,
+            bundleTime: 60,
             price: [65, 90],
-            allow: true,
         },
         bridal: {
             name: "Bridal/Wedding",
-            select: false,
-            allow: true,
+            selected: false,
+            time: null,
+            bundleTime: null,
+            price: null,
             requireConsult: true,
         },
     },
-    extensions: {
+    Quiet: {
+        name: "Quiet Appointment",
+    },
+    Extensions: {
         // Geni manually adds only
         name: "Extensions",
-        select: false,
         rate: 70,
         bundleTime: 30,
         full: {
             name: "Full application",
-            select: false,
+            selected: false,
             requireConsult: true,
         },
         moveUp: {
             name: "Maintenance move up",
-            select: false,
+            selected: false,
             time: 90,
             price: 105,
         },
         removal: {
             name: "Removal",
-            select: false,
+            selected: false,
             time: 60,
             price: 70,
         },
-    },
-    quiet: {
-        name: "Quiet Appointment",
-        select: false,
-        rate: 0,
     },
 };
 
 // highlights: {
 //     name: "Highlights",
-//     select: false,
+//     selected: false,
 //     rate: 95,
 //     disable: ["balayage", "bleachTone", "babyLights"],
 //     partial: {
 //         name: "Partial",
-//         select: false,
+//         selected: false,
 //         time: 150,
 //         price: 140,
 //     },
 
 //     full: {
 //         name: "Full",
-//         select: false,
+//         selected: false,
 //         time: 180,
 //         price: 220,
 //     },
 // },
 // balayage: {
 //     name: "Balayage",
-//     select: false,
+//     selected: false,
 //     rate: 95,
 //     disable: ["bleachTone", "babyLights", "highlights"],
 //     partial: {
 //         name: "Partial",
-//         select: false,
+//         selected: false,
 //         time: 180,
 //         price: 215,
 //     },
 //     full: {
 //         name: "Full",
-//         select: false,
+//         selected: false,
 //         time: 180,
 //         price: 260,
 //     },
 // },
 // babyLights: {
 //     name: "Baby Lights",
-//     select: false,
+//     selected: false,
 //     rate: 100,
 //     disable: ["balayage", "bleachTone", "highlights"],
 //     partial: {
 //         name: "Partial",
-//         select: false,
+//         selected: false,
 //         time: 210,
 //         price: 250,
 //     },
 //     full: {
 //         name: "Full",
-//         select: false,
+//         selected: false,
 //         time: 270,
 //         price: 290,
 //     },
 // },
 // bleachTone: {
 //     name: "Bleach & Tone",
-//     select: false,
+//     selected: false,
 //     rate: 85,
 //     disable: ["balayage", "allOverColor", "babyLights", "highlights"],
 //     halfInch: {
 //         name: "Growouts: 1/2 inch or less",
-//         select: false,
+//         selected: false,
 //         time: 150,
 //         price: 140,
 //     },
 //     twoInch: {
 //         name: "Growouts: 1/2 inch to 2 inches",
-//         select: false,
+//         selected: false,
 //         time: 180,
 //         price: 190,
 //         message: true,
 //     },
 //     moreThanTwo: {
 //         name: "Growouts: 2 inches or more",
-//         select: false,
+//         selected: false,
 //         requireConsult: true,
 //     },
 // },

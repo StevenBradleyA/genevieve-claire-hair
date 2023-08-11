@@ -1,5 +1,5 @@
 import Services from "./Services";
-import Specifications from './Specifications';
+import Specifications from "./Specifications";
+import ConsultMessage from "./ConsultMessage";
 
-
-export { Services, Specifications };
+export { Services, ConsultMessage, Specifications };
