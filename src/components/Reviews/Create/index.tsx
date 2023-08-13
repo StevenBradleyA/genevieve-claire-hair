@@ -60,7 +60,7 @@ export default function CreateReview({
     closeModal,
     bookingId,
 }: CreateReviewProps) {
-    const [text, setText] = useState("");
+    const [text, setText] = useState<string>("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
     const { data: session } = useSession();
@@ -87,7 +87,6 @@ export default function CreateReview({
         onSuccess: () => {
             closeModal();
             void ctx.review.getAll.invalidate();
-            void ctx.review.hasReviewed.invalidate();
         },
     });
 
@@ -101,7 +100,6 @@ export default function CreateReview({
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("hello, submit");
         if (!Object.values(errors).length && !isSubmitting) {
             try {
                 const sessionUserId = session?.user?.id;
@@ -155,7 +153,6 @@ export default function CreateReview({
                         link: imageUrl || "",
                     }));
                 }
-                console.log("data", data);
                 setText("");
                 setStarRating(0);
                 setHover(0);

@@ -60,6 +60,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const handleMouseLeave = () => {
         setHoveredArea(null);
     };
+    if (isLoading) return <div>Loading All Review Images...</div>;
 
     return (
         <div>
@@ -81,7 +82,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     }}
                 >
                     {cardClick && images && images.length > 0 ? (
-                        <div className="flex pt-1 justify-center">
+                        <div className="flex justify-center pt-1">
                             {images.map((image: Images, i: number) => {
                                 return (
                                     <ReviewCarousel
@@ -144,7 +145,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                             Edit Review
                         </button>
                         <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                            <UpdateReview review={review} session={session} />
+                            <UpdateReview review={review} session={session} closeModal={closeModal} />
                         </ModalDialog>
                     </div>
 
@@ -153,6 +154,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                         session={session}
                         showDelete={showDelete}
                         setShowDelete={setShowDelete}
+                        images={images || []}
                     />
                 </div>
             )}

@@ -9,19 +9,10 @@ import ModalDialog from "~/components/Modal";
 import SelectReview from "~/components/Reviews/Create/selectReview";
 
 export default function Reviews() {
-    // TODO Decide if we want create review to be linked to a booking
-    // could display type of booking on each review
-    // positive can see type of booking -- adds credibility
-    // negative some clients book over text exclusive lose sample size
-    //
     // TODO make modal for creating and editing a review.
     // TODO Add total Star Rating
-
     // TODO Give admin god power to delete a review
-    // TODO Add Date to Review  Month/Year
-
     // TODO First name and Last Name on Review
-
     // could make cool progress bar for review have a logo fill up all the way at a five star total etc...
 
     const { data: session } = useSession();
@@ -101,7 +92,6 @@ export default function Reviews() {
                     )}
                 </div>
             </div>
-
             <DisplayReviews />
         </div>
     );

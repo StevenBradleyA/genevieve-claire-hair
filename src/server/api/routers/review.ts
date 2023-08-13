@@ -4,8 +4,7 @@ import {
     publicProcedure,
     protectedProcedure,
 } from "~/server/api/trpc";
-
-// TODO want to refactor review router to work with bookings once it is finished :D
+import { removeFileFromS3 } from "../utils";
 
 export const reviewRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
@@ -15,7 +14,6 @@ export const reviewRouter = createTRPCRouter({
             },
         });
     }),
-    // need to include booking type and Images with resource type review
     getByUserId: publicProcedure.input(z.string()).query(({ input, ctx }) => {
         return ctx.prisma.review.findMany({ where: { userId: input } });
     }),
@@ -78,16 +76,70 @@ export const reviewRouter = createTRPCRouter({
                 userId: z.string(),
                 text: z.string().optional(),
                 starRating: z.number().optional(),
+                bookingId: z.string(),
+                deleteImageIds: z.array(z.string()).optional(),
+                images: z
+                    .array(
+                        z.object({
+                            link: z.string(),
+                        })
+                    )
+                    .optional(),
             })
         )
         .mutation(async ({ input, ctx }) => {
-            if (ctx.session.user.id === input.userId) {
+            const { id, userId, text, starRating, deleteImageIds, images } =
+                input;
+
+            if (ctx.session.user.id === userId) {
                 const updatedReview = await ctx.prisma.review.update({
                     where: {
-                        id: input.id,
+                        id: id,
                     },
-                    data: input,
+                    data: { text, starRating },
                 });
+
+                if (images && images.length > 0) {
+                    await Promise.all(
+                        images.map(async (image) => {
+                            return ctx.prisma.images.create({
+                                data: {
+                                    link: image.link,
+                                    resourceType: "REVIEW",
+                                    resourceId: id,
+                                    userId: userId,
+                                },
+                            });
+                        })
+                    );
+                }
+                if (deleteImageIds && deleteImageIds.length > 0) {
+                    const images = await ctx.prisma.images.findMany({
+                        where: {
+                            id: { in: deleteImageIds },
+                        },
+                    });
+                    const removeFilePromises = images.map(async (image) => {
+                        try {
+                            await removeFileFromS3(image.link);
+                        } catch (err) {
+                            console.error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                            throw new Error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                        }
+                    });
+
+                    await Promise.all(removeFilePromises);
+
+                    await ctx.prisma.images.deleteMany({
+                        where: {
+                            id: { in: deleteImageIds },
+                        },
+                    });
+                }
 
                 return updatedReview;
             }
@@ -96,9 +148,44 @@ export const reviewRouter = createTRPCRouter({
         }),
 
     delete: protectedProcedure
-        .input(z.object({ id: z.string(), userId: z.string() }))
+        .input(
+            z.object({
+                id: z.string(),
+                userId: z.string(),
+                imageIds: z.array(z.string()),
+            })
+        )
         .mutation(async ({ input, ctx }) => {
-            if (ctx.session.user.id === input.userId) {
+            const { imageIds, userId } = input;
+            if (ctx.session.user.id === userId) {
+                if (imageIds.length > 0) {
+                    const images = await ctx.prisma.images.findMany({
+                        where: {
+                            id: { in: imageIds },
+                        },
+                    });
+                    const removeFilePromises = images.map(async (image) => {
+                        try {
+                            await removeFileFromS3(image.link);
+                        } catch (err) {
+                            console.error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                            throw new Error(
+                                `Failed to remove file from S3: ${err}`
+                            );
+                        }
+                    });
+
+                    await Promise.all(removeFilePromises);
+
+                    await ctx.prisma.images.deleteMany({
+                        where: {
+                            id: { in: imageIds },
+                        },
+                    });
+                }
+
                 await ctx.prisma.review.delete({ where: { id: input.id } });
 
                 return "Successfully deleted";
