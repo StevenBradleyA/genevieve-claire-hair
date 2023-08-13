@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import type { FormInputType, FormDataType } from "./Services";
+import type { FormInputType } from "./Services";
 
-type ServiceOptionType = { [key in FormInputType]: string[] | null };
+type SelectionsType = Exclude<FormInputType, "Vivids" | "Color Corrections">;
+
+type ServiceOptionType = { [key in SelectionsType]: string[] };
+
+type DefaultStateType = { [key in SelectionsType]: number };
 
 const serviceOptions: ServiceOptionType = {
     Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
@@ -11,42 +15,99 @@ const serviceOptions: ServiceOptionType = {
         "Roots to ends",
         "Unsure",
     ],
-    Blonding: ["Highlights", "Balayage", "Baby lights", "Bleach and tone"],
+    Blonding: [
+        "Highlights",
+        "Balayage",
+        "Baby lights",
+        "Bleach and tone",
+        "Unsure",
+    ],
     Styling: [
         "Styling",
         "Special Event - Prom, Homecoming, Senior pics, Formal",
         "Bridal/Wedding",
         "Unsure",
     ],
-    Quiet: ["Music", "No Music"],
-    Vivids: null,
-    "Color Corrections": null,
+    Quiet: ["Music", "No Music", "Either"],
+};
+
+const defaultState: DefaultStateType = {
+    Haircut: -1,
+    "All Over Color": -1,
+    Blonding: -1,
+    Styling: -1,
+    Quiet: -1,
 };
 
 const Specifications = () => {
-    const [selections, setSelections] = useState<FormInputType[]>();
+    const [selections, setSelections] = useState<SelectionsType[]>();
+    const [subSelections, setSubSelections] = useState(defaultState);
 
     useEffect(() => {
-        const storage = localStorage.getItem("Services");
-        if (storage) {
-            const choicesObj = JSON.parse(storage) as FormDataType;
-            const choicesArr = Object.keys(choicesObj) as FormInputType[];
+        const services = localStorage.getItem("Services");
+
+        if (services) {
+            const choicesObj = JSON.parse(services) as ServiceOptionType;
+            const choicesArr = Object.keys(choicesObj) as SelectionsType[];
 
             setSelections(choicesArr.filter((el) => choicesObj[el]));
         }
     }, []);
 
-    if (selections) {
-        if (selections.includes("Quiet") || selections.includes("Vivids")) {
-            return <div>Consult Message</div>;
+    useEffect(() => {
+        const specifications = localStorage.getItem("Specifications");
+        if (specifications) {
+            const specObj = JSON.parse(specifications) as DefaultStateType;
+            for (const option in specObj) {
+                console.log(selections);
+                if (
+                    selections &&
+                    !selections.includes(option as SelectionsType)
+                ) {
+                    console.log("hey", selections, option);
+                    specObj[option as SelectionsType] = -1;
+                }
+            }
+            localStorage.setItem("Specifications", JSON.stringify(specObj));
+            setSubSelections(specObj);
         }
+    }, [selections]);
+
+    const toggle = (service: SelectionsType, choice: number) => {
+        const newSelections = { ...subSelections };
+        newSelections[service] = choice;
+
+        localStorage.setItem("Specifications", JSON.stringify(newSelections));
+        setSubSelections(newSelections);
+    };
+
+    if (selections) {
         return (
-            <div>
+            <div className="flex flex-col text-3xl">
                 {selections.map((service) => {
                     return (
                         <div key={service}>
-                            {serviceOptions[service].map((option) => {
-                                return <input key={option}></input>;
+                            {service}
+                            {serviceOptions[service].map((option, choice) => {
+                                return (
+                                    <label
+                                        key={option}
+                                        className="flex cursor-pointer items-center gap-5 text-xl"
+                                    >
+                                        {option}
+                                        <input
+                                            className="custom-checkbox"
+                                            type="checkbox"
+                                            checked={
+                                                subSelections[service] ===
+                                                choice
+                                            }
+                                            onChange={() =>
+                                                toggle(service, choice)
+                                            }
+                                        ></input>
+                                    </label>
+                                );
                             })}
                         </div>
                     );
