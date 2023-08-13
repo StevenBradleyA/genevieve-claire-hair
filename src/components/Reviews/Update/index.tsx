@@ -81,6 +81,9 @@ export default function UpdateReview({
         resourceType: "REVIEW",
         resourceId: review.id,
     });
+    console.log("imageFiles", imageFiles.length);
+    console.log("prev images", images?.length);
+    console.log("activedeleted", activeDeletedImageIds.length);
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
@@ -90,7 +93,6 @@ export default function UpdateReview({
             (imageFiles.length ?? 0) +
             (images?.length ?? 0) -
             (activeDeletedImageIds.length ?? 0);
-
         if (totalImageCount > 3) {
             errorsObj.imageExcess = "Cannot provide more than 3 photos";
         }
@@ -99,7 +101,7 @@ export default function UpdateReview({
 
     useEffect(() => {
         handleInputErrors();
-    }, [imageFiles]);
+    }, [imageFiles, activeDeletedImageIds, images]);
 
     const { mutate } = api.review.update.useMutation({
         onSuccess: () => {
