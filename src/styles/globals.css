@@ -83,7 +83,7 @@
 
 /* -------------       Pricing       ------------- */
 
-.blurblur {
+/* .blurblur {
     position: absolute;
     background-image: linear-gradient(
         rgba(255, 255, 255, 0.4),
@@ -93,7 +93,7 @@
     height: 100%;
     backdrop-filter: blur(40px);
     border-radius: 40px;
-}
+} */
 
 .text-image {
     background-image: url("../../public/Holographic/holo-crinkle.png");
@@ -103,7 +103,6 @@
 }
 
 /* -------------       Reviews       ------------- */
-
 
 .overlay {
     position: fixed;
@@ -122,7 +121,6 @@
 }
 
 /* -------------       Review Card Movement      ------------- */
-
 
 .card-poggers {
     margin: 10px;
