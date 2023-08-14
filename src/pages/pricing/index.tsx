@@ -66,7 +66,7 @@ export default function Pricing() {
                         <li className=" text-image mb-1">
                             All Over Color - $115+
                         </li>
-                        <li className=" text-image mb-1 ml-12 text-3xl">Roots Only- $80</li>
+                        <li className=" text-image mb-1 ml-12 text-3xl">Roots Only - $80</li>
                         <li className=" text-image mb-1">
                             Partial Blonding - $170+
                         </li>
