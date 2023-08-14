@@ -82,14 +82,15 @@ export default function Portfolio() {
 
     return (
         <motion.div
-            className="grid grid-cols-1 gap-4 p-8 sm:grid-cols-2"
+            // className="grid grid-cols-1 gap-4 p-8 sm:grid-cols-2"
+            className="flex"
             initial="hidden"
             animate="visible"
             variants={pageVariants}
         >
             {/* Left half*/}
-            <div className="w-full">
-                <div className=" instagram-header mb-12 flex h-20 items-center justify-center">
+            <div className="w-2/3 px-10">
+                <div className=" instagram-header mb-12 flex h-20 items-center justify-center rounded-2xl shadow-xl">
                     <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
                         Instagram
                     </h1>
@@ -100,7 +101,7 @@ export default function Portfolio() {
                         onClick={handleInstaClick}
                     />
                 </div>
-                <div className="flex flex-wrap">
+                <div className="flex justify-center flex-wrap bg-glass shadow-2xl rounded-2xl p-10">
                     <AnimatePresence>
                         {instaFeed.map((post, index) => (
                             <motion.div
@@ -109,15 +110,15 @@ export default function Portfolio() {
                                 animate="visible"
                                 custom={index}
                                 variants={staggerVariants}
-                                className="w-full overflow-hidden sm:w-1/2 md:w-1/3 lg:w-1/4"
-                                style={{ width: "300px", height: "300px" }}
+                                className="w-full overflow-hidden"
+                                style={{ width: "275px", height: "275px" }}
                             >
                                 <div className="zoom-effect h-full w-full rounded-lg object-cover">
                                     <Image
                                         src={post.media_url}
                                         alt={post.caption || ""}
-                                        width={300}
-                                        height={300}
+                                        width={275}
+                                        height={275}
                                         className="h-full w-full"
                                     />
                                 </div>
@@ -128,7 +129,7 @@ export default function Portfolio() {
             </div>
 
             {/* Right half*/}
-            <div className="flex w-full flex-col items-center">
+            {/* <div className="flex w-full flex-col items-center">
                 <AnimatePresence>
                     <motion.div
                         initial="hidden"
@@ -179,7 +180,7 @@ export default function Portfolio() {
                         <Image src={slc} alt="blonding" />
                     </motion.div>
                 </AnimatePresence>
-            </div>
+            </div> */}
         </motion.div>
     );
 }
