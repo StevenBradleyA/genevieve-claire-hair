@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Services, Specifications } from "~/components/NewBookingForm";
 import type { FormDataType } from "~/components/NewBookingForm/Services";
+import type { SpecificationsType } from "~/components/NewBookingForm/Specifications";
+
 // Redirect to sign up & new client form
 const form = [
     <Services key={0} />,
@@ -15,25 +17,39 @@ export default function Booking() {
     const [page, setPage] = useState(0);
     const [requireConsult, setRequireConsult] = useState<string>("");
 
-    const checkForConsultOptions = () => {
+    const checkForConsultServices = () => {
         const services = localStorage.getItem("Services");
         if (services) {
             const choicesObj = JSON.parse(services) as FormDataType;
 
             if (choicesObj["Vivids"]) {
                 setRequireConsult("Vivids");
-            }
-            if (choicesObj["Color Corrections"]) {
+            } else if (choicesObj["Color Corrections"]) {
                 setRequireConsult("Color Corrections");
-            }
+            } else setRequireConsult("");
+        } else return null;
+    };
+
+    const checkForConsultSpecifications = () => {
+        const specifications = localStorage.getItem("Specifications");
+        if (specifications) {
+            const specObj = JSON.parse(specifications) as SpecificationsType;
+
+            if (specObj.Styling === 2) setRequireConsult("Bridal/Wedding");
+            else setRequireConsult("");
+
+            if (specObj.ready) return true;
+            else return null;
         }
     };
 
     const changePages = (num: number) => {
         const newNum = page + num;
 
-        if (newNum === 1 || newNum === 2) {
-            checkForConsultOptions();
+        if (newNum === 1) {
+            if (checkForConsultServices() === null) return;
+        } else if (newNum === 2) {
+            if (checkForConsultSpecifications() === null) return;
         } else {
             setRequireConsult("");
         }
