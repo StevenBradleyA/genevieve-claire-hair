@@ -11,9 +11,6 @@ export default function Pricing() {
         visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
     };
 
-    // 💅
-    // I like the nail emoji better lmao
-
     return (
         <div className="w-3/4">
             <motion.div
@@ -69,7 +66,7 @@ export default function Pricing() {
                         <li className=" text-image mb-1">
                             All Over Color - $115+
                         </li>
-                        <li className=" text-image mb-1">Roots Only- $80</li>
+                        <li className=" text-image mb-1 ml-12 text-3xl">Roots Only- $80</li>
                         <li className=" text-image mb-1">
                             Partial Blonding - $170+
                         </li>
