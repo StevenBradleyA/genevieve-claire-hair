@@ -5,7 +5,9 @@ type SelectionsType = Exclude<FormInputType, "Vivids" | "Color Corrections">;
 
 type ServiceOptionType = { [key in SelectionsType]: string[] };
 
-type DefaultStateType = { [key in SelectionsType]: number };
+export type SpecificationsType = { [key in SelectionsType]: number } & {
+    ready: boolean;
+};
 
 const serviceOptions: ServiceOptionType = {
     Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
@@ -31,12 +33,13 @@ const serviceOptions: ServiceOptionType = {
     Quiet: ["Music", "No Music", "Either"],
 };
 
-const defaultState: DefaultStateType = {
+const defaultState: SpecificationsType = {
     Haircut: -1,
     "All Over Color": -1,
     Blonding: -1,
     Styling: -1,
     Quiet: -1,
+    ready: false,
 };
 
 const Specifications = () => {
@@ -57,17 +60,21 @@ const Specifications = () => {
     useEffect(() => {
         const specifications = localStorage.getItem("Specifications");
         if (specifications) {
-            const specObj = JSON.parse(specifications) as DefaultStateType;
+            const specObj = JSON.parse(specifications) as SpecificationsType;
             for (const option in specObj) {
-                console.log(selections);
                 if (
+                    option !== "ready" &&
                     selections &&
                     !selections.includes(option as SelectionsType)
                 ) {
-                    console.log("hey", selections, option);
                     specObj[option as SelectionsType] = -1;
                 }
             }
+
+            if (selections && selections.some((el) => specObj[el] === -1)) {
+                specObj.ready = false;
+            } else specObj.ready = true;
+
             localStorage.setItem("Specifications", JSON.stringify(specObj));
             setSubSelections(specObj);
         }
@@ -76,6 +83,10 @@ const Specifications = () => {
     const toggle = (service: SelectionsType, choice: number) => {
         const newSelections = { ...subSelections };
         newSelections[service] = choice;
+
+        if (selections && selections.some((el) => newSelections[el] === -1)) {
+            newSelections.ready = false;
+        } else newSelections.ready = true;
 
         localStorage.setItem("Specifications", JSON.stringify(newSelections));
         setSubSelections(newSelections);
