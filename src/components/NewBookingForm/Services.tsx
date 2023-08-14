@@ -35,7 +35,11 @@ const Services = () => {
 
         if (allowSelection(type)) {
             newData[type] = !newData[type];
-            localStorage.setItem("Services", JSON.stringify(newData));
+
+            if (Object.values(newData).includes(true)) {
+                localStorage.setItem("Services", JSON.stringify(newData));
+            } else localStorage.removeItem("Services");
+            
             setFormData(newData);
         } else {
             console.log("Hot Toast Incoming!!!");
