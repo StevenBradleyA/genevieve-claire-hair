@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { env } from "~/env.mjs";
 import Image from "next/image";
 import instagramLogo from "../../../public/insta.png";
-// import { useRouter } from "next/router";
 import blonding from "../../../public/portfolio/blonding.png";
 import vivids from "../../../public/portfolio/vivids.png";
 import colorCorrection from "../../../public/portfolio/color-correction.png";
@@ -20,7 +19,6 @@ interface InstagramFeedItem {
 export default function Portfolio() {
     const instaToken = env.NEXT_PUBLIC_INSTA_TOKEN;
     const [instaFeed, setInstaFeed] = useState<InstagramFeedItem[]>([]);
-    // const router = useRouter();
     useEffect(() => {
         if (instaToken) {
             fetchInstagramFeed(instaToken)
@@ -58,22 +56,8 @@ export default function Portfolio() {
             },
         }),
     };
+    // ----- animations end -----
 
-    // -----  end animations -----
-
-    // TODO decide if we want a redirect or new tab open
-
-    // const handleInstaClick = () => {
-    //     router.push('https://www.instagram.com/genevieveclare.hair/')
-    //       .then(() => {
-    //         // You can perform any additional actions here if needed
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error navigating to Instagram:', error);
-    //       });
-    //   };
-
-    // new tab
     const handleInstaClick = (e: React.FormEvent) => {
         e.preventDefault();
         const url = "https://www.instagram.com/genevieveclare.hair/";
@@ -82,7 +66,6 @@ export default function Portfolio() {
 
     return (
         <motion.div
-            // className="grid grid-cols-1 gap-4 p-8 sm:grid-cols-2"
             className="flex"
             initial="hidden"
             animate="visible"

@@ -52,6 +52,11 @@
 
 /* -------------       Home       ------------- */
 
+
+
+
+
+
 /* -------------       Portfolio       ------------- */
 
 .zoom-effect {
@@ -69,19 +74,7 @@
     opacity: 0.5;
 }
 
-/* .blurInsta {
-    position: absolute;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.1)
-    );
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(40px);
-    border-radius: 40px;
-} */
-
-.insta-image-sizing{
+.insta-image-sizing {
     width: 200px;
     height: 200px;
 }
@@ -104,22 +97,7 @@
     }
 }
 
-
-
-
 /* -------------       Pricing       ------------- */
-
-/* .blurblur {
-    position: absolute;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.1)
-    );
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(40px);
-    border-radius: 40px;
-} */
 
 .text-image {
     background-image: url("../../public/Holographic/holo-crinkle.png");
