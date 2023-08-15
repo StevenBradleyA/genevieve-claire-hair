@@ -69,7 +69,7 @@
     opacity: 0.5;
 }
 
-.blurInsta {
+/* .blurInsta {
     position: absolute;
     background-image: linear-gradient(
         rgba(255, 255, 255, 0.4),
@@ -79,7 +79,33 @@
     height: 100%;
     backdrop-filter: blur(40px);
     border-radius: 40px;
+} */
+
+.insta-image-sizing{
+    width: 200px;
+    height: 200px;
 }
+@media (min-width: 1280px) {
+    .insta-image-sizing {
+        width: 250px;
+        height: 250px;
+    }
+}
+@media (min-width: 1920px) {
+    .insta-image-sizing {
+        width: 275px;
+        height: 275px;
+    }
+}
+@media (min-width: 2560px) {
+    .insta-image-sizing {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+
+
 
 /* -------------       Pricing       ------------- */
 
