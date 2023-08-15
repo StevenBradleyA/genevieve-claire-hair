@@ -21,6 +21,11 @@ export default {
                 "grand-hotel": ['"Grand Hotel"', "cursive"],
                 "dancing-script": ['"Dancing Script"', "cursive"],
             },
+            screens: {
+                mobile: "320px",
+                full: "1920px",
+                ultrawide: "2560px",
+            },
         },
     },
     plugins: [],
