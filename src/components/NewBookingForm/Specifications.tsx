@@ -5,7 +5,7 @@ type SelectionsType = Exclude<FormInputType, "Vivids" | "Color Corrections">;
 
 type ServiceOptionType = { [key in SelectionsType]: string[] };
 
-export type SpecificationsType = { [key in SelectionsType]: number } & {
+export type SpecificationsType = { [key in SelectionsType]: string } & {
     ready: boolean;
 };
 
@@ -24,21 +24,16 @@ const serviceOptions: ServiceOptionType = {
         "Bleach and tone",
         "Unsure",
     ],
-    Styling: [
-        "Styling",
-        "Special Event - Prom, Homecoming, Senior pics, Formal",
-        "Bridal/Wedding",
-        "Unsure",
-    ],
+    Styling: ["Styling", "Special Event", "Bridal/Wedding", "Unsure"],
     Quiet: ["Music", "No Music", "Either"],
 };
 
 const defaultState: SpecificationsType = {
-    Haircut: -1,
-    "All Over Color": -1,
-    Blonding: -1,
-    Styling: -1,
-    Quiet: -1,
+    Haircut: "",
+    "All Over Color": "",
+    Blonding: "",
+    Styling: "",
+    Quiet: "",
     ready: false,
 };
 
@@ -67,11 +62,11 @@ const Specifications = () => {
                     selections &&
                     !selections.includes(option as SelectionsType)
                 ) {
-                    specObj[option as SelectionsType] = -1;
+                    specObj[option as SelectionsType] = "";
                 }
             }
 
-            if (selections && selections.some((el) => specObj[el] === -1)) {
+            if (selections && selections.some((el) => !specObj[el])) {
                 specObj.ready = false;
             } else specObj.ready = true;
 
@@ -80,11 +75,11 @@ const Specifications = () => {
         }
     }, [selections]);
 
-    const toggle = (service: SelectionsType, choice: number) => {
+    const toggle = (service: SelectionsType, choice: string) => {
         const newSelections = { ...subSelections };
         newSelections[service] = choice;
 
-        if (selections && selections.some((el) => newSelections[el] === -1)) {
+        if (selections && selections.some((el) => !newSelections[el])) {
             newSelections.ready = false;
         } else newSelections.ready = true;
 
@@ -99,7 +94,7 @@ const Specifications = () => {
                     return (
                         <div key={service}>
                             {service}
-                            {serviceOptions[service].map((option, choice) => {
+                            {serviceOptions[service].map((option) => {
                                 return (
                                     <label
                                         key={option}
@@ -111,10 +106,10 @@ const Specifications = () => {
                                             type="checkbox"
                                             checked={
                                                 subSelections[service] ===
-                                                choice
+                                                option
                                             }
                                             onChange={() =>
-                                                toggle(service, choice)
+                                                toggle(service, option)
                                             }
                                         ></input>
                                     </label>

@@ -35,7 +35,8 @@ export default function Booking() {
         if (specifications) {
             const specObj = JSON.parse(specifications) as SpecificationsType;
 
-            if (specObj.Styling === 2) setRequireConsult("Bridal/Wedding");
+            if (specObj.Styling === "Bridal/Wedding")
+                setRequireConsult("Bridal/Wedding");
             else setRequireConsult("");
 
             if (specObj.ready) return true;
