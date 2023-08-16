@@ -14,13 +14,15 @@ export default function Reviews() {
     // TODO make modal for creating and editing a review.
     // TODO Give admin god power to delete a review
     // TODO First name and Last Name on Review
-    // TODO Test Modals on mobile 
-    
+    // TODO Test Modals on mobile
+
     const { isMobile } = useMobile();
     const { data: session } = useSession();
 
     const { data: bookings, isLoading } =
-        api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id);
+        session && session.user
+            ? api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id)
+            : { data: null, isLoading: false };
 
     const buttonScript: string[] = [
         "Leave me a review",
