@@ -7,13 +7,12 @@ import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
 import ModalDialog from "~/components/Modal";
 import SelectReview from "~/components/Reviews/Create/selectReview";
+import { DotLoader } from "react-spinners";
 
 export default function Reviews() {
     // TODO make modal for creating and editing a review.
-    // TODO Add total Star Rating
     // TODO Give admin god power to delete a review
     // TODO First name and Last Name on Review
-    // could make cool progress bar for review have a logo fill up all the way at a five star total etc...
 
     const { data: session } = useSession();
 
@@ -58,7 +57,13 @@ export default function Reviews() {
         setIsModalOpen(false);
     };
 
-    if (isLoading) return <div>Loading All Bookings...</div>;
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Reviews are Loading</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     return (
         <div className="flex w-full flex-col items-center">

@@ -113,6 +113,7 @@ export default function NavBar() {
                             >
                                 Admin
                             </Link>
+                            {/* <AuthController /> */}
                         </div>
                     )}
                 </div>
