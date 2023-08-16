@@ -53,6 +53,68 @@
 /* -------------       Home       ------------- */
 
 
+/* mobile Burger */
+
+.container {
+    position: relative;
+    height: 28px;
+    width: 36px;
+    cursor: pointer;
+  }
+  
+  .line-top,
+  .line-middle,
+  .line-bottom {
+    position: absolute;
+    display: block;
+    height: 4px;
+    width: 36px;
+    border-radius: 2px;
+    background: #fff;
+  }
+  
+  .line-top {
+    top: 0;
+    transform-origin: 34px 2px;
+  }
+  
+  .line-middle {
+    top: 12px;
+    transition: opacity 200ms linear;
+  }
+  
+  .line-bottom {
+    bottom: 0;
+    transform-origin: 34px 2px;
+  }
+  
+  .is-open .line-top {
+    animation: line-top-out 600ms linear normal;
+    animation-fill-mode: forwards;
+  }
+  
+  .is-open .line-middle {
+    opacity: 0;
+  }
+  
+  .is-open .line-bottom {
+    animation: line-bot-out 600ms linear normal;
+    animation-fill-mode: forwards;
+  }
+  
+  .is-closed .line-top {
+    animation: line-top-in 600ms linear normal;
+    animation-fill-mode: forwards;
+  }
+  
+  .is-closed .line-middle {
+    transition-delay: 200ms;
+  }
+  
+  .is-closed .line-bottom {
+    animation: line-bot-in 600ms linear normal;
+    animation-fill-mode: forwards;
+  }
 
 
 
