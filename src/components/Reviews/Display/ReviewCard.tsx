@@ -63,12 +63,13 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const handleMouseLeave = () => {
         setHoveredArea(null);
     };
-    if (isLoading) return <div className="text-white">Loading All Review Images...</div>;
+    if (isLoading)
+        return <div className="text-white">Loading All Review Images...</div>;
 
     return isMobile ? (
         <div className="my-10">
             <div
-                className="w-[350px] h-[220px] rounded-2xl bg-glass text-white shadow-2xl"
+                className="h-[220px] w-[350px] rounded-2xl bg-glass text-white shadow-2xl"
                 onClick={handleCardClick}
             >
                 {cardClick && images && images.length > 0 ? (
@@ -85,7 +86,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     </div>
                 ) : (
                     <div className="p-4">
-                        <div className="mb-2 flex gap-5 items-center">
+                        <div className="mb-2 flex items-center gap-5">
                             <div className=" flex h-12 w-14 items-center justify-center rounded-full bg-lightPurple text-4xl">
                                 {review.user.name ? review.user.name[0] : null}
                             </div>
@@ -176,7 +177,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                         </div>
                     ) : (
                         <div className="p-4">
-                            <div className="mb-2 flex gap-5 items-center">
+                            <div className="mb-2 flex items-center gap-5">
                                 <div className=" flex h-14 w-14 items-center justify-center rounded-full bg-lightPurple text-4xl">
                                     {review.user.name
                                         ? review.user.name[0]

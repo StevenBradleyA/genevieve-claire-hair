@@ -14,6 +14,8 @@ export default function Reviews() {
     // TODO make modal for creating and editing a review.
     // TODO Give admin god power to delete a review
     // TODO First name and Last Name on Review
+    // TODO Test Modals on mobile 
+    
     const { isMobile } = useMobile();
     const { data: session } = useSession();
 
