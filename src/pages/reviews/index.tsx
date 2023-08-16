@@ -7,24 +7,28 @@ import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
 import ModalDialog from "~/components/Modal";
 import SelectReview from "~/components/Reviews/Create/selectReview";
+import { DotLoader } from "react-spinners";
+import { useMobile } from "~/components/MobileContext";
 
 export default function Reviews() {
     // TODO make modal for creating and editing a review.
-    // TODO Add total Star Rating
     // TODO Give admin god power to delete a review
     // TODO First name and Last Name on Review
-    // could make cool progress bar for review have a logo fill up all the way at a five star total etc...
+    // TODO Test Modals on mobile
 
+    const { isMobile } = useMobile();
     const { data: session } = useSession();
 
     const { data: bookings, isLoading } =
-        api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id);
+        session && session.user
+            ? api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id)
+            : { data: null, isLoading: false };
 
     const buttonScript: string[] = [
         "Leave me a review",
         "woah!",
         "have you booked with me before?",
-        "you promise your signed in too?",
+        "you promise youre signed in too?",
         "you promised tho 🥺",
         "okay, chill",
         "pls",
@@ -58,40 +62,79 @@ export default function Reviews() {
         setIsModalOpen(false);
     };
 
-    if (isLoading) return <div>Loading All Bookings...</div>;
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Reviews are loading</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     return (
         <div className="flex w-full flex-col items-center">
-            <div className="flex items-center gap-32">
-                <h1 className="font-grand-hotel text-9xl text-white ">
-                    Reviews
-                </h1>
-                <div className="flex w-[400px] justify-center">
-                    {session && session.user && bookings ? (
-                        <div>
+            {isMobile ? (
+                <div className="flex flex-col items-center gap-10">
+                    <h1 className="font-grand-hotel text-8xl text-white ">
+                        Reviews
+                    </h1>
+                    <div className="flex w-[400px] justify-center">
+                        {session && session.user && bookings ? (
+                            <div>
+                                <button
+                                    onClick={openModal}
+                                    className=" inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                                >
+                                    Leave me a review
+                                </button>
+                                <ModalDialog
+                                    isOpen={isModalOpen}
+                                    onClose={closeModal}
+                                >
+                                    <SelectReview closeModal={closeModal} />
+                                </ModalDialog>
+                            </div>
+                        ) : (
                             <button
-                                onClick={openModal}
-                                className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105"
+                                className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                                onClick={handleButtonClick}
                             >
-                                Leave me a review
+                                {buttonText}
                             </button>
-                            <ModalDialog
-                                isOpen={isModalOpen}
-                                onClose={closeModal}
-                            >
-                                <SelectReview closeModal={closeModal} />
-                            </ModalDialog>
-                        </div>
-                    ) : (
-                        <button
-                            className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-gray-800 shadow-none transition-transform hover:scale-110 active:scale-105"
-                            onClick={handleButtonClick}
-                        >
-                            {buttonText}
-                        </button>
-                    )}
+                        )}
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className="flex items-center gap-32">
+                    <h1 className="font-grand-hotel text-9xl text-white ">
+                        Reviews
+                    </h1>
+                    <div className="flex w-[400px] justify-center">
+                        {session && session.user && bookings ? (
+                            <div>
+                                <button
+                                    onClick={openModal}
+                                    className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                                >
+                                    Leave me a review
+                                </button>
+                                <ModalDialog
+                                    isOpen={isModalOpen}
+                                    onClose={closeModal}
+                                >
+                                    <SelectReview closeModal={closeModal} />
+                                </ModalDialog>
+                            </div>
+                        ) : (
+                            <button
+                                className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                                onClick={handleButtonClick}
+                            >
+                                {buttonText}
+                            </button>
+                        )}
+                    </div>
+                </div>
+            )}
             <DisplayReviews />
         </div>
     );

@@ -12,9 +12,11 @@ export default function DisplayReviews() {
 
     if (!reviews) return <div>Oops</div>;
 
+    const reversedReviews = [...reviews].reverse();
+
     return (
         <div className="flex flex-wrap justify-center gap-10 px-10 mx-10 w-full">
-            {reviews.map((review: ReviewWithUser, i: number) => {
+            {reversedReviews.map((review: ReviewWithUser, i: number) => {
                 return <ReviewCard key={i} review={review} />;
             })}
         </div>
