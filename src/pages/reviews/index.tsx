@@ -1,8 +1,5 @@
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
-import CreateImage from "../../components/Images/Create";
-import DisplayImages from "../../components/Images/Display";
-import CreateReview from "~/components/Reviews/Create";
 import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
 import ModalDialog from "~/components/Modal";
@@ -21,7 +18,7 @@ export default function Reviews() {
 
     const { data: bookings, isLoading } =
         session && session.user
-            ? api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id)
+            ? api.booking.getAllByUserIdWithNoReview.useQuery(session.user.id)
             : { data: null, isLoading: false };
 
     const buttonScript: string[] = [

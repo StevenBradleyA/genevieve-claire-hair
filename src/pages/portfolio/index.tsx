@@ -21,6 +21,8 @@ export default function Portfolio() {
     const { isMobile } = useMobile();
     const instaToken = env.NEXT_PUBLIC_INSTA_TOKEN;
     const [instaFeed, setInstaFeed] = useState<InstagramFeedItem[]>([]);
+
+    
     useEffect(() => {
         if (instaToken) {
             fetchInstagramFeed(instaToken)
@@ -82,9 +84,9 @@ export default function Portfolio() {
                     />
                 </div>
                 <div className="flex flex-wrap justify-center rounded-2xl bg-glass p-3 shadow-2xl">
-                    {instaFeed.map((post) => (
+                    {instaFeed.map((post, index) => (
                         <div
-                            key={post.id}
+                            key={index}
                             className="insta-image-sizing-mobile w-full overflow-hidden"
                         >
                             <div className="zoom-effect h-full w-full rounded-lg object-cover">
@@ -169,10 +171,10 @@ export default function Portfolio() {
                     <AnimatePresence>
                         {instaFeed.map((post, index) => (
                             <motion.div
-                                key={post.id}
+                                key={index}
                                 initial="hidden"
                                 animate="visible"
-                                custom={index}
+                                // custom={index}
                                 variants={staggerVariants}
                                 className="insta-image-sizing w-full overflow-hidden"
                             >
