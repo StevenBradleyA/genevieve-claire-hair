@@ -10,6 +10,7 @@ import slc from "../../../public/portfolio/slc.png";
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMobile } from "~/components/MobileContext";
+import InstagramImageCard from "~/components/Portfolio";
 
 interface InstagramFeedItem {
     id: string;
@@ -22,7 +23,7 @@ export default function Portfolio() {
     const instaToken = env.NEXT_PUBLIC_INSTA_TOKEN;
     const [instaFeed, setInstaFeed] = useState<InstagramFeedItem[]>([]);
 
-    
+
     useEffect(() => {
         if (instaToken) {
             fetchInstagramFeed(instaToken)
@@ -39,16 +40,7 @@ export default function Portfolio() {
         visible: { opacity: 1, y: 0, transition: { duration: 1.2 } },
     };
 
-    const staggerVariants = {
-        hidden: { opacity: 0 },
-        visible: (index: number) => ({
-            opacity: 1,
-            transition: {
-                duration: 0.5,
-                delay: index * 0.12,
-            },
-        }),
-    };
+  
     const contentStaggerVariants = {
         hidden: { opacity: 0, y: -20 },
         visible: (index: number) => ({
@@ -170,24 +162,7 @@ export default function Portfolio() {
                 <div className="flex flex-wrap justify-center rounded-2xl bg-glass p-10 shadow-2xl">
                     <AnimatePresence>
                         {instaFeed.map((post, index) => (
-                            <motion.div
-                                key={index}
-                                initial="hidden"
-                                animate="visible"
-                                // custom={index}
-                                variants={staggerVariants}
-                                className="insta-image-sizing w-full overflow-hidden"
-                            >
-                                <div className="zoom-effect h-full w-full rounded-lg object-cover">
-                                    <Image
-                                        src={post.media_url}
-                                        alt={post.caption || ""}
-                                        width={300}
-                                        height={300}
-                                        className="h-full w-full"
-                                    />
-                                </div>
-                            </motion.div>
+                           <InstagramImageCard key={index} post={post} />
                         ))}
                     </AnimatePresence>
                 </div>
