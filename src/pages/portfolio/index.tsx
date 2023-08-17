@@ -66,7 +66,86 @@ export default function Portfolio() {
         window.open(url, "_blank");
     };
 
-    return (
+    return isMobile ? (
+        <div className="flex gap-5">
+            {/* Left half*/}
+            <div className="w-44">
+                <div className=" instagram-header mb-5 flex h-20 items-center justify-center rounded-2xl shadow-xl">
+                    <h1 className="ml-5 font-grand-hotel text-3xl text-white">
+                        Instagram
+                    </h1>
+                    <Image
+                        alt="instagram"
+                        src={instagramLogo}
+                        className=" w-20 cursor-pointer object-cover"
+                        onClick={handleInstaClick}
+                    />
+                </div>
+                <div className="flex flex-wrap justify-center rounded-2xl bg-glass p-3 shadow-2xl">
+                    {instaFeed.map((post) => (
+                        <div
+                            key={post.id}
+                            className="insta-image-sizing-mobile w-full overflow-hidden"
+                        >
+                            <div className="zoom-effect h-full w-full rounded-lg object-cover">
+                                <Image
+                                    src={post.media_url}
+                                    alt={post.caption || ""}
+                                    width={300}
+                                    height={300}
+                                    className="h-full w-full"
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Right half*/}
+            <div className="flex w-44 flex-col items-center font-grand-hotel text-3xl  text-white">
+                <div className="mb-5 flex flex-col items-center ">
+                    <div className=" instagram-header mb-5 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                        <h1>Blonding</h1>
+                    </div>
+                    <Image
+                        src={blonding}
+                        alt="blonding"
+                        className=" w-auto rounded-2xl"
+                    />
+                </div>
+                <div className="mb-5 flex flex-col items-center">
+                    <div className=" instagram-header mb-5 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                        <h1>Vivids</h1>
+                    </div>
+                    <Image
+                        src={vivids}
+                        alt="vivids"
+                        className="w-auto rounded-2xl"
+                    />
+                </div>
+                <div className="mb-5 flex flex-col items-center ">
+                    <div className=" instagram-header mb-5 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                        <h1>Color Correction</h1>
+                    </div>
+                    <Image
+                        src={colorCorrection}
+                        alt="color correction"
+                        className="w-auto rounded-2xl"
+                    />
+                </div>
+                <div className="mb-5 flex flex-col items-center">
+                    <div className=" instagram-header mb-5 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                        <h1>Short Length Cut</h1>
+                    </div>
+                    <Image
+                        src={slc}
+                        alt="short length cut"
+                        className="w-auto rounded-2xl"
+                    />
+                </div>
+            </div>
+        </div>
+    ) : (
         <motion.div
             className="flex"
             initial="hidden"
