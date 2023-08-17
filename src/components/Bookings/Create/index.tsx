@@ -11,7 +11,6 @@ import type {
     SpecificationsType,
     SelectionsType,
 } from "~/components/NewBookingForm/Specifications";
-import type { ServiceDetailsType } from "~/utils/services";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -63,10 +62,6 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
     };
 
     return options;
-};
-
-type SelectionPickerType = {
-    [key in SelectionsType]?: ServiceDetailsType & { name: string };
 };
 
 type BookingOptionType = Exclude<SelectionsType, "Quiet">;

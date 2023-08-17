@@ -1,12 +1,4 @@
-import {
-    addHours,
-    addMinutes,
-    eachHourOfInterval,
-    endOfDay,
-    isBefore,
-    isToday,
-    startOfHour,
-} from "date-fns";
+import { addHours, addMinutes, isBefore, isToday, startOfHour } from "date-fns";
 import { useEffect, useState } from "react";
 
 /**
@@ -72,7 +64,7 @@ export default function TimeSlotPicker({
             }
 
             return;
-        }
+        } else setCurrTime(undefined);
     }, [date, interval, setTimeSlot]);
 
     return (
