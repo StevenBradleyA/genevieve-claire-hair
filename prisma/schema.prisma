@@ -23,7 +23,8 @@ model Review {
 
 model Booking {
     id        String   @id @default(cuid())
-    date      DateTime
+    startDate DateTime
+    endDate   DateTime
     status    String
     type      String
     createdAt DateTime @default(now())
@@ -43,10 +44,10 @@ model Transaction {
     status String
 
     userId    String
-    bookingId String
+    bookingId String?
 
-    user    User    @relation(fields: [userId], references: [id])
-    booking Booking @relation(fields: [bookingId], references: [id])
+    user    User     @relation(fields: [userId], references: [id])
+    booking Booking? @relation(fields: [bookingId], references: [id])
 }
 
 model Images {
