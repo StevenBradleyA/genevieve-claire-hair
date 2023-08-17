@@ -137,6 +137,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image h-64 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">
                                 Book Your Appointment
@@ -152,6 +153,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Portfolio</span>
                         </div>
@@ -165,6 +167,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Pricing</span>
                         </div>
@@ -178,6 +181,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Reviews</span>
                         </div>
@@ -191,6 +195,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Admin</span>
                         </div>
