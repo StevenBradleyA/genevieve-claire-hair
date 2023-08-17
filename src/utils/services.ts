@@ -46,12 +46,12 @@ type AllServicesType = {
 export const allServices: AllServicesType = {
     Blonding: {
         Partial: {
-            time: 60,
+            time: 180,
             price: 170,
             bundleTime: 30,
         },
         Full: {
-            time: 60,
+            time: 210,
             price: 220,
             bundleTime: 30,
         },

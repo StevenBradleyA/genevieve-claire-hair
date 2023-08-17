@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import type { FormInputType } from "./Services";
 
-export type SelectionsType = Exclude<FormInputType, "Vivids" | "Color Corrections">;
+export type SelectionsType = Exclude<
+    FormInputType,
+    "Vivids" | "Color Corrections"
+>;
 
 type ServiceOptionType = { [key in SelectionsType]: string[] };
 
@@ -17,13 +20,7 @@ const serviceOptions: ServiceOptionType = {
         "Roots to ends",
         "Unsure",
     ],
-    Blonding: [
-        "Highlights",
-        "Balayage",
-        "Baby lights",
-        "Bleach and tone",
-        "Unsure",
-    ],
+    Blonding: ["Partial", "Full", "Unsure"],
     Styling: ["Styling", "Special Event", "Bridal/Wedding", "Unsure"],
     Quiet: ["Music", "No Music", "Either"],
 };
