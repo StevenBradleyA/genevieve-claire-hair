@@ -26,7 +26,7 @@
     ],
  */
 
-type ServiceDetailsType = {
+export type ServiceDetailsType = {
     time: number;
     price: number;
     bundleTime: number;
@@ -37,12 +37,42 @@ type ServiceType = {
 };
 
 type AllServicesType = {
-    Haircut: ServiceType;
+    Blonding: ServiceType;
     "All Over Color": ServiceType;
+    Haircut: ServiceType;
     Styling: ServiceType;
 };
 
 export const allServices: AllServicesType = {
+    Blonding: {
+        Partial: {
+            time: 60,
+            price: 170,
+            bundleTime: 30,
+        },
+        Full: {
+            time: 60,
+            price: 220,
+            bundleTime: 30,
+        },
+    },
+    "All Over Color": {
+        "Gloss and toner only": {
+            time: 60,
+            price: 50,
+            bundleTime: 30,
+        },
+        "Roots only": {
+            time: 90,
+            price: 80,
+            bundleTime: 30,
+        },
+        "Roots to ends": {
+            time: 120,
+            price: 115,
+            bundleTime: 30,
+        },
+    },
     Haircut: {
         Buzz: {
             time: 20,
@@ -65,26 +95,6 @@ export const allServices: AllServicesType = {
             bundleTime: 60,
         },
     },
-    "All Over Color": {
-        "Gloss and toner only": {
-            time: 60,
-            price: 50,
-            bundleTime: 30,
-        },
-        "Roots only": {
-            time: 90,
-            price: 80,
-            bundleTime: 30,
-        },
-        "Roots to ends": {
-            time: 120,
-            price: 115,
-            bundleTime: 30,
-        },
-    },
-    // Blonding: {
-
-    // },
     Styling: {
         Blowout: {
             time: 40,

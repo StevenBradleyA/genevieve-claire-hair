@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { FormInputType } from "./Services";
 
-type SelectionsType = Exclude<FormInputType, "Vivids" | "Color Corrections">;
+export type SelectionsType = Exclude<FormInputType, "Vivids" | "Color Corrections">;
 
 type ServiceOptionType = { [key in SelectionsType]: string[] };
 

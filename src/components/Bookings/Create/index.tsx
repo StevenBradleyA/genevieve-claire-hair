@@ -1,11 +1,17 @@
 import { api } from "~/utils/api";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useSession } from "next-auth/react";
 import { isEqual } from "date-fns";
 import TimeSlotPicker from "./TimeSlotPicker";
+import { allServices } from "~/utils/services";
 import type { Matcher } from "react-day-picker";
+import type {
+    SpecificationsType,
+    SelectionsType,
+} from "~/components/NewBookingForm/Specifications";
+import type { ServiceDetailsType } from "~/utils/services";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -59,14 +65,52 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
     return options;
 };
 
+type SelectionPickerType = {
+    [key in SelectionsType]?: ServiceDetailsType & { name: string };
+};
+
+type BookingOptionType = Exclude<SelectionsType, "Quiet">;
+
 export default function CreateBooking() {
     const { data: session } = useSession();
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<number>();
+    const [services, setServices] = useState();
     let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
 
     if (!pfBangs) pfBangs = [];
     const { data: check } = api.booking.getByDate.useQuery(date);
+
+    useEffect(() => {
+        const storage = localStorage.getItem("Specifications");
+
+        if (storage) {
+            const specifications = JSON.parse(storage) as SpecificationsType;
+
+            for (const service in specifications) {
+                if (
+                    service !== "ready" &&
+                    service !== "Quiet" &&
+                    specifications[service as BookingOptionType]
+                ) {
+                    // selections[service as BookingOptionType] = {
+                    //     name: specifications[service],
+                    //     ...allServices[service][specifications[service]],
+                    // };
+
+                    const selections: SelectionPickerType = {
+                        [service as BookingOptionType]: {
+                            name: specifications[service as BookingOptionType],
+                            ...allServices[service as BookingOptionType][
+                                specifications[service as BookingOptionType]
+                            ],
+                        },
+                    };
+                    console.log(selections);
+                }
+            }
+        }
+    }, []);
 
     const checkConflicts = () => {
         if (!date) return true;
