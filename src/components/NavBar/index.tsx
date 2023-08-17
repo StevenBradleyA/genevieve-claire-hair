@@ -48,18 +48,14 @@ export default function NavBar() {
 
     return isMobile ? (
         <nav
-            className="z-20 mb-10 flex items-center text-white
-            justify-between bg-glass px-5"
+            className="z-20 mb-10 flex items-center justify-between
+            bg-glass px-5 text-white"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
-                <Image
-                    alt="home"
-                    src={homeLogo}
-                    className=" mb-2 w-32"
-                />
+                <Image alt="home" src={homeLogo} className=" mb-2 w-32" />
             </Link>
-            <div className="flex flex-col mr-10">
+            <div className="mr-10 flex flex-col">
                 <div
                     className={`container ${
                         isMenuOpen ? "is-open" : "is-closed"
@@ -211,13 +207,10 @@ function AuthController() {
     const { data: sessionData } = useSession();
 
     return (
-        <div className="flex flex-col items-center justify-center gap-1 rounded-md border-l-2 px-10 py-2 text-base">
-            <p className="text-center">
-                {sessionData && <span>Hello {sessionData.user?.name}!</span>}
-            </p>
+        <div className=" mr-10 flex flex-col items-center justify-center gap-1 text-white ">
             <button
                 aria-label={sessionData ? "Sign out" : "Sign in"}
-                className="rounded-full bg-white/10 px-4 py-2 font-semibold no-underline transition hover:bg-white/20"
+                className="font-grand-hotel text-5xl "
                 onClick={
                     sessionData ? () => void signOut() : () => void signIn()
                     // undefined, {callbackUrl: "/first-time-client/check",}
@@ -225,6 +218,9 @@ function AuthController() {
             >
                 {sessionData ? "Sign out" : "Sign in"}
             </button>
+            <p className=" opacity-70">
+                {sessionData && <span>Hello {sessionData.user?.name}!</span>}
+            </p>
         </div>
     );
 }

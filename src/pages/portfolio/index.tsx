@@ -18,7 +18,7 @@ interface InstagramFeedItem {
 }
 
 export default function Portfolio() {
-    const isMobile = useMobile();
+    const { isMobile } = useMobile();
     const instaToken = env.NEXT_PUBLIC_INSTA_TOKEN;
     const [instaFeed, setInstaFeed] = useState<InstagramFeedItem[]>([]);
     useEffect(() => {
