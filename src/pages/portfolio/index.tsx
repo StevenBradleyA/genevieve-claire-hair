@@ -9,6 +9,7 @@ import slc from "../../../public/portfolio/slc.png";
 
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMobile } from "~/components/MobileContext";
 
 interface InstagramFeedItem {
     id: string;
@@ -17,6 +18,7 @@ interface InstagramFeedItem {
 }
 
 export default function Portfolio() {
+    const isMobile = useMobile();
     const instaToken = env.NEXT_PUBLIC_INSTA_TOKEN;
     const [instaFeed, setInstaFeed] = useState<InstagramFeedItem[]>([]);
     useEffect(() => {
