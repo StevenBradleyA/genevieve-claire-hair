@@ -74,8 +74,8 @@ type BookingOptionType = Exclude<SelectionsType, "Quiet">;
 export default function CreateBooking() {
     const { data: session } = useSession();
     const [date, setDate] = useState<Date>();
-    const [timeSlot, setTimeSlot] = useState<number>();
-    const [price, setPrice] = useState();
+    const [timeSlot, setTimeSlot] = useState<string>();
+    const [interval, setInterval] = useState<number>();
     let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
 
     if (!pfBangs) pfBangs = [];
@@ -97,7 +97,6 @@ export default function CreateBooking() {
                 if (subService && service !== "ready" && service !== "Quiet") {
                     const currentService =
                         allServices[service as BookingOptionType][subService];
-                    console.log(currentService);
                     bookingDetails.totalPrice += currentService?.price || 0;
                     bookingDetails.totalTime += currentService?.time || 0;
                 }
@@ -155,12 +154,13 @@ export default function CreateBooking() {
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
+                    interval={interval}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
                 <button
                     disabled={checkConflicts()}
-                    className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 hover:scale-105 hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
+                    className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
                 >
                     Book now!
                 </button>
