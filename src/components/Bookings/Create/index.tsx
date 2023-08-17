@@ -75,7 +75,7 @@ export default function CreateBooking() {
     const { data: session } = useSession();
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<number>();
-    const [services, setServices] = useState();
+    const [price, setPrice] = useState();
     let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
 
     if (!pfBangs) pfBangs = [];
@@ -87,26 +87,19 @@ export default function CreateBooking() {
         if (storage) {
             const specifications = JSON.parse(storage) as SpecificationsType;
 
-            for (const service in specifications) {
-                if (
-                    service !== "ready" &&
-                    service !== "Quiet" &&
-                    specifications[service as BookingOptionType]
-                ) {
-                    // selections[service as BookingOptionType] = {
-                    //     name: specifications[service],
-                    //     ...allServices[service][specifications[service]],
-                    // };
+            const bookingDetails = {
+                totalPrice: 0,
+                totalTime: 0,
+            };
 
-                    const selections: SelectionPickerType = {
-                        [service as BookingOptionType]: {
-                            name: specifications[service as BookingOptionType],
-                            ...allServices[service as BookingOptionType][
-                                specifications[service as BookingOptionType]
-                            ],
-                        },
-                    };
-                    console.log(selections);
+            for (const service in specifications) {
+                const subService = specifications[service as BookingOptionType];
+                if (subService && service !== "ready" && service !== "Quiet") {
+                    const currentService =
+                        allServices[service as BookingOptionType][subService];
+                    console.log(currentService);
+                    bookingDetails.totalPrice += currentService?.price || 0;
+                    bookingDetails.totalTime += currentService?.time || 0;
                 }
             }
         }
