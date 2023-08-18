@@ -8,7 +8,7 @@ import colorCorrection from "../../../public/portfolio/color-correction.png";
 import slc from "../../../public/portfolio/slc.png";
 
 import { fetchInstagramFeed } from "../api/insta/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useMobile } from "~/components/MobileContext";
 
 interface InstagramFeedItem {
@@ -61,9 +61,9 @@ export default function Portfolio() {
                     />
                 </div>
                 <div className="flex flex-wrap justify-center rounded-2xl bg-glass p-3 shadow-2xl">
-                    {instaFeed.map((post) => (
+                    {instaFeed.map((post, index) => (
                         <div
-                            key={post.id}
+                            key={index}
                             className="insta-image-sizing-mobile w-full overflow-hidden"
                         >
                             <div className="zoom-effect h-full w-full rounded-lg object-cover">

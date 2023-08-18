@@ -10,37 +10,37 @@ export const bookingRouter = createTRPCRouter({
         return ctx.prisma.booking.findMany();
     }),
 
-    getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
-        const bookedArr = await ctx.prisma.booking.findMany();
+    // getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
+    //     const bookedArr = await ctx.prisma.booking.findMany();
 
-        return bookedArr.map((el) => el.date);
-    }),
+    //     return bookedArr.map((el) => el.date);
+    // }),
 
-    getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
-        const bookedArr = await ctx.prisma.booking.findMany({
-            where: {
-                date: {
-                    gte: new Date(),
-                },
-            },
-            select: {
-                date: true,
-            },
-            orderBy: {
-                date: "asc",
-            },
-        });
+    // getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
+    //     const bookedArr = await ctx.prisma.booking.findMany({
+    //         where: {
+    //             date: {
+    //                 gte: new Date(),
+    //             },
+    //         },
+    //         select: {
+    //             date: true,
+    //         },
+    //         orderBy: {
+    //             date: "asc",
+    //         },
+    //     });
 
-        return bookedArr.map((el) => el.date);
-    }),
+    //     return bookedArr.map((el) => el.date);
+    // }),
 
-    getByDate: publicProcedure
-        .input(z.date().optional())
-        .query(({ input, ctx }) => {
-            return ctx.prisma.booking.findFirst({
-                where: { date: input },
-            });
-        }),
+    // getByDate: publicProcedure
+    //     .input(z.date().optional())
+    //     .query(({ input, ctx }) => {
+    //         return ctx.prisma.booking.findFirst({
+    //             where: { date: input },
+    //         });
+    //     }),
 
     getByUserId: protectedProcedure
         .input(z.string())

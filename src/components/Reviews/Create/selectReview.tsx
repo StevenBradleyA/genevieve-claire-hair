@@ -6,18 +6,22 @@ import { useState } from "react";
 
 interface SelectReviewProps {
     closeModal: () => void;
+    bookings: Booking;
+    isLoading: boolean
 }
 
-export default function SelectReview({ closeModal }: SelectReviewProps) {
+export default function SelectReview({
+    closeModal,
+    bookings,
+    isLoading
+}: SelectReviewProps) {
     const { data: session } = useSession();
+
     const [selectedBooking, setSelectedBooking] = useState<Booking | null>(
         null
     );
 
     if (!session) return <div>Please login to see bookings</div>;
-
-    const { data: bookings, isLoading } =
-        api.booking.getAllByUserIdWithNoReview.useQuery(session.user.id);
 
     if (isLoading) return <div>Loading All Bookings...</div>;
 

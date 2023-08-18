@@ -3,26 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import homeLogo from "../../../public/home-logo.png";
 import holoColumn from "../../../public/Holographic/holo-column.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMobile } from "../MobileContext";
 // import { useRouter } from "next/router";
 // import { useEffect } from "react";
 export default function NavBar() {
-    // const [isMobile, setIsMobile] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setIsMobile(window.innerWidth <= 768);
-    //     };
-
-    //     handleResize();
-    //     window.addEventListener("resize", handleResize);
-
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
 
     const { isMobile } = useMobile();
 

@@ -1,8 +1,5 @@
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
-import CreateImage from "../../components/Images/Create";
-import DisplayImages from "../../components/Images/Display";
-import CreateReview from "~/components/Reviews/Create";
 import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
 import ModalDialog from "~/components/Modal";
@@ -15,14 +12,7 @@ export default function Reviews() {
     // TODO Give admin god power to delete a review
     // TODO First name and Last Name on Review
     // TODO Test Modals on mobile
-
-    const { isMobile } = useMobile();
     const { data: session } = useSession();
-
-    const { data: bookings, isLoading } =
-        session && session.user
-            ? api.booking.getAllByUserIdWithNoReview.useQuery(session?.user.id)
-            : { data: null, isLoading: false };
 
     const buttonScript: string[] = [
         "Leave me a review",
@@ -43,6 +33,23 @@ export default function Reviews() {
     const [buttonText, setButtonText] = useState<string | undefined>(
         buttonScript[0]
     );
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const { isMobile } = useMobile();
+
+    // console.log("session", session);
+
+    const userId = session?.user?.id;
+
+    const bookingQuery = userId
+        ? api.booking.getAllByUserIdWithNoReview.useQuery(userId)
+        : null;
+
+    const bookings = bookingQuery?.data || {};
+    const isLoading = bookingQuery?.isLoading || false;
+
+    // ! maybe try just getting my user id and filtering for association on the front end then idk whats going on
+    // console.log(bookings, "poggers");
 
     const handleButtonClick = () => {
         if (buttonText) {
@@ -52,8 +59,6 @@ export default function Reviews() {
         }
     };
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -61,6 +66,11 @@ export default function Reviews() {
     const closeModal = () => {
         setIsModalOpen(false);
     };
+
+    // let userId = "";
+    // if(session && session.user){
+    //     userId = session.user.id
+    // }
 
     if (isLoading)
         return (
@@ -72,13 +82,13 @@ export default function Reviews() {
 
     return (
         <div className="flex w-full flex-col items-center">
-            {isMobile ? (
+            {/* {isMobile ? (
                 <div className="flex flex-col items-center gap-10">
                     <h1 className="font-grand-hotel text-8xl text-white ">
                         Reviews
                     </h1>
                     <div className="flex w-[400px] justify-center">
-                        {session && session.user && bookings ? (
+                        {session && session.user && bookings && bookings.length > 1 ? (
                             <div>
                                 <button
                                     onClick={openModal}
@@ -103,38 +113,40 @@ export default function Reviews() {
                         )}
                     </div>
                 </div>
-            ) : (
-                <div className="flex items-center gap-32">
-                    <h1 className="font-grand-hotel text-9xl text-white ">
-                        Reviews
-                    </h1>
-                    <div className="flex w-[400px] justify-center">
-                        {session && session.user && bookings ? (
-                            <div>
-                                <button
-                                    onClick={openModal}
-                                    className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
-                                >
-                                    Leave me a review
-                                </button>
-                                <ModalDialog
-                                    isOpen={isModalOpen}
-                                    onClose={closeModal}
-                                >
-                                    <SelectReview closeModal={closeModal} />
-                                </ModalDialog>
-                            </div>
-                        ) : (
+            ) :  */}
+
+            {/* ( */}
+            <div className="flex items-center gap-32">
+                <h1 className="font-grand-hotel text-9xl text-white ">
+                    Reviews
+                </h1>
+                <div className="flex w-[400px] justify-center">
+                    {session && session.user && bookings ? (
+                        <div>
                             <button
+                                onClick={openModal}
                                 className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
-                                onClick={handleButtonClick}
                             >
-                                {buttonText}
+                                Leave me a review
                             </button>
-                        )}
-                    </div>
+                            <ModalDialog
+                                isOpen={isModalOpen}
+                                onClose={closeModal}
+                            >
+                                <SelectReview closeModal={closeModal} bookings={bookings} isLoading={isLoading} />
+                            </ModalDialog>
+                        </div>
+                    ) : (
+                        <button
+                            className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                            onClick={handleButtonClick}
+                        >
+                            {buttonText}
+                        </button>
+                    )}
                 </div>
-            )}
+            </div>
+            {/* )} */}
             <DisplayReviews />
         </div>
     );
