@@ -47,12 +47,19 @@ export const bookingRouter = createTRPCRouter({
         .query(({ input, ctx }) => {
             return ctx.prisma.booking.findMany({ where: { userId: input } });
         }),
-    getAllByUserIdWithNoReview: protectedProcedure
+    getAllBookingsWithoutReviewsByUserId: protectedProcedure
         .input(z.string())
         .query(({ input, ctx }) => {
-            return ctx.prisma.booking.findMany({
-                where: { userId: input, review: { none: {} } },
+            try{
+                const bookingsWithoutReviews = ctx.prisma.booking.findMany({
+                   where: { userId: input, review: { none: {} } },
+
+
             });
+            return bookingsWithoutReviews
+        } catch (error){
+            throw new Error ("Failed to fetch bookings without reviews.")
+        }
         }),
     getAllByUserIdWithReview: protectedProcedure
         .input(z.string())

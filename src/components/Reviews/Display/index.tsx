@@ -5,8 +5,7 @@ import ReviewCard from "./ReviewCard";
 export type ReviewWithUser = Review & { user: { name: string | null } };
 
 export default function DisplayReviews() {
-    const { data: reviews, isLoading } =
-        api.review.getAll.useQuery();
+    const { data: reviews, isLoading } = api.review.getAll.useQuery();
 
     if (isLoading) return <div>Loading All Reviews...</div>;
 
@@ -15,7 +14,7 @@ export default function DisplayReviews() {
     const reversedReviews = [...reviews].reverse();
 
     return (
-        <div className="flex flex-wrap justify-center gap-10 px-10 mx-10 w-full">
+        <div className="mx-10 flex w-full flex-wrap justify-center gap-10 px-10">
             {reversedReviews.map((review: ReviewWithUser, i: number) => {
                 return <ReviewCard key={i} review={review} />;
             })}
