@@ -1,8 +1,6 @@
-import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import DisplayReviews from "~/components/Reviews/Display";
 import { useState } from "react";
-
 import { useMobile } from "~/components/MobileContext";
 import ChooseReview from "~/components/Reviews/Create/chooseReview";
 
@@ -11,9 +9,9 @@ export default function Reviews() {
     // TODO Give admin god power to delete a review
     // TODO First name and Last Name on Review
     // TODO Test Modals on mobile
-    const { data: session } = useSession();
 
-    console.log("yo", session)
+    const { data: session } = useSession();
+    const { isMobile } = useMobile();
 
     const buttonScript: string[] = [
         "Leave me a review",
@@ -35,17 +33,6 @@ export default function Reviews() {
         buttonScript[0]
     );
 
-    const { isMobile } = useMobile();
-
-    // const { data: bookings, isLoading } =
-    //     api.booking.getAllByUserIdWithNoReview.useQuery({
-    //         userId: session?.user.id,
-    //     });
-
-
-    // ! maybe try just getting my user id and filtering for association on the front end then idk whats going on
-    // console.log(bookings, "poggers");
-
     const handleButtonClick = () => {
         if (buttonText) {
             const nextPosition =
@@ -54,33 +41,16 @@ export default function Reviews() {
         }
     };
 
-
-
-   
-
     return (
         <div className="flex w-full flex-col items-center">
-            {/* {isMobile ? (
+            {isMobile ? (
                 <div className="flex flex-col items-center gap-10">
                     <h1 className="font-grand-hotel text-8xl text-white ">
                         Reviews
                     </h1>
                     <div className="flex w-[400px] justify-center">
-                        {session && session.user && bookings && bookings.length > 1 ? (
-                            <div>
-                                <button
-                                    onClick={openModal}
-                                    className=" inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
-                                >
-                                    Leave me a review
-                                </button>
-                                <ModalDialog
-                                    isOpen={isModalOpen}
-                                    onClose={closeModal}
-                                >
-                                    <SelectReview closeModal={closeModal} />
-                                </ModalDialog>
-                            </div>
+                        {session && session.user ? (
+                            <ChooseReview session={session} />
                         ) : (
                             <button
                                 className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
@@ -91,29 +61,25 @@ export default function Reviews() {
                         )}
                     </div>
                 </div>
-            ) :  */}
-
-            {/* ( */}
-            <div className="flex items-center gap-32">
-                <h1 className="font-grand-hotel text-9xl text-white ">
-                    Reviews
-                </h1>
-                <div className="flex w-[400px] justify-center">
-                    {session && session.user ? (
-                        <div>
-                           <ChooseReview session={session}/>
-                        </div>
-                    ) : (
-                        <button
-                            className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
-                            onClick={handleButtonClick}
-                        >
-                            {buttonText}
-                        </button>
-                    )}
+            ) : (
+                <div className="flex items-center gap-32">
+                    <h1 className="font-grand-hotel text-9xl text-white ">
+                        Reviews
+                    </h1>
+                    <div className="flex w-[400px] justify-center">
+                        {session && session.user ? (
+                            <ChooseReview session={session} />
+                        ) : (
+                            <button
+                                className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                                onClick={handleButtonClick}
+                            >
+                                {buttonText}
+                            </button>
+                        )}
+                    </div>
                 </div>
-            </div>
-            {/* )} */}
+            )}
             <DisplayReviews />
         </div>
     );

@@ -4,10 +4,11 @@ import { DotLoader } from "react-spinners";
 import ModalDialog from "~/components/Modal";
 import SelectReview from "~/components/Reviews/Create/selectReview";
 import { useState } from "react";
+import type { Session } from "next-auth";
 
 
 
-export default function ChooseReview( {session}) {
+export default function ChooseReview({session}: {session: Session}) {
 
     console.log(session)
 
