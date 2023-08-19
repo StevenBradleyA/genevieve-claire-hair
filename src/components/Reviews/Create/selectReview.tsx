@@ -6,14 +6,14 @@ import { useState } from "react";
 
 interface SelectReviewProps {
     closeModal: () => void;
-    bookings: Booking;
-    isLoading: boolean
+    bookings: Booking[];
+    isLoading: boolean;
 }
 
 export default function SelectReview({
     closeModal,
     bookings,
-    isLoading
+    isLoading,
 }: SelectReviewProps) {
     const { data: session } = useSession();
 

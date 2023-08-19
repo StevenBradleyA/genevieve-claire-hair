@@ -9,6 +9,7 @@ export default function Reviews() {
     // TODO Give admin god power to delete a review
     // TODO First name and Last Name on Review
     // TODO Test Modals on mobile
+    // ! put button script in own component instead of repeating in choose Review
 
     const { data: session } = useSession();
     const { isMobile } = useMobile();
