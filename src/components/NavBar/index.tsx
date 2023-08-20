@@ -3,26 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import homeLogo from "../../../public/home-logo.png";
 import holoColumn from "../../../public/Holographic/holo-column.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMobile } from "../MobileContext";
 // import { useRouter } from "next/router";
 // import { useEffect } from "react";
 export default function NavBar() {
-    // const [isMobile, setIsMobile] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setIsMobile(window.innerWidth <= 768);
-    //     };
-
-    //     handleResize();
-    //     window.addEventListener("resize", handleResize);
-
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
 
     const { isMobile } = useMobile();
 
@@ -48,18 +34,14 @@ export default function NavBar() {
 
     return isMobile ? (
         <nav
-            className="z-20 mb-10 flex items-center text-white
-            justify-between bg-glass px-5"
+            className="z-20 mb-10 flex items-center justify-between
+            bg-glass px-5 text-white"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
-                <Image
-                    alt="home"
-                    src={homeLogo}
-                    className=" mb-2 w-32"
-                />
+                <Image alt="home" src={homeLogo} className=" mb-2 w-32" />
             </Link>
-            <div className="flex flex-col mr-10">
+            <div className="mr-10 flex flex-col">
                 <div
                     className={`container ${
                         isMenuOpen ? "is-open" : "is-closed"
@@ -141,6 +123,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image h-64 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">
                                 Book Your Appointment
@@ -156,6 +139,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Portfolio</span>
                         </div>
@@ -169,6 +153,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Pricing</span>
                         </div>
@@ -182,6 +167,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Reviews</span>
                         </div>
@@ -195,6 +181,7 @@ export default function NavBar() {
                                 alt="holo column graphic"
                                 src={holoColumn}
                                 className="diagonal-image-small h-28 w-10 object-cover"
+                                priority={true}
                             />
                             <span className="relative z-10">Admin</span>
                         </div>
@@ -211,13 +198,10 @@ function AuthController() {
     const { data: sessionData } = useSession();
 
     return (
-        <div className="flex flex-col items-center justify-center gap-1 rounded-md border-l-2 px-10 py-2 text-base">
-            <p className="text-center">
-                {sessionData && <span>Hello {sessionData.user?.name}!</span>}
-            </p>
+        <div className=" mr-10 flex flex-col items-center justify-center gap-1 text-white ">
             <button
                 aria-label={sessionData ? "Sign out" : "Sign in"}
-                className="rounded-full bg-white/10 px-4 py-2 font-semibold no-underline transition hover:bg-white/20"
+                className="font-grand-hotel text-5xl "
                 onClick={
                     sessionData ? () => void signOut() : () => void signIn()
                     // undefined, {callbackUrl: "/first-time-client/check",}
@@ -225,6 +209,9 @@ function AuthController() {
             >
                 {sessionData ? "Sign out" : "Sign in"}
             </button>
+            <p className=" opacity-70">
+                {sessionData && <span>Hello {sessionData.user?.name}!</span>}
+            </p>
         </div>
     );
 }

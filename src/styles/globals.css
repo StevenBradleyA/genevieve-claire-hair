@@ -50,6 +50,14 @@
     z-index: -1;
 }
 
+.sign-in-header {
+    background: url("../../public/Holographic/holo-column-flipped.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+}
+
 /* -------------       Home       ------------- */
 
 /* mobile Burger */
@@ -222,6 +230,12 @@
     width: 200px;
     height: 200px;
 }
+
+.insta-image-sizing-mobile {
+    width: 75px;
+    height: 75px;
+}
+
 @media (min-width: 1280px) {
     .insta-image-sizing {
         width: 250px;

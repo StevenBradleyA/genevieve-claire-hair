@@ -10,49 +10,56 @@ export const bookingRouter = createTRPCRouter({
         return ctx.prisma.booking.findMany();
     }),
 
-    getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
-        const bookedArr = await ctx.prisma.booking.findMany();
+    // getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
+    //     const bookedArr = await ctx.prisma.booking.findMany();
 
-        return bookedArr.map((el) => el.date);
-    }),
+    //     return bookedArr.map((el) => el.date);
+    // }),
 
-    getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
-        const bookedArr = await ctx.prisma.booking.findMany({
-            where: {
-                date: {
-                    gte: new Date(),
-                },
-            },
-            select: {
-                date: true,
-            },
-            orderBy: {
-                date: "asc",
-            },
-        });
+    // getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
+    //     const bookedArr = await ctx.prisma.booking.findMany({
+    //         where: {
+    //             date: {
+    //                 gte: new Date(),
+    //             },
+    //         },
+    //         select: {
+    //             date: true,
+    //         },
+    //         orderBy: {
+    //             date: "asc",
+    //         },
+    //     });
 
-        return bookedArr.map((el) => el.date);
-    }),
+    //     return bookedArr.map((el) => el.date);
+    // }),
 
-    getByDate: publicProcedure
-        .input(z.date().optional())
-        .query(({ input, ctx }) => {
-            return ctx.prisma.booking.findFirst({
-                where: { date: input },
-            });
-        }),
+    // getByDate: publicProcedure
+    //     .input(z.date().optional())
+    //     .query(({ input, ctx }) => {
+    //         return ctx.prisma.booking.findFirst({
+    //             where: { date: input },
+    //         });
+    //     }),
 
     getByUserId: protectedProcedure
         .input(z.string())
         .query(({ input, ctx }) => {
             return ctx.prisma.booking.findMany({ where: { userId: input } });
         }),
-    getAllByUserIdWithNoReview: protectedProcedure
+    getAllBookingsWithoutReviewsByUserId: protectedProcedure
         .input(z.string())
         .query(({ input, ctx }) => {
-            return ctx.prisma.booking.findMany({
-                where: { userId: input, review: { none: {} } },
+            try{
+                const bookingsWithoutReviews = ctx.prisma.booking.findMany({
+                   where: { userId: input, review: { none: {} } },
+
+
             });
+            return bookingsWithoutReviews
+        } catch (error){
+            throw new Error ("Failed to fetch bookings without reviews.")
+        }
         }),
     getAllByUserIdWithReview: protectedProcedure
         .input(z.string())

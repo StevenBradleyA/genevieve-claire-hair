@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 import ReviewCarousel from "./carousel";
 import type { Images } from "@prisma/client";
 import { useMobile } from "~/components/MobileContext";
+import { DotLoader } from "react-spinners";
 
 interface HoveredArea {
     top: string;
@@ -64,7 +65,12 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
         setHoveredArea(null);
     };
     if (isLoading)
-        return <div className="text-white">Loading All Review Images...</div>;
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">images are loading</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     return isMobile ? (
         <div className="my-10">

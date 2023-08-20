@@ -1,6 +1,4 @@
 import { useSession } from "next-auth/react";
-import type { Session } from "next-auth";
-
 import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import React from "react";

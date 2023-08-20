@@ -21,10 +21,13 @@ const config = {
 
     images: {
         domains: [
-            "scontent-sea1-1.cdninstagram.com",
             "scontent.cdninstagram.com",
-            "scontent-sjc3-1.cdninstagram.com",
             "genevieveclairehair.s3.us-west-2.amazonaws.com",
+        ],
+        remotePatterns: [
+            {
+                hostname: "**.cdninstagram.com",
+            },
         ],
     },
 };
