@@ -11,12 +11,13 @@ export type FormInputType =
 
 export type FormDataType = { [key in FormInputType]: boolean };
 
+// TODO: Geni orders by price and time
 const defaultState: FormDataType = {
-    Haircut: false,
-    "All Over Color": false,
     Blonding: false,
+    "All Over Color": false,
     Vivids: false,
     "Color Corrections": false,
+    Haircut: false,
     Styling: false,
     Quiet: false,
 };
@@ -39,7 +40,7 @@ const Services = () => {
             if (Object.values(newData).includes(true)) {
                 localStorage.setItem("Services", JSON.stringify(newData));
             } else localStorage.removeItem("Services");
-            
+
             setFormData(newData);
         } else {
             console.log("Hot Toast Incoming!!!");

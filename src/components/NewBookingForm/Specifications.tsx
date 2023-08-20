@@ -12,23 +12,24 @@ export type SpecificationsType = { [key in SelectionsType]: string } & {
     ready: boolean;
 };
 
+// TODO: Geni orders by price and time
 const serviceOptions: ServiceOptionType = {
-    Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
+    Blonding: ["Partial", "Full", "Unsure"],
     "All Over Color": [
         "Gloss and toner only",
         "Roots only",
         "Roots to ends",
         "Unsure",
     ],
-    Blonding: ["Partial", "Full", "Unsure"],
+    Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
     Styling: ["Styling", "Special Event", "Bridal/Wedding", "Unsure"],
     Quiet: ["Music", "No Music", "Either"],
 };
 
 const defaultState: SpecificationsType = {
-    Haircut: "",
-    "All Over Color": "",
     Blonding: "",
+    "All Over Color": "",
+    Haircut: "",
     Styling: "",
     Quiet: "",
     ready: false,
