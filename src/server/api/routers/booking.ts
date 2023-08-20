@@ -10,37 +10,37 @@ export const bookingRouter = createTRPCRouter({
         return ctx.prisma.booking.findMany();
     }),
 
-    // getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
-    //     const bookedArr = await ctx.prisma.booking.findMany();
+    getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
+        const bookedArr = await ctx.prisma.booking.findMany();
 
-    //     return bookedArr.map((el) => el.date);
-    // }),
+        return bookedArr.map((el) => el.startDate);
+    }),
 
-    // getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
-    //     const bookedArr = await ctx.prisma.booking.findMany({
-    //         where: {
-    //             date: {
-    //                 gte: new Date(),
-    //             },
-    //         },
-    //         select: {
-    //             date: true,
-    //         },
-    //         orderBy: {
-    //             date: "asc",
-    //         },
-    //     });
+    getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
+        const bookedArr = await ctx.prisma.booking.findMany({
+            where: {
+                startDate: {
+                    gte: new Date(),
+                },
+            },
+            select: {
+                startDate: true,
+            },
+            orderBy: {
+                startDate: "asc",
+            },
+        });
 
-    //     return bookedArr.map((el) => el.date);
-    // }),
+        return bookedArr.map((el) => el.startDate);
+    }),
 
-    // getByDate: publicProcedure
-    //     .input(z.date().optional())
-    //     .query(({ input, ctx }) => {
-    //         return ctx.prisma.booking.findFirst({
-    //             where: { date: input },
-    //         });
-    //     }),
+    getByDate: publicProcedure
+        .input(z.date().optional())
+        .query(({ input, ctx }) => {
+            return ctx.prisma.booking.findFirst({
+                where: { startDate: input },
+            });
+        }),
 
     getByUserId: protectedProcedure
         .input(z.string())
@@ -50,16 +50,14 @@ export const bookingRouter = createTRPCRouter({
     getAllBookingsWithoutReviewsByUserId: protectedProcedure
         .input(z.string())
         .query(({ input, ctx }) => {
-            try{
+            try {
                 const bookingsWithoutReviews = ctx.prisma.booking.findMany({
-                   where: { userId: input, review: { none: {} } },
-
-
-            });
-            return bookingsWithoutReviews
-        } catch (error){
-            throw new Error ("Failed to fetch bookings without reviews.")
-        }
+                    where: { userId: input, review: { none: {} } },
+                });
+                return bookingsWithoutReviews;
+            } catch (error) {
+                throw new Error("Failed to fetch bookings without reviews.");
+            }
         }),
     getAllByUserIdWithReview: protectedProcedure
         .input(z.string())
