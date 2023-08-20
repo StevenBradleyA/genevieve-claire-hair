@@ -4,6 +4,7 @@ import type { Review } from "@prisma/client";
 import type { Session } from "next-auth";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import Image from "next/image";
+import { DotLoader } from "react-spinners";
 
 interface UpdateProps {
     review: Review;
@@ -81,9 +82,6 @@ export default function UpdateReview({
         resourceType: "REVIEW",
         resourceId: review.id,
     });
-    console.log("imageFiles", imageFiles.length);
-    console.log("prev images", images?.length);
-    console.log("activedeleted", activeDeletedImageIds.length);
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
@@ -192,7 +190,13 @@ export default function UpdateReview({
             }
         }
     };
-    if (isLoading) return <div>Loading All Review Images...</div>;
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Images are loading</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     return (
         <form

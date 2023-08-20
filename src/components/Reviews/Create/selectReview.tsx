@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import type { Booking } from "@prisma/client";
 import EachBookingCard from "./eachBooking";
 import { useState } from "react";
+import { DotLoader } from "react-spinners";
 
 interface SelectReviewProps {
     closeModal: () => void;
@@ -10,7 +11,7 @@ interface SelectReviewProps {
     isLoading: boolean;
 }
 
-export default function SelectReview({
+export default function SelectService({
     closeModal,
     bookings,
     isLoading,
@@ -23,9 +24,15 @@ export default function SelectReview({
 
     if (!session) return <div>Please login to see bookings</div>;
 
-    if (isLoading) return <div>Loading All Bookings...</div>;
-
     if (!bookings) return <div>You have no bookings to review </div>;
+
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Reviews are loading</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     const handleBookingClick = (booking: Booking) => {
         setSelectedBooking(booking);

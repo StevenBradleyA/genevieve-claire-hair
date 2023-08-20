@@ -3,6 +3,7 @@ import type { Images } from "@prisma/client";
 import ImageCard from "./imageCard";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { DotLoader } from "react-spinners";
 
 interface DeleteImageObj {
     [id: string]: string;
@@ -38,7 +39,13 @@ export default function DisplayImages({ userId }: { userId: string }) {
         }
     };
 
-    if (isLoading) return <div>Loading All Images...</div>;
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Images are loading</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     if (!images) return <div>Oops</div>;
 
@@ -61,7 +68,10 @@ export default function DisplayImages({ userId }: { userId: string }) {
                 })}
             </div>
             <div className="flex justify-center">
-                <button onClick={handleDeleteImage} className="rounded-lg bg-gray-800 px-4 py-2 font-bold text-white shadow-lg transition-all duration-300 hover:bg-purple-500">
+                <button
+                    onClick={handleDeleteImage}
+                    className="rounded-lg bg-gray-800 px-4 py-2 font-bold text-white shadow-lg transition-all duration-300 hover:bg-purple-500"
+                >
                     Update Images
                 </button>
             </div>

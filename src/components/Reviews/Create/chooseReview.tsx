@@ -1,10 +1,10 @@
 import { api } from "~/utils/api";
 import { DotLoader } from "react-spinners";
 import ModalDialog from "~/components/Modal";
-import SelectReview from "~/components/Reviews/Create/selectReview";
 import { useState } from "react";
 import type { Session } from "next-auth";
 import ScriptButton from "~/pages/reviews/scriptButton";
+import SelectService from "~/components/Reviews/Create/selectReview";
 
 export default function ChooseReview({ session }: { session: Session }) {
     const { data: bookings, isLoading } =
@@ -39,7 +39,7 @@ export default function ChooseReview({ session }: { session: Session }) {
                 Leave me a review
             </button>
             <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                <SelectReview
+                <SelectService
                     closeModal={closeModal}
                     bookings={bookings}
                     isLoading={isLoading}
