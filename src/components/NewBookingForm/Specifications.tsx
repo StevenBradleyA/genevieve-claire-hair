@@ -87,18 +87,23 @@ const Specifications = () => {
 
     if (selections) {
         return (
-            <div className="flex flex-col text-3xl bg-glass shadow-lg rounded-2xl items-center text-white p-10">
+            <div className="flex flex-col items-center rounded-2xl bg-glass p-10 text-3xl text-white shadow-lg">
                 {selections.map((service) => {
                     return (
-                        <div key={service} className="text-6xl flex flex-col">
+                        <div
+                            key={service}
+                            className="mb-5 flex flex-col text-6xl"
+                        >
                             {service}
                             {serviceOptions[service].map((option) => {
                                 return (
                                     <label
                                         key={option}
-                                        className="flex cursor-pointer items-center gap-5 text-xl"
+                                        className="flex cursor-pointer items-center justify-center gap-5 text-xl"
                                     >
-                                        {option}
+                                        <span className="bg-gradient-to-r from-blue-300 to-violet-300 bg-clip-text text-transparent">
+                                            {option}
+                                        </span>
                                         <input
                                             className="custom-checkbox"
                                             type="checkbox"
