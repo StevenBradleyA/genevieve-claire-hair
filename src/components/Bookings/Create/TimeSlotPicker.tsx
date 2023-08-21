@@ -83,11 +83,11 @@ export default function TimeSlotPicker({
                             onClick={() => {
                                 setTimeSlot(time);
                             }}
-                            className={`cursor-pointer rounded ${
+                            className={`cursor-pointer rounded-full flex items-center justify-center w-14 h-14 text-xs font-semibold transition ${
                                 timeSlot === time
-                                    ? "bg-emerald-400"
-                                    : "bg-white"
-                            } p-1 shadow-2xl `}
+                                    ? "bg-violet-300 text-white shadow-md"
+                                    : "bg-glass shadow-md text-purple-500 hover:bg-violet-100 hover:text-violet-600"
+                            }`}
                             key={time}
                         >
                             {time}

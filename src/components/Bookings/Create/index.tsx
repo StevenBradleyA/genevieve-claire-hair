@@ -141,10 +141,11 @@ export default function CreateBooking() {
         },
     });
 
+
     return (
         <div
             onSubmit={book}
-            className="flex items-center justify-center px-4 py-16 font-quattrocento"
+            className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg"
         >
             <DayPicker
                 mode="single"
@@ -152,7 +153,7 @@ export default function CreateBooking() {
                 onSelect={(e) => {
                     setDate(e);
                 }}
-                className="rounded-lg  bg-white p-1 shadow-2xl"
+                className="p-  rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
                 {...createCalendarOptions(pfBangs)}
             />
             <div className="flex w-60 flex-col">
@@ -164,7 +165,7 @@ export default function CreateBooking() {
                 />
                 <button // TODO: remove this with button refactor
                     disabled={checkConflicts()}
-                    className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
+                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
                 >
                     Book now!
                 </button>
