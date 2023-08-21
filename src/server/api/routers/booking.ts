@@ -25,13 +25,14 @@ export const bookingRouter = createTRPCRouter({
             },
             select: {
                 startDate: true,
+                endDate: true,
             },
             orderBy: {
                 startDate: "asc",
             },
         });
 
-        return bookedArr.map((el) => el.startDate);
+        return bookedArr;
     }),
 
     getByDate: publicProcedure
@@ -69,7 +70,8 @@ export const bookingRouter = createTRPCRouter({
     create: protectedProcedure
         .input(
             z.object({
-                date: z.date(),
+                startDate: z.date(),
+                endDate: z.date(),
                 userId: z.string(),
             })
         )
