@@ -177,7 +177,6 @@ export default function CreateBooking() {
         },
     });
 
-
     return (
         <div
             onSubmit={book}
@@ -189,7 +188,7 @@ export default function CreateBooking() {
                 onSelect={(e) => {
                     setDate(e);
                 }}
-                className="p-  rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
+                className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
                 {...createCalendarOptions(pfBangs)}
             />
             <div className="flex w-60 flex-col">
@@ -204,7 +203,6 @@ export default function CreateBooking() {
                     disabled={checkConflicts()}
                     className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
                     onClick={book}
-                    className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
                 >
                     Book now!
                 </button>
