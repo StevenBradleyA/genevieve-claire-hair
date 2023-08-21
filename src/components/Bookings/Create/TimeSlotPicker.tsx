@@ -118,12 +118,7 @@ export default function TimeSlotPicker({
                                 setTimeSlot(el);
                                 console.log(el);
                             }}
-                            // className={`cursor-pointer rounded-full flex items-center justify-center w-14 h-14 text-xs font-semibold transition ${
-                            //     timeSlot === time
-                            //         ? "bg-violet-300 text-white shadow-md"
-                            //         : "bg-glass shadow-md text-purple-500 hover:bg-violet-100 hover:text-violet-600"
-                            // }`}
-                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-xs font-semibold transition ${
+                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[11px] font-semibold transition ${
                                 timeSlot === el
                                     ? "bg-violet-300 text-white shadow-md"
                                     : "bg-glass text-purple-500 shadow-md hover:bg-violet-100 hover:text-violet-600"
