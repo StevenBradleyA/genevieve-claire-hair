@@ -22,6 +22,17 @@ export default function Booking() {
         if (services) {
             const choicesObj = JSON.parse(services) as FormDataType;
 
+            const nonQuietCheck = Object.entries(choicesObj).filter(
+                ([, selected]) => selected
+            );
+
+            if (
+                nonQuietCheck.length === 1 &&
+                nonQuietCheck[0] &&
+                nonQuietCheck[0][0] === "Quiet"
+            ) {
+                return null;
+            }
             if (choicesObj["Vivids"]) {
                 setRequireConsult("Vivids");
             } else if (choicesObj["Color Corrections"]) {
@@ -66,13 +77,11 @@ export default function Booking() {
             </h1>
 
             <div>
-                <div>
-                    {requireConsult ? (
-                        <div>Please contact me to discuss your appointment</div>
-                    ) : (
-                        form[page]
-                    )}
-                </div>
+                {requireConsult ? (
+                    <div>Please contact me to discuss your appointment</div>
+                ) : (
+                    form[page]
+                )}
 
                 <div className="mt-5 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
                     <button
@@ -89,17 +98,33 @@ export default function Booking() {
                         >
                             Submit
                         </button>
-                    ) : (
+                    ) : page !== form.length - 1 ? (
                         <button
                             onClick={() => changePages(1)}
                             className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
                         >
-                            {page === form.length - 1 ? "Submit" : "Next"}
+                            Next
                         </button>
-                    )}
+                    ) : null}
                 </div>
                 {/* Submit using local storage check */}
             </div>
         </div>
     );
 }
+
+/**
+ * allowNextPage(page)
+ *
+ * switch case
+ *
+ * 0 => if anything other than "Quiet" is selected
+ *
+ * 1 => if chosen all specifications
+ *
+ * 2 => if date and time are chosen
+ *
+ * 3 => once order has been reviewed
+ *
+ * API on success remove from local storage
+ */
