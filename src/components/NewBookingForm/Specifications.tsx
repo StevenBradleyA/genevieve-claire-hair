@@ -87,10 +87,10 @@ const Specifications = () => {
 
     if (selections) {
         return (
-            <div className="flex flex-col text-3xl">
+            <div className="flex flex-col text-3xl bg-glass shadow-lg rounded-2xl items-center text-white p-10">
                 {selections.map((service) => {
                     return (
-                        <div key={service}>
+                        <div key={service} className="text-6xl flex flex-col">
                             {service}
                             {serviceOptions[service].map((option) => {
                                 return (

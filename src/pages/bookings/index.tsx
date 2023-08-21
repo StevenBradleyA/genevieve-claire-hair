@@ -72,13 +72,24 @@ export default function Booking() {
 
     return (
         <div className="flex flex-col items-center justify-center gap-5">
-            <h1 className="font-grand-hotel text-8xl text-white mb-5">
+            <h1 className="mb-5 font-grand-hotel text-8xl text-white">
                 Book An Appointment
             </h1>
 
             <div>
                 {requireConsult ? (
-                    <div>Please contact me to discuss your appointment</div>
+                    <div className=" flex flex-col items-center gap-10 rounded-2xl bg-glass p-10 text-3xl text-white shadow-xl">
+                        <div className="">
+                            {"Let's touch base before this appointment!"}
+                        </div>
+                        <div className="">
+                            Text me at{" "}
+                            <span className="rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 px-4 py-2 shadow-lg">
+                                {" "}
+                                (425) 241-7865{" "}
+                            </span>{" "}
+                        </div>
+                    </div>
                 ) : (
                     form[page]
                 )}
