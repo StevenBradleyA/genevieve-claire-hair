@@ -8,7 +8,7 @@ import {
     isEqual,
 } from "date-fns";
 import { useEffect, useState } from "react";
-import type { BookedDateType } from "./";
+import type { BookedDateType, BookingDetailsType } from "./";
 
 /**
  * Monday: 9am - 1pm
@@ -36,10 +36,21 @@ const createTimeIntervals = (start: Date, end: Date) => {
     return timeArray;
 };
 
-const checkOverlappingBooking = (date: Date, bookedDates: BookedDateType[]) => {
+const checkOverlappingBooking = (
+    date: Date,
+    bookedDates: BookedDateType[],
+    details: BookingDetailsType
+) => {
+    const endOfBooking = addMinutes(date, details.totalTime);
+
     for (const { startDate, endDate } of bookedDates) {
         if (isAfter(date, startDate) && isBefore(date, endDate)) return true;
         if (isEqual(date, startDate) || isEqual(date, endDate)) return true;
+
+        if (isAfter(endOfBooking, startDate) && isBefore(endOfBooking, endDate))
+            return true;
+        if (isEqual(endOfBooking, startDate) || isEqual(endOfBooking, endDate))
+            return true;
     }
 
     return false;
@@ -53,11 +64,7 @@ export default function TimeSlotPicker({
     setTimeSlot,
 }: {
     date: Date | undefined;
-    details: {
-        totalPrice: number;
-        totalTime: number;
-        services: string;
-    };
+    details: BookingDetailsType;
     bookedDates: BookedDateType[];
     timeSlot: Date | undefined;
     setTimeSlot: React.Dispatch<React.SetStateAction<Date | undefined>>;
@@ -95,7 +102,8 @@ export default function TimeSlotPicker({
         <div className="flex flex-wrap justify-between gap-1 align-top">
             {currTime &&
                 currTime.map((el) => {
-                    if (checkOverlappingBooking(el, bookedDates)) return null;
+                    if (checkOverlappingBooking(el, bookedDates, details))
+                        return null;
 
                     const hour = el.getHours();
                     const minutes = `${el.getMinutes() || "00"}`;

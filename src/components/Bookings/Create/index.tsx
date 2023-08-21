@@ -35,6 +35,12 @@ export type BookedDateType = {
     endDate: Date;
 };
 
+export type BookingDetailsType = {
+    totalPrice: number;
+    totalTime: number;
+    services: string;
+};
+
 const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -165,8 +171,9 @@ export default function CreateBooking() {
 
     const { mutate } = api.booking.create.useMutation({
         onSuccess: () => {
-            void ctx.booking.getByUserId.invalidate();
-            void ctx.booking.getAllBookedDates.invalidate();
+            void ctx.booking.getPresentFutureBookings.invalidate();
+            localStorage.removeItem("Services");
+            localStorage.removeItem("Specifications");
         },
     });
 
