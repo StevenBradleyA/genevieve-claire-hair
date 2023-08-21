@@ -15,7 +15,7 @@ export default function BookingCard({ booking }: { booking: Booking }) {
             {!showUpdate && (
                 <>
                     <div className="text-slate-200">
-                        {format(booking.date, "PPP")}
+                        {format(booking.startDate, "PPP")}
                     </div>
                 </>
             )}

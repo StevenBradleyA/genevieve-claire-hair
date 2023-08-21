@@ -23,7 +23,7 @@ export default function UpdateBooking({
 
     const checkConflicts = () => {
         if (!date) return true;
-        if (date && check && isEqual(check.date, date)) return true;
+        if (date && check && isEqual(check.startDate, date)) return true;
         return false;
     };
 
@@ -82,7 +82,7 @@ export default function UpdateBooking({
                             className={`mx-2 rounded-lg border px-4 py-1 text-slate-200 `}
                             onClick={() => {
                                 setShowUpdate(false);
-                                setDate(booking.date);
+                                setDate(booking.startDate);
                             }}
                         >
                             Cancel

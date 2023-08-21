@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useSession } from "next-auth/react";
-import { isEqual } from "date-fns";
+import { addMinutes, isEqual } from "date-fns";
 import TimeSlotPicker from "./TimeSlotPicker";
 import { allServices } from "~/utils/services";
 import type { Matcher } from "react-day-picker";
@@ -30,7 +30,18 @@ export interface CalendarOptions {
     showOutsideDays: boolean;
 }
 
-const createCalendarOptions = (booked: Date[]): CalendarOptions => {
+export type BookedDateType = {
+    startDate: Date;
+    endDate: Date;
+};
+
+export type BookingDetailsType = {
+    totalPrice: number;
+    totalTime: number;
+    services: string;
+};
+
+const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const yesterday = new Date(
@@ -39,8 +50,10 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
         today.getDate() - 1
     );
 
+    console.log(booked);
+
     const disabled = [
-        ...booked,
+        // ...booked,
         { from: startOfMonth, to: yesterday },
         { dayOfWeek: [0, 6] },
     ];
@@ -49,7 +62,8 @@ const createCalendarOptions = (booked: Date[]): CalendarOptions => {
         disabled,
         fromYear: today.getFullYear(),
         fromMonth: today,
-        modifiers: { booked },
+        // modifiers: { booked },
+        modifiers: { booked: [] },
         modifiersStyles: {
             booked: {
                 color: "red",
@@ -69,8 +83,12 @@ type BookingOptionType = Exclude<SelectionsType, "Quiet">;
 export default function CreateBooking() {
     const { data: session } = useSession();
     const [date, setDate] = useState<Date>();
-    const [timeSlot, setTimeSlot] = useState<string>();
-    const [interval, setInterval] = useState<number>();
+    const [timeSlot, setTimeSlot] = useState<Date>();
+    const [details, setDetails] = useState({
+        totalPrice: 0,
+        totalTime: 0,
+        services: "",
+    });
     let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
 
     if (!pfBangs) pfBangs = [];
@@ -85,23 +103,47 @@ export default function CreateBooking() {
             const bookingDetails = {
                 totalPrice: 0,
                 totalTime: 0,
+                services: "",
             };
 
             for (const service in specifications) {
                 const subService = specifications[service as BookingOptionType];
-                if (subService && service !== "ready" && service !== "Quiet") {
-                    const currentService =
-                        allServices[service as BookingOptionType][subService];
-                    bookingDetails.totalPrice += currentService?.price || 0;
-                    bookingDetails.totalTime += currentService?.time || 0;
+                // if (subService && service !== "ready" && service !== "Quiet") {
+                if (subService && service !== "ready") {
+                    if (bookingDetails.services) {
+                        bookingDetails.services += `, ${service}: ${subService}`;
+                    } else {
+                        bookingDetails.services += `${service}: ${subService}`;
+                    }
+
+                    if (subService && service !== "Quiet") {
+                        const currentService =
+                            allServices[service as BookingOptionType][
+                                subService
+                            ];
+                        if (bookingDetails.totalTime) {
+                            bookingDetails.totalPrice +=
+                                currentService?.bundleTime || 0;
+                            bookingDetails.totalPrice +=
+                                currentService?.price || 0;
+                        } else {
+                            bookingDetails.totalTime +=
+                                currentService?.time || 0;
+                            bookingDetails.totalPrice +=
+                                currentService?.price || 0;
+                        }
+                    }
                 }
             }
+            console.log(bookingDetails);
+            setDetails(bookingDetails);
         }
     }, []);
 
     const checkConflicts = () => {
         if (!date) return true;
-        if (date && check && isEqual(check.date, date)) return true;
+
+        // if (date && check && isEqual(check.startDate, date)) return true;
         if (!timeSlot) return true;
         return false;
     };
@@ -111,7 +153,9 @@ export default function CreateBooking() {
 
         if (session && session.user && session.user.id && date) {
             const data = {
-                date,
+                startDate: timeSlot ?? date,
+                endDate: addMinutes(timeSlot ?? date, details.totalTime),
+                type: details.services,
                 userId: session.user.id,
             };
 
@@ -127,15 +171,16 @@ export default function CreateBooking() {
 
     const { mutate } = api.booking.create.useMutation({
         onSuccess: () => {
-            void ctx.booking.getByUserId.invalidate();
-            void ctx.booking.getAllBookedDates.invalidate();
+            void ctx.booking.getPresentFutureBookings.invalidate();
+            localStorage.removeItem("Services");
+            localStorage.removeItem("Specifications");
         },
     });
 
     return (
-        <form
+        <div
             onSubmit={book}
-            className="container flex items-center justify-center px-4 py-16"
+            className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg"
         >
             <DayPicker
                 mode="single"
@@ -143,23 +188,25 @@ export default function CreateBooking() {
                 onSelect={(e) => {
                     setDate(e);
                 }}
-                className="rounded-lg  bg-white p-1 shadow-2xl"
+                className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
                 {...createCalendarOptions(pfBangs)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
-                    interval={interval}
+                    details={details}
+                    bookedDates={pfBangs}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
-                <button
+                <button // TODO: remove this with button refactor
                     disabled={checkConflicts()}
-                    className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
+                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
+                    onClick={book}
                 >
                     Book now!
                 </button>
             </div>
-        </form>
+        </div>
     );
 }

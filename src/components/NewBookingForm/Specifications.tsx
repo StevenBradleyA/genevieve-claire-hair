@@ -12,23 +12,24 @@ export type SpecificationsType = { [key in SelectionsType]: string } & {
     ready: boolean;
 };
 
+// TODO: Geni orders by price and time
 const serviceOptions: ServiceOptionType = {
-    Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
+    Blonding: ["Partial", "Full", "Unsure"],
     "All Over Color": [
         "Gloss and toner only",
         "Roots only",
         "Roots to ends",
         "Unsure",
     ],
-    Blonding: ["Partial", "Full", "Unsure"],
+    Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
     Styling: ["Styling", "Special Event", "Bridal/Wedding", "Unsure"],
     Quiet: ["Music", "No Music", "Either"],
 };
 
 const defaultState: SpecificationsType = {
-    Haircut: "",
-    "All Over Color": "",
     Blonding: "",
+    "All Over Color": "",
+    Haircut: "",
     Styling: "",
     Quiet: "",
     ready: false,
@@ -86,18 +87,23 @@ const Specifications = () => {
 
     if (selections) {
         return (
-            <div className="flex flex-col text-3xl">
+            <div className="flex flex-col items-center rounded-2xl bg-glass p-10 text-3xl text-white shadow-lg">
                 {selections.map((service) => {
                     return (
-                        <div key={service}>
+                        <div
+                            key={service}
+                            className="mb-5 flex flex-col text-6xl"
+                        >
                             {service}
                             {serviceOptions[service].map((option) => {
                                 return (
                                     <label
                                         key={option}
-                                        className="flex cursor-pointer items-center gap-5 text-xl"
+                                        className="flex cursor-pointer items-center justify-center gap-5 text-xl"
                                     >
-                                        {option}
+                                        <span className="bg-gradient-to-r from-blue-300 to-violet-300 bg-clip-text text-transparent">
+                                            {option}
+                                        </span>
                                         <input
                                             className="custom-checkbox"
                                             type="checkbox"

@@ -1,5 +1,14 @@
-import { addHours, addMinutes, isBefore, isToday, startOfHour } from "date-fns";
+import {
+    addHours,
+    addMinutes,
+    isBefore,
+    isAfter,
+    isToday,
+    startOfHour,
+    isEqual,
+} from "date-fns";
 import { useEffect, useState } from "react";
+import type { BookedDateType, BookingDetailsType } from "./";
 
 /**
  * Monday: 9am - 1pm
@@ -15,28 +24,50 @@ const schedule: { [key: number]: number[] } = {
     5: [10, 19],
 };
 
-const createTimeIntervals = (start: Date, end: Date, interval = 30) => {
+const createTimeIntervals = (start: Date, end: Date) => {
     const timeArray = [];
     let currTime = start;
 
     while (currTime <= end) {
         timeArray.push(currTime);
-        currTime = addMinutes(currTime, interval);
+        currTime = addMinutes(currTime, 30);
     }
 
     return timeArray;
 };
 
+const checkOverlappingBooking = (
+    date: Date,
+    bookedDates: BookedDateType[],
+    details: BookingDetailsType
+) => {
+    const endOfBooking = addMinutes(date, details.totalTime);
+
+    for (const { startDate, endDate } of bookedDates) {
+        if (isAfter(date, startDate) && isBefore(date, endDate)) return true;
+        if (isEqual(date, startDate) || isEqual(date, endDate)) return true;
+
+        if (isAfter(endOfBooking, startDate) && isBefore(endOfBooking, endDate))
+            return true;
+        if (isEqual(endOfBooking, startDate) || isEqual(endOfBooking, endDate))
+            return true;
+    }
+
+    return false;
+};
+
 export default function TimeSlotPicker({
     date,
-    interval,
+    details,
+    bookedDates,
     timeSlot,
     setTimeSlot,
 }: {
     date: Date | undefined;
-    interval: number | undefined;
-    timeSlot: string | undefined;
-    setTimeSlot: React.Dispatch<React.SetStateAction<string | undefined>>;
+    details: BookingDetailsType;
+    bookedDates: BookedDateType[];
+    timeSlot: Date | undefined;
+    setTimeSlot: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }) {
     const [currTime, setCurrTime] = useState<Date[]>();
 
@@ -59,18 +90,21 @@ export default function TimeSlotPicker({
                 }
 
                 if (isBefore(start, end))
-                    setCurrTime(createTimeIntervals(start, end, interval));
+                    setCurrTime(createTimeIntervals(start, end));
                 else setCurrTime([]);
             }
 
             return;
         } else setCurrTime(undefined);
-    }, [date, interval, setTimeSlot]);
+    }, [date, setTimeSlot]);
 
     return (
         <div className="flex flex-wrap justify-between gap-1 align-top">
             {currTime &&
                 currTime.map((el) => {
+                    if (checkOverlappingBooking(el, bookedDates, details))
+                        return null;
+
                     const hour = el.getHours();
                     const minutes = `${el.getMinutes() || "00"}`;
                     const time =
@@ -81,12 +115,13 @@ export default function TimeSlotPicker({
                     return (
                         <div
                             onClick={() => {
-                                setTimeSlot(time);
+                                setTimeSlot(el);
+                                console.log(el);
                             }}
-                            className={`cursor-pointer rounded ${
-                                timeSlot === time
-                                    ? "bg-emerald-400"
-                                    : "bg-white"
+                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[11px] font-semibold transition ${
+                                timeSlot === el
+                                    ? "bg-violet-300 text-white shadow-md"
+                                    : "bg-glass text-purple-500 shadow-md hover:bg-violet-100 hover:text-violet-600"
                             } p-1 shadow-2xl `}
                             key={time}
                         >
