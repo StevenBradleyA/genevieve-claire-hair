@@ -89,19 +89,28 @@ export default function CreateBooking() {
 
             for (const service in specifications) {
                 const subService = specifications[service as BookingOptionType];
-                if (subService && service !== "ready" && service !== "Quiet") {
+                // if (subService && service !== "ready" && service !== "Quiet") {
+                if (subService && !["ready", "Quiet"].includes(service)) {
                     const currentService =
                         allServices[service as BookingOptionType][subService];
-                    bookingDetails.totalPrice += currentService?.price || 0;
-                    bookingDetails.totalTime += currentService?.time || 0;
+                    if (bookingDetails.totalTime) {
+                        bookingDetails.totalPrice +=
+                            currentService?.bundleTime || 0;
+                        bookingDetails.totalPrice += currentService?.price || 0;
+                    } else {
+                        bookingDetails.totalTime += currentService?.time || 0;
+                        bookingDetails.totalPrice += currentService?.price || 0;
+                    }
                 }
             }
+
+            console.log(bookingDetails);
         }
     }, []);
 
     const checkConflicts = () => {
         if (!date) return true;
-        if (date && check && isEqual(check.date, date)) return true;
+        if (date && check && isEqual(check.startDate, date)) return true;
         if (!timeSlot) return true;
         return false;
     };
@@ -133,9 +142,9 @@ export default function CreateBooking() {
     });
 
     return (
-        <form
+        <div
             onSubmit={book}
-            className="container flex items-center justify-center px-4 py-16"
+            className="flex items-center justify-center px-4 py-16 font-quattrocento"
         >
             <DayPicker
                 mode="single"
@@ -153,13 +162,13 @@ export default function CreateBooking() {
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
-                <button
+                <button // TODO: remove this with button refactor
                     disabled={checkConflicts()}
                     className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500"
                 >
                     Book now!
                 </button>
             </div>
-        </form>
+        </div>
     );
 }
