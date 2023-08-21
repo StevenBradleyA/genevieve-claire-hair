@@ -54,13 +54,13 @@ const Services = () => {
     };
 
     return (
-        <div className="flex cursor-pointer justify-center gap-2">
+        <div className="flex justify-center gap-2 bg-glass p-20 rounded-2xl shadow-xl">
             {Object.keys(defaultState).map((type) => (
                 <div
-                    className={`rounded-lg p-2 text-white ${
+                    className={`rounded-lg p-2 text-white cursor-pointer hover:scale-105 active:scale-95 ${
                         formData[type as FormInputType]
-                            ? "bg-violet-500"
-                            : "bg-violet-300"
+                            ? "bg-violet-400 shadow-md"
+                            : "bg-gradient-to-br from-fuchsia-200 to-blue-200 shadow-md"
                     } 
                     ${
                         allowSelection(type as FormInputType)

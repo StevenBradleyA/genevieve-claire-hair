@@ -72,7 +72,7 @@ export default function Booking() {
 
     return (
         <div className="flex flex-col items-center justify-center gap-5">
-            <h1 className="font-grand-hotel text-8xl text-white">
+            <h1 className="font-grand-hotel text-8xl text-white mb-5">
                 Book An Appointment
             </h1>
 
@@ -83,10 +83,10 @@ export default function Booking() {
                     form[page]
                 )}
 
-                <div className="mt-5 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                <div className="mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
                     <button
                         onClick={() => changePages(-1)}
-                        className="transform rounded-md bg-glass px-4 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                        className="transform rounded-md bg-glass px-12 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
                     >
                         Back
                     </button>
@@ -94,14 +94,14 @@ export default function Booking() {
                         <button
                             // TODO: Submit partial booking and redirect back home
                             onClick={() => console.log("")}
-                            className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                            className="transform rounded-md bg-glass px-12 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
                         >
                             Submit
                         </button>
                     ) : page !== form.length - 1 ? (
                         <button
                             onClick={() => changePages(1)}
-                            className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                            className="transform rounded-md bg-glass px-12 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
                         >
                             Next
                         </button>
