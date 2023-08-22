@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { FormInputType } from "./Services";
+import { useMobile } from "../MobileContext";
 
 export type SelectionsType = Exclude<
     FormInputType,
@@ -38,6 +39,7 @@ const defaultState: SpecificationsType = {
 const Specifications = () => {
     const [selections, setSelections] = useState<SelectionsType[]>();
     const [subSelections, setSubSelections] = useState(defaultState);
+    const { isMobile } = useMobile();
 
     useEffect(() => {
         const services = localStorage.getItem("Services");
@@ -89,7 +91,49 @@ const Specifications = () => {
         return (
             <div className="flex flex-col items-center rounded-2xl bg-glass p-10 text-3xl text-white shadow-lg">
                 {selections.map((service) => {
-                    return (
+                    return isMobile ? (
+                        <div className="flex flex-col items-center rounded-2xl bg-glass p-10 text-3xl text-white shadow-lg">
+                            {selections.map((service) => {
+                                return (
+                                    <div
+                                        key={service}
+                                        className="mb-5 flex flex-col text-6xl"
+                                    >
+                                        {service}
+                                        {serviceOptions[service].map(
+                                            (option) => {
+                                                return (
+                                                    <label
+                                                        key={option}
+                                                        className="flex cursor-pointer items-center justify-center gap-5 text-xl"
+                                                    >
+                                                        <span className="bg-gradient-to-r from-blue-300 to-violet-300 bg-clip-text text-transparent">
+                                                            {option}
+                                                        </span>
+                                                        <input
+                                                            className="custom-checkbox"
+                                                            type="checkbox"
+                                                            checked={
+                                                                subSelections[
+                                                                    service
+                                                                ] === option
+                                                            }
+                                                            onChange={() =>
+                                                                toggle(
+                                                                    service,
+                                                                    option
+                                                                )
+                                                            }
+                                                        ></input>
+                                                    </label>
+                                                );
+                                            }
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
                         <div
                             key={service}
                             className="mb-5 flex flex-col text-6xl"
