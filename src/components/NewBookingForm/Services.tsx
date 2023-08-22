@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useMobile } from "../MobileContext";
 
 export type FormInputType =
     | "Haircut"
@@ -23,6 +24,7 @@ const defaultState: FormDataType = {
 };
 
 const Services = () => {
+    const { isMobile } = useMobile();
     const [formData, setFormData] = useState(defaultState);
 
     useEffect(() => {
@@ -53,11 +55,33 @@ const Services = () => {
         return true;
     };
 
-    return (
-        <div className="flex justify-center gap-2 bg-glass p-20 rounded-2xl shadow-xl">
+    return isMobile ? (
+        <div className="flex w-80 flex-wrap justify-center gap-2 rounded-2xl bg-glass p-10 shadow-xl">
             {Object.keys(defaultState).map((type) => (
                 <div
-                    className={`rounded-lg p-2 text-white cursor-pointer hover:scale-105 active:scale-95 ${
+                    className={`cursor-pointer rounded-lg px-6 py-2 text-white hover:scale-105 active:scale-95 ${
+                        formData[type as FormInputType]
+                            ? "bg-violet-400 shadow-md"
+                            : "bg-gradient-to-br from-fuchsia-200 to-blue-200 shadow-md"
+                    } 
+                ${
+                    allowSelection(type as FormInputType)
+                        ? ""
+                        : "cursor-not-allowed"
+                }
+                `}
+                    key={type}
+                    onClick={() => toggle(type as FormInputType)}
+                >
+                    {type}
+                </div>
+            ))}
+        </div>
+    ) : (
+        <div className="flex justify-center gap-2 rounded-2xl bg-glass p-20 shadow-xl">
+            {Object.keys(defaultState).map((type) => (
+                <div
+                    className={`cursor-pointer rounded-lg px-4 py-2 text-white hover:scale-105 active:scale-95 ${
                         formData[type as FormInputType]
                             ? "bg-violet-400 shadow-md"
                             : "bg-gradient-to-br from-fuchsia-200 to-blue-200 shadow-md"

@@ -11,6 +11,7 @@ import type {
     SpecificationsType,
     SelectionsType,
 } from "~/components/NewBookingForm/Specifications";
+import { useMobile } from "~/components/MobileContext";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -82,6 +83,8 @@ type BookingOptionType = Exclude<SelectionsType, "Quiet">;
 
 export default function CreateBooking() {
     const { data: session } = useSession();
+    const { isMobile } = useMobile();
+
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
     const [details, setDetails] = useState({
@@ -177,7 +180,38 @@ export default function CreateBooking() {
         },
     });
 
-    return (
+    return isMobile ? (
+        <div
+            onSubmit={book}
+            className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 font-quattrocento shadow-lg"
+        >
+            <DayPicker
+                mode="single"
+                selected={date}
+                onSelect={(e) => {
+                    setDate(e);
+                }}
+                className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
+                {...createCalendarOptions(pfBangs)}
+            />
+            <div className="flex w-60 flex-col">
+                <TimeSlotPicker
+                    date={date}
+                    details={details}
+                    bookedDates={pfBangs}
+                    timeSlot={timeSlot}
+                    setTimeSlot={setTimeSlot}
+                />
+                <button // TODO: remove this with button refactor
+                    disabled={checkConflicts()}
+                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
+                    onClick={book}
+                >
+                    Book now!
+                </button>
+            </div>
+        </div>
+    ) : (
         <div
             onSubmit={book}
             className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg"
