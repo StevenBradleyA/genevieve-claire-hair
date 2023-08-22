@@ -140,7 +140,7 @@ export default function Booking() {
                     form[page]
                 )}
 
-                <div className="mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                <div className="mt-10 mb-20 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
                     <button
                         onClick={() => changePages(-1)}
                         className="transform rounded-md bg-glass px-12 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
