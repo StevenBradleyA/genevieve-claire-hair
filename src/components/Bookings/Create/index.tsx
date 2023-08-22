@@ -183,7 +183,7 @@ export default function CreateBooking() {
     return isMobile ? (
         <div
             onSubmit={book}
-            className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg"
+            className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 font-quattrocento shadow-lg"
         >
             <DayPicker
                 mode="single"

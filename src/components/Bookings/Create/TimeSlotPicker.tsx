@@ -9,6 +9,7 @@ import {
 } from "date-fns";
 import { useEffect, useState } from "react";
 import type { BookedDateType, BookingDetailsType } from "./";
+import { useMobile } from "~/components/MobileContext";
 
 /**
  * Monday: 9am - 1pm
@@ -70,6 +71,7 @@ export default function TimeSlotPicker({
     setTimeSlot: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }) {
     const [currTime, setCurrTime] = useState<Date[]>();
+    const { isMobile } = useMobile();
 
     useEffect(() => {
         // TODO: Reset time slot if new selection doesn't have that time slot
@@ -112,7 +114,22 @@ export default function TimeSlotPicker({
                             ? `${hour - 12}:${minutes} pm`
                             : `${hour}:${minutes} am`;
 
-                    return (
+                    return isMobile ? (
+                        <div
+                            onClick={() => {
+                                setTimeSlot(el);
+                                console.log(el);
+                            }}
+                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[9px] font-semibold transition ${
+                                timeSlot === el
+                                    ? "bg-violet-300 text-white shadow-md"
+                                    : "bg-glass text-purple-500 shadow-md hover:bg-violet-100 hover:text-violet-600"
+                            } p-1 shadow-2xl `}
+                            key={time}
+                        >
+                            {time}
+                        </div>
+                    ) : (
                         <div
                             onClick={() => {
                                 setTimeSlot(el);
