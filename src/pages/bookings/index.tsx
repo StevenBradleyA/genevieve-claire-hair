@@ -80,16 +80,11 @@ export default function Booking() {
 
             <div>
                 {requireConsult ? (
-                    <div className=" flex flex-col items-center gap-10 rounded-2xl bg-glass p-10 text-3xl text-white shadow-xl">
-                        <div className="">
-                            {"Let's touch base before this appointment!"}
-                        </div>
-                        <div className="">
-                            Text me at{" "}
-                            <span className="rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 px-4 py-2 shadow-lg">
-                                {" "}
-                                (425) 241-7865{" "}
-                            </span>{" "}
+                    <div className=" flex w-80 flex-col items-center justify-center gap-5 rounded-2xl bg-glass p-10 text-xl text-white shadow-xl">
+                        <div>{"Let's touch base before this appointment!"}</div>
+                        <div>Text me at:</div>
+                        <div className="rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 px-4 py-2 shadow-lg">
+                            <a href="tel:+14252417865">(425) 241-7865</a>
                         </div>
                     </div>
                 ) : (
@@ -132,10 +127,8 @@ export default function Booking() {
             <div>
                 {requireConsult ? (
                     <div className=" flex flex-col items-center gap-10 rounded-2xl bg-glass p-10 text-3xl text-white shadow-xl">
-                        <div className="">
-                            {"Let's touch base before this appointment!"}
-                        </div>
-                        <div className="">
+                        <div>{"Let's touch base before this appointment!"}</div>
+                        <div>
                             Text me at{" "}
                             <span className="rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 px-4 py-2 shadow-lg">
                                 {" "}
