@@ -56,10 +56,10 @@ const Services = () => {
     };
 
     return isMobile ? (
-        <div className="flex justify-center gap-2 rounded-2xl bg-glass p-20 shadow-xl">
+        <div className="flex justify-center gap-2 rounded-2xl bg-glass p-10 shadow-xl w-80 flex-wrap">
             {Object.keys(defaultState).map((type) => (
                 <div
-                    className={`cursor-pointer rounded-lg p-2 text-white hover:scale-105 active:scale-95 ${
+                    className={`cursor-pointer rounded-lg px-6 py-2 text-white hover:scale-105 active:scale-95 ${
                         formData[type as FormInputType]
                             ? "bg-violet-400 shadow-md"
                             : "bg-gradient-to-br from-fuchsia-200 to-blue-200 shadow-md"
