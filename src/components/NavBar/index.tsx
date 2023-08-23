@@ -53,7 +53,7 @@ export default function NavBar() {
     return isMobile ? (
         <nav
             className="z-20 mb-10 flex items-center justify-between
-            bg-glass px-5 text-white"
+            bg-glass px-5 text-white overflow-auto"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
