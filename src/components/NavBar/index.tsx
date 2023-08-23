@@ -4,19 +4,36 @@ import Image from "next/image";
 import homeLogo from "../../../public/home-logo.png";
 import holoColumn from "../../../public/Holographic/holo-column.png";
 import geniSignature from "../../../public/signature.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMobile } from "../MobileContext";
 // import { useRouter } from "next/router";
 // import { useEffect } from "react";
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
+    const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const { isMobile } = useMobile();
 
     const toggleMenu = () => {
         setIsMenuOpen((prevOpen) => !prevOpen);
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    console.log(isScrolled);
     // const { data: session, status } = useSession();
     // const router = useRouter();
 
@@ -104,11 +121,12 @@ export default function NavBar() {
             </div>
         </nav>
     ) : (
-        <div className="p-5">
+        <div className="sticky -top-5 z-20 p-5">
             <nav
-                className="sticky top-0 z-10 mb-5 flex items-center justify-between
-            rounded-2xl bg-glass py-2 text-white shadow-sm"
-                aria-label="Main Navigation"
+                className={` ${
+                    isScrolled ? `bg-darkGlass` : `bg-glass`
+                } rounded-2xlbg-glass mb-5 flex items-center justify-between py-2 text-white shadow-sm`}
+                aria-label="Main Navigation -z-30"
             >
                 <Link href="/" aria-label="Home">
                     <Image alt="home" src={homeLogo} className="mb-2 w-32" />
@@ -130,14 +148,7 @@ export default function NavBar() {
                     <div className=" flex w-80 justify-center">
                         <Link href="/" aria-label="Home">
                             <div className="diagonal-image-container">
-                                <Image
-                                    src={geniSignature}
-                                    alt="art"
-                                    width={geniSignature.width}
-                                    height={geniSignature.height}
-                                    className=" object-cover"
-                                />
-                                <div className="holo-column-container">
+                                <div className="holo-column-container -z-10">
                                     <Image
                                         alt="holo column graphic"
                                         src={holoColumn}
@@ -145,6 +156,14 @@ export default function NavBar() {
                                         priority={true}
                                     />
                                 </div>
+                                <Image
+                                    src={geniSignature}
+                                    alt="art"
+                                    width={geniSignature.width}
+                                    height={geniSignature.height}
+                                    className=" z-30 object-cover"
+                                    priority={true}
+                                />
                             </div>
                         </Link>
                     </div>

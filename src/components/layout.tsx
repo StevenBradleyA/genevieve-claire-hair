@@ -12,8 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="min-h-screen flex flex-col bg-gradient-to-br from-fuchsia-100 to-blue-200 -z-20 overflow-auto ">
-
+            <div className="flex min-h-screen flex-col bg-gradient-to-br from-fuchsia-100  to-blue-200 ">
                 <NavBar />
                 <main className="flex flex-col items-center justify-center">
                     {children}
