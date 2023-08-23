@@ -104,79 +104,73 @@ export default function NavBar() {
             </div>
         </nav>
     ) : (
-        <nav
-            className="sticky top-0 z-10 mb-10 flex items-center justify-between
-            bg-glass py-2 text-white"
-            aria-label="Main Navigation"
-        >
-            <Link href="/" aria-label="Home">
-                <Image alt="home" src={homeLogo} className="mb-2 w-32" />
-            </Link>
+        <div className="p-5">
+            <nav
+                className="sticky top-0 z-10 mb-5 flex items-center justify-between
+            rounded-2xl bg-glass py-2 text-white shadow-sm"
+                aria-label="Main Navigation"
+            >
+                <Link href="/" aria-label="Home">
+                    <Image alt="home" src={homeLogo} className="mb-2 w-32" />
+                </Link>
 
-            <div className="mr-14 flex items-center gap-10 text-2xl">
-                <div className="group relative">
-                    <Link href="/bookings" aria-label="Bookings">
-                        Book Your Appointment
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div>
-                <div className="group relative">
-                    <Link href="/portfolio" aria-label="Images">
-                        Portfolio
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div>
-                <div className=" flex w-80 justify-center">
-                    <Link href="/" aria-label="Home">
-                        <div className="diagonal-image-container">
-                            <Image
-                                src={geniSignature}
-                                alt="art"
-                                width={geniSignature.width}
-                                height={geniSignature.height}
-                                className=" object-cover"
-                            />
-                            <div className="holo-column-container">
+                <div className="mr-16 flex items-center gap-10 text-2xl">
+                    <div className="group relative">
+                        <Link href="/bookings" aria-label="Bookings">
+                            Book Your Appointment
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
+                    <div className="group relative">
+                        <Link href="/portfolio" aria-label="Images">
+                            Portfolio
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
+                    <div className=" flex w-80 justify-center">
+                        <Link href="/" aria-label="Home">
+                            <div className="diagonal-image-container">
                                 <Image
-                                    alt="holo column graphic"
-                                    src={holoColumn}
-                                    className="h-80 w-6 object-cover"
-                                    priority={true}
+                                    src={geniSignature}
+                                    alt="art"
+                                    width={geniSignature.width}
+                                    height={geniSignature.height}
+                                    className=" object-cover"
                                 />
+                                <div className="holo-column-container">
+                                    <Image
+                                        alt="holo column graphic"
+                                        src={holoColumn}
+                                        className="h-80 w-6 object-cover"
+                                        priority={true}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </Link>
-                </div>
-                <div className="group relative ">
-                    <Link href="/pricing" aria-label="Pricing">
-                        Pricing
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div>
+                        </Link>
+                    </div>
+                    <div className="group relative ">
+                        <Link href="/pricing" aria-label="Pricing">
+                            Pricing
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
 
-                <div className="group relative ">
-                    <Link href="/reviews" aria-label="Feature">
-                        Reviews
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    <div className="group relative ">
+                        <Link href="/reviews" aria-label="Feature">
+                            Reviews
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
                 </div>
-                {/* <div className="group relative ">
+                <div className="group relative font-grand-hotel text-5xl text-violet-300">
                     <Link href="/admin" aria-label="Feature">
-                        <div className="diagonal-image-container">
-                            <Image
-                                alt="holo column graphic"
-                                src={holoColumn}
-                                className="diagonal-image-small h-28 w-10 object-cover"
-                                priority={true}
-                            />
-                            <span className="relative z-10">Admin</span>
-                        </div>
+                        Admin
                     </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div> */}
-            </div>
-            <AuthController />
-        </nav>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-violet-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                </div>
+                <AuthController />
+            </nav>
+        </div>
     );
 }
 
