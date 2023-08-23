@@ -13,6 +13,7 @@ export default {
                 chillPurple: "#E3D4F4",
                 lightPurple: "#E5DFFF",
                 glass: "rgba(255, 255, 255, 0.2)",
+                darkGlass: "rgba(0, 0, 0, 0.05)",
                 clear: "rgba(255, 255, 255, 0)",
             },
             fontFamily: {

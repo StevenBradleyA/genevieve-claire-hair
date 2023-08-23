@@ -3,19 +3,37 @@ import Link from "next/link";
 import Image from "next/image";
 import homeLogo from "../../../public/home-logo.png";
 import holoColumn from "../../../public/Holographic/holo-column.png";
-import { useState } from "react";
+import geniSignature from "../../../public/signature.png";
+import { useState, useEffect } from "react";
 import { useMobile } from "../MobileContext";
 // import { useRouter } from "next/router";
 // import { useEffect } from "react";
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
+    const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const { isMobile } = useMobile();
 
     const toggleMenu = () => {
         setIsMenuOpen((prevOpen) => !prevOpen);
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    console.log(isScrolled);
     // const { data: session, status } = useSession();
     // const router = useRouter();
 
@@ -35,7 +53,7 @@ export default function NavBar() {
     return isMobile ? (
         <nav
             className="z-20 mb-10 flex items-center justify-between
-            bg-glass px-5 text-white"
+            bg-glass px-5 text-white overflow-auto"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
@@ -103,94 +121,75 @@ export default function NavBar() {
             </div>
         </nav>
     ) : (
-        <nav
-            className="sticky top-0 z-10 mb-10 flex items-center text-white
-            mobile:justify-around mobile:bg-glass mobile:py-0 sm:justify-between sm:bg-clear sm:py-2"
-            aria-label="Main Navigation"
-        >
-            <Link href="/" aria-label="Home">
-                <Image
-                    alt="home"
-                    src={homeLogo}
-                    className=" mb-2 w-48 mobile:mb-2 mobile:w-32"
-                />
-            </Link>
-            <ul className="flex flex-grow items-center justify-around text-2xl">
-                <li className="group relative mr-4">
-                    <Link href="/bookings" aria-label="Bookings">
-                        <div className="diagonal-image-container">
-                            <Image
-                                alt="holo column graphic"
-                                src={holoColumn}
-                                className="diagonal-image h-64 w-10 object-cover"
-                                priority={true}
-                            />
-                            <span className="relative z-10">
-                                Book Your Appointment
-                            </span>
-                        </div>
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </li>
-                <li className="group relative mr-4">
-                    <Link href="/portfolio" aria-label="Images">
-                        <div className="diagonal-image-container">
-                            <Image
-                                alt="holo column graphic"
-                                src={holoColumn}
-                                className="diagonal-image-small h-28 w-10 object-cover"
-                                priority={true}
-                            />
-                            <span className="relative z-10">Portfolio</span>
-                        </div>
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </li>
-                <li className="group relative mr-4">
-                    <Link href="/pricing" aria-label="Pricing">
-                        <div className="diagonal-image-container ">
-                            <Image
-                                alt="holo column graphic"
-                                src={holoColumn}
-                                className="diagonal-image-small h-28 w-10 object-cover"
-                                priority={true}
-                            />
-                            <span className="relative z-10">Pricing</span>
-                        </div>
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </li>
-                <li className="group relative mr-4">
-                    <Link href="/reviews" aria-label="Feature">
-                        <div className="diagonal-image-container">
-                            <Image
-                                alt="holo column graphic"
-                                src={holoColumn}
-                                className="diagonal-image-small h-28 w-10 object-cover"
-                                priority={true}
-                            />
-                            <span className="relative z-10">Reviews</span>
-                        </div>
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </li>
-                <li className="group relative mr-4">
+        <div className="sticky -top-5 z-20 p-5">
+            <nav
+                className={` ${
+                    isScrolled ? `bg-darkGlass` : `bg-glass`
+                } rounded-2xlbg-glass mb-5 flex items-center justify-between py-2 text-white shadow-sm`}
+                aria-label="Main Navigation -z-30"
+            >
+                <Link href="/" aria-label="Home">
+                    <Image alt="home" src={homeLogo} className="mb-2 w-32" />
+                </Link>
+
+                <div className="mr-16 flex items-center gap-10 text-2xl">
+                    <div className="group relative">
+                        <Link href="/bookings" aria-label="Bookings">
+                            Book Your Appointment
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
+                    <div className="group relative">
+                        <Link href="/portfolio" aria-label="Images">
+                            Portfolio
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
+                    <div className=" flex w-80 justify-center">
+                        <Link href="/" aria-label="Home">
+                            <div className="diagonal-image-container">
+                                <div className="holo-column-container -z-10">
+                                    <Image
+                                        alt="holo column graphic"
+                                        src={holoColumn}
+                                        className="h-80 w-6 object-cover"
+                                        priority={true}
+                                    />
+                                </div>
+                                <Image
+                                    src={geniSignature}
+                                    alt="art"
+                                    width={geniSignature.width}
+                                    height={geniSignature.height}
+                                    className=" z-30 object-cover"
+                                    priority={true}
+                                />
+                            </div>
+                        </Link>
+                    </div>
+                    <div className="group relative ">
+                        <Link href="/pricing" aria-label="Pricing">
+                            Pricing
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
+
+                    <div className="group relative ">
+                        <Link href="/reviews" aria-label="Feature">
+                            Reviews
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
+                </div>
+                <div className="group relative font-grand-hotel text-5xl text-violet-300">
                     <Link href="/admin" aria-label="Feature">
-                        <div className="diagonal-image-container">
-                            <Image
-                                alt="holo column graphic"
-                                src={holoColumn}
-                                className="diagonal-image-small h-28 w-10 object-cover"
-                                priority={true}
-                            />
-                            <span className="relative z-10">Admin</span>
-                        </div>
+                        Admin
                     </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </li>
-            </ul>
-            <AuthController />
-        </nav>
+                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-violet-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                </div>
+                <AuthController />
+            </nav>
+        </div>
     );
 }
 
