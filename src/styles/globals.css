@@ -41,6 +41,26 @@
     z-index: -1;
 }
 
+.signature-image {
+    position: absolute;
+    top: -133px;
+    left: 30px;
+    transform: rotate(90deg);
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.holo-column-container {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+
 .diagonal-image-small {
     position: absolute;
     top: -51px;
