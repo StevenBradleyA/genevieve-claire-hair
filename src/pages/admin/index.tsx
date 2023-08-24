@@ -10,7 +10,6 @@ export default function AdminPage() {
     // TODO Going to need services db setup fixed cost optional rate optional
     // TODO fix new client form so that notes and images are saving for a new client
     // TODO MAYBE ONLY WANT TO SHOW NON NEWCLIENTS?? This could keep weird google profile names from showing etc...
-    // TODO sorted firstname lastname
     // Want ability to change pricing page
     // Geni can add stuff to calendar in the booking page probs
 

@@ -1,6 +1,11 @@
 import type { User } from "@prisma/client";
 
 export default function EachClientCard({user}: {user:User}) {
+
+
+    
+
+
     return (
         <div className="flex">
 
