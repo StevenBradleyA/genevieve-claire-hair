@@ -15,6 +15,9 @@ export const userRouter = createTRPCRouter({
                     },
                 },
             },
+            orderBy: {
+                name: "asc",
+            },
         });
     }),
 

@@ -7,7 +7,7 @@ export default function AdminPage() {
     // TODO add admin only viewing or redirect if user is not admin
     // TODO Going to need services db setup fixed cost optional rate optional
     // TODO fix new client form so that notes and images are saving for a new client
-
+    // TODO MAYBE ONLY WANT TO SHOW NON NEWCLIENTS?? This could keep weird google profile names from showing etc... 
     // Want ability to change pricing page
     // Geni can add stuff to calendar in the booking page probs
 
@@ -42,7 +42,7 @@ export default function AdminPage() {
     console.log(users);
 
     return (
-        <div className="text-4xl text-white">
+        <div className="text-4xl text-white ">
             <div>Client Checkout</div>
             <div className="mb-20"> Product Checkout dropdown </div>
 
@@ -54,9 +54,11 @@ export default function AdminPage() {
 
             <div className="mb-20"> Ability to change pricing </div>
 
-            <div> List of all clients with search </div>
-
-            <div>
+            <div className="mb-10 flex justify-center font-grand-hotel text-6xl">
+                {" "}
+                Clients{" "}
+            </div>
+            <div className=" bg-glass rounded-2xl p-20">
                 {users.map((user: User, i: number) => {
                     return <EachClientCard key={i} user={user} />;
                 })}
