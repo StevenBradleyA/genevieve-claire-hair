@@ -30,6 +30,7 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_TOKEN: z.string(),
         NEXT_PUBLIC_INSTA_SECRET: z.string(),
         NEXT_PUBLIC_INSTA_APP_ID: z.string(),
+        SQUARE_ACCESS_TOKEN: z.string(),
     },
 
     /**
@@ -46,6 +47,8 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_TOKEN: z.string(),
         NEXT_PUBLIC_INSTA_SECRET: z.string(),
         NEXT_PUBLIC_INSTA_APP_ID: z.string(),
+        NEXT_PUBLIC_SQUARE_APP_ID: z.string(),
+        NEXT_PUBLIC_SQUARE_LOCATION_ID: z.string(),
     },
 
     /**
@@ -68,6 +71,10 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_TOKEN: process.env.NEXT_PUBLIC_INSTA_TOKEN,
         NEXT_PUBLIC_INSTA_SECRET: process.env.NEXT_PUBLIC_INSTA_SECRET,
         NEXT_PUBLIC_INSTA_APP_ID: process.env.NEXT_PUBLIC_INSTA_APP_ID,
+        SQUARE_ACCESS_TOKEN: process.env.SQUARE_ACCESS_TOKEN,
+        NEXT_PUBLIC_SQUARE_APP_ID: process.env.NEXT_PUBLIC_SQUARE_APP_ID,
+        NEXT_PUBLIC_SQUARE_LOCATION_ID:
+            process.env.NEXT_PUBLIC_SQUARE_LOCATION_ID,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
