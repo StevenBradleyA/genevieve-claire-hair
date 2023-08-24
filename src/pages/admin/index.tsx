@@ -2,12 +2,15 @@ import { DotLoader } from "react-spinners";
 import { api } from "~/utils/api";
 import type { User } from "@prisma/client";
 import EachClientCard from "~/components/Clients";
+import giraffe from "../../../public/giraffe.png";
+import Image from "next/image";
 
 export default function AdminPage() {
     // TODO add admin only viewing or redirect if user is not admin
     // TODO Going to need services db setup fixed cost optional rate optional
     // TODO fix new client form so that notes and images are saving for a new client
-    // TODO MAYBE ONLY WANT TO SHOW NON NEWCLIENTS?? This could keep weird google profile names from showing etc... 
+    // TODO MAYBE ONLY WANT TO SHOW NON NEWCLIENTS?? This could keep weird google profile names from showing etc...
+    // TODO sorted firstname lastname
     // Want ability to change pricing page
     // Geni can add stuff to calendar in the booking page probs
 
@@ -47,18 +50,25 @@ export default function AdminPage() {
             <div className="mb-20"> Product Checkout dropdown </div>
 
             <div> Calendar that shows schedule </div>
-            <div className="mb-20">
+            <div className="mb-10">
                 {" "}
                 Ability to change calendar availability
             </div>
 
-            <div className="mb-20"> Ability to change pricing </div>
+            <div className="mb-5"> Ability to change pricing </div>
 
-            <div className="mb-10 flex justify-center font-grand-hotel text-6xl">
+            <div className="mb-10 flex justify-center items-end gap-5 font-grand-hotel text-6xl">
                 {" "}
-                Clients{" "}
+                Clients
+                <Image
+                    src={giraffe}
+                    alt="giraffe"
+                    width={giraffe.width}
+                    height={giraffe.height}
+                    className="w-24 object-cover"
+                />
             </div>
-            <div className=" bg-glass rounded-2xl p-20">
+            <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 shadow-xl">
                 {users.map((user: User, i: number) => {
                     return <EachClientCard key={i} user={user} />;
                 })}
