@@ -9,7 +9,20 @@ const defaultState: { [name: string]: boolean } = {
     tg: false,
 };
 
-export default function ServiceOptions() {
+interface FirstTimeClientProps {
+    notes: string;
+    // setNotes: React.Dispatch<React.SetStateAction<string>>;
+    setNotes: (notes: string) => void;
+    changePages: (num: number) => void;
+    currentPage: number;
+}
+
+export default function ServiceOptions({
+    notes,
+    setNotes,
+    changePages,
+    currentPage,
+}: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
 
     const toggle = (input: string) => {
