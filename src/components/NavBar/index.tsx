@@ -33,7 +33,6 @@ export default function NavBar() {
         };
     }, []);
 
-    console.log(isScrolled);
     // const { data: session, status } = useSession();
     // const router = useRouter();
 
@@ -53,7 +52,7 @@ export default function NavBar() {
     return isMobile ? (
         <nav
             className="z-20 mb-10 flex items-center justify-between
-            bg-glass px-5 text-white overflow-auto"
+            overflow-auto bg-glass px-5 text-white"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">

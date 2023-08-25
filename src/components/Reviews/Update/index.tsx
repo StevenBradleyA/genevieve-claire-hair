@@ -119,7 +119,6 @@ export default function UpdateReview({
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("hello, submit");
         if (!Object.values(errors).length && !isSubmitting) {
             try {
                 const sessionUserId = session?.user?.id;
@@ -140,7 +139,6 @@ export default function UpdateReview({
                 setIsSubmitting(true);
 
                 if (imageFiles.length > 0) {
-                    console.log("hello, we have more than one image");
                     const imagePromises = imageFiles.map((file) => {
                         return new Promise<string>((resolve, reject) => {
                             const reader = new FileReader();
@@ -175,7 +173,6 @@ export default function UpdateReview({
                         link: imageUrl || "",
                     }));
                 }
-                console.log("data", data);
                 setText("");
                 setStarRating(0);
                 setHover(0);
@@ -317,7 +314,6 @@ export default function UpdateReview({
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    console.log("submit button clicked");
                     void submit(e);
                 }}
                 disabled={

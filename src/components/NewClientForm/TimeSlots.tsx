@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const defaultState = {
     mon: false,
@@ -10,11 +10,40 @@ const defaultState = {
     sun: false,
     time: "",
 };
+interface FirstTimeClientProps {
+    setNotes: (notes: string) => void;
+}
 
 type InputNames = "mon" | "tues" | "wed" | "thur" | "fri" | "sat" | "sun";
 
-export default function TimeSlots() {
+export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
+
+    useEffect(() => {
+        const selectedDays = Object.keys(formData).filter(
+            (key) => formData[key as keyof typeof formData] && key !== "time"
+        );
+
+        const parsedTime = formData.time
+            ? new Date(`1970-01-01T${formData.time}`)
+            : null;
+
+        let formattedTime = "";
+        if (parsedTime) {
+            const hours = parsedTime.getHours();
+            const minutes = parsedTime.getMinutes();
+            const amPm = hours >= 12 ? "PM" : "AM";
+            const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+            formattedTime = `${formattedHours}:${minutes
+                .toString()
+                .padStart(2, "0")} ${amPm}`;
+        }
+
+        const updatedNotes = `Most Likely to Book at: \n${selectedDays.join(
+            ", "
+        )}, ${formattedTime}`;
+        setNotes(updatedNotes);
+    }, [formData, setNotes]);
 
     const setTime = (input: string) => {
         const newData = { ...formData };

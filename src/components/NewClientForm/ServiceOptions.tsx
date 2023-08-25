@@ -1,16 +1,29 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const defaultState: { [name: string]: boolean } = {
     haircuts: false,
     color: false,
     vivid: false,
-    hb: false,
-    tg: false,
+    highlightsBalayage: false,
+    tonorGloss: false,
 };
 
-export default function ServiceOptions() {
+interface FirstTimeClientProps {
+    setNotes: (notes: string) => void;
+}
+
+export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
+
+    useEffect(() => {
+        const selectedOptions = Object.keys(formData).filter(
+            (key) => formData[key]
+        );
+        const updatedNotes = `Interested in the following services: \n ${selectedOptions.join(
+            ", "
+        )}`;
+        setNotes(updatedNotes);
+    }, [formData, setNotes]);
 
     const toggle = (input: string) => {
         const newData = { ...formData };
@@ -63,8 +76,8 @@ export default function ServiceOptions() {
                     Highlights/Balayage
                     <input
                         type="checkbox"
-                        name="hb"
-                        checked={formData.hb}
+                        name="highlightsBalayage"
+                        checked={formData.highlightsBalayage}
                         onChange={(e) => toggle(e.target.name)}
                         className="custom-checkbox"
                     />
@@ -73,8 +86,8 @@ export default function ServiceOptions() {
                     Toner/Gloss
                     <input
                         type="checkbox"
-                        name="tg"
-                        checked={formData.tg}
+                        name="tonorGloss"
+                        checked={formData.tonorGloss}
                         onChange={(e) => toggle(e.target.name)}
                         className="custom-checkbox"
                     />

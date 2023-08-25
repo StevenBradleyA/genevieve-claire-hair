@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const defaultState = {
     yes: false,
@@ -10,8 +10,35 @@ const defaultState = {
 
 type InputNames = "yes" | "no" | "prof" | "home";
 
-export default function ColorHistory() {
+interface FirstTimeClientProps {
+    setNotes: (notes: string) => void;
+}
+
+export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
+
+    useEffect(() => {
+        let newNotes = "Has had color before: \n";
+
+        if (formData.yes) {
+            newNotes += "yes";
+
+            if (formData.ago) {
+                newNotes += `, ${formData.ago} ago`;
+
+                if (formData.prof) {
+                    newNotes += ", professionally";
+                }
+                if (formData.home) {
+                    newNotes += ", at home";
+                }
+            }
+        } else if (formData.no) {
+            newNotes += "no";
+        }
+
+        setNotes(newNotes);
+    }, [formData, setNotes]);
 
     const setAgo = (input: string) => {
         const newData = { ...formData };
@@ -31,7 +58,6 @@ export default function ColorHistory() {
 
         setFormData(newData);
     };
-
     return (
         <form className="flex flex-col items-center  font-quattrocento text-3xl text-white">
             <div className="flex justify-center text-4xl">

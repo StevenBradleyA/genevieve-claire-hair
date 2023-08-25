@@ -7,8 +7,13 @@ import {
 import { removeFileFromS3 } from "../utils";
 
 export const reviewRouter = createTRPCRouter({
-    getAll: publicProcedure.query(({ ctx }) => {
+    getAllUsers: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.review.findMany({
+            where: {
+                user: {
+                    isNew: false,
+                },
+            },
             include: {
                 user: { select: { name: true } },
             },

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const defaultState = {
     blackBrown: false,
     brown: false,
-    brownBlonde: false,
+    lightBrownDarkBlonde: false,
     blonde: false,
-    white: false,
+    grayWhite: false,
     other: false,
     input: "",
 };
@@ -13,13 +13,32 @@ const defaultState = {
 type InputNames =
     | "blackBrown"
     | "brown"
-    | "brownBlonde"
+    | "lightBrownDarkBlonde"
     | "blonde"
-    | "white"
+    | "grayWhite"
     | "other";
 
-export default function CurrentColor() {
+interface FirstTimeClientProps {
+    setNotes: (notes: string) => void;
+}
+
+export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
+
+    useEffect(() => {
+        const selectedOptions = Object.keys(formData).filter(
+            (key) => formData[key as keyof typeof formData] && key !== "input"
+        );
+
+        if (formData.other && formData.input.trim() !== "") {
+            selectedOptions.push(`${formData.input}`);
+        }
+
+        const updatedNotes = `Current Hair Color: \n ${selectedOptions.join(
+            ": "
+        )}`;
+        setNotes(updatedNotes);
+    }, [formData, setNotes]);
 
     const setInput = (input: string) => {
         const newData = { ...formData };
@@ -67,9 +86,9 @@ export default function CurrentColor() {
                     Light Brown/Dark Blonde
                     <input
                         type="checkbox"
-                        name="brownBlonde"
-                        checked={formData.brownBlonde}
-                        onChange={() => singleToggle("brownBlonde")}
+                        name="lightBrownDarkBlonde"
+                        checked={formData.lightBrownDarkBlonde}
+                        onChange={() => singleToggle("lightBrownDarkBlonde")}
                         className="custom-checkbox"
                     ></input>
                 </label>
@@ -88,8 +107,8 @@ export default function CurrentColor() {
                     <input
                         type="checkbox"
                         name="white"
-                        checked={formData.white}
-                        onChange={() => singleToggle("white")}
+                        checked={formData.grayWhite}
+                        onChange={() => singleToggle("grayWhite")}
                         className="custom-checkbox"
                     ></input>
                 </label>
