@@ -71,7 +71,7 @@ export default function AdminPage() {
             </div>
             <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 shadow-xl">
                 {users.map((user: User, i: number) => {
-                    return <EachClientCard key={i} user={user} />;
+                    return <EachClientCard key={i} user={user} i={i} />;
                 })}
             </div>
         </div>
