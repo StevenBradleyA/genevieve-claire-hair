@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const defaultState = {
     yes: false,
@@ -10,8 +10,24 @@ const defaultState = {
 
 type InputNames = "yes" | "no" | "keratin" | "waves" | "relaxers";
 
-export default function ChemHair() {
+interface FirstTimeClientProps {
+    setNotes: (notes: string) => void;
+}
+
+export default function ChemHair({setNotes}: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
+
+
+    useEffect(() => {
+        const selectedOptions = Object.keys(formData).filter(
+            (key) => formData[key]
+        );
+        const updatedNotes = `Has had chemical treatments done to hair: \n ${selectedOptions.join(
+            ", "
+        )}`;
+        setNotes(updatedNotes);
+    }, [formData, setNotes]);
+
 
     const toggle = (input: InputNames) => {
         const newData = { ...formData };
