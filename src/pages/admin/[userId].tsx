@@ -6,8 +6,8 @@ export default function ClientProfile() {
     const { userId } = router.query;
 
     return (
-        <div className="flex">
-            <h1> client details</h1>
+        <div className="flex flex-col justify-center items-center mt-10">
+            {/* <div className="text-8xl font-grand-hotel text-white"> client details</div> */}
             {userId && <ClientDetails userId={userId.toString()} />}
         </div>
     );

@@ -24,6 +24,16 @@ export const userRouter = createTRPCRouter({
     getUserById: publicProcedure.input(z.string()).query(({ input, ctx }) => {
         return ctx.prisma.user.findFirst({
             where: { id: input },
+            include: {
+                images: {
+                    where: {
+                        resourceId: input,
+                    },
+                    select: {
+                        link: true,
+                    },
+                },
+            },
         });
     }),
     updateNewUser: protectedProcedure
