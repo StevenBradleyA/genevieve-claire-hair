@@ -113,7 +113,6 @@ export default function ExtraDetails({
                 setIsSubmitting(true);
 
                 if (imageFiles.length > 0) {
-                    console.log("hello, we have more than one image");
                     const imagePromises = imageFiles.map((file) => {
                         return new Promise<string>((resolve, reject) => {
                             const reader = new FileReader();
@@ -261,7 +260,6 @@ export default function ExtraDetails({
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    console.log("submit button clicked");
                     void submit(e);
                 }}
                 disabled={

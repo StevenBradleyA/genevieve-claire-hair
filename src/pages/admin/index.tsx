@@ -43,7 +43,6 @@ export default function AdminPage() {
 
     if (!users) return <div>Oops</div>;
 
-
     return (
         <div className="text-4xl text-white ">
             <div>Client Checkout</div>

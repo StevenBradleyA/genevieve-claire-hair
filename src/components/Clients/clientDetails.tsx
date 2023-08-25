@@ -5,7 +5,7 @@ import { api } from "~/utils/api";
 export default function ClientDetails({ userId }: { userId: string }) {
     // TODO ALLOW ADMIN to edit and update notes
     // TODO maybe allow geni to give admin permission here very easy to do
-
+    // TODO potential poggywoggy refactor there is prob a better way
     const { data: user, isLoading } = api.user.getUserById.useQuery(userId);
 
     if (isLoading)
@@ -17,8 +17,6 @@ export default function ClientDetails({ userId }: { userId: string }) {
         );
 
     if (!user) return <div>Oops</div>;
-
-    const formattedNotes = user.notes?.replace(/poggywoggy/g, "\n");
 
     return (
         <div className="mb-20 flex w-2/3 flex-col items-center justify-center rounded-2xl bg-glass p-10 text-white shadow-xl">
@@ -47,7 +45,12 @@ export default function ClientDetails({ userId }: { userId: string }) {
             <div className="mt-5 text-5xl font-bold">Notes</div>
             <div className="mx-56 mt-3 rounded-2xl bg-chillPurple p-6 ">
                 {/* <p className="text-xl ">{user.notes}</p> */}
-                <p className="text-xl ">{formattedNotes}</p>
+                {user.notes &&
+                    user.notes.split("poggywoggy").map((line, index) => (
+                        <p key={index} className="text-xl">
+                            {line}
+                        </p>
+                    ))}
             </div>
         </div>
     );
