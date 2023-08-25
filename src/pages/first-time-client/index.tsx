@@ -24,8 +24,7 @@ export default function FirstTimeClient() {
     console.log(colorHistoryNotes);
     console.log(chemNotes)
     console.log(currentColorNotes)
-    // console.log(timeNotes)
-    // console.log(chemNotes)
+    console.log(timeNotes)
     // console.log(extraNotes)
 
     const changePages = (num: number) => {

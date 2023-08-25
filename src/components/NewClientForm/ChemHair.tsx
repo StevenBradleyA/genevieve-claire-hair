@@ -14,20 +14,18 @@ interface FirstTimeClientProps {
     setNotes: (notes: string) => void;
 }
 
-export default function ChemHair({setNotes}: FirstTimeClientProps) {
+export default function ChemHair({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
-
 
     useEffect(() => {
         const selectedOptions = Object.keys(formData).filter(
-            (key) => formData[key]
+            (key) => formData[key as keyof typeof formData]
         );
         const updatedNotes = `Has had chemical treatments done to hair: \n ${selectedOptions.join(
             ", "
         )}`;
         setNotes(updatedNotes);
     }, [formData, setNotes]);
-
 
     const toggle = (input: InputNames) => {
         const newData = { ...formData };
@@ -42,7 +40,9 @@ export default function ChemHair({setNotes}: FirstTimeClientProps) {
 
     return (
         <form className="flex flex-col items-center justify-center font-quattrocento text-3xl text-white">
-            <div className="text-4xl">Have you had any chemical treatments done on your hair?</div>
+            <div className="text-4xl">
+                Have you had any chemical treatments done on your hair?
+            </div>
 
             <div className=" mb-5 mt-5 flex justify-center gap-10">
                 <label className="flex cursor-pointer items-center justify-center gap-5">

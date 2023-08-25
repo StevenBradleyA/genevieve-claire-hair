@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 const defaultState = {
     blackBrown: false,
     brown: false,
-    brownBlonde: false,
+    lightBrownDarkBlonde: false,
     blonde: false,
-    white: false,
+    grayWhite: false,
     other: false,
     input: "",
 };
@@ -13,9 +13,9 @@ const defaultState = {
 type InputNames =
     | "blackBrown"
     | "brown"
-    | "brownBlonde"
+    | "lightBrownDarkBlonde"
     | "blonde"
-    | "white"
+    | "grayWhite"
     | "other";
 
 interface FirstTimeClientProps {
@@ -86,9 +86,9 @@ export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
                     Light Brown/Dark Blonde
                     <input
                         type="checkbox"
-                        name="brownBlonde"
-                        checked={formData.brownBlonde}
-                        onChange={() => singleToggle("brownBlonde")}
+                        name="lightBrownDarkBlonde"
+                        checked={formData.lightBrownDarkBlonde}
+                        onChange={() => singleToggle("lightBrownDarkBlonde")}
                         className="custom-checkbox"
                     ></input>
                 </label>
@@ -107,8 +107,8 @@ export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
                     <input
                         type="checkbox"
                         name="white"
-                        checked={formData.white}
-                        onChange={() => singleToggle("white")}
+                        checked={formData.grayWhite}
+                        onChange={() => singleToggle("grayWhite")}
                         className="custom-checkbox"
                     ></input>
                 </label>
