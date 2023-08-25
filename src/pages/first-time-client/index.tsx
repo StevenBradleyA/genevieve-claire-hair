@@ -14,16 +14,16 @@ export default function FirstTimeClient() {
     const [page, setPage] = useState<number>(0);
     const [serviceNotes, setServiceNotes] = useState<string>("");
     const [colorHistoryNotes, setColorHistoryNotes] = useState<string>("");
-    const [currentColorNotes, setCurrentColorNotes] = useState<string>("");
     const [chemNotes, setChemNotes] = useState<string>("");
+    const [currentColorNotes, setCurrentColorNotes] = useState<string>("");
     const [timeNotes, setTimeNotes] = useState<string>("");
     const [extraNotes, setExtraNotes] = useState<string>("");
 
     // need to concatenate all notes at the end with \n and add to the db
     console.log(serviceNotes);
     console.log(colorHistoryNotes);
-    // console.log(currentColorNotes)
-    // console.log(chemNotes)
+    console.log(chemNotes)
+    console.log(currentColorNotes)
     // console.log(timeNotes)
     // console.log(chemNotes)
     // console.log(extraNotes)

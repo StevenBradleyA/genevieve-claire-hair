@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const defaultState = {
     blackBrown: false,
@@ -18,8 +18,27 @@ type InputNames =
     | "white"
     | "other";
 
-export default function CurrentColor() {
+interface FirstTimeClientProps {
+    setNotes: (notes: string) => void;
+}
+
+export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
+
+    useEffect(() => {
+        const selectedOptions = Object.keys(formData).filter(
+            (key) => formData[key as keyof typeof formData] && key !== "input"
+        );
+
+        if (formData.other && formData.input.trim() !== "") {
+            selectedOptions.push(`${formData.input}`);
+        }
+
+        const updatedNotes = `Current Hair Color: \n ${selectedOptions.join(
+            ": "
+        )}`;
+        setNotes(updatedNotes);
+    }, [formData, setNotes]);
 
     const setInput = (input: string) => {
         const newData = { ...formData };
