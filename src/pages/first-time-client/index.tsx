@@ -19,13 +19,10 @@ export default function FirstTimeClient() {
     const [timeNotes, setTimeNotes] = useState<string>("");
     const [extraNotes, setExtraNotes] = useState<string>("");
 
-    // need to concatenate all notes at the end with \n and add to the db
-    console.log(serviceNotes);
-    console.log(colorHistoryNotes);
-    console.log(chemNotes)
-    console.log(currentColorNotes)
-    console.log(timeNotes)
-    // console.log(extraNotes)
+//  TODO make this form only viewable if bool on user model tru
+//  TODO otherwise redirect
+//  TODO make it pop up if they have signed in but bool is false always
+
 
     const changePages = (num: number) => {
         const newNum = page + num;
@@ -44,12 +41,12 @@ export default function FirstTimeClient() {
         <ExtraDetails
             key={5}
             extraNotes={extraNotes}
+            setExtraNotes={setExtraNotes}
             serviceNotes={serviceNotes}
             colorHistoryNotes={colorHistoryNotes}
             chemNotes={chemNotes}
             currentColorNotes={currentColorNotes}
             timeNotes={timeNotes}
-            setExtraNotes={extraNotes}
         />,
     ];
 

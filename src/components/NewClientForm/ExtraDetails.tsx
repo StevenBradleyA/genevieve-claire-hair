@@ -1,17 +1,136 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateImage from "../Images/Create";
+import { useSession } from "next-auth/react";
+import { api } from "~/utils/api";
 
-export default function ExtraDetails() {
+interface FirstTimeClientProps {
+    extraNotes: string;
+    setExtraNotes: (notes: string) => void;
+    serviceNotes: string;
+    colorHistoryNotes: string;
+    chemNotes: string;
+    currentColorNotes: string;
+    timeNotes: string;
+}
+
+interface ErrorsObj {
+    image?: string;
+    imageExcess?: string;
+}
+
+interface Image {
+    link: string;
+}
+
+export default function ExtraDetails({
+    extraNotes,
+    setExtraNotes,
+    serviceNotes,
+    colorHistoryNotes,
+    chemNotes,
+    currentColorNotes,
+    timeNotes,
+}: FirstTimeClientProps) {
+    const { data: session } = useSession();
+    const ctx = api.useContext();
     const [formData, setFormData] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [errors, setErrors] = useState<ErrorsObj>({});
+    const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-    const [hasSubmittedImages, setHasSubmittedImages] =
-        useState<boolean>(false);
+    //    TODO need to add notes to user , first name, last name
 
-    console.log(formData);
+    const { mutate } = api.review.create.useMutation({
+        onSuccess: () => {
+            // void ctx.review.getAll.invalidate();
+        },
+    });
+
+    const handleInputErrors = () => {
+        const errorsObj: ErrorsObj = {};
+        // ! should implement max file size upload could cap at like 50mb
+        if (imageFiles.length > 5) {
+            errorsObj.imageExcess = "Cannot provide more than 5 photos";
+        }
+        setErrors(errorsObj);
+    };
+
+    useEffect(() => {
+        handleInputErrors();
+    }, [imageFiles]);
 
     //TODO  have submit here
+    const submit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!Object.values(errors).length && !isSubmitting) {
+            try {
+                const sessionUserId = session?.user?.id;
+
+                if (!sessionUserId) {
+                    throw new Error("Session expired");
+                }
+
+                const data: ReviewData = {
+                    text,
+                    starRating,
+                    userId: sessionUserId,
+                    bookingId: bookingId,
+                };
+
+                setIsSubmitting(true);
+
+                if (imageFiles.length > 0) {
+                    console.log("hello, we have more than one image");
+                    const imagePromises = imageFiles.map((file) => {
+                        return new Promise<string>((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(file);
+                            reader.onloadend = () => {
+                                if (typeof reader.result === "string") {
+                                    const base64Data =
+                                        reader.result.split(",")[1];
+                                    if (base64Data) {
+                                        resolve(base64Data);
+                                    }
+                                } else {
+                                    reject(new Error("Failed to read file"));
+                                }
+                            };
+                            reader.onerror = () => {
+                                reject(new Error("Failed to read file"));
+                            };
+                        });
+                    });
+
+                    const base64DataArray = await Promise.all(imagePromises);
+                    const imageUrlArr: string[] = [];
+
+                    for (const base64Data of base64DataArray) {
+                        const buffer = Buffer.from(base64Data, "base64");
+                        const imageUrl = await uploadFileToS3(buffer);
+                        imageUrlArr.push(imageUrl);
+                    }
+
+                    data.images = imageUrlArr.map((imageUrl) => ({
+                        link: imageUrl || "",
+                    }));
+                }
+                // setText("");
+
+                // mutate(data);
+
+                setImageFiles([]);
+                setHasSubmitted(true);
+                setIsSubmitting(false);
+            } catch (error) {
+                console.error("Submission failed:", error);
+                setIsSubmitting(false);
+            }
+        }
+    };
 
     return (
         <form className="flex flex-col items-center  rounded-2xl bg-glass p-20 font-quattrocento text-3xl text-white shadow-xl">
@@ -57,10 +176,7 @@ export default function ExtraDetails() {
                 <div>thank you!</div>
             )}
 
-            <button
-
-                className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
-            >
+            <button className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95">
                 Submit
             </button>
         </form>
