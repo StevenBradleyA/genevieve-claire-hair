@@ -42,7 +42,7 @@ export default function ExtraDetails({
     currentColorNotes,
     timeNotes,
 }: FirstTimeClientProps) {
-    const { data: session } = useSession();
+    const { data: session, update } = useSession();
     const ctx = api.useContext();
     const router = useRouter();
     const [formData, setFormData] = useState("");
@@ -52,7 +52,6 @@ export default function ExtraDetails({
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
     //    TODO need to add notes to user , first name, last name
 
     const { mutate } = api.user.updateNewUser.useMutation({
@@ -60,6 +59,7 @@ export default function ExtraDetails({
             try {
                 void ctx.user.getAllUsers.invalidate();
                 void ctx.user.invalidate();
+                await update();
                 await router.push("/");
             } catch (error) {
                 console.error("Error while navigating:", error);
@@ -206,14 +206,6 @@ export default function ExtraDetails({
             <div className=" flex justify-center text-xl">
                 (this will only be seen by me )
             </div>
-            {/* {!hasSubmittedImages ? (
-                <CreateImage
-                    setHasSubmittedImages={setHasSubmittedImages}
-                    resourceType={"USER"}
-                />
-            ) : (
-                <div>thank you!</div>
-            )} */}
             <div className="py-4">
                 <label className="relative inline-block h-40 w-40">
                     <input
@@ -292,10 +284,6 @@ export default function ExtraDetails({
             >
                 {isSubmitting ? "Uploading..." : "Submit Review"}
             </button>
-
-            {/* <button className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95">
-                Submit
-            </button> */}
         </form>
     );
 }
