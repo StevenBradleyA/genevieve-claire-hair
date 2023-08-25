@@ -21,10 +21,56 @@ export const userRouter = createTRPCRouter({
         });
     }),
 
-    updateNewUser: protectedProcedure.mutation(({ ctx }) => {
-        return ctx.prisma.user.update({
-            where: { id: ctx.session.user.id },
-            data: { isNew: false },
-        });
-    }),
+    updateNewUser: protectedProcedure
+        .input(
+            z.object({
+                userId: z.string(),
+                firstName: z.string(),
+                lastName: z.string(),
+                notes: z.string(),
+                images: z
+                    .array(
+                        z.object({
+                            link: z.string(),
+                        })
+                    )
+                    .optional(),
+            })
+        )
+        .mutation(async ({ input, ctx }) => {
+            const { userId, firstName, lastName, notes, images } = input;
+            if (ctx.session.user.id === userId) {
+                const updatedUser = await ctx.prisma.user.update({
+                    where: { id: ctx.session.user.id },
+                    data: { firstName, lastName, notes, isNew: false },
+                });
+
+                if (images) {
+                    const createdImages = images.map(async (image) => {
+                        return ctx.prisma.images.create({
+                            data: {
+                                link: image.link,
+                                resourceType: "USER",
+                                resourceId: userId,
+                                userId: userId,
+                            },
+                        });
+                    });
+                    return {
+                        updatedUser,
+                        createdImages,
+                    };
+                }
+                return { updatedUser };
+            }
+
+            throw new Error("Invalid userId");
+        }),
+
+    // updateNewUser: protectedProcedure.mutation(({ ctx }) => {
+    //     return ctx.prisma.user.update({
+    //         where: { id: ctx.session.user.id },
+    //         data: { isNew: false },
+    //     });
+    // }),
 });
