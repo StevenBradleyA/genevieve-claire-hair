@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const defaultState: { [name: string]: boolean } = {
@@ -10,20 +10,21 @@ const defaultState: { [name: string]: boolean } = {
 };
 
 interface FirstTimeClientProps {
-    notes: string;
-    // setNotes: React.Dispatch<React.SetStateAction<string>>;
     setNotes: (notes: string) => void;
-    changePages: (num: number) => void;
-    currentPage: number;
 }
 
-export default function ServiceOptions({
-    notes,
-    setNotes,
-    changePages,
-    currentPage,
-}: FirstTimeClientProps) {
+export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
+
+    useEffect(() => {
+        const selectedOptions = Object.keys(formData).filter(
+            (key) => formData[key]
+        );
+        const updatedNotes = `Interested in the following services: \n ${selectedOptions.join(
+            ", "
+        )}`;
+        setNotes(updatedNotes);
+    }, [formData, setNotes]);
 
     const toggle = (input: string) => {
         const newData = { ...formData };
@@ -31,9 +32,6 @@ export default function ServiceOptions({
         newData[input] = !newData[input];
 
         setFormData(newData);
-        const selectedOptions = Object.keys(newData).filter(key => newData[key]);
-        const updatedNotes = `Interested in the following services: \n ${selectedOptions.join(", ")}`
-        setNotes(updatedNotes);
     };
 
     return (

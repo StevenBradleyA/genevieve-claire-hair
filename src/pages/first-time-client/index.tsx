@@ -10,28 +10,55 @@ import {
     ExtraDetails,
 } from "~/components/NewClientForm";
 
-
-
 export default function FirstTimeClient() {
     const [page, setPage] = useState<number>(0);
-    const [notes, setNotes] = useState<string>("");
-    console.log(notes)
+    const [serviceNotes, setServiceNotes] = useState<string>("");
+    const [colorHistoryNotes, setColorHistoryNotes] = useState<string>("");
+    const [currentColorNotes, setCurrentColorNotes] = useState<string>("");
+
+    const [chemNotes, setChemNotes] = useState<string>("");
+    const [timeNotes, setTimeNotes] = useState<string>("");
+    const [ExtraNotes, setExtraNotes] = useState<string>("");
+
+    // need to concatenate all notes at the end with \n and add to the db
+    console.log(serviceNotes);
+
     const changePages = (num: number) => {
         const newNum = page + num;
 
         if (newNum < form.length && newNum >= 0) {
-            // Update notes before moving to the next page
-            form[page].props.setNotes(notes); // Update notes for the current page
             setPage(newNum);
         } else newNum < 0 ? setPage(0) : setPage(form.length - 1);
     };
 
     const form = [
-        <ServiceOptions key={0} notes={notes} setNotes={setNotes} changePages={changePages} currentPage={page} />,
-        <ColorHistory key={1} notes={notes} setNotes={setNotes} changePages={changePages} currentPage={page} />,
-        <ChemHair key={2} notes={notes} setNotes={setNotes} changePages={changePages} currentPage={page} />,
-        <CurrentColor key={3} notes={notes} setNotes={setNotes} changePages={changePages} currentPage={page} />,
-        <TimeSlots key={4} notes={notes} setNotes={setNotes} changePages={changePages} currentPage={page} />,
+        <ServiceOptions key={0} setNotes={setServiceNotes} />,
+        <ColorHistory
+            key={1}
+            notes={colorHistoryNotes}
+            setNotes={setColorHistoryNotes}
+        />,
+        <ChemHair
+            key={2}
+            notes={chemNotes}
+            setNotes={setChemNotes}
+            changePages={changePages}
+            currentPage={page}
+        />,
+        <CurrentColor
+            key={3}
+            notes={currentColorNotes}
+            setNotes={setCurrentColorNotes}
+            changePages={changePages}
+            currentPage={page}
+        />,
+        <TimeSlots
+            key={4}
+            notes={timeNotes}
+            setNotes={setTimeNotes}
+            changePages={changePages}
+            currentPage={page}
+        />,
         <ExtraDetails key={5} changePages={changePages} currentPage={page} />,
     ];
 
