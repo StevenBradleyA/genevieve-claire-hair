@@ -36,10 +36,6 @@ export default function FirstTimeClient() {
         void redirectIfNotNew();
     }, [isNew]);
 
-    //  TODO make this form only viewable if bool on user model tru
-    //  TODO otherwise redirect
-    //  TODO make it pop up if they have signed in but bool is false always
-
     const changePages = (num: number) => {
         const newNum = page + num;
 

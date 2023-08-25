@@ -29,15 +29,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         async function redirectIfNew() {
             if (isNew) {
                 try {
-                    await router.push('/first-time-client');
+                    await router.push("/first-time-client");
                 } catch (error) {
-                    console.error('Error while redirecting:', error);
+                    console.error("Error while redirecting:", error);
                 }
             }
         }
         void redirectIfNew();
     }, [isNew, router.asPath]);
-
 
     return (
         <>

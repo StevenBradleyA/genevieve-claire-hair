@@ -52,7 +52,6 @@ export default function ExtraDetails({
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-    //    TODO need to add notes to user , first name, last name
 
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
@@ -192,7 +191,7 @@ export default function ExtraDetails({
             )}
 
             <div className="mb-5 flex justify-center text-4xl">
-                Anything you'd like me to know?
+                {`Anything you'd like me to know?`}
             </div>
             <textarea
                 value={formData}
