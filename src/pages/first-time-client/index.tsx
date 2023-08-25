@@ -19,10 +19,11 @@ export default function FirstTimeClient() {
     const [timeNotes, setTimeNotes] = useState<string>("");
     const [extraNotes, setExtraNotes] = useState<string>("");
 
-//  TODO make this form only viewable if bool on user model tru
-//  TODO otherwise redirect
-//  TODO make it pop up if they have signed in but bool is false always
+    //  TODO make this form only viewable if bool on user model tru
+    //  TODO otherwise redirect
+    //  TODO make it pop up if they have signed in but bool is false always
 
+    console.log(extraNotes);
 
     const changePages = (num: number) => {
         const newNum = page + num;

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import CreateImage from "../Images/Create";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
+import Image from "next/image";
+import { uploadFileToS3 } from "~/pages/api/aws/utils";
+import { useRouter } from "next/router";
 
 interface FirstTimeClientProps {
     extraNotes: string;
@@ -16,10 +18,19 @@ interface FirstTimeClientProps {
 interface ErrorsObj {
     image?: string;
     imageExcess?: string;
+    firstName?: string;
+    lastName?: string;
 }
 
 interface Image {
     link: string;
+}
+interface UserData {
+    userId: string;
+    firstName: string;
+    lastName: string;
+    notes: string;
+    images?: Image[];
 }
 
 export default function ExtraDetails({
@@ -33,6 +44,7 @@ export default function ExtraDetails({
 }: FirstTimeClientProps) {
     const { data: session } = useSession();
     const ctx = api.useContext();
+    const router = useRouter();
     const [formData, setFormData] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -43,15 +55,27 @@ export default function ExtraDetails({
 
     //    TODO need to add notes to user , first name, last name
 
-    const { mutate } = api.review.create.useMutation({
-        onSuccess: () => {
-            // void ctx.review.getAll.invalidate();
+    const { mutate } = api.user.updateNewUser.useMutation({
+        onSuccess: async () => {
+            try {
+                void ctx.user.getAllUsers.invalidate();
+                await router.push("/");
+            } catch (error) {
+                console.error("Error while navigating:", error);
+            }
         },
     });
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
         // ! should implement max file size upload could cap at like 50mb
+        if (!firstName.length) {
+            errorsObj.firstName = "Please provide your first name";
+        }
+        if (!lastName.length) {
+            errorsObj.lastName = "Please provide your last name";
+        }
+
         if (imageFiles.length > 5) {
             errorsObj.imageExcess = "Cannot provide more than 5 photos";
         }
@@ -60,9 +84,13 @@ export default function ExtraDetails({
 
     useEffect(() => {
         handleInputErrors();
-    }, [imageFiles]);
+    }, [imageFiles, firstName, lastName]);
 
-    //TODO  have submit here
+    useEffect(() => {
+        const updatedNotes = `Anything you'd like me to know? \n ${formData}`;
+        setExtraNotes(updatedNotes);
+    }, [formData, setExtraNotes]);
+
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!Object.values(errors).length && !isSubmitting) {
@@ -73,11 +101,13 @@ export default function ExtraDetails({
                     throw new Error("Session expired");
                 }
 
-                const data: ReviewData = {
-                    text,
-                    starRating,
+                const notes = `${serviceNotes} + \n${colorHistoryNotes} + \n${chemNotes}+ \n${currentColorNotes}+ \n${timeNotes}+ \n${extraNotes}`;
+
+                const data: UserData = {
                     userId: sessionUserId,
-                    bookingId: bookingId,
+                    firstName,
+                    lastName,
+                    notes,
                 };
 
                 setIsSubmitting(true);
@@ -118,10 +148,8 @@ export default function ExtraDetails({
                         link: imageUrl || "",
                     }));
                 }
-                // setText("");
 
-                // mutate(data);
-
+                mutate(data);
                 setImageFiles([]);
                 setHasSubmitted(true);
                 setIsSubmitting(false);
@@ -151,6 +179,16 @@ export default function ExtraDetails({
                     placeholder="Last Name"
                 ></input>
             </div>
+            {errors.firstName && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.firstName}
+                </p>
+            )}
+            {errors.lastName && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.lastName}
+                </p>
+            )}
 
             <div className="mb-5 flex justify-center text-4xl">
                 Anything you'd like me to know?
@@ -167,18 +205,96 @@ export default function ExtraDetails({
             <div className=" flex justify-center text-xl">
                 (this will only be seen by me )
             </div>
-            {!hasSubmittedImages ? (
+            {/* {!hasSubmittedImages ? (
                 <CreateImage
                     setHasSubmittedImages={setHasSubmittedImages}
                     resourceType={"USER"}
                 />
             ) : (
                 <div>thank you!</div>
+            )} */}
+            <div className="py-4">
+                <label className="relative inline-block h-40 w-40">
+                    <input
+                        className="absolute h-full w-full cursor-pointer opacity-0"
+                        type="file"
+                        multiple
+                        // accept="image/png, image/jpg, image/jpeg"
+                        accept="image/*"
+                        onChange={(e) => {
+                            if (e.target.files)
+                                setImageFiles([
+                                    ...imageFiles,
+                                    ...e.target.files,
+                                ]);
+                        }}
+                    />
+                    <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                        <span className="text-center font-quattrocento">
+                            Choose Files
+                        </span>
+                    </div>
+                </label>
+            </div>
+            <div className="mb-5 flex w-3/4 flex-wrap justify-center gap-10">
+                {imageFiles.map((e, i) => (
+                    <div key={i} className="relative">
+                        <Image
+                            className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
+                            alt={`listing-${i}`}
+                            src={URL.createObjectURL(e)}
+                            width={100}
+                            height={100}
+                        />
+                        <button
+                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-red-500"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const newImageFiles = [...imageFiles];
+                                newImageFiles.splice(i, 1);
+                                setImageFiles(newImageFiles);
+                            }}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                ))}
+            </div>
+            {errors.imageExcess && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageExcess}
+                </p>
             )}
 
-            <button className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95">
-                Submit
+            <button
+                onClick={(e) => {
+                    e.preventDefault();
+                    console.log("submit button clicked");
+                    void submit(e);
+                }}
+                disabled={
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!firstName || !lastName))
+                }
+                className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!firstName || !lastName))
+                        ? "text-slate-300"
+                        : "text-purple-300"
+                }`}
+            >
+                {isSubmitting ? "Uploading..." : "Submit Review"}
             </button>
+
+            {/* <button className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95">
+                Submit
+            </button> */}
         </form>
     );
 }

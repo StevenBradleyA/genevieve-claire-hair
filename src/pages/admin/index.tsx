@@ -6,6 +6,8 @@ import giraffe from "../../../public/giraffe.png";
 import Image from "next/image";
 
 export default function AdminPage() {
+    // ! square texts her clients with she books them
+    // ! could we do an email confirmation to them? when they book?
     // TODO add admin only viewing or redirect if user is not admin
     // TODO Going to need services db setup fixed cost optional rate optional
     // TODO fix new client form so that notes and images are saving for a new client
@@ -56,7 +58,7 @@ export default function AdminPage() {
 
             <div className="mb-5"> Ability to change pricing </div>
 
-            <div className="mb-10 flex justify-center items-end gap-5 font-grand-hotel text-6xl">
+            <div className="mb-10 flex items-end justify-center gap-5 font-grand-hotel text-6xl">
                 {" "}
                 Clients
                 <Image
