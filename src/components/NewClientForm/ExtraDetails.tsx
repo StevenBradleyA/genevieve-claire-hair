@@ -59,6 +59,7 @@ export default function ExtraDetails({
         onSuccess: async () => {
             try {
                 void ctx.user.getAllUsers.invalidate();
+                void ctx.user.invalidate();
                 await router.push("/");
             } catch (error) {
                 console.error("Error while navigating:", error);

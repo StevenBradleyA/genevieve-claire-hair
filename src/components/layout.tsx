@@ -9,18 +9,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const isNew = session?.user.isNew;
 
+    //TODO decide how strict we want redirect enforcement
+    // here is a non enforced...
+    // useEffect(() => {
+    //     async function redirectIfNew() {
+    //         if (isNew) {
+    //             try {
+    //                 await router.push("/first-time-client");
+    //             } catch (error) {
+    //                 console.error("Error while redirecting:", error);
+    //             }
+    //         }
+    //     }
+    //     void redirectIfNew();
+    // }, [isNew]);
+
+    // enforced redirect
     useEffect(() => {
-        async function redirectIfNotNew() {
-            if (!isNew) {
+        async function redirectIfNew() {
+            if (isNew) {
                 try {
-                    await router.push("/");
+                    await router.push('/first-time-client');
                 } catch (error) {
-                    console.error("Error while redirecting:", error);
+                    console.error('Error while redirecting:', error);
                 }
             }
         }
-        void redirectIfNotNew();
-    }, [isNew]);
+        void redirectIfNew();
+    }, [isNew, router.asPath]);
+
 
     return (
         <>
