@@ -4,6 +4,8 @@ import { api } from "~/utils/api";
 
 export default function ClientDetails({ userId }: { userId: string }) {
     // TODO ALLOW ADMIN to edit and update notes
+    // TODO maybe allow geni to give admin permission here very easy to do
+
     const { data: user, isLoading } = api.user.getUserById.useQuery(userId);
 
     if (isLoading)

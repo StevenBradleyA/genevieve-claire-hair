@@ -43,7 +43,6 @@ export default function AdminPage() {
 
     if (!users) return <div>Oops</div>;
 
-    console.log(users);
 
     return (
         <div className="text-4xl text-white ">
