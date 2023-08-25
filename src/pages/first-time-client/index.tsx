@@ -21,20 +21,20 @@ export default function FirstTimeClient() {
     const { data: session } = useSession();
     const router = useRouter();
 
-   const isNew = session?.user.isNew
+    const isNew = session?.user.isNew;
 
-   useEffect(() => {
-    async function redirectIfNotNew() {
-        if (!isNew) {
-            try {
-                await router.push('/');
-            } catch (error) {
-                console.error('Error while redirecting:', error);
+    useEffect(() => {
+        async function redirectIfNotNew() {
+            if (!isNew) {
+                try {
+                    await router.push("/");
+                } catch (error) {
+                    console.error("Error while redirecting:", error);
+                }
             }
         }
-    }
-    void redirectIfNotNew();
-}, [isNew]);
+        void redirectIfNotNew();
+    }, [isNew]);
 
     //  TODO make this form only viewable if bool on user model tru
     //  TODO otherwise redirect
@@ -66,7 +66,7 @@ export default function FirstTimeClient() {
         />,
     ];
 
-    return (
+    return isNew ? (
         <div className="flex flex-col items-center justify-center gap-5">
             <h1 className="font-grand-hotel text-8xl text-white">
                 First Time Client
@@ -93,6 +93,11 @@ export default function FirstTimeClient() {
                     )}
                 </div>
             </div>
+        </div>
+    ) : (
+        <div className="mt-20 text-3xl text-white">
+            {" "}
+            New Client Form Completed 😊
         </div>
     );
 }
