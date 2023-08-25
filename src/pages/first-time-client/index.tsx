@@ -15,6 +15,16 @@ import {
 export default function FirstTimeClient() {
     const [page, setPage] = useState<number>(0);
     const [notes, setNotes] = useState<string>("");
+    console.log(notes)
+    const changePages = (num: number) => {
+        const newNum = page + num;
+
+        if (newNum < form.length && newNum >= 0) {
+            // Update notes before moving to the next page
+            form[page].props.setNotes(notes); // Update notes for the current page
+            setPage(newNum);
+        } else newNum < 0 ? setPage(0) : setPage(form.length - 1);
+    };
 
     const form = [
         <ServiceOptions key={0} notes={notes} setNotes={setNotes} changePages={changePages} currentPage={page} />,
@@ -25,15 +35,6 @@ export default function FirstTimeClient() {
         <ExtraDetails key={5} changePages={changePages} currentPage={page} />,
     ];
 
-    const changePages = (num: number) => {
-        const newNum = page + num;
-
-        if (newNum < form.length && newNum >= 0) {
-            // Update notes before moving to the next page
-            form[page].props.setNotes(notes); // Update notes for the current page
-            setPage(newNum);
-        } else newNum < 0 ? setPage(0) : setPage(form.length - 1);
-    };
     //     if (newNum < form.length && newNum >= 0) setPage(page + num);
     //     else newNum < 0 ? setPage(0) : setPage(form.length - 1);
     // };

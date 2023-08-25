@@ -31,6 +31,9 @@ export default function ServiceOptions({
         newData[input] = !newData[input];
 
         setFormData(newData);
+        const selectedOptions = Object.keys(newData).filter(key => newData[key]);
+        const updatedNotes = `Interested in the following services: \n ${selectedOptions.join(", ")}`
+        setNotes(updatedNotes);
     };
 
     return (
