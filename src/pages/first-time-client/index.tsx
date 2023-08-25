@@ -15,13 +15,18 @@ export default function FirstTimeClient() {
     const [serviceNotes, setServiceNotes] = useState<string>("");
     const [colorHistoryNotes, setColorHistoryNotes] = useState<string>("");
     const [currentColorNotes, setCurrentColorNotes] = useState<string>("");
-
     const [chemNotes, setChemNotes] = useState<string>("");
     const [timeNotes, setTimeNotes] = useState<string>("");
-    const [ExtraNotes, setExtraNotes] = useState<string>("");
+    const [extraNotes, setExtraNotes] = useState<string>("");
 
     // need to concatenate all notes at the end with \n and add to the db
     console.log(serviceNotes);
+    console.log(colorHistoryNotes);
+    // console.log(currentColorNotes)
+    // console.log(chemNotes)
+    // console.log(timeNotes)
+    // console.log(chemNotes)
+    // console.log(extraNotes)
 
     const changePages = (num: number) => {
         const newNum = page + num;
@@ -33,35 +38,23 @@ export default function FirstTimeClient() {
 
     const form = [
         <ServiceOptions key={0} setNotes={setServiceNotes} />,
-        <ColorHistory
-            key={1}
-            notes={colorHistoryNotes}
-            setNotes={setColorHistoryNotes}
+        <ColorHistory key={1} setNotes={setColorHistoryNotes} />,
+        <ChemHair key={2} setNotes={setChemNotes} />,
+        <CurrentColor key={3} setNotes={setCurrentColorNotes} />,
+        <TimeSlots key={4} setNotes={setTimeNotes} />,
+        <ExtraDetails
+            key={5}
+            extraNotes={extraNotes}
+            serviceNotes={serviceNotes}
+            colorHistoryNotes={colorHistoryNotes}
+            chemNotes={chemNotes}
+            currentColorNotes={currentColorNotes}
+            timeNotes={timeNotes}
+            setExtraNotes={extraNotes}
         />,
-        <ChemHair
-            key={2}
-            notes={chemNotes}
-            setNotes={setChemNotes}
-            changePages={changePages}
-            currentPage={page}
-        />,
-        <CurrentColor
-            key={3}
-            notes={currentColorNotes}
-            setNotes={setCurrentColorNotes}
-            changePages={changePages}
-            currentPage={page}
-        />,
-        <TimeSlots
-            key={4}
-            notes={timeNotes}
-            setNotes={setTimeNotes}
-            changePages={changePages}
-            currentPage={page}
-        />,
-        <ExtraDetails key={5} changePages={changePages} currentPage={page} />,
     ];
 
+    //! gonna need to pass all other notes to extradetails and concatenate them during submission.
     //     if (newNum < form.length && newNum >= 0) setPage(page + num);
     //     else newNum < 0 ? setPage(0) : setPage(form.length - 1);
     // };
