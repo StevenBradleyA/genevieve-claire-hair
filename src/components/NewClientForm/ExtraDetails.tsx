@@ -101,7 +101,7 @@ export default function ExtraDetails({
                     throw new Error("Session expired");
                 }
 
-                const notes = `${serviceNotes} + \n${colorHistoryNotes} + \n${chemNotes}+ \n${currentColorNotes}+ \n${timeNotes}+ \n${extraNotes}`;
+                const notes = `${serviceNotes} poggywoggy ${colorHistoryNotes} poggywoggy ${chemNotes} poggywoggy ${currentColorNotes} poggywoggy ${timeNotes} poggywoggy ${extraNotes}`;
 
                 const data: UserData = {
                     userId: sessionUserId,

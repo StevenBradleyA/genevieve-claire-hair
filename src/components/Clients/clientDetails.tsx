@@ -16,6 +16,8 @@ export default function ClientDetails({ userId }: { userId: string }) {
 
     if (!user) return <div>Oops</div>;
 
+    const formattedNotes = user.notes?.replace(/poggywoggy/g, "\n");
+
     return (
         <div className="mb-20 flex w-2/3 flex-col items-center justify-center rounded-2xl bg-glass p-10 text-white shadow-xl">
             <div className="mb-5 flex gap-5 text-5xl font-bold">
@@ -42,7 +44,8 @@ export default function ClientDetails({ userId }: { userId: string }) {
 
             <div className="mt-5 text-5xl font-bold">Notes</div>
             <div className="mx-56 mt-3 rounded-2xl bg-chillPurple p-6 ">
-                <p className="text-xl ">{user.notes}</p>
+                {/* <p className="text-xl ">{user.notes}</p> */}
+                <p className="text-xl ">{formattedNotes}</p>
             </div>
         </div>
     );
