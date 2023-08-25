@@ -1,3 +1,4 @@
+import { Input } from "postcss";
 import { z } from "zod";
 import {
     createTRPCRouter,
@@ -20,7 +21,11 @@ export const userRouter = createTRPCRouter({
             },
         });
     }),
-
+    getUserById: publicProcedure.input(z.string()).query(({ input, ctx }) => {
+        return ctx.prisma.user.findFirst({
+            where: { id: input },
+        });
+    }),
     updateNewUser: protectedProcedure
         .input(
             z.object({
