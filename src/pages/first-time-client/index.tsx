@@ -1,6 +1,6 @@
-import { api } from "~/utils/api";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import {
     ServiceOptions,
     ColorHistory,
@@ -18,12 +18,27 @@ export default function FirstTimeClient() {
     const [currentColorNotes, setCurrentColorNotes] = useState<string>("");
     const [timeNotes, setTimeNotes] = useState<string>("");
     const [extraNotes, setExtraNotes] = useState<string>("");
+    const { data: session } = useSession();
+    const router = useRouter();
+
+   const isNew = session?.user.isNew
+
+   useEffect(() => {
+    async function redirectIfNotNew() {
+        if (!isNew) {
+            try {
+                await router.push('/');
+            } catch (error) {
+                console.error('Error while redirecting:', error);
+            }
+        }
+    }
+    void redirectIfNotNew();
+}, [isNew]);
 
     //  TODO make this form only viewable if bool on user model tru
     //  TODO otherwise redirect
     //  TODO make it pop up if they have signed in but bool is false always
-
-    console.log(extraNotes);
 
     const changePages = (num: number) => {
         const newNum = page + num;
@@ -50,30 +65,6 @@ export default function FirstTimeClient() {
             timeNotes={timeNotes}
         />,
     ];
-
-    //! gonna need to pass all other notes to extradetails and concatenate them during submission.
-    //     if (newNum < form.length && newNum >= 0) setPage(page + num);
-    //     else newNum < 0 ? setPage(0) : setPage(form.length - 1);
-    // };
-
-    const router = useRouter();
-
-    // const generateNotes = () => {
-    //     const selectedOptions = Object.keys(formData).filter(
-    //         (key) => formData[key]
-    //     );
-    //     return selectedOptions.join(", ");
-    // };
-
-    // const handleOptionsChange = () => {
-    //     const updatedNotes = generateNotes();
-    //     setNotes(updatedNotes);
-    // };
-
-    // TODO: On submission of form update user
-    const { mutate } = api.user.updateNewUser.useMutation({
-        onSuccess: () => router.push("/"),
-    });
 
     return (
         <div className="flex flex-col items-center justify-center gap-5">
