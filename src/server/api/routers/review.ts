@@ -10,7 +10,9 @@ export const reviewRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.review.findMany({
             include: {
-                user: { select: { name: true } },
+                user: {
+                    select: { name: true, firstName: true, lastName: true },
+                },
             },
         });
     }),

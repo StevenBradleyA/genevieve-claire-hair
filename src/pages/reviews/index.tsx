@@ -6,9 +6,7 @@ import ScriptButton from "./scriptButton";
 
 export default function Reviews() {
     // TODO Test Modals on mobile
-    // TODO First name and Last Name on Review
     // TODO Give admin god power to delete a review
-
     const { data: session } = useSession();
     const { isMobile } = useMobile();
 

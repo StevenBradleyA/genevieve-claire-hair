@@ -20,7 +20,6 @@ interface HoveredArea {
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
     const { isMobile } = useMobile();
-
     const [showDelete, setShowDelete] = useState<boolean>(false);
     const [cardClick, setCardClick] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -99,7 +98,12 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                             <div className="flex w-72 items-center justify-between">
                                 <div className="flex flex-col">
                                     <div className="text-2xl font-semibold">
-                                        {review.user.name}
+                                        {session?.user.firstName
+                                            ? session.user.firstName
+                                            : review.user.name}
+                                        {session?.user.lastName
+                                            ? session.user.lastName
+                                            : null}
                                     </div>
                                     <div className="text-image flex gap-1">
                                         {Array(review.starRating).fill("⭐️")}
@@ -191,8 +195,13 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                 </div>
                                 <div className="flex w-72 items-center justify-between">
                                     <div className="flex flex-col">
-                                        <div className="text-2xl font-semibold">
-                                            {review.user.name}
+                                        <div className=" text-2xl font-semibold">
+                                            {review.user.firstName
+                                                ? `${review.user.firstName} `
+                                                : review.user.name}
+                                            {review.user.lastName
+                                                ? review.user.lastName
+                                                : ""}
                                         </div>
                                         <div className="text-image flex gap-1">
                                             {Array(review.starRating).fill(
