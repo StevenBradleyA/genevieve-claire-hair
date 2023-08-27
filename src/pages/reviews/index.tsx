@@ -1,15 +1,13 @@
 import { useSession } from "next-auth/react";
 import DisplayReviews from "~/components/Reviews/Display";
-import { useState } from "react";
 import { useMobile } from "~/components/MobileContext";
 import ChooseReview from "~/components/Reviews/Create/chooseReview";
 import ScriptButton from "./scriptButton";
 
 export default function Reviews() {
-    // TODO make modal for creating and editing a review.
-    // TODO Give admin god power to delete a review
-    // TODO First name and Last Name on Review
     // TODO Test Modals on mobile
+    // TODO First name and Last Name on Review
+    // TODO Give admin god power to delete a review
 
     const { data: session } = useSession();
     const { isMobile } = useMobile();
