@@ -6,9 +6,8 @@ import holoColumn from "../../../public/Holographic/holo-column.png";
 import geniSignature from "../../../public/signature.png";
 import { useState, useEffect } from "react";
 import { useMobile } from "../MobileContext";
-// import { useRouter } from "next/router";
-// import { useEffect } from "react";
 export default function NavBar() {
+    // TODO make admin  admin only
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const { data: sessionData } = useSession();
@@ -33,22 +32,6 @@ export default function NavBar() {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
-    // const { data: session, status } = useSession();
-    // const router = useRouter();
-
-    // // TODO: Prevent extra fetch call to "/"
-    // useEffect(() => {
-    //     if (!session) return;
-
-    //     if (status === "authenticated" && session.user.isNew)
-    //         void router.push("/first-time-client");
-
-    //     if (status === "authenticated" && !session.user.isNew)
-    //         void router.push("/");
-    // }, [status, session, router]);
-
-    // TODO make admin  admin only
 
     return isMobile ? (
         <nav
