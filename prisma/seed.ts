@@ -108,8 +108,38 @@ async function main() {
                         time: 90,
                         bundleTime: 60,
                     },
+                    {
+                        name: "Bridal/Wedding",
+                        price: 90,
+                        time: 90,
+                        bundleTime: 60,
+                        requireConsult: true,
+                    },
                 ],
             },
+        },
+    });
+
+    //? Vivids
+    await prisma.serviceCategory.create({
+        data: {
+            name: "Vivids",
+            requireConsult: true,
+        },
+    });
+
+    //? Color Corrections
+    await prisma.serviceCategory.create({
+        data: {
+            name: "Color Corrections",
+            requireConsult: true,
+        },
+    });
+
+    //? Quiet
+    await prisma.serviceCategory.create({
+        data: {
+            name: "Quiet",
         },
     });
 

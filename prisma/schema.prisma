@@ -65,17 +65,19 @@ model Images {
 }
 
 model ServiceCategory {
-    id            Int                  @id @default(autoincrement())
-    name          String
-    subcategories ServiceSubcategory[]
+    id             Int                  @id @default(autoincrement())
+    name           String
+    requireConsult Boolean              @default(false)
+    subcategories  ServiceSubcategory[]
 }
 
 model ServiceSubcategory {
-    id         Int    @id @default(autoincrement())
-    name       String
-    price      Int
-    time       Int
-    bundleTime Int
+    id             Int     @id @default(autoincrement())
+    name           String
+    price          Int
+    time           Int
+    bundleTime     Int
+    requireConsult Boolean @default(false)
 
     serviceCategoryId Int
 
