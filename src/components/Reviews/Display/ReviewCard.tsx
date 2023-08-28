@@ -128,23 +128,27 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
             </div>
 
             {session && session.user.id === review.userId && (
-                <div className="flex justify-center gap-5">
-                    <div>
-                        <button
-                            onClick={openModal}
-                            className="justify-centerp-3 flex transform rounded-xl bg-glass px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
-                        >
-                            Edit Review
-                        </button>
-                        <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                            <UpdateReview
-                                review={review}
-                                session={session}
-                                closeModal={closeModal}
-                            />
-                        </ModalDialog>
-                    </div>
-
+                <div className="mt-5 flex justify-center gap-5">
+                    {!showDelete && (
+                        <div>
+                            <button
+                                onClick={openModal}
+                                className="justify-centerp-3 flex transform rounded-xl bg-glass px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                            >
+                                Edit Review
+                            </button>
+                            <ModalDialog
+                                isOpen={isModalOpen}
+                                onClose={closeModal}
+                            >
+                                <UpdateReview
+                                    review={review}
+                                    session={session}
+                                    closeModal={closeModal}
+                                />
+                            </ModalDialog>
+                        </div>
+                    )}
                     <DeleteReview
                         id={review.id}
                         session={session}

@@ -164,14 +164,14 @@ export default function NavBar() {
                         </Link>
                         <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                     </div>
-                    <div className=" flex w-80 justify-center">
+                    <div className=" flex justify-center sm:w-40 md:w-60 full:w-80">
                         <Link href="/" aria-label="Home">
                             <div className="diagonal-image-container">
                                 <div className="holo-column-container -z-10">
                                     <Image
                                         alt="holo column graphic"
                                         src={holoColumn}
-                                        className="h-80 w-6 object-cover"
+                                        className=" object-cover sm:h-40 sm:w-4 md:h-60 md:w-5 full:h-80 full:w-6"
                                         priority={true}
                                     />
                                 </div>
@@ -222,7 +222,6 @@ function AuthController() {
                 className="font-grand-hotel mobile:mb-5 mobile:text-3xl sm:mb-0 sm:text-5xl "
                 onClick={
                     sessionData ? () => void signOut() : () => void signIn()
-                    // undefined, {callbackUrl: "/first-time-client/check",}
                 }
             >
                 {sessionData ? "Sign out" : "Sign in"}
