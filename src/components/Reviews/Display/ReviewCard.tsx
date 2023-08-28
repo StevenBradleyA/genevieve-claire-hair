@@ -104,7 +104,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                             ? `${review.user.firstName} `
                                             : review.user.name}
                                         {review.user.lastName
-                                            ? review.user.lastName
+                                            ? review.user.lastName[0]
                                             : ""}
                                     </div>
                                     <div className="text-image flex gap-1">
@@ -201,7 +201,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                                 ? `${review.user.firstName} `
                                                 : review.user.name}
                                             {review.user.lastName
-                                                ? review.user.lastName
+                                                ? review.user.lastName[0]
                                                 : ""}
                                         </div>
                                         <div className="text-image flex gap-1">

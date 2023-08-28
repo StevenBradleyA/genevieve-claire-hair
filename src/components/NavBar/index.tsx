@@ -11,6 +11,7 @@ import { useMobile } from "../MobileContext";
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
+    const { data: sessionData } = useSession();
     const { isMobile } = useMobile();
 
     const toggleMenu = () => {
@@ -71,6 +72,11 @@ export default function NavBar() {
                 </div>
                 {isMenuOpen && (
                     <div className="absolute left-28 top-20 z-40 flex flex-col items-center gap-5 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 text-lg shadow-2xl">
+                        {sessionData && sessionData.user ? (
+                            <div className=" flex justify-center text-xl">
+                                Hello {sessionData.user?.name}!
+                            </div>
+                        ) : null}
                         <Link
                             href="/bookings"
                             aria-label="Bookings"
@@ -114,7 +120,21 @@ export default function NavBar() {
                         >
                             Admin
                         </Link>
-                        {/* <AuthController /> */}
+                        <div className="flex items-center justify-center rounded-2xl bg-glass px-6 py-2 shadow-sm">
+                            <button
+                                aria-label={
+                                    sessionData ? "Sign out" : "Sign in"
+                                }
+                                className="flex items-center justify-center"
+                                onClick={
+                                    sessionData
+                                        ? () => void signOut()
+                                        : () => void signIn()
+                                }
+                            >
+                                {sessionData ? "Sign out" : "Sign in"}
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
@@ -199,7 +219,7 @@ function AuthController() {
         <div className=" mr-10 flex flex-col items-center justify-center gap-1 text-white ">
             <button
                 aria-label={sessionData ? "Sign out" : "Sign in"}
-                className="font-grand-hotel text-5xl "
+                className="font-grand-hotel mobile:mb-5 mobile:text-3xl sm:mb-0 sm:text-5xl "
                 onClick={
                     sessionData ? () => void signOut() : () => void signIn()
                     // undefined, {callbackUrl: "/first-time-client/check",}
