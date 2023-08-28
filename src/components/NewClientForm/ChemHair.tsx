@@ -69,7 +69,7 @@ export default function ChemHair({ setNotes }: FirstTimeClientProps) {
                 </label>
             </div>
             {formData.yes && (
-                <div className=" mb-5 mt-5 flex justify-center gap-10">
+                <div className=" mt-5 flex flex-col justify-center gap-3">
                     <label className="flex cursor-pointer items-center justify-center gap-5">
                         Keratin Treatment
                         <input
