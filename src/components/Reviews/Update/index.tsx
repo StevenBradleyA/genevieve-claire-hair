@@ -205,7 +205,7 @@ export default function UpdateReview({
                 value={text}
                 placeholder="What did you think of my work?"
                 onChange={(e) => setText(e.target.value)}
-                className=" h-24 w-44 rounded-md bg-glass p-2 text-xl text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                className=" h-24 w-44 rounded-md bg-glass p-2 text-xs text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
             />
             <div className="flex items-center text-white ">
                 <div className="m-2 flex items-center">

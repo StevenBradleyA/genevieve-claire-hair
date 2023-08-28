@@ -71,7 +71,7 @@ export default function NavBar() {
                     <div className="line-bottom"></div>
                 </div>
                 {isMenuOpen && (
-                    <div className="absolute left-28 top-20 z-40 flex flex-col items-center gap-5 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 text-lg shadow-2xl">
+                    <div className="absolute right-5 top-20 z-40 flex flex-col items-center gap-5 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 text-lg shadow-2xl">
                         {sessionData && sessionData.user ? (
                             <div className=" flex justify-center text-xl">
                                 Hello {sessionData.user?.name}!
