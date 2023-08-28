@@ -1,5 +1,6 @@
 generator client {
     provider = "prisma-client-js"
+    seed     = "ts-node prisma/seed.ts"
 }
 
 datasource db {
@@ -61,6 +62,24 @@ model Images {
     userId String
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ServiceCategory {
+    id            Int                  @id @default(autoincrement())
+    name          String
+    subcategories ServiceSubcategory[]
+}
+
+model ServiceSubcategory {
+    id         Int    @id @default(autoincrement())
+    name       String
+    price      Int
+    time       Int
+    bundleTime Int
+
+    serviceCategoryId Int
+
+    serviceCategory ServiceCategory @relation(fields: [serviceCategoryId], references: [id])
 }
 
 // Necessary for Next auth
