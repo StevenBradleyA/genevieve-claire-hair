@@ -63,9 +63,6 @@ export default function UpdateReview({
     session,
     closeModal,
 }: UpdateProps) {
-    // TODO update error handling so it detects imageFiles length plus image length
-    // TODO may need to invalidate the photos too worked on refresh
-    // TODO update route needs refactoring when new image is added and text/star rating dont get updated.
     const [text, setText] = useState(review.text);
     const [starRating, setStarRating] = useState(review.starRating);
     const [hover, setHover] = useState(0);
@@ -86,7 +83,7 @@ export default function UpdateReview({
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
-        // ! should implement max file size upload could cap at like 50mb
+        //TODO should implement max file size upload could cap at like 50mb
 
         const totalImageCount =
             (imageFiles.length ?? 0) +
@@ -208,10 +205,9 @@ export default function UpdateReview({
                 value={text}
                 placeholder="What did you think of my work?"
                 onChange={(e) => setText(e.target.value)}
-                className=" h-24 w-44\ rounded-md bg-glass p-2 text-xl text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                className=" h-24 w-44 rounded-md bg-glass p-2 text-xl text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
             />
             <div className="flex items-center text-white ">
-                <span className="font-quattrocento text-3xl">Star Rating</span>
                 <div className="m-2 flex items-center">
                     {[1, 2, 3, 4, 5].map((rating) => (
                         <Star
@@ -225,12 +221,12 @@ export default function UpdateReview({
                     ))}
                 </div>
             </div>
-            <div className="flex justify-center font-grand-hotel text-6xl">
+            <div className="flex justify-center font-grand-hotel text-xl">
                 Show Off Your Awesome Hair!
             </div>
 
             <div className="py-4">
-                <label className="relative inline-block h-40 w-40">
+                <label className="relative inline-block h-16 w-16">
                     <input
                         className="absolute h-full w-full cursor-pointer opacity-0"
                         type="file"
@@ -246,24 +242,24 @@ export default function UpdateReview({
                         }}
                     />
                     <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <span className="text-center font-quattrocento">
+                        <span className="text-center text-xs">
                             Choose Files
                         </span>
                     </div>
                 </label>
             </div>
-            <div className="mb-5 flex w-full flex-wrap justify-center gap-10">
+            <div className="mb-5 flex w-full flex-wrap justify-center gap-3">
                 {imageFiles.map((e, i) => (
                     <div key={i} className="relative">
                         <Image
-                            className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
+                            className="h-12 w-auto rounded-lg object-cover shadow-sm "
                             alt={`listing-${i}`}
                             src={URL.createObjectURL(e)}
                             width={100}
                             height={100}
                         />
                         <button
-                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-red-500"
+                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 "
                             onClick={(e) => {
                                 e.preventDefault();
                                 const newImageFiles = [...imageFiles];
@@ -281,14 +277,14 @@ export default function UpdateReview({
                         !activeDeletedImageIds.includes(image.id) ? (
                             <div key={i} className="relative">
                                 <Image
-                                    className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
+                                    className="h-12 w-auto rounded-lg object-cover shadow-sm"
                                     alt={`listing-${i}`}
                                     src={image.link}
                                     width={100}
                                     height={100}
                                 />
                                 <button
-                                    className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-red-500"
+                                    className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 "
                                     onClick={(e) => {
                                         e.preventDefault();
                                         const newDeletedImageIds = [
@@ -307,7 +303,7 @@ export default function UpdateReview({
                     )}
             </div>
             {errors.imageExcess && (
-                <p className="create-listing-errors text-red-500">
+                <p className="create-listing-errors text-xs text-red-500">
                     {errors.imageExcess}
                 </p>
             )}
@@ -324,7 +320,7 @@ export default function UpdateReview({
                         (hasSubmitted || Object.values(errors).length > 0)) ||
                     (!isSubmitting && (!starRating || !text))
                 }
-                className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                className={`transform rounded-md bg-glass px-4 py-2 text-xs shadow-md transition-transform hover:scale-105 active:scale-95 ${
                     (hasSubmitted && Object.values(errors).length > 0) ||
                     isSubmitting ||
                     (imageFiles.length > 0 &&
