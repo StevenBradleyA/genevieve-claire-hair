@@ -106,6 +106,11 @@ export const allServices: AllServicesType = {
             time: 90,
             bundleTime: 60,
         },
+        "Bridal/Wedding": {
+            price: 90,
+            time: 90,
+            bundleTime: 60,
+        },
     },
 };
 

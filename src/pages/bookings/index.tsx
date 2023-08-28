@@ -17,7 +17,27 @@ export default function Booking() {
     // const { data: session } = useSession(); // TODO: Redirect if not logged in
     const [page, setPage] = useState(0);
     const [requireConsult, setRequireConsult] = useState<string>("");
+    const { data: serviceData } = api.service.getAll.useQuery();
     const { isMobile } = useMobile();
+
+    const checkForValidSelections = () => {
+        const serviceCheck = localStorage.getItem("Services");
+        // const specifications = localStorage.getItem("Specifications");
+
+        if (serviceCheck && serviceData) {
+            const services = JSON.parse(serviceCheck) as FormDataType;
+
+            let counter = 0;
+            for (const [serviceName, isSelected] of Object.entries(services)) {
+                if (isSelected && serviceData[serviceName]?.requireConsult) {
+                    setRequireConsult(serviceName);
+                }
+                if (isSelected && serviceName !== "Quiet") counter++;
+            }
+
+            if (!counter) return null;
+        } else return null;
+    };
 
     const checkForConsultServices = () => {
         const services = localStorage.getItem("Services");
@@ -61,7 +81,7 @@ export default function Booking() {
         const newNum = page + num;
 
         if (newNum === 1) {
-            if (checkForConsultServices() === null) return;
+            if (checkForValidSelections() === null) return;
         } else if (newNum === 2) {
             if (checkForConsultSpecifications() === null) return;
         } else {
@@ -140,7 +160,7 @@ export default function Booking() {
                     form[page]
                 )}
 
-                <div className="mt-10 mb-20 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
                     <button
                         onClick={() => changePages(-1)}
                         className="transform rounded-md bg-glass px-12 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
