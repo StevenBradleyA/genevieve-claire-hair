@@ -4,6 +4,7 @@ import type { Booking } from "@prisma/client";
 import EachBookingCard from "./eachBooking";
 import { useState } from "react";
 import { DotLoader } from "react-spinners";
+import { useMobile } from "~/components/MobileContext";
 
 interface SelectReviewProps {
     closeModal: () => void;
@@ -17,6 +18,7 @@ export default function SelectService({
     isLoading,
 }: SelectReviewProps) {
     const { data: session } = useSession();
+    const { isMobile } = useMobile();
 
     const [selectedBooking, setSelectedBooking] = useState<Booking | null>(
         null
@@ -38,7 +40,39 @@ export default function SelectService({
         setSelectedBooking(booking);
     };
 
-    return (
+    return isMobile ? (
+        <div className="flex flex-col items-center">
+            <div className="mb-10 text-lg text-white">
+                Select a Service to Review
+            </div>
+            {bookings ? (
+                <div className="flex flex-col gap-5">
+                    {selectedBooking ? (
+                        <EachBookingCard
+                            booking={selectedBooking}
+                            closeModal={closeModal}
+                            isSelected={true}
+                            toggleBooking={() => setSelectedBooking(null)}
+                        />
+                    ) : (
+                        bookings.map((booking: Booking, i: number) => (
+                            <EachBookingCard
+                                key={i}
+                                booking={booking}
+                                closeModal={closeModal}
+                                isSelected={false}
+                                toggleBooking={() =>
+                                    handleBookingClick(booking)
+                                }
+                            />
+                        ))
+                    )}
+                </div>
+            ) : (
+                <div>Hey Gurl, you have no services to review</div>
+            )}
+        </div>
+    ) : (
         <div className="flex flex-col items-center">
             <div className="mb-10 font-grand-hotel text-6xl text-white">
                 Select a Service to Review{" "}
