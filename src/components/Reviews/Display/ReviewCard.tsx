@@ -20,7 +20,6 @@ interface HoveredArea {
 export default function ReviewCard({ review }: { review: ReviewWithUser }) {
     const { data: session } = useSession();
     const { isMobile } = useMobile();
-
     const [showDelete, setShowDelete] = useState<boolean>(false);
     const [cardClick, setCardClick] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -94,12 +93,19 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     <div className="p-4">
                         <div className="mb-2 flex items-center gap-5">
                             <div className=" flex h-12 w-14 items-center justify-center rounded-full bg-lightPurple text-4xl">
-                                {review.user.name ? review.user.name[0] : null}
+                                {review.user?.firstName
+                                    ? review.user.firstName[0]
+                                    : review.user?.name?.[0]}
                             </div>
                             <div className="flex w-72 items-center justify-between">
                                 <div className="flex flex-col">
                                     <div className="text-2xl font-semibold">
-                                        {review.user.name}
+                                        {review.user.firstName
+                                            ? `${review.user.firstName} `
+                                            : review.user.name}
+                                        {review.user.lastName
+                                            ? review.user.lastName[0]
+                                            : ""}
                                     </div>
                                     <div className="text-image flex gap-1">
                                         {Array(review.starRating).fill("⭐️")}
@@ -114,8 +120,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                         </div>
                         <div className="h-32 overflow-y-auto break-words">
                             <p className="bg-gradient-to-r from-violet-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">
-                                {review.text}{" "}
-                                {`holy ; asfjkl; djkl; l; as even longer aslkdfj al;ksdfj lsjkal; djkl ;fjkl; jkl; asdjk;l fjkl; ljk asdlj kfl jkasdjkl fjkl asdjkl; asdfjkl adfjkl sajkl sdfjkl dasl jk a fjkl asdf jkl adfs jkl dasf jkl dfs jkl dsf jkl sdfajkl dfas jkl asdf jkl dfas jkl asdf jkl asdf jkl; sadf jkl asdf jkl sadf jkl; asdf jkl adjkl adfjkl asdf jl kasdf jkl a dfsjkl a dfslajl sdfjkal jkl; dfjkl asdf ljkl sdf jkl  sdfjkl asdf jkl asdfjkldfjkl;s  jkl; f ajkl dsafjkl  asdfjkl  fdsjkl; asdf jkl asdf jkl asdf jkl asdf jkl dfas jkl; asdf jkl asdf jkl df asjkl asdf jkl df asjkl asdf jkl adf sjkl adfs jl asdf jkl adfs jkl df jkl dfs ajkl dfas jkl asdf jlk df sjkl sdfa jkl asdf jkl asdf jkl df jkl sdf ajkl asdf jkl; asdf ;kasdj f;lkjas;ldkf j;laksjd fl;kasjdkl; fjkl; asdjkl; fkl jsfadjkl; l;dfsajkldfjkl; sajkl; asdfjkl; ;jl f; jasfdjkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jl;k jkl; jkl; jkl; jkl; jkl; lj k;lj; ljk; jkl ljk jkl jkl; jkl jkl jkl jkl jkl jkl jkl  jkl jkljkl jkl; jkl jkl ;jkl; jkl; asdlflljkajkls; djkl;f jkl; asdjkl; fjkl; asdlfk;j asl;kdfjlkasjdfl;kjsadlkfjlsdjfljweoiruwoeiru oweiru weoiru oweiur oiweu roweiu roiwue roiwueoriuw eoiruwoeiru woeiru weoiru df;asdfl;j jl; that was soooo werid wtd skadfl;jkfasld; j;asfdjl; ksfjkl; dajl; asdfjl;jfkjkl; big poggies woggy als;kdjf al;skdjf lkasjdf ;kljas dfl;kjas dl;fkj asl;dkfj l; jsda asdfjkl; fjkl; asdjkl; asdfjl; kasdfj ;jf`}
+                                {review.text}
                             </p>
                         </div>
                     </div>
@@ -123,23 +128,27 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
             </div>
 
             {session && session.user.id === review.userId && (
-                <div className="flex justify-center gap-5">
-                    <div>
-                        <button
-                            onClick={openModal}
-                            className="justify-centerp-3 flex transform rounded-xl bg-glass px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
-                        >
-                            Edit Review
-                        </button>
-                        <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                            <UpdateReview
-                                review={review}
-                                session={session}
-                                closeModal={closeModal}
-                            />
-                        </ModalDialog>
-                    </div>
-
+                <div className="mt-5 flex justify-center gap-5">
+                    {!showDelete && (
+                        <div>
+                            <button
+                                onClick={openModal}
+                                className="justify-centerp-3 flex transform rounded-xl bg-glass px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                            >
+                                Edit Review
+                            </button>
+                            <ModalDialog
+                                isOpen={isModalOpen}
+                                onClose={closeModal}
+                            >
+                                <UpdateReview
+                                    review={review}
+                                    session={session}
+                                    closeModal={closeModal}
+                                />
+                            </ModalDialog>
+                        </div>
+                    )}
                     <DeleteReview
                         id={review.id}
                         session={session}
@@ -185,14 +194,19 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                         <div className="p-4">
                             <div className="mb-2 flex items-center gap-5">
                                 <div className=" flex h-14 w-14 items-center justify-center rounded-full bg-lightPurple text-4xl">
-                                    {review.user.name
-                                        ? review.user.name[0]
-                                        : null}
+                                    {review.user?.firstName
+                                        ? review.user.firstName[0]
+                                        : review.user?.name?.[0]}
                                 </div>
                                 <div className="flex w-72 items-center justify-between">
                                     <div className="flex flex-col">
-                                        <div className="text-2xl font-semibold">
-                                            {review.user.name}
+                                        <div className=" text-2xl font-semibold">
+                                            {review.user.firstName
+                                                ? `${review.user.firstName} `
+                                                : review.user.name}
+                                            {review.user.lastName
+                                                ? review.user.lastName[0]
+                                                : ""}
                                         </div>
                                         <div className="text-image flex gap-1">
                                             {Array(review.starRating).fill(
@@ -214,8 +228,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                             </div>
                             <div className="h-32 overflow-y-auto break-words">
                                 <p className="bg-gradient-to-r from-violet-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">
-                                    {review.text}{" "}
-                                    {`holy ; asfjkl; djkl; l; as even longer aslkdfj al;ksdfj lsjkal; djkl ;fjkl; jkl; asdjk;l fjkl; ljk asdlj kfl jkasdjkl fjkl asdjkl; asdfjkl adfjkl sajkl sdfjkl dasl jk a fjkl asdf jkl adfs jkl dasf jkl dfs jkl dsf jkl sdfajkl dfas jkl asdf jkl dfas jkl asdf jkl asdf jkl; sadf jkl asdf jkl sadf jkl; asdf jkl adjkl adfjkl asdf jl kasdf jkl a dfsjkl a dfslajl sdfjkal jkl; dfjkl asdf ljkl sdf jkl  sdfjkl asdf jkl asdfjkldfjkl;s  jkl; f ajkl dsafjkl  asdfjkl  fdsjkl; asdf jkl asdf jkl asdf jkl asdf jkl dfas jkl; asdf jkl asdf jkl df asjkl asdf jkl df asjkl asdf jkl adf sjkl adfs jl asdf jkl adfs jkl df jkl dfs ajkl dfas jkl asdf jlk df sjkl sdfa jkl asdf jkl asdf jkl df jkl sdf ajkl asdf jkl; asdf ;kasdj f;lkjas;ldkf j;laksjd fl;kasjdkl; fjkl; asdjkl; fkl jsfadjkl; l;dfsajkldfjkl; sajkl; asdfjkl; ;jl f; jasfdjkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jl;k jkl; jkl; jkl; jkl; jkl; lj k;lj; ljk; jkl ljk jkl jkl; jkl jkl jkl jkl jkl jkl jkl  jkl jkljkl jkl; jkl jkl ;jkl; jkl; asdlflljkajkls; djkl;f jkl; asdjkl; fjkl; asdlfk;j asl;kdfjlkasjdfl;kjsadlkfjlsdjfljweoiruwoeiru oweiru weoiru oweiur oiweu roweiu roiwue roiwueoriuw eoiruwoeiru woeiru weoiru df;asdfl;j jl; that was soooo werid wtd skadfl;jkfasld; j;asfdjl; ksfjkl; dajl; asdfjl;jfkjkl; big poggies woggy als;kdjf al;skdjf lkasjdf ;kljas dfl;kjas dl;fkj asl;dkfj l; jsda asdfjkl; fjkl; asdjkl; asdfjl; kasdfj ;jf`}
+                                    {review.text}
                                 </p>
                             </div>
                         </div>

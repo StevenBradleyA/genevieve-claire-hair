@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import React from "react";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import Image from "next/image";
+import { useMobile } from "~/components/MobileContext";
 
 interface StarProps {
     rating: number;
@@ -61,12 +62,13 @@ export default function CreateReview({
     const [text, setText] = useState<string>("");
     const [starRating, setStarRating] = useState(0);
     const [hover, setHover] = useState(0);
-    const { data: session } = useSession();
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const ctx = api.useContext();
+    const { data: session } = useSession();
+    const { isMobile } = useMobile();
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
@@ -165,7 +167,117 @@ export default function CreateReview({
         }
     };
 
-    return (
+    return isMobile ? (
+        <form
+            className="flex flex-col items-center text-white"
+            encType="multipart/form-data"
+        >
+            <div className="font-grand-hotel text-3xl text-white">
+                Leave a Review
+            </div>
+            <textarea
+                value={text}
+                placeholder="What did you think of my work?"
+                onChange={(e) => setText(e.target.value)}
+                className=" h-24 w-44 rounded-md bg-glass p-2 text-xs text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+            />
+            <div className="flex items-center text-white ">
+                <div className="m-2 flex items-center">
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                        <Star
+                            key={rating}
+                            rating={rating}
+                            starRating={starRating}
+                            hover={hover}
+                            starHover={starHover}
+                            onClick={starClick}
+                        />
+                    ))}
+                </div>
+            </div>
+            <div className="flex justify-center font-grand-hotel text-xl">
+                Show Off Your Awesome Hair!
+            </div>
+
+            <div className="py-4">
+                <label className="relative inline-block h-16 w-16">
+                    <input
+                        className="absolute h-full w-full cursor-pointer opacity-0"
+                        type="file"
+                        multiple
+                        // accept="image/png, image/jpg, image/jpeg"
+                        accept="image/*"
+                        onChange={(e) => {
+                            if (e.target.files)
+                                setImageFiles([
+                                    ...imageFiles,
+                                    ...e.target.files,
+                                ]);
+                        }}
+                    />
+                    <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg ">
+                        <span className="text-center text-xs">
+                            Choose Files
+                        </span>
+                    </div>
+                </label>
+            </div>
+            <div className="mb-5 flex w-full flex-wrap justify-center gap-3">
+                {imageFiles.map((e, i) => (
+                    <div key={i} className="relative">
+                        <Image
+                            className="h-12 w-auto rounded-lg object-cover shadow-sm"
+                            alt={`listing-${i}`}
+                            src={URL.createObjectURL(e)}
+                            width={100}
+                            height={100}
+                        />
+                        <button
+                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 "
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const newImageFiles = [...imageFiles];
+                                newImageFiles.splice(i, 1);
+                                setImageFiles(newImageFiles);
+                            }}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                ))}
+            </div>
+            {errors.imageExcess && (
+                <p className="create-listing-errors text-sm text-red-500">
+                    {errors.imageExcess}
+                </p>
+            )}
+
+            <button
+                onClick={(e) => {
+                    e.preventDefault();
+                    void submit(e);
+                }}
+                disabled={
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!starRating || !text))
+                }
+                className={` transform rounded-md bg-glass px-4 py-2 text-sm shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!starRating || !text))
+                        ? "text-slate-300"
+                        : "text-purple-300"
+                }`}
+            >
+                {isSubmitting ? "Uploading..." : "Submit Review"}
+            </button>
+        </form>
+    ) : (
         <form
             className="flex flex-col items-center gap-5 text-white"
             encType="multipart/form-data"

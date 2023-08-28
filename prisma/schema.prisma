@@ -17,7 +17,7 @@ model Review {
     userId    String
     bookingId String
 
-    user    User    @relation(fields: [userId], references: [id])
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 }
 
@@ -32,7 +32,7 @@ model Booking {
 
     userId String
 
-    user        User          @relation(fields: [userId], references: [id])
+    user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
     review      Review[]
     transaction Transaction[]
 }

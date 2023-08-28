@@ -6,11 +6,11 @@ import holoColumn from "../../../public/Holographic/holo-column.png";
 import geniSignature from "../../../public/signature.png";
 import { useState, useEffect } from "react";
 import { useMobile } from "../MobileContext";
-// import { useRouter } from "next/router";
-// import { useEffect } from "react";
 export default function NavBar() {
+    // TODO make admin  admin only
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
+    const { data: sessionData } = useSession();
     const { isMobile } = useMobile();
 
     const toggleMenu = () => {
@@ -33,22 +33,6 @@ export default function NavBar() {
         };
     }, []);
 
-    // const { data: session, status } = useSession();
-    // const router = useRouter();
-
-    // // TODO: Prevent extra fetch call to "/"
-    // useEffect(() => {
-    //     if (!session) return;
-
-    //     if (status === "authenticated" && session.user.isNew)
-    //         void router.push("/first-time-client");
-
-    //     if (status === "authenticated" && !session.user.isNew)
-    //         void router.push("/");
-    // }, [status, session, router]);
-
-    // TODO make admin  admin only
-
     return isMobile ? (
         <nav
             className="z-20 mb-10 flex items-center justify-between
@@ -70,7 +54,12 @@ export default function NavBar() {
                     <div className="line-bottom"></div>
                 </div>
                 {isMenuOpen && (
-                    <div className="absolute left-28 top-20 z-40 flex flex-col items-center gap-5 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 text-lg shadow-2xl">
+                    <div className="absolute right-5 top-20 z-40 flex flex-col items-center gap-5 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 text-lg shadow-2xl">
+                        {sessionData && sessionData.user ? (
+                            <div className=" flex justify-center text-xl">
+                                Hello {sessionData.user?.name}!
+                            </div>
+                        ) : null}
                         <Link
                             href="/bookings"
                             aria-label="Bookings"
@@ -114,7 +103,21 @@ export default function NavBar() {
                         >
                             Admin
                         </Link>
-                        {/* <AuthController /> */}
+                        <div className="flex items-center justify-center rounded-2xl bg-glass px-6 py-2 shadow-sm">
+                            <button
+                                aria-label={
+                                    sessionData ? "Sign out" : "Sign in"
+                                }
+                                className="flex items-center justify-center"
+                                onClick={
+                                    sessionData
+                                        ? () => void signOut()
+                                        : () => void signIn()
+                                }
+                            >
+                                {sessionData ? "Sign out" : "Sign in"}
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
@@ -144,14 +147,14 @@ export default function NavBar() {
                         </Link>
                         <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                     </div>
-                    <div className=" flex w-80 justify-center">
+                    <div className=" flex justify-center sm:w-40 md:w-60 full:w-80">
                         <Link href="/" aria-label="Home">
                             <div className="diagonal-image-container">
                                 <div className="holo-column-container -z-10">
                                     <Image
                                         alt="holo column graphic"
                                         src={holoColumn}
-                                        className="h-80 w-6 object-cover"
+                                        className=" object-cover sm:h-40 sm:w-4 md:h-60 md:w-5 full:h-80 full:w-6"
                                         priority={true}
                                     />
                                 </div>
@@ -199,10 +202,9 @@ function AuthController() {
         <div className=" mr-10 flex flex-col items-center justify-center gap-1 text-white ">
             <button
                 aria-label={sessionData ? "Sign out" : "Sign in"}
-                className="font-grand-hotel text-5xl "
+                className="font-grand-hotel mobile:mb-5 mobile:text-3xl sm:mb-0 sm:text-5xl "
                 onClick={
                     sessionData ? () => void signOut() : () => void signIn()
-                    // undefined, {callbackUrl: "/first-time-client/check",}
                 }
             >
                 {sessionData ? "Sign out" : "Sign in"}
