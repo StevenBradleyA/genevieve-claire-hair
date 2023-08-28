@@ -43,7 +43,7 @@ export default function SelectService({
     return isMobile ? (
         <div className="flex flex-col items-center">
             {selectedBooking ? null : (
-                <div className="mb-10 text-lg text-white">
+                <div className="mb-5 text-lg text-white">
                     Select a Service to Review
                 </div>
             )}

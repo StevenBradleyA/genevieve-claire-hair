@@ -5,6 +5,7 @@ import type { Session } from "next-auth";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import Image from "next/image";
 import { DotLoader } from "react-spinners";
+import { useMobile } from "~/components/MobileContext";
 
 interface UpdateProps {
     review: Review;
@@ -75,7 +76,7 @@ export default function UpdateReview({
     const [activeDeletedImageIds, setActiveDeletedImageIds] = useState<
         string[]
     >([]);
-
+    const { isMobile } = useMobile();
     const ctx = api.useContext();
 
     const { data: images, isLoading } = api.image.getAllByResourceId.useQuery({
@@ -195,7 +196,148 @@ export default function UpdateReview({
             </div>
         );
 
-    return (
+    return isMobile ? (
+        <form
+            className="flex flex-col items-center text-white"
+            encType="multipart/form-data"
+        >
+            <div className="font-grand-hotel text-3xl text-white">
+                Update Review
+            </div>
+            <textarea
+                value={text}
+                placeholder="What did you think of my work?"
+                onChange={(e) => setText(e.target.value)}
+                className=" h-24 w-44\ rounded-md bg-glass p-2 text-xl text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+            />
+            <div className="flex items-center text-white ">
+                <span className="font-quattrocento text-3xl">Star Rating</span>
+                <div className="m-2 flex items-center">
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                        <Star
+                            key={rating}
+                            rating={rating}
+                            starRating={starRating}
+                            hover={hover}
+                            starHover={starHover}
+                            onClick={starClick}
+                        />
+                    ))}
+                </div>
+            </div>
+            <div className="flex justify-center font-grand-hotel text-6xl">
+                Show Off Your Awesome Hair!
+            </div>
+
+            <div className="py-4">
+                <label className="relative inline-block h-40 w-40">
+                    <input
+                        className="absolute h-full w-full cursor-pointer opacity-0"
+                        type="file"
+                        multiple
+                        // accept="image/png, image/jpg, image/jpeg"
+                        accept="image/*"
+                        onChange={(e) => {
+                            if (e.target.files)
+                                setImageFiles([
+                                    ...imageFiles,
+                                    ...e.target.files,
+                                ]);
+                        }}
+                    />
+                    <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                        <span className="text-center font-quattrocento">
+                            Choose Files
+                        </span>
+                    </div>
+                </label>
+            </div>
+            <div className="mb-5 flex w-full flex-wrap justify-center gap-10">
+                {imageFiles.map((e, i) => (
+                    <div key={i} className="relative">
+                        <Image
+                            className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
+                            alt={`listing-${i}`}
+                            src={URL.createObjectURL(e)}
+                            width={100}
+                            height={100}
+                        />
+                        <button
+                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-red-500"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const newImageFiles = [...imageFiles];
+                                newImageFiles.splice(i, 1);
+                                setImageFiles(newImageFiles);
+                            }}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                ))}
+                {images &&
+                    images.length > 0 &&
+                    images.map((image, i) =>
+                        !activeDeletedImageIds.includes(image.id) ? (
+                            <div key={i} className="relative">
+                                <Image
+                                    className="h-28 w-auto rounded-lg object-cover shadow-sm hover:scale-105 hover:shadow-md"
+                                    alt={`listing-${i}`}
+                                    src={image.link}
+                                    width={100}
+                                    height={100}
+                                />
+                                <button
+                                    className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 transition-transform duration-300 ease-in-out hover:rotate-45 hover:scale-110 hover:text-red-500"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const newDeletedImageIds = [
+                                            ...activeDeletedImageIds,
+                                            image.id,
+                                        ];
+                                        setActiveDeletedImageIds(
+                                            newDeletedImageIds
+                                        );
+                                    }}
+                                >
+                                    &times;
+                                </button>
+                            </div>
+                        ) : null
+                    )}
+            </div>
+            {errors.imageExcess && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageExcess}
+                </p>
+            )}
+
+            <button
+                onClick={(e) => {
+                    e.preventDefault();
+                    void submit(e);
+                }}
+                disabled={
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!starRating || !text))
+                }
+                className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!starRating || !text))
+                        ? "text-slate-300"
+                        : "text-purple-300"
+                }`}
+            >
+                {isSubmitting ? "Uploading..." : "Submit Review"}
+            </button>
+        </form>
+    ) : (
         <form
             className="flex flex-col items-center gap-5 text-white"
             encType="multipart/form-data"
