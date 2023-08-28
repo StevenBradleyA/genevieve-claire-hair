@@ -42,9 +42,12 @@ export default function SelectService({
 
     return isMobile ? (
         <div className="flex flex-col items-center">
-            <div className="mb-10 text-lg text-white">
-                Select a Service to Review
-            </div>
+            {selectedBooking ? null : (
+                <div className="mb-10 text-lg text-white">
+                    Select a Service to Review
+                </div>
+            )}
+
             {bookings ? (
                 <div className="flex flex-col gap-5">
                     {selectedBooking ? (
@@ -74,9 +77,11 @@ export default function SelectService({
         </div>
     ) : (
         <div className="flex flex-col items-center">
-            <div className="mb-10 font-grand-hotel text-6xl text-white">
-                Select a Service to Review{" "}
-            </div>
+            {selectedBooking ? null : (
+                <div className="mb-10 text-lg text-white">
+                    Select a Service to Review
+                </div>
+            )}
             {bookings ? (
                 <div className="flex flex-col gap-5">
                     {selectedBooking ? (
