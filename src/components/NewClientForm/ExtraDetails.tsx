@@ -89,7 +89,7 @@ export default function ExtraDetails({
     }, [imageFiles, firstName, lastName]);
 
     useEffect(() => {
-        const updatedNotes = `Anything you'd like me to know? poggywoggy ${formData}`;
+        const updatedNotes = `Anything you'd like me to know? enter ${formData}`;
         setExtraNotes(updatedNotes);
     }, [formData, setExtraNotes]);
 
@@ -103,7 +103,7 @@ export default function ExtraDetails({
                     throw new Error("Session expired");
                 }
 
-                const notes = `${serviceNotes} poggywoggy ${colorHistoryNotes} poggywoggy ${chemNotes} poggywoggy ${currentColorNotes} poggywoggy ${timeNotes} poggywoggy ${extraNotes}`;
+                const notes = `${serviceNotes} enter ${colorHistoryNotes} enter ${chemNotes} enter ${currentColorNotes} enter ${timeNotes} enter ${extraNotes}`;
 
                 const data: UserData = {
                     userId: sessionUserId,

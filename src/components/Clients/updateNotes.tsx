@@ -59,7 +59,7 @@ export default function EditUserNotes({
             <div className=" my-5 text-center text-xl">
                 Use the keyword{" "}
                 <span className="rounded-2xl bg-glass p-2 text-purple-300 shadow-lg">
-                    poggywoggy
+                    enter
                 </span>{" "}
                 to start a new line{" "}
             </div>

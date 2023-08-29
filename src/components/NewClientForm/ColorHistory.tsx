@@ -20,7 +20,7 @@ export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
     const { isMobile } = useMobile();
 
     useEffect(() => {
-        let newNotes = "Has had color before: poggywoggy ";
+        let newNotes = "Has had color before: enter ";
 
         if (formData.yes) {
             newNotes += "yes";

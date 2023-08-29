@@ -6,9 +6,6 @@ import ModalDialog from "~/components/Modal";
 import EditUserNotes from "./updateNotes";
 
 export default function ClientDetails({ userId }: { userId: string }) {
-    // TODO ALLOW ADMIN to edit and update notes
-    // TODO maybe allow geni to give admin permission here very easy to do
-
     const { data: user, isLoading } = api.user.getUserById.useQuery(userId);
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -74,10 +71,9 @@ export default function ClientDetails({ userId }: { userId: string }) {
                         </ModalDialog>
                     )}
                 </div>
-                <div className=" mt-3 w-3/4 rounded-2xl bg-chillPurple p-6 ">
-                    {/* <p className="text-xl ">{user.notes}</p> */}
+                <div className=" mt-3 w-full rounded-2xl bg-chillPurple p-6 ">
                     {user.notes &&
-                        user.notes.split("poggywoggy").map((line, index) => (
+                        user.notes.split("enter").map((line, index) => (
                             <p key={index} className="text-xl">
                                 {line}
                             </p>
