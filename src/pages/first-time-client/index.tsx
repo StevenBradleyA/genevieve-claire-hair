@@ -64,14 +64,14 @@ export default function FirstTimeClient() {
 
     return isNew ? (
         <div className="flex flex-col items-center justify-center gap-5">
-            <h1 className="font-grand-hotel text-8xl text-white">
+            <h1 className="font-grand-hotel text-white mobile:text-3xl sm:text-8xl">
                 First Time Client
             </h1>
 
             <div>
                 <div>{form[page]}</div>
 
-                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-2xl">
                     <button
                         onClick={() => changePages(-1)}
                         className="transform rounded-md bg-glass px-4 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"

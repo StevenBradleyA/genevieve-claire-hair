@@ -8,7 +8,7 @@ interface EachBookingProps {
 interface Booking {
     id: string;
     type: string;
-    startDate: string;
+    startDate: Date;
 }
 
 export default function EachBookingCard({

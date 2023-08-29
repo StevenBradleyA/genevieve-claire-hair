@@ -25,6 +25,7 @@ export default function DeleteReview({
     const { mutate } = api.review.delete.useMutation({
         onSuccess: () => {
             void ctx.review.getAll.invalidate();
+            void ctx.booking.getAllBookingsWithoutReviewsByUserId.invalidate();
             void ctx.review.hasReviewed.invalidate();
         },
     });

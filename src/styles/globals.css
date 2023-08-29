@@ -49,6 +49,17 @@
     opacity: 0.3;
 }
 
+@media (min-width: 1280px) {
+    .holo-column-container {
+        bottom: 20px;
+    }
+}
+@media (min-width: 1920px) {
+    .holo-column-container {
+        bottom: 25px;
+    }
+}
+
 .diagonal-image-small {
     position: absolute;
     top: -51px;

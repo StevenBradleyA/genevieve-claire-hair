@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import Image from "next/image";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import { useRouter } from "next/router";
+import { useMobile } from "../MobileContext";
 
 interface FirstTimeClientProps {
     extraNotes: string;
@@ -20,6 +21,7 @@ interface ErrorsObj {
     imageExcess?: string;
     firstName?: string;
     lastName?: string;
+    imageLarge?: string;
 }
 
 interface Image {
@@ -43,6 +45,7 @@ export default function ExtraDetails({
     timeNotes,
 }: FirstTimeClientProps) {
     const { data: session, update } = useSession();
+    const { isMobile } = useMobile();
     const ctx = api.useContext();
     const router = useRouter();
     const [formData, setFormData] = useState("");
@@ -52,6 +55,7 @@ export default function ExtraDetails({
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const maxFileSize = 6 * 1024 * 1024;
 
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
@@ -68,7 +72,7 @@ export default function ExtraDetails({
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
-        // ! should implement max file size upload could cap at like 50mb
+
         if (!firstName.length) {
             errorsObj.firstName = "Please provide your first name";
         }
@@ -79,6 +83,15 @@ export default function ExtraDetails({
         if (imageFiles.length > 5) {
             errorsObj.imageExcess = "Cannot provide more than 5 photos";
         }
+
+        for (const file of imageFiles) {
+            if (file.size > maxFileSize) {
+                errorsObj.imageLarge =
+                    "One or more images exceeds the max 6 MB file size";
+                break;
+            }
+        }
+
         setErrors(errorsObj);
     };
 
@@ -87,7 +100,7 @@ export default function ExtraDetails({
     }, [imageFiles, firstName, lastName]);
 
     useEffect(() => {
-        const updatedNotes = `Anything you'd like me to know? \n ${formData}`;
+        const updatedNotes = `Anything you'd like me to know? enter ${formData}`;
         setExtraNotes(updatedNotes);
     }, [formData, setExtraNotes]);
 
@@ -101,7 +114,7 @@ export default function ExtraDetails({
                     throw new Error("Session expired");
                 }
 
-                const notes = `${serviceNotes} poggywoggy ${colorHistoryNotes} poggywoggy ${chemNotes} poggywoggy ${currentColorNotes} poggywoggy ${timeNotes} poggywoggy ${extraNotes}`;
+                const notes = `${serviceNotes} enter ${colorHistoryNotes} enter ${chemNotes} enter ${currentColorNotes} enter ${timeNotes} enter ${extraNotes}`;
 
                 const data: UserData = {
                     userId: sessionUserId,
@@ -159,7 +172,135 @@ export default function ExtraDetails({
         }
     };
 
-    return (
+    return isMobile ? (
+        <form className="flex w-72 flex-col  items-center rounded-2xl bg-glass p-5 font-quattrocento text-xl text-white shadow-xl">
+            <div className="mb-5 text-center text-lg">
+                Please provide your full name
+            </div>
+            <div className=" mb-5 flex flex-col gap-5 text-xs">
+                <input
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className=" rounded-md p-3 text-xs text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                    placeholder="First Name"
+                ></input>
+                <input
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className=" rounded-md p-3 text-xs text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                    placeholder="Last Name"
+                ></input>
+            </div>
+            {errors.firstName && (
+                <p className="create-listing-errors text-xs text-red-500">
+                    {errors.firstName}
+                </p>
+            )}
+            {errors.lastName && (
+                <p className="create-listing-errors text-xs text-red-500">
+                    {errors.lastName}
+                </p>
+            )}
+
+            <div className="mb-5 text-center text-lg">
+                {`Anything you'd like me to know?`}
+            </div>
+            <textarea
+                value={formData}
+                onChange={(e) => setFormData(e.target.value)}
+                className=" h-16 w-48 rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+            ></textarea>
+
+            <div className="mt-5 text-center text-lg">
+                Upload photos of your hair
+            </div>
+            <div className=" text-center text-xs">
+                (this will only be seen by me )
+            </div>
+            <div className="py-4">
+                <label className="relative inline-block h-16 w-16">
+                    <input
+                        className="absolute h-full w-full cursor-pointer opacity-0"
+                        type="file"
+                        multiple
+                        // accept="image/png, image/jpg, image/jpeg"
+                        accept="image/*"
+                        onChange={(e) => {
+                            if (e.target.files)
+                                setImageFiles([
+                                    ...imageFiles,
+                                    ...e.target.files,
+                                ]);
+                        }}
+                    />
+                    <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                        <span className="text-center font-quattrocento text-xs">
+                            Choose Files
+                        </span>
+                    </div>
+                </label>
+            </div>
+            <div className="mb-5 flex w-3/4 flex-wrap justify-center gap-3">
+                {imageFiles.map((e, i) => (
+                    <div key={i} className="relative">
+                        <Image
+                            className="mb-3 h-12 w-auto rounded-lg object-cover shadow-sm"
+                            alt={`listing-${i}`}
+                            src={URL.createObjectURL(e)}
+                            width={100}
+                            height={100}
+                        />
+                        <button
+                            className="absolute right-[-10px] top-[-32px] transform p-1 text-2xl text-gray-600 "
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const newImageFiles = [...imageFiles];
+                                newImageFiles.splice(i, 1);
+                                setImageFiles(newImageFiles);
+                            }}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                ))}
+            </div>
+            {errors.imageExcess && (
+                <p className="create-listing-errors text-xs text-red-500">
+                    {errors.imageExcess}
+                </p>
+            )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-xs text-red-500">
+                    {errors.imageLarge}
+                </p>
+            )}
+
+            <button
+                onClick={(e) => {
+                    e.preventDefault();
+                    void submit(e);
+                }}
+                disabled={
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!firstName || !lastName))
+                }
+                className={`transform rounded-md bg-glass px-4 py-2 text-xs shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                    (hasSubmitted && Object.values(errors).length > 0) ||
+                    isSubmitting ||
+                    (imageFiles.length > 0 &&
+                        (hasSubmitted || Object.values(errors).length > 0)) ||
+                    (!isSubmitting && (!firstName || !lastName))
+                        ? "text-slate-300"
+                        : "text-purple-300"
+                }`}
+            >
+                {isSubmitting ? "Uploading..." : "Submit Review"}
+            </button>
+        </form>
+    ) : (
         <form className="flex flex-col items-center  rounded-2xl bg-glass p-20 font-quattrocento text-3xl text-white shadow-xl">
             <div className="mb-5 flex justify-center text-4xl">
                 Please provide your full name
@@ -254,6 +395,11 @@ export default function ExtraDetails({
             {errors.imageExcess && (
                 <p className="create-listing-errors text-red-500">
                     {errors.imageExcess}
+                </p>
+            )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageLarge}
                 </p>
             )}
 
