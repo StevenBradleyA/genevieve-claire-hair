@@ -4,7 +4,10 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Services, Specifications } from "~/components/NewBookingForm";
 import type { FormDataType } from "~/components/NewBookingForm/Services";
-import type { SpecificationsType } from "~/components/NewBookingForm/Specifications";
+import type {
+    SelectionsType,
+    SpecificationsType,
+} from "~/components/NewBookingForm/Specifications";
 import { useMobile } from "~/components/MobileContext";
 
 // Redirect to sign up & new client form
@@ -22,8 +25,6 @@ export default function Booking() {
 
     const checkForValidSelections = () => {
         const serviceCheck = localStorage.getItem("Services");
-        // const specifications = localStorage.getItem("Specifications");
-
         if (serviceCheck && serviceData) {
             const services = JSON.parse(serviceCheck) as FormDataType;
 
@@ -39,42 +40,42 @@ export default function Booking() {
         } else return null;
     };
 
-    const checkForConsultServices = () => {
-        const services = localStorage.getItem("Services");
-        if (services) {
-            const choicesObj = JSON.parse(services) as FormDataType;
+    const checkForValidSpecifications = () => {
+        const serviceCheck = localStorage.getItem("Services");
+        const specCheck = localStorage.getItem("Specifications");
 
-            const nonQuietCheck = Object.entries(choicesObj).filter(
-                ([, selected]) => selected
-            );
+        if (serviceCheck && specCheck && serviceData) {
+            const services = JSON.parse(serviceCheck) as FormDataType;
+            const specifications = JSON.parse(specCheck) as SpecificationsType;
 
-            if (
-                nonQuietCheck.length === 1 &&
-                nonQuietCheck[0] &&
-                nonQuietCheck[0][0] === "Quiet"
-            ) {
-                return null;
+            let optionCounter = 0;
+            let choiceCounter = 0;
+            for (const [serviceName, isSelected] of Object.entries(services)) {
+                if (isSelected) {
+                    optionCounter++;
+                    const options =
+                        serviceData[serviceName]?.subcategories ?? [];
+
+                    options.forEach((el) => {
+                        if (
+                            el.name ===
+                            specifications[serviceName as SelectionsType]
+                        ) {
+                            if (el.requireConsult)
+                                setRequireConsult(
+                                    specifications[
+                                        serviceName as SelectionsType
+                                    ]
+                                );
+                            choiceCounter++;
+                        }
+                    });
+                }
             }
-            if (choicesObj["Vivids"]) {
-                setRequireConsult("Vivids");
-            } else if (choicesObj["Color Corrections"]) {
-                setRequireConsult("Color Corrections");
-            } else setRequireConsult("");
+            if (!optionCounter) return null;
+            if (!choiceCounter) return null;
+            if (optionCounter !== choiceCounter) return null;
         } else return null;
-    };
-
-    const checkForConsultSpecifications = () => {
-        const specifications = localStorage.getItem("Specifications");
-        if (specifications) {
-            const specObj = JSON.parse(specifications) as SpecificationsType;
-
-            if (specObj.Styling === "Bridal/Wedding")
-                setRequireConsult("Bridal/Wedding");
-            else setRequireConsult("");
-
-            if (specObj.ready) return true;
-            else return null;
-        }
     };
 
     const changePages = (num: number) => {
@@ -83,7 +84,7 @@ export default function Booking() {
         if (newNum === 1) {
             if (checkForValidSelections() === null) return;
         } else if (newNum === 2) {
-            if (checkForConsultSpecifications() === null) return;
+            if (checkForValidSpecifications() === null) return;
         } else {
             setRequireConsult("");
         }

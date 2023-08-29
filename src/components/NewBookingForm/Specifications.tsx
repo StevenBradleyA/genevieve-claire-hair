@@ -9,21 +9,14 @@ export type SelectionsType = Exclude<
 
 type ServiceOptionType = { [key in SelectionsType]: string[] };
 
-export type SpecificationsType = { [key in SelectionsType]: string } & {
-    ready: boolean;
-};
+export type SpecificationsType = { [key in SelectionsType]: string };
 
 // TODO: Geni orders by price and time
 const serviceOptions: ServiceOptionType = {
-    Blonding: ["Partial", "Full", "Unsure"],
-    "All Over Color": [
-        "Gloss and toner only",
-        "Roots only",
-        "Roots to ends",
-        "Unsure",
-    ],
-    Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
-    Styling: ["Styling", "Special Event", "Bridal/Wedding", "Unsure"],
+    Blonding: ["Partial", "Full"],
+    "All Over Color": ["Gloss and toner only", "Roots only", "Roots to ends"],
+    Haircut: ["Buzz", "Short", "Long", "Creative"],
+    Styling: ["Blowout", "Special Event", "Bridal/Wedding"],
     Quiet: ["Music", "No Music", "Either"],
 };
 
@@ -33,7 +26,6 @@ const defaultState: SpecificationsType = {
     Haircut: "",
     Styling: "",
     Quiet: "",
-    ready: false,
 };
 
 const Specifications = () => {
@@ -57,18 +49,14 @@ const Specifications = () => {
         if (specifications) {
             const specObj = JSON.parse(specifications) as SpecificationsType;
             for (const option in specObj) {
+                console.log(selections, "\n\nheywowowow");
                 if (
-                    option !== "ready" &&
                     selections &&
                     !selections.includes(option as SelectionsType)
                 ) {
                     specObj[option as SelectionsType] = "";
                 }
             }
-
-            if (selections && selections.some((el) => !specObj[el])) {
-                specObj.ready = false;
-            } else specObj.ready = true;
 
             localStorage.setItem("Specifications", JSON.stringify(specObj));
             setSubSelections(specObj);
@@ -78,10 +66,6 @@ const Specifications = () => {
     const toggle = (service: SelectionsType, choice: string) => {
         const newSelections = { ...subSelections };
         newSelections[service] = choice;
-
-        if (selections && selections.some((el) => !newSelections[el])) {
-            newSelections.ready = false;
-        } else newSelections.ready = true;
 
         localStorage.setItem("Specifications", JSON.stringify(newSelections));
         setSubSelections(newSelections);
