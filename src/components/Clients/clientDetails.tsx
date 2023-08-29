@@ -1,12 +1,25 @@
 import Image from "next/image";
+import { useState } from "react";
 import { DotLoader } from "react-spinners";
 import { api } from "~/utils/api";
+import ModalDialog from "~/components/Modal";
+import EditUserNotes from "./updateNotes";
 
 export default function ClientDetails({ userId }: { userId: string }) {
     // TODO ALLOW ADMIN to edit and update notes
     // TODO maybe allow geni to give admin permission here very easy to do
-    // TODO potential poggywoggy refactor there is prob a better way
+
     const { data: user, isLoading } = api.user.getUserById.useQuery(userId);
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     if (isLoading)
         return (
@@ -45,9 +58,21 @@ export default function ClientDetails({ userId }: { userId: string }) {
 
                 <div className="mt-5 flex gap-5 text-5xl font-bold">
                     Notes{" "}
-                    <button className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm">
+                    <button
+                        onClick={openModal}
+                        className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                    >
                         🧐
                     </button>
+                    {user && (
+                        <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                            <EditUserNotes
+                                closeModal={closeModal}
+                                user={user}
+                                isLoading={isLoading}
+                            />
+                        </ModalDialog>
+                    )}
                 </div>
                 <div className=" mt-3 w-3/4 rounded-2xl bg-chillPurple p-6 ">
                     {/* <p className="text-xl ">{user.notes}</p> */}
