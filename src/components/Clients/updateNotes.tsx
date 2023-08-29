@@ -55,7 +55,7 @@ export default function EditUserNotes({
         );
 
     return (
-        <form className="w-[600px] ">
+        <form className="w-[600px]flex flex-col items-center justify-center">
             <div className=" my-5 text-center text-xl">
                 Use the keyword{" "}
                 <span className="rounded-2xl bg-glass p-2 text-purple-300 shadow-lg">
@@ -68,7 +68,15 @@ export default function EditUserNotes({
                 onChange={(e) => setNotes(e.target.value)}
                 className=" h-96 w-full rounded-2xl bg-lightPurple p-10 text-xl text-white shadow-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
             />
-            <button onClick={submit}> update </button>
+            <div className="mt-5 flex justify-center">
+                <button
+                    onClick={submit}
+                    className=" rounded-2xl bg-glass p-2 text-xl shadow-lg"
+                >
+                    {" "}
+                    Submit Notes 😊
+                </button>
+            </div>
         </form>
     );
 }
