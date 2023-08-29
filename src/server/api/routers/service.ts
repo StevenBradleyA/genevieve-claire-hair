@@ -4,9 +4,8 @@ import {
     publicProcedure,
     protectedProcedure,
 } from "~/server/api/trpc";
-import type { ServiceCategory, ServiceSubcategory } from "@prisma/client";
 
-type NormalizedDataType = {
+export type NormalizedDataType = {
     [key: string]: {
         subcategories: {
             id: number;
