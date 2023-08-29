@@ -1,21 +1,27 @@
 import { api } from "~/utils/api";
 import CreateBooking from "../../components/Bookings/Create";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Services, Specifications } from "~/components/NewBookingForm";
 import type { FormDataType } from "~/components/NewBookingForm/Services";
+import type { NormalizedDataType } from "~/server/api/routers/service";
 import type {
     SelectionsType,
     SpecificationsType,
 } from "~/components/NewBookingForm/Specifications";
 import { useMobile } from "~/components/MobileContext";
 
+type FormProps = { key: number; serviceData: NormalizedDataType | undefined };
+
 // Redirect to sign up & new client form
 const form = [
-    <Services key={0} />,
-    <Specifications key={1} />,
-    <CreateBooking key={2} />,
+    (props: FormProps) => <Services {...props} />,
+    (props: FormProps) => <Specifications {...props} />,
+    (props: FormProps) => <CreateBooking {...props} />,
 ];
+
+// TODO: Geni orders by price and time
+
 export default function Booking() {
     // const { data: session } = useSession(); // TODO: Redirect if not logged in
     const [page, setPage] = useState(0);
@@ -109,7 +115,10 @@ export default function Booking() {
                         </div>
                     </div>
                 ) : (
-                    form[page]
+                    (form[page] as (props: FormProps) => JSX.Element)({
+                        key: page,
+                        serviceData,
+                    })
                 )}
 
                 <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
@@ -136,7 +145,6 @@ export default function Booking() {
                         </button>
                     ) : null}
                 </div>
-                {/* Submit using local storage check */}
             </div>
         </div>
     ) : (
@@ -158,7 +166,10 @@ export default function Booking() {
                         </div>
                     </div>
                 ) : (
-                    form[page]
+                    (form[page] as (props: FormProps) => JSX.Element)({
+                        key: page,
+                        serviceData,
+                    })
                 )}
 
                 <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
@@ -185,7 +196,6 @@ export default function Booking() {
                         </button>
                     ) : null}
                 </div>
-                {/* Submit using local storage check */}
             </div>
         </div>
     );
