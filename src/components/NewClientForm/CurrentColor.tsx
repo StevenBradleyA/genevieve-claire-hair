@@ -36,7 +36,7 @@ export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
             selectedOptions.push(`${formData.input}`);
         }
 
-        const updatedNotes = `Current Hair Color: poggywoggy ${selectedOptions.join(
+        const updatedNotes = `Current Hair Color: enter ${selectedOptions.join(
             ": "
         )}`;
         setNotes(updatedNotes);

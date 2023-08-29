@@ -17,6 +17,7 @@ interface StarProps {
 interface ErrorsObj {
     image?: string;
     imageExcess?: string;
+    imageLarge?: string;
 }
 
 interface Image {
@@ -69,13 +70,22 @@ export default function CreateReview({
     const ctx = api.useContext();
     const { data: session } = useSession();
     const { isMobile } = useMobile();
+    const maxFileSize = 6 * 1024 * 1024;
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
-        // ! should implement max file size upload could cap at like 50mb
         if (imageFiles.length > 3) {
             errorsObj.imageExcess = "Cannot provide more than 3 photos";
         }
+
+        for (const file of imageFiles) {
+            if (file.size > maxFileSize) {
+                errorsObj.imageLarge =
+                    "One or more images exceeds the max 6 MB file size";
+                break;
+            }
+        }
+
         setErrors(errorsObj);
     };
 
@@ -251,6 +261,11 @@ export default function CreateReview({
                     {errors.imageExcess}
                 </p>
             )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-sm text-red-500">
+                    {errors.imageLarge}
+                </p>
+            )}
 
             <button
                 onClick={(e) => {
@@ -360,6 +375,11 @@ export default function CreateReview({
             {errors.imageExcess && (
                 <p className="create-listing-errors text-red-500">
                     {errors.imageExcess}
+                </p>
+            )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageLarge}
                 </p>
             )}
 

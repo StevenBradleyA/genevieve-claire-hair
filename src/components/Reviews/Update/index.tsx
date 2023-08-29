@@ -15,6 +15,7 @@ interface UpdateProps {
 interface ErrorsObj {
     image?: string;
     imageExcess?: string;
+    imageLarge?: string;
 }
 
 interface StarProps {
@@ -75,6 +76,7 @@ export default function UpdateReview({
     >([]);
     const { isMobile } = useMobile();
     const ctx = api.useContext();
+    const maxFileSize = 6 * 1024 * 1024;
 
     const { data: images, isLoading } = api.image.getAllByResourceId.useQuery({
         resourceType: "REVIEW",
@@ -83,7 +85,6 @@ export default function UpdateReview({
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
-        //TODO should implement max file size upload could cap at like 50mb
 
         const totalImageCount =
             (imageFiles.length ?? 0) +
@@ -92,6 +93,15 @@ export default function UpdateReview({
         if (totalImageCount > 3) {
             errorsObj.imageExcess = "Cannot provide more than 3 photos";
         }
+
+        for (const file of imageFiles) {
+            if (file.size > maxFileSize) {
+                errorsObj.imageLarge =
+                    "One or more images exceeds the max 6 MB file size";
+                break;
+            }
+        }
+
         setErrors(errorsObj);
     };
 
@@ -307,6 +317,11 @@ export default function UpdateReview({
                     {errors.imageExcess}
                 </p>
             )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-xs text-red-500">
+                    {errors.imageLarge}
+                </p>
+            )}
 
             <button
                 onClick={(e) => {
@@ -446,6 +461,11 @@ export default function UpdateReview({
             {errors.imageExcess && (
                 <p className="create-listing-errors text-red-500">
                     {errors.imageExcess}
+                </p>
+            )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageLarge}
                 </p>
             )}
 

@@ -3,15 +3,15 @@ import React, { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useSession } from "next-auth/react";
-import { addMinutes, isEqual } from "date-fns";
+import { addMinutes } from "date-fns";
 import TimeSlotPicker from "./TimeSlotPicker";
-import { allServices } from "~/utils/services";
 import type { Matcher } from "react-day-picker";
 import type {
     SpecificationsType,
     SelectionsType,
 } from "~/components/NewBookingForm/Specifications";
 import { useMobile } from "~/components/MobileContext";
+import type { NormalizedDataType } from "~/server/api/routers/service";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -81,7 +81,11 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
 
 type BookingOptionType = Exclude<SelectionsType, "Quiet">;
 
-export default function CreateBooking() {
+export default function CreateBooking({
+    serviceData,
+}: {
+    serviceData: NormalizedDataType | undefined;
+}) {
     const { data: session } = useSession();
     const { isMobile } = useMobile();
 
@@ -95,12 +99,11 @@ export default function CreateBooking() {
     let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
 
     if (!pfBangs) pfBangs = [];
-    const { data: check } = api.booking.getByDate.useQuery(date);
 
     useEffect(() => {
         const storage = localStorage.getItem("Specifications");
 
-        if (storage) {
+        if (storage && serviceData) {
             const specifications = JSON.parse(storage) as SpecificationsType;
 
             const bookingDetails = {
@@ -111,37 +114,33 @@ export default function CreateBooking() {
 
             for (const service in specifications) {
                 const subService = specifications[service as BookingOptionType];
-                // if (subService && service !== "ready" && service !== "Quiet") {
-                if (subService && service !== "ready") {
+
+                if (subService) {
                     if (bookingDetails.services) {
                         bookingDetails.services += `, ${service}: ${subService}`;
                     } else {
                         bookingDetails.services += `${service}: ${subService}`;
                     }
+                }
 
-                    if (subService && service !== "Quiet") {
-                        const currentService =
-                            allServices[service as BookingOptionType][
-                                subService
-                            ];
+                const currentCategories =
+                    serviceData[service]?.subcategories ?? [];
+
+                for (const subcat of currentCategories) {
+                    if (subcat.name === subService) {
                         if (bookingDetails.totalTime) {
-                            bookingDetails.totalPrice +=
-                                currentService?.bundleTime || 0;
-                            bookingDetails.totalPrice +=
-                                currentService?.price || 0;
+                            bookingDetails.totalTime += subcat?.bundleTime || 0;
+                            bookingDetails.totalPrice += subcat?.price || 0;
                         } else {
-                            bookingDetails.totalTime +=
-                                currentService?.time || 0;
-                            bookingDetails.totalPrice +=
-                                currentService?.price || 0;
+                            bookingDetails.totalTime += subcat?.time || 0;
+                            bookingDetails.totalPrice += subcat?.price || 0;
                         }
                     }
                 }
             }
-            console.log(bookingDetails);
             setDetails(bookingDetails);
         }
-    }, []);
+    }, [serviceData]);
 
     const checkConflicts = () => {
         if (!date) return true;

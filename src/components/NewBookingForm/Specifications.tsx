@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import type { FormInputType } from "./Services";
 import { useMobile } from "../MobileContext";
+import type { FormInputType } from "./Services";
+import type { NormalizedDataType } from "~/server/api/routers/service";
+
 
 export type SelectionsType = Exclude<
     FormInputType,
@@ -9,23 +11,7 @@ export type SelectionsType = Exclude<
 
 type ServiceOptionType = { [key in SelectionsType]: string[] };
 
-export type SpecificationsType = { [key in SelectionsType]: string } & {
-    ready: boolean;
-};
-
-// TODO: Geni orders by price and time
-const serviceOptions: ServiceOptionType = {
-    Blonding: ["Partial", "Full", "Unsure"],
-    "All Over Color": [
-        "Gloss and toner only",
-        "Roots only",
-        "Roots to ends",
-        "Unsure",
-    ],
-    Haircut: ["Buzz", "Short", "Long", "Creative", "Unsure"],
-    Styling: ["Styling", "Special Event", "Bridal/Wedding", "Unsure"],
-    Quiet: ["Music", "No Music", "Either"],
-};
+export type SpecificationsType = { [key in SelectionsType]: string };
 
 const defaultState: SpecificationsType = {
     Blonding: "",
@@ -33,10 +19,13 @@ const defaultState: SpecificationsType = {
     Haircut: "",
     Styling: "",
     Quiet: "",
-    ready: false,
 };
 
-const Specifications = () => {
+const Specifications = ({
+    serviceData,
+}: {
+    serviceData: NormalizedDataType | undefined;
+}) => {
     const [selections, setSelections] = useState<SelectionsType[]>();
     const [subSelections, setSubSelections] = useState(defaultState);
     const { isMobile } = useMobile();
@@ -58,17 +47,12 @@ const Specifications = () => {
             const specObj = JSON.parse(specifications) as SpecificationsType;
             for (const option in specObj) {
                 if (
-                    option !== "ready" &&
                     selections &&
                     !selections.includes(option as SelectionsType)
                 ) {
                     specObj[option as SelectionsType] = "";
                 }
             }
-
-            if (selections && selections.some((el) => !specObj[el])) {
-                specObj.ready = false;
-            } else specObj.ready = true;
 
             localStorage.setItem("Specifications", JSON.stringify(specObj));
             setSubSelections(specObj);
@@ -78,10 +62,6 @@ const Specifications = () => {
     const toggle = (service: SelectionsType, choice: string) => {
         const newSelections = { ...subSelections };
         newSelections[service] = choice;
-
-        if (selections && selections.some((el) => !newSelections[el])) {
-            newSelections.ready = false;
-        } else newSelections.ready = true;
 
         localStorage.setItem("Specifications", JSON.stringify(newSelections));
         setSubSelections(newSelections);
@@ -97,29 +77,36 @@ const Specifications = () => {
                             className="mb-5 flex flex-col text-4xl"
                         >
                             {service}
-                            {serviceOptions[service].map((option) => {
-                                return (
-                                    <label
-                                        key={option}
-                                        className="flex cursor-pointer items-center justify-center gap-5 text-lg"
-                                    >
-                                        <span className="bg-gradient-to-r from-blue-300 to-violet-300 bg-clip-text text-transparent">
-                                            {option}
-                                        </span>
-                                        <input
-                                            className="custom-checkbox"
-                                            type="checkbox"
-                                            checked={
-                                                subSelections[service] ===
-                                                option
-                                            }
-                                            onChange={() =>
-                                                toggle(service, option)
-                                            }
-                                        ></input>
-                                    </label>
-                                );
-                            })}
+                            {serviceData &&
+                                serviceData[service]?.subcategories.map(
+                                    (option) => {
+                                        return (
+                                            <label
+                                                key={option.name}
+                                                className="flex cursor-pointer items-center justify-center gap-5 text-lg"
+                                            >
+                                                <span className="bg-gradient-to-r from-blue-300 to-violet-300 bg-clip-text text-transparent">
+                                                    {option.name}
+                                                </span>
+                                                <input
+                                                    className="custom-checkbox"
+                                                    type="checkbox"
+                                                    checked={
+                                                        subSelections[
+                                                            service
+                                                        ] === option.name
+                                                    }
+                                                    onChange={() =>
+                                                        toggle(
+                                                            service,
+                                                            option.name
+                                                        )
+                                                    }
+                                                ></input>
+                                            </label>
+                                        );
+                                    }
+                                )}
                         </div>
                     );
                 })}
@@ -133,29 +120,36 @@ const Specifications = () => {
                             className="mb-5 flex flex-col text-6xl"
                         >
                             {service}
-                            {serviceOptions[service].map((option) => {
-                                return (
-                                    <label
-                                        key={option}
-                                        className="flex cursor-pointer items-center justify-center gap-5 text-xl"
-                                    >
-                                        <span className="bg-gradient-to-r from-blue-300 to-violet-300 bg-clip-text text-transparent">
-                                            {option}
-                                        </span>
-                                        <input
-                                            className="custom-checkbox"
-                                            type="checkbox"
-                                            checked={
-                                                subSelections[service] ===
-                                                option
-                                            }
-                                            onChange={() =>
-                                                toggle(service, option)
-                                            }
-                                        ></input>
-                                    </label>
-                                );
-                            })}
+                            {serviceData &&
+                                serviceData[service]?.subcategories.map(
+                                    (option) => {
+                                        return (
+                                            <label
+                                                key={option.name}
+                                                className="flex cursor-pointer items-center justify-center gap-5 text-xl"
+                                            >
+                                                <span className="bg-gradient-to-r from-blue-300 to-violet-300 bg-clip-text text-transparent">
+                                                    {option.name}
+                                                </span>
+                                                <input
+                                                    className="custom-checkbox"
+                                                    type="checkbox"
+                                                    checked={
+                                                        subSelections[
+                                                            service
+                                                        ] === option.name
+                                                    }
+                                                    onChange={() =>
+                                                        toggle(
+                                                            service,
+                                                            option.name
+                                                        )
+                                                    }
+                                                ></input>
+                                            </label>
+                                        );
+                                    }
+                                )}
                         </div>
                     );
                 })}

@@ -1,69 +1,96 @@
 import { api } from "~/utils/api";
 import CreateBooking from "../../components/Bookings/Create";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Services, Specifications } from "~/components/NewBookingForm";
 import type { FormDataType } from "~/components/NewBookingForm/Services";
-import type { SpecificationsType } from "~/components/NewBookingForm/Specifications";
+import type { NormalizedDataType } from "~/server/api/routers/service";
+import type {
+    SelectionsType,
+    SpecificationsType,
+} from "~/components/NewBookingForm/Specifications";
 import { useMobile } from "~/components/MobileContext";
+
+type FormProps = { key: number; serviceData: NormalizedDataType | undefined };
 
 // Redirect to sign up & new client form
 const form = [
-    <Services key={0} />,
-    <Specifications key={1} />,
-    <CreateBooking key={2} />,
+    (props: FormProps) => <Services {...props} />,
+    (props: FormProps) => <Specifications {...props} />,
+    (props: FormProps) => <CreateBooking {...props} />,
 ];
+
+// TODO: Geni orders by price and time
+
 export default function Booking() {
     // const { data: session } = useSession(); // TODO: Redirect if not logged in
     const [page, setPage] = useState(0);
     const [requireConsult, setRequireConsult] = useState<string>("");
+    const { data: serviceData } = api.service.getAll.useQuery();
     const { isMobile } = useMobile();
 
-    const checkForConsultServices = () => {
-        const services = localStorage.getItem("Services");
-        if (services) {
-            const choicesObj = JSON.parse(services) as FormDataType;
+    const checkForValidSelections = () => {
+        const serviceCheck = localStorage.getItem("Services");
+        if (serviceCheck && serviceData) {
+            const services = JSON.parse(serviceCheck) as FormDataType;
 
-            const nonQuietCheck = Object.entries(choicesObj).filter(
-                ([, selected]) => selected
-            );
-
-            if (
-                nonQuietCheck.length === 1 &&
-                nonQuietCheck[0] &&
-                nonQuietCheck[0][0] === "Quiet"
-            ) {
-                return null;
+            let counter = 0;
+            for (const [serviceName, isSelected] of Object.entries(services)) {
+                if (isSelected && serviceData[serviceName]?.requireConsult) {
+                    setRequireConsult(serviceName);
+                }
+                if (isSelected && serviceName !== "Quiet") counter++;
             }
-            if (choicesObj["Vivids"]) {
-                setRequireConsult("Vivids");
-            } else if (choicesObj["Color Corrections"]) {
-                setRequireConsult("Color Corrections");
-            } else setRequireConsult("");
+
+            if (!counter) return null;
         } else return null;
     };
 
-    const checkForConsultSpecifications = () => {
-        const specifications = localStorage.getItem("Specifications");
-        if (specifications) {
-            const specObj = JSON.parse(specifications) as SpecificationsType;
+    const checkForValidSpecifications = () => {
+        const serviceCheck = localStorage.getItem("Services");
+        const specCheck = localStorage.getItem("Specifications");
 
-            if (specObj.Styling === "Bridal/Wedding")
-                setRequireConsult("Bridal/Wedding");
-            else setRequireConsult("");
+        if (serviceCheck && specCheck && serviceData) {
+            const services = JSON.parse(serviceCheck) as FormDataType;
+            const specifications = JSON.parse(specCheck) as SpecificationsType;
 
-            if (specObj.ready) return true;
-            else return null;
-        }
+            let optionCounter = 0;
+            let choiceCounter = 0;
+            for (const [serviceName, isSelected] of Object.entries(services)) {
+                if (isSelected) {
+                    optionCounter++;
+                    const options =
+                        serviceData[serviceName]?.subcategories ?? [];
+
+                    options.forEach((el) => {
+                        if (
+                            el.name ===
+                            specifications[serviceName as SelectionsType]
+                        ) {
+                            if (el.requireConsult)
+                                setRequireConsult(
+                                    specifications[
+                                        serviceName as SelectionsType
+                                    ]
+                                );
+                            choiceCounter++;
+                        }
+                    });
+                }
+            }
+            if (!optionCounter) return null;
+            if (!choiceCounter) return null;
+            if (optionCounter !== choiceCounter) return null;
+        } else return null;
     };
 
     const changePages = (num: number) => {
         const newNum = page + num;
 
         if (newNum === 1) {
-            if (checkForConsultServices() === null) return;
+            if (checkForValidSelections() === null) return;
         } else if (newNum === 2) {
-            if (checkForConsultSpecifications() === null) return;
+            if (checkForValidSpecifications() === null) return;
         } else {
             setRequireConsult("");
         }
@@ -88,7 +115,10 @@ export default function Booking() {
                         </div>
                     </div>
                 ) : (
-                    form[page]
+                    (form[page] as (props: FormProps) => JSX.Element)({
+                        key: page,
+                        serviceData,
+                    })
                 )}
 
                 <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
@@ -115,7 +145,6 @@ export default function Booking() {
                         </button>
                     ) : null}
                 </div>
-                {/* Submit using local storage check */}
             </div>
         </div>
     ) : (
@@ -137,10 +166,13 @@ export default function Booking() {
                         </div>
                     </div>
                 ) : (
-                    form[page]
+                    (form[page] as (props: FormProps) => JSX.Element)({
+                        key: page,
+                        serviceData,
+                    })
                 )}
 
-                <div className="mt-10 mb-20 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
                     <button
                         onClick={() => changePages(-1)}
                         className="transform rounded-md bg-glass px-12 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
@@ -164,7 +196,6 @@ export default function Booking() {
                         </button>
                     ) : null}
                 </div>
-                {/* Submit using local storage check */}
             </div>
         </div>
     );

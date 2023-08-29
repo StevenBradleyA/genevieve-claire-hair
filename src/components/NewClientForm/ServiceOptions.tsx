@@ -17,12 +17,11 @@ export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
     const { isMobile } = useMobile();
 
-
     useEffect(() => {
         const selectedOptions = Object.keys(formData).filter(
             (key) => formData[key]
         );
-        const updatedNotes = `Interested in the following services: poggywoggy ${selectedOptions.join(
+        const updatedNotes = `Interested in the following services: enter ${selectedOptions.join(
             ", "
         )}`;
         setNotes(updatedNotes);
@@ -36,7 +35,7 @@ export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
         setFormData(newData);
     };
 
-    return isMobile? (
+    return isMobile ? (
         <form className="flex flex-col items-center justify-center font-quattrocento text-xl text-white">
             <div className="flex flex-col items-center gap-1">
                 <div className="text-sm">
@@ -97,7 +96,7 @@ export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
                 </label>
             </div>
         </form>
-    ): (
+    ) : (
         <form className="flex flex-col items-center justify-center font-quattrocento text-3xl text-white">
             <div className="flex items-center gap-5">
                 <div className="text-4xl">
