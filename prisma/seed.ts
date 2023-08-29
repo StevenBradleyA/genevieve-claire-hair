@@ -120,6 +120,29 @@ async function main() {
         },
     });
 
+    //? Quiet
+    await prisma.serviceCategory.create({
+        data: {
+            name: "Quiet",
+            subcategories: {
+                create: [
+                    {
+                        name: "Music",
+                        price: 0,
+                        time: 0,
+                        bundleTime: 0,
+                    },
+                    {
+                        name: "No Music",
+                        price: 0,
+                        time: 0,
+                        bundleTime: 0,
+                    },
+                ],
+            },
+        },
+    });
+
     //? Vivids
     await prisma.serviceCategory.create({
         data: {
@@ -133,13 +156,6 @@ async function main() {
         data: {
             name: "Color Corrections",
             requireConsult: true,
-        },
-    });
-
-    //? Quiet
-    await prisma.serviceCategory.create({
-        data: {
-            name: "Quiet",
         },
     });
 
