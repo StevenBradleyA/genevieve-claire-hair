@@ -21,6 +21,7 @@ interface ErrorsObj {
     imageExcess?: string;
     firstName?: string;
     lastName?: string;
+    imageLarge?: string;
 }
 
 interface Image {
@@ -54,6 +55,7 @@ export default function ExtraDetails({
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const maxFileSize = 6 * 1024 * 1024;
 
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
@@ -70,7 +72,7 @@ export default function ExtraDetails({
 
     const handleInputErrors = () => {
         const errorsObj: ErrorsObj = {};
-        // ! should implement max file size upload could cap at like 50mb
+
         if (!firstName.length) {
             errorsObj.firstName = "Please provide your first name";
         }
@@ -81,6 +83,15 @@ export default function ExtraDetails({
         if (imageFiles.length > 5) {
             errorsObj.imageExcess = "Cannot provide more than 5 photos";
         }
+
+        for (const file of imageFiles) {
+            if (file.size > maxFileSize) {
+                errorsObj.imageLarge =
+                    "One or more images exceeds the max 6 MB file size";
+                break;
+            }
+        }
+
         setErrors(errorsObj);
     };
 
@@ -258,6 +269,11 @@ export default function ExtraDetails({
                     {errors.imageExcess}
                 </p>
             )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-xs text-red-500">
+                    {errors.imageLarge}
+                </p>
+            )}
 
             <button
                 onClick={(e) => {
@@ -379,6 +395,11 @@ export default function ExtraDetails({
             {errors.imageExcess && (
                 <p className="create-listing-errors text-red-500">
                     {errors.imageExcess}
+                </p>
+            )}
+            {errors.imageLarge && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.imageLarge}
                 </p>
             )}
 
