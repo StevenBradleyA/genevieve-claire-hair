@@ -20,7 +20,7 @@ export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
     const { isMobile } = useMobile();
 
     useEffect(() => {
-        let newNotes = "Has had color before: enter ";
+        let newNotes = "Has had color before: ";
 
         if (formData.yes) {
             newNotes += "yes";
@@ -97,7 +97,7 @@ export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
                         type="input"
                         value={formData.ago}
                         onChange={(e) => setAgo(e.target.value)}
-                        className="text-sm rounded-md p-2 text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                        className="rounded-md p-2 text-sm text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                     ></input>
                     <label className="flex cursor-pointer items-center justify-center gap-5">
                         Professionally

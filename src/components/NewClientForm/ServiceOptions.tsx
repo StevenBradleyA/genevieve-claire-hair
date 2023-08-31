@@ -21,7 +21,7 @@ export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
         const selectedOptions = Object.keys(formData).filter(
             (key) => formData[key]
         );
-        const updatedNotes = `Interested in the following services: enter ${selectedOptions.join(
+        const updatedNotes = `Interested in the following services: ${selectedOptions.join(
             ", "
         )}`;
         setNotes(updatedNotes);

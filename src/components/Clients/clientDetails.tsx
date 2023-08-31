@@ -73,7 +73,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                 </div>
                 <div className=" mt-3 w-full rounded-2xl bg-chillPurple p-6 ">
                     {user.notes &&
-                        user.notes.split("enter").map((line, index) => (
+                        user.notes.split("\n").map((line, index) => (
                             <p key={index} className="text-xl">
                                 {line}
                             </p>
