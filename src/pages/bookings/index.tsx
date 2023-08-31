@@ -26,7 +26,7 @@ export default function Booking() {
     // const { data: session } = useSession(); // TODO: Redirect if not logged in
     const [page, setPage] = useState(0);
     const [requireConsult, setRequireConsult] = useState<string>("");
-    const { data: serviceData } = api.service.getAll.useQuery();
+    const { data: serviceData } = api.service.getAllNormalized.useQuery();
     const { isMobile } = useMobile();
 
     const checkForValidSelections = () => {

@@ -29,6 +29,14 @@ export const serviceRouter = createTRPCRouter({
             include: { subcategories: true },
         });
 
+        return data;
+    }),
+
+    getAllNormalized: publicProcedure.query(async ({ ctx }) => {
+        const data = await ctx.prisma.serviceCategory.findMany({
+            include: { subcategories: true },
+        });
+
         const res: NormalizedDataType = {};
 
         data.forEach((el) => (res[el.name] = el));
