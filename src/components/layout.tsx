@@ -36,7 +36,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             }
         }
         void redirectIfNew();
-    }, [isNew, router.asPath]);
+    }, [isNew, router]);
 
     return (
         <>
