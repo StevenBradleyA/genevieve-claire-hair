@@ -2,10 +2,13 @@ import { api } from "~/utils/api";
 import EachClientCard from "~/components/Clients";
 import giraffe from "@public/giraffe.png";
 import Image from "next/image";
+import AdminLayout from "../layout";
 import { DotLoader } from "react-spinners";
 import type { User } from "@prisma/client";
+import type { NextPageWithLayout } from "~/pages/_app";
+import type { ReactElement } from "react";
 
-export default function Users() {
+const AdminViewUsers: NextPageWithLayout = () => {
     const { data: users, isLoading } = api.user.getAllUsers.useQuery();
     if (isLoading)
         return (
@@ -16,11 +19,10 @@ export default function Users() {
         );
 
     if (!users) return <div>Oops</div>;
+
     return (
         <>
-            {" "}
-            <div className="mb-10 flex items-end justify-center gap-5 font-grand-hotel text-6xl">
-                {" "}
+            <div className="mb-10 flex flex-col items-end justify-center gap-5 font-grand-hotel text-6xl">
                 Clients
                 <Image
                     src={giraffe}
@@ -37,4 +39,10 @@ export default function Users() {
             </div>
         </>
     );
-}
+};
+
+AdminViewUsers.getLayout = function getLayout(page: ReactElement) {
+    return <AdminLayout>{page}</AdminLayout>;
+};
+
+export default AdminViewUsers;
