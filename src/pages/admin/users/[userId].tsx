@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import ClientDetails from "~/components/Clients/clientDetails";
+import type { NextPageWithLayout } from "~/pages/_app";
+import type { ReactElement } from "react";
+import AdminLayout from "../layout";
 
-export default function ClientProfile() {
+const ClientProfile: NextPageWithLayout = () => {
     const router = useRouter();
     const { userId } = router.query;
 
@@ -10,4 +13,10 @@ export default function ClientProfile() {
             {userId && <ClientDetails userId={userId.toString()} />}
         </div>
     );
-}
+};
+
+ClientProfile.getLayout = function getLayout(page: ReactElement) {
+    return <AdminLayout>{page}</AdminLayout>;
+};
+
+export default ClientProfile;
