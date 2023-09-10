@@ -1,17 +1,19 @@
 import { useRouter } from "next/router";
-import ClientDetails from "~/components/Clients/clientDetails";
+import ClientDetails from "~/components/Clients/ClientDetails";
 import type { NextPageWithLayout } from "~/pages/_app";
 import type { ReactElement } from "react";
 import AdminLayout from "../layout";
+import ClientBookings from "~/components/Clients/ClientBookings";
 
 const ClientProfile: NextPageWithLayout = () => {
     const router = useRouter();
     const { userId } = router.query;
 
     return (
-        <div className="mt-10 flex flex-col items-center justify-center">
-            {userId && <ClientDetails userId={userId.toString()} />}
-        </div>
+        <>
+            <div>{userId && <ClientDetails userId={userId as string} />}</div>
+            <div>{userId && <ClientBookings userId={userId as string} />}</div>
+        </>
     );
 };
 
