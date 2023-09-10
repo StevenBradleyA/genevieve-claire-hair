@@ -10,6 +10,21 @@ export const bookingRouter = createTRPCRouter({
         return ctx.prisma.booking.findMany();
     }),
 
+    getPast: publicProcedure.query(async ({ ctx }) => {
+        const bookedArr = await ctx.prisma.booking.findMany({
+            where: {
+                startDate: {
+                    lt: new Date(),
+                },
+            },
+            orderBy: {
+                startDate: "desc",
+            },
+        });
+
+        return bookedArr;
+    }),
+
     getFuture: publicProcedure.query(async ({ ctx }) => {
         const bookedArr = await ctx.prisma.booking.findMany({
             where: {
