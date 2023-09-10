@@ -115,7 +115,6 @@ export default function ExtraDetails({
                 }
 
                 const notes = `${serviceNotes} \n ${colorHistoryNotes} \n ${chemNotes} \n ${currentColorNotes} \n ${timeNotes} \n ${extraNotes}`;
-
                 const data: UserData = {
                     userId: sessionUserId,
                     firstName,

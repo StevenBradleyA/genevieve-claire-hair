@@ -6,7 +6,7 @@ interface EachClientCardProps {
     i: number;
 }
 
-export default function EachClientCard({ user, i }: EachClientCardProps) {
+export default function EachClientCard({ user }: EachClientCardProps) {
     return (
         <div className="flex">
             <Link
