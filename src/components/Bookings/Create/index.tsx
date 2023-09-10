@@ -51,8 +51,6 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
         today.getDate() - 1
     );
 
-    console.log(booked);
-
     const disabled = [
         // ...booked,
         { from: startOfMonth, to: yesterday },
@@ -96,9 +94,9 @@ export default function CreateBooking({
         totalTime: 0,
         services: "",
     });
-    let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
+    let { data: futureBookings } = api.booking.getFuture.useQuery();
 
-    if (!pfBangs) pfBangs = [];
+    if (!futureBookings) futureBookings = [];
 
     useEffect(() => {
         const storage = localStorage.getItem("Specifications");
@@ -173,7 +171,7 @@ export default function CreateBooking({
 
     const { mutate } = api.booking.create.useMutation({
         onSuccess: () => {
-            void ctx.booking.getPresentFutureBookings.invalidate();
+            void ctx.booking.getFuture.invalidate();
             localStorage.removeItem("Services");
             localStorage.removeItem("Specifications");
         },
@@ -191,13 +189,13 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
-                {...createCalendarOptions(pfBangs)}
+                {...createCalendarOptions(futureBookings)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
-                    bookedDates={pfBangs}
+                    bookedDates={futureBookings}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
@@ -222,13 +220,13 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
-                {...createCalendarOptions(pfBangs)}
+                {...createCalendarOptions(futureBookings)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
-                    bookedDates={pfBangs}
+                    bookedDates={futureBookings}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />

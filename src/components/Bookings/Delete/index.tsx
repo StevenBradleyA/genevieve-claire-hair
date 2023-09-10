@@ -19,7 +19,6 @@ export default function DeleteBooking({
     const { mutate } = api.booking.delete.useMutation({
         onSuccess: () => {
             void ctx.booking.getByUserId.invalidate();
-            void ctx.booking.getAllBookedDates.invalidate();
         },
     });
 

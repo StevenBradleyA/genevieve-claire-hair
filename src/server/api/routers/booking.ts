@@ -10,22 +10,12 @@ export const bookingRouter = createTRPCRouter({
         return ctx.prisma.booking.findMany();
     }),
 
-    getAllBookedDates: publicProcedure.query(async ({ ctx }) => {
-        const bookedArr = await ctx.prisma.booking.findMany();
-
-        return bookedArr.map((el) => el.startDate);
-    }),
-
-    getPresentFutureBookings: publicProcedure.query(async ({ ctx }) => {
+    getFuture: publicProcedure.query(async ({ ctx }) => {
         const bookedArr = await ctx.prisma.booking.findMany({
             where: {
                 startDate: {
                     gte: new Date(),
                 },
-            },
-            select: {
-                startDate: true,
-                endDate: true,
             },
             orderBy: {
                 startDate: "asc",
@@ -48,6 +38,7 @@ export const bookingRouter = createTRPCRouter({
         .query(({ input, ctx }) => {
             return ctx.prisma.booking.findMany({ where: { userId: input } });
         }),
+
     getAllBookingsWithoutReviewsByUserId: protectedProcedure
         .input(z.string())
         .query(({ input, ctx }) => {
@@ -60,6 +51,7 @@ export const bookingRouter = createTRPCRouter({
                 throw new Error("Failed to fetch bookings without reviews.");
             }
         }),
+
     getAllByUserIdWithReview: protectedProcedure
         .input(z.string())
         .query(({ input, ctx }) => {
@@ -67,6 +59,7 @@ export const bookingRouter = createTRPCRouter({
                 where: { userId: input, review: { some: {} } },
             });
         }),
+
     create: protectedProcedure
         .input(
             z.object({

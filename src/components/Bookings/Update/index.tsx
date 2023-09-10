@@ -50,7 +50,6 @@ export default function UpdateBooking({
     const { mutate } = api.booking.update.useMutation({
         onSuccess: () => {
             void ctx.booking.getByUserId.invalidate();
-            void ctx.booking.getAllBookedDates.invalidate();
             setShowUpdate(false);
         },
     });
@@ -69,7 +68,7 @@ export default function UpdateBooking({
                         mode="single"
                         selected={date}
                         onSelect={setDate}
-                        className="shadow-3xl  rounded-lg bg-white"
+                        className="shadow-3xl rounded-lg"
                     />
                     <div>
                         <button
