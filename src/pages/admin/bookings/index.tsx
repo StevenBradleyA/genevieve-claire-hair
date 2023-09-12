@@ -21,16 +21,30 @@ const AdminViewBookings: NextPageWithLayout = () => {
         );
 
     return (
-        <div className="flex flex-col items-center gap-10 rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
-            <div className="pt-5 text-5xl font-bold">
-                <button className="px-5" onClick={() => setView("past")}>
+        <div className="flex w-full flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
+            <div className="flex w-full justify-around pt-5 text-5xl font-bold">
+                <button
+                    className={`rounded-t-xl px-5 py-2 ${
+                        view === "past"
+                            ? "border-x-2 border-t-2 border-white text-purple-300"
+                            : ""
+                    }`}
+                    onClick={() => setView("past")}
+                >
                     Past
                 </button>
-                <button className="px-5" onClick={() => setView("future")}>
+                <button
+                    className={`rounded-t-xl px-5 py-2 ${
+                        view === "future"
+                            ? "border-x-2 border-t-2 border-white text-purple-300"
+                            : ""
+                    }`}
+                    onClick={() => setView("future")}
+                >
                     Upcoming
                 </button>
             </div>
-            <div>
+            <div className="flex w-full flex-wrap justify-around gap-5 rounded-lg border-2 border-white p-5">
                 {view === "future" &&
                     future &&
                     future.map((booking) => (

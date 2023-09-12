@@ -7,14 +7,16 @@ import type { ServiceSubcategory } from "@prisma/client";
 const AdminViewServices: NextPageWithLayout = () => {
     const { data } = api.service.getAll.useQuery();
 
-
     return (
         <div>
             {data &&
                 data.map((el) => {
                     return (
-                        <div key={el.id}>
-                            <div>{el.name}</div>
+                        <div
+                            className="flex flex-col items-center gap-10 rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl"
+                            key={el.id}
+                        >
+                            <div className="text-5xl font-bold">{el.name}</div>
                             {el.subcategories.length && (
                                 <SubcategoryView subsArr={el.subcategories} />
                             )}
