@@ -5,8 +5,15 @@ import type { Booking } from "@prisma/client";
 import UpdateBooking from "../Update";
 import ModalDialog from "~/components/Modal";
 import { api } from "~/utils/api";
+import type { NormalizedServicesType } from "~/server/api/routers/service";
 
-export default function BookingCard({ booking }: { booking: Booking }) {
+export default function BookingCard({
+    booking,
+    serviceData,
+}: {
+    booking: Booking;
+    serviceData: NormalizedServicesType;
+}) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -50,8 +57,10 @@ export default function BookingCard({ booking }: { booking: Booking }) {
             <div>
                 {format(startDate, "paa")} to {format(endDate, "paa")}
             </div>
-            <div>{type}</div>
-            <div>{status}</div>
+            <div>Status: {status}</div>
+            {type.split(", ").map((el, i) => (
+                <div key={i}>{el}</div>
+            ))}
             <div className="mt-5 flex justify-between gap-5 text-5xl font-bold">
                 {!showDelete && (
                     <>
@@ -89,7 +98,10 @@ export default function BookingCard({ booking }: { booking: Booking }) {
             </div>
             {session && (
                 <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                    <UpdateBooking booking={booking} session={session} />
+                    <UpdateBooking
+                        booking={booking}
+                        serviceData={serviceData}
+                    />
                 </ModalDialog>
             )}
         </div>
