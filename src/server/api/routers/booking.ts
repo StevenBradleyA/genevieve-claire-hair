@@ -80,12 +80,13 @@ export const bookingRouter = createTRPCRouter({
             z.object({
                 startDate: z.date(),
                 endDate: z.date(),
+                type: z.string(),
                 userId: z.string(),
             })
         )
         .mutation(async ({ input, ctx }) => {
             if (ctx.session.user.id === input.userId) {
-                const data = { ...input, status: "pending", type: "test" };
+                const data = { ...input, status: "pending" };
                 const newBooking = await ctx.prisma.booking.create({
                     data,
                 });
@@ -100,25 +101,26 @@ export const bookingRouter = createTRPCRouter({
         .input(
             z.object({
                 id: z.string(),
-                userId: z.string(),
-                date: z.date().optional(),
+                // userId: z.string(),
+                startDate: z.date().optional(),
+                endDate: z.date().optional(),
                 status: z.string().optional(),
                 type: z.string().optional(),
             })
         )
         .mutation(async ({ input, ctx }) => {
-            if (ctx.session.user.id === input.userId) {
-                const updatedBooking = await ctx.prisma.booking.update({
-                    where: {
-                        id: input.id,
-                    },
-                    data: input,
-                });
+            // if (ctx.session.user.id === input.userId) {
+            const updatedBooking = await ctx.prisma.booking.update({
+                where: {
+                    id: input.id,
+                },
+                data: input,
+            });
 
-                return updatedBooking;
-            }
+            return updatedBooking;
+            // }
 
-            throw new Error("Invalid userId");
+            // throw new Error("Invalid userId");
         }),
 
     delete: protectedProcedure
