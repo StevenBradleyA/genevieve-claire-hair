@@ -5,8 +5,11 @@ import {
     protectedProcedure,
 } from "~/server/api/trpc";
 
-export type NormalizedDataType = {
+export type NormalizedServicesType = {
     [key: string]: {
+        id: number;
+        name: string;
+        requireConsult: boolean;
         subcategories: {
             id: number;
             name: string;
@@ -16,10 +19,6 @@ export type NormalizedDataType = {
             requireConsult: boolean;
             serviceCategoryId: number;
         }[];
-    } & {
-        id: number;
-        name: string;
-        requireConsult: boolean;
     };
 };
 
@@ -37,7 +36,7 @@ export const serviceRouter = createTRPCRouter({
             include: { subcategories: true },
         });
 
-        const res: NormalizedDataType = {};
+        const res: NormalizedServicesType = {};
 
         data.forEach((el) => (res[el.name] = el));
 

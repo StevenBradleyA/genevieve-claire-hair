@@ -4,14 +4,17 @@ import CreateBooking from "../../components/Bookings/Create";
 import { useState } from "react";
 import { Services, Specifications } from "~/components/NewBookingForm";
 import type { FormDataType } from "~/components/NewBookingForm/Services";
-import type { NormalizedDataType } from "~/server/api/routers/service";
+import type { NormalizedServicesType } from "~/server/api/routers/service";
 import type {
     SelectionsType,
     SpecificationsType,
 } from "~/components/NewBookingForm/Specifications";
 import { useMobile } from "~/components/MobileContext";
 
-type FormProps = { key: number; serviceData: NormalizedDataType | undefined };
+type FormProps = {
+    key: number;
+    serviceData: NormalizedServicesType | undefined;
+};
 
 // Redirect to sign up & new client form
 const form = [

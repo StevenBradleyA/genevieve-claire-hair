@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMobile } from "../MobileContext";
 import type { FormInputType } from "./Services";
-import type { NormalizedDataType } from "~/server/api/routers/service";
-
+import type { NormalizedServicesType } from "~/server/api/routers/service";
 
 export type SelectionsType = Exclude<
     FormInputType,
@@ -24,7 +23,7 @@ const defaultState: SpecificationsType = {
 const Specifications = ({
     serviceData,
 }: {
-    serviceData: NormalizedDataType | undefined;
+    serviceData: NormalizedServicesType | undefined;
 }) => {
     const [selections, setSelections] = useState<SelectionsType[]>();
     const [subSelections, setSubSelections] = useState(defaultState);
