@@ -11,6 +11,7 @@ const AdminViewBookings: NextPageWithLayout = () => {
         api.booking.getFuture.useQuery();
     const { data: past, isLoading: pastLoading } =
         api.booking.getPast.useQuery();
+    const { data: serviceData } = api.service.getAllNormalized.useQuery();
 
     if (pastLoading)
         return <DotLoader size={50} color={"#ffffff"} loading={pastLoading} />;
@@ -19,6 +20,9 @@ const AdminViewBookings: NextPageWithLayout = () => {
         return (
             <DotLoader size={50} color={"#ffffff"} loading={futureLoading} />
         );
+
+    if (!serviceData)
+        return <DotLoader size={50} color={"#ffffff"} loading={serviceData} />;
 
     return (
         <div className="flex w-full flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
@@ -48,12 +52,20 @@ const AdminViewBookings: NextPageWithLayout = () => {
                 {view === "future" &&
                     future &&
                     future.map((booking) => (
-                        <BookingCard key={booking.id} booking={booking} />
+                        <BookingCard
+                            key={booking.id}
+                            booking={booking}
+                            serviceData={serviceData}
+                        />
                     ))}
                 {view === "past" &&
                     past &&
                     past.map((booking) => (
-                        <BookingCard key={booking.id} booking={booking} />
+                        <BookingCard
+                            key={booking.id}
+                            booking={booking}
+                            serviceData={serviceData}
+                        />
                     ))}
             </div>
         </div>
