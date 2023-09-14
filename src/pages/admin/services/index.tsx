@@ -1,8 +1,11 @@
 import AdminLayout from "../layout";
 import { api } from "~/utils/api";
-import type { ReactElement } from "react";
+import { useState, type ReactElement } from "react";
 import type { NextPageWithLayout } from "~/pages/_app";
 import type { ServiceSubcategory } from "@prisma/client";
+import ModalDialog from "~/components/Modal";
+import UpdateService from "~/components/Services/Update";
+import type { ServicesType } from "~/server/api/routers/service";
 
 const AdminViewServices: NextPageWithLayout = () => {
     const { data } = api.service.getAll.useQuery();
@@ -18,7 +21,15 @@ const AdminViewServices: NextPageWithLayout = () => {
                         >
                             <div className="text-5xl font-bold">{el.name}</div>
                             {el.subcategories.length && (
-                                <SubcategoryView subsArr={el.subcategories} />
+                                <ul>
+                                    {el.subcategories.map((sub, i) => (
+                                        <SubcategoryView
+                                            key={i}
+                                            subCat={sub}
+                                            serviceData={data}
+                                        />
+                                    ))}
+                                </ul>
                             )}
                         </div>
                     );
@@ -27,23 +38,44 @@ const AdminViewServices: NextPageWithLayout = () => {
     );
 };
 
-const SubcategoryView = ({ subsArr }: { subsArr: ServiceSubcategory[] }) => {
+const SubcategoryView = ({
+    subCat,
+    serviceData,
+}: {
+    subCat: ServiceSubcategory;
+    serviceData: ServicesType[];
+}) => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
-        <ul>
-            {subsArr.map((el) => {
-                return (
-                    <li key={el.id}>
-                        {el.name}
-                        <div>${el.price}</div>
-                        <div>{el.time} minutes</div>
-                        <div>{el.bundleTime} minutes</div>
-                        <div>
-                            Require consult: {el.requireConsult ? "yes" : "no"}
-                        </div>
-                    </li>
-                );
-            })}
-        </ul>
+        <>
+            <li key={subCat.id}>
+                {subCat.name}
+                <div>${subCat.price}</div>
+                <div>{subCat.time} minutes</div>
+                <div>{subCat.bundleTime} minutes</div>
+                <div>
+                    Require consult: {subCat.requireConsult ? "yes" : "no"}
+                </div>
+            </li>
+            <button
+                onClick={openModal}
+                className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+            >
+                💅
+            </button>
+            <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                <UpdateService subService={subCat} serviceData={serviceData} />
+            </ModalDialog>
+        </>
     );
 };
 
