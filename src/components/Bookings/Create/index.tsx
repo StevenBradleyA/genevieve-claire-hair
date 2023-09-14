@@ -11,7 +11,7 @@ import type {
     SelectionsType,
 } from "~/components/NewBookingForm/Specifications";
 import { useMobile } from "~/components/MobileContext";
-import type { NormalizedDataType } from "~/server/api/routers/service";
+import type { NormalizedServicesType } from "~/server/api/routers/service";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -51,8 +51,6 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
         today.getDate() - 1
     );
 
-    console.log(booked);
-
     const disabled = [
         // ...booked,
         { from: startOfMonth, to: yesterday },
@@ -84,7 +82,7 @@ type BookingOptionType = Exclude<SelectionsType, "Quiet">;
 export default function CreateBooking({
     serviceData,
 }: {
-    serviceData: NormalizedDataType | undefined;
+    serviceData: NormalizedServicesType | undefined;
 }) {
     const { data: session } = useSession();
     const { isMobile } = useMobile();
@@ -96,9 +94,9 @@ export default function CreateBooking({
         totalTime: 0,
         services: "",
     });
-    let { data: pfBangs } = api.booking.getPresentFutureBookings.useQuery();
+    let { data: futureBookings } = api.booking.getFuture.useQuery();
 
-    if (!pfBangs) pfBangs = [];
+    if (!futureBookings) futureBookings = [];
 
     useEffect(() => {
         const storage = localStorage.getItem("Specifications");
@@ -129,11 +127,11 @@ export default function CreateBooking({
                 for (const subcat of currentCategories) {
                     if (subcat.name === subService) {
                         if (bookingDetails.totalTime) {
-                            bookingDetails.totalTime += subcat?.bundleTime || 0;
-                            bookingDetails.totalPrice += subcat?.price || 0;
+                            bookingDetails.totalTime += subcat.bundleTime;
+                            bookingDetails.totalPrice += subcat.price;
                         } else {
-                            bookingDetails.totalTime += subcat?.time || 0;
-                            bookingDetails.totalPrice += subcat?.price || 0;
+                            bookingDetails.totalTime += subcat.time;
+                            bookingDetails.totalPrice += subcat.price;
                         }
                     }
                 }
@@ -173,17 +171,14 @@ export default function CreateBooking({
 
     const { mutate } = api.booking.create.useMutation({
         onSuccess: () => {
-            void ctx.booking.getPresentFutureBookings.invalidate();
+            void ctx.booking.getFuture.invalidate();
             localStorage.removeItem("Services");
             localStorage.removeItem("Specifications");
         },
     });
 
     return isMobile ? (
-        <div
-            onSubmit={book}
-            className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 font-quattrocento shadow-lg"
-        >
+        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 font-quattrocento shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}
@@ -191,13 +186,13 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
-                {...createCalendarOptions(pfBangs)}
+                {...createCalendarOptions(futureBookings)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
-                    bookedDates={pfBangs}
+                    bookedDates={futureBookings}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
@@ -211,10 +206,7 @@ export default function CreateBooking({
             </div>
         </div>
     ) : (
-        <div
-            onSubmit={book}
-            className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg"
-        >
+        <div className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}
@@ -222,13 +214,13 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
-                {...createCalendarOptions(pfBangs)}
+                {...createCalendarOptions(futureBookings)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
-                    bookedDates={pfBangs}
+                    bookedDates={futureBookings}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />

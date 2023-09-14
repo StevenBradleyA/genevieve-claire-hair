@@ -59,14 +59,14 @@ const Services = () => {
         <div className="flex w-80 flex-wrap justify-center gap-2 rounded-2xl bg-glass p-10 shadow-xl">
             {Object.keys(defaultState).map((type) => (
                 <div
-                    className={`cursor-pointer rounded-lg px-6 py-2 text-white hover:scale-105 active:scale-95 ${
+                    className={`rounded-lg bg-gradient-to-br px-6 py-2 text-white shadow-md active:scale-95 ${
                         formData[type as FormInputType]
-                            ? "bg-violet-400 shadow-md"
-                            : "bg-gradient-to-br from-fuchsia-200 to-blue-200 shadow-md"
+                            ? "from-fuchsia-300 to-blue-300"
+                            : "from-fuchsia-200 to-blue-200"
                     } 
                 ${
                     allowSelection(type as FormInputType)
-                        ? ""
+                        ? "cursor-pointer hover:scale-105"
                         : "cursor-not-allowed"
                 }
                 `}
@@ -81,14 +81,14 @@ const Services = () => {
         <div className="flex justify-center gap-2 rounded-2xl bg-glass p-20 shadow-xl">
             {Object.keys(defaultState).map((type) => (
                 <div
-                    className={`cursor-pointer rounded-lg px-4 py-2 text-white hover:scale-105 active:scale-95 ${
+                    className={`rounded-lg bg-gradient-to-br px-4 py-2 text-white shadow-md active:scale-95 ${
                         formData[type as FormInputType]
-                            ? "bg-violet-400 shadow-md"
-                            : "bg-gradient-to-br from-fuchsia-200 to-blue-200 shadow-md"
+                            ? "from-fuchsia-300 to-blue-300"
+                            : "from-fuchsia-200 to-blue-200"
                     } 
                     ${
                         allowSelection(type as FormInputType)
-                            ? ""
+                            ? "cursor-pointer hover:scale-105"
                             : "cursor-not-allowed"
                     }
                     `}

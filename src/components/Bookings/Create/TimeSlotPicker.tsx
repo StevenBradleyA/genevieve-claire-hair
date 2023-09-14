@@ -44,13 +44,25 @@ const checkOverlappingBooking = (
 ) => {
     const endOfBooking = addMinutes(date, details.totalTime);
 
+    console.log(bookedDates);
+
     for (const { startDate, endDate } of bookedDates) {
+        // Check if new start is within existing booking times
         if (isAfter(date, startDate) && isBefore(date, endDate)) return true;
+
+        // Check if new start is equal to existing booking times
         if (isEqual(date, startDate) || isEqual(date, endDate)) return true;
 
+        // Check if new end is within existing booking times
         if (isAfter(endOfBooking, startDate) && isBefore(endOfBooking, endDate))
             return true;
+
+        // Check if new end is equal to existing booking times
         if (isEqual(endOfBooking, startDate) || isEqual(endOfBooking, endDate))
+            return true;
+
+        // Check if new times surround existing booking times
+        if (isBefore(date, startDate) && isAfter(endOfBooking, endDate))
             return true;
     }
 

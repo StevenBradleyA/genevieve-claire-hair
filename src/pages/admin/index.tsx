@@ -1,11 +1,8 @@
-import { DotLoader } from "react-spinners";
-import { api } from "~/utils/api";
-import type { User } from "@prisma/client";
-import EachClientCard from "~/components/Clients";
-import giraffe from "../../../public/giraffe.png";
-import Image from "next/image";
+import type { ReactElement } from "react";
+import type { NextPageWithLayout } from "../_app";
+import AdminLayout from "./layout";
 
-export default function AdminPage() {
+const AdminPage: NextPageWithLayout = () => {
     // ! square texts her clients with she books them
     // ! could we do an email confirmation to them? when they book?
     // TODO add admin only viewing or redirect if user is not admin
@@ -31,18 +28,6 @@ export default function AdminPage() {
     // purchase log
     // sell product through this page????
 
-    const { data: users, isLoading } = api.user.getAllUsers.useQuery();
-
-    if (isLoading)
-        return (
-            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
-                <div className="text-lg text-white">Users are loading</div>{" "}
-                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
-            </div>
-        );
-
-    if (!users) return <div>Oops</div>;
-
     return (
         <div className="text-4xl text-white ">
             <div>Client Checkout</div>
@@ -55,23 +40,12 @@ export default function AdminPage() {
             </div>
 
             <div className="mb-5"> Ability to change pricing </div>
-
-            <div className="mb-10 flex items-end justify-center gap-5 font-grand-hotel text-6xl">
-                {" "}
-                Clients
-                <Image
-                    src={giraffe}
-                    alt="giraffe"
-                    width={giraffe.width}
-                    height={giraffe.height}
-                    className="w-24 object-cover"
-                />
-            </div>
-            <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 shadow-xl">
-                {users.map((user: User, i: number) => {
-                    return <EachClientCard key={i} user={user} i={i} />;
-                })}
-            </div>
         </div>
     );
-}
+};
+
+AdminPage.getLayout = function getLayout(page: ReactElement) {
+    return <AdminLayout>{page}</AdminLayout>;
+};
+
+export default AdminPage;

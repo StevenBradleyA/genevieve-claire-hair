@@ -41,7 +41,7 @@ export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
                 .padStart(2, "0")} ${amPm}`;
         }
 
-        const updatedNotes = `Most Likely to Book at: enter ${selectedDays.join(
+        const updatedNotes = `Most Likely to Book at: ${selectedDays.join(
             ", "
         )}, ${formattedTime}`;
         setNotes(updatedNotes);

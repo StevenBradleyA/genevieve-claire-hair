@@ -23,7 +23,7 @@ export default function ChemHair({ setNotes }: FirstTimeClientProps) {
         const selectedOptions = Object.keys(formData).filter(
             (key) => formData[key as keyof typeof formData]
         );
-        const updatedNotes = `Has had chemical treatments done to hair: enter ${selectedOptions.join(
+        const updatedNotes = `Has had chemical treatments done to hair: ${selectedOptions.join(
             ", "
         )}`;
         setNotes(updatedNotes);
