@@ -1,5 +1,7 @@
 import type { NormalizedServicesType } from "~/server/api/routers/service";
 
+// TODO: Manage state to update booking
+
 export default function ServiceSelector({
     serviceData,
 }: {
