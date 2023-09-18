@@ -26,7 +26,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className=" flex w-full flex-col items-center">{children}</div>
 
             <motion.div
-                className={`relative  mt-5 flex h-[35rem] flex-col items-center rounded-l-3xl bg-glass  shadow-xl ${
+                className={` sticky top-40  mt-5 flex h-[35rem] flex-col items-center rounded-l-3xl bg-glass  shadow-xl ${
                     isSidebarOpen ? "p-10" : "p-5"
                 }`}
                 initial={{ width: "5rem" }}

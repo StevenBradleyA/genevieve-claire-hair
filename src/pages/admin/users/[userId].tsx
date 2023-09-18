@@ -10,10 +10,10 @@ const ClientProfile: NextPageWithLayout = () => {
     const { userId } = router.query;
 
     return (
-        <>
+        <div>
             <div>{userId && <ClientDetails userId={userId as string} />}</div>
             <div>{userId && <ClientBookings userId={userId as string} />}</div>
-        </>
+        </div>
     );
 };
 
