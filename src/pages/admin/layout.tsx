@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import Image from "next/image";
 import giraffe from "@public/giraffe.png";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -11,44 +12,81 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     };
 
     return (
-        // <div className="grid w-full grid-cols-12 gap-2">
         <div className=" flex w-full justify-between">
             <div className=" flex w-full flex-col items-center">{children}</div>
 
-            <div
+            <motion.div
                 className={`relative  mt-5 flex h-[35rem] flex-col items-center rounded-l-3xl bg-glass  shadow-xl ${
                     isSidebarOpen ? "p-10" : "p-5"
                 }`}
+                initial={{ width: "5rem" }}
+                animate={{ width: isSidebarOpen ? "15rem" : "0rem" }}
+                exit={{ width: "0rem" }}
+                transition={{ duration: 0.5, spring: "spring" }}
             >
                 {isSidebarOpen ? (
                     <div className="ml-3 flex flex-col gap-5 text-2xl text-white">
-                        <Link href="/admin">
-                            <Image
-                                src={giraffe}
-                                alt="giraffe"
-                                width={giraffe.width}
-                                height={giraffe.height}
-                                className="mb-5 w-28 transform object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-                            />
-                        </Link>
-                        <Link
-                            href="/admin/users"
-                            className="flex justify-center rounded-2xl bg-glass px-4 py-2 shadow-md"
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5, duration: 0.3 }}
                         >
-                            Clients
-                        </Link>
-                        <Link
-                            href="/admin/services"
-                            className="flex justify-center rounded-2xl bg-glass px-4 py-2 shadow-md"
+                            <Link href="/admin">
+                                <Image
+                                    src={giraffe}
+                                    alt="giraffe"
+                                    width={giraffe.width}
+                                    height={giraffe.height}
+                                    className="mb-5 w-28 transform object-cover "
+                                />
+                            </Link>
+                        </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4, duration: 0.3 }}
                         >
-                            Services
-                        </Link>
-                        <Link
-                            href="/admin/bookings"
-                            className="flex justify-center rounded-2xl bg-glass px-4 py-2 shadow-md"
+                            <Link
+                                href="/admin/users"
+                                className="flex justify-center rounded-2xl bg-glass px-4 py-2 shadow-md"
+                            >
+                                Clients
+                            </Link>
+                        </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3, duration: 0.3 }}
                         >
-                            Bookings
-                        </Link>
+                            <Link
+                                href="/admin/services"
+                                className="flex justify-center rounded-2xl bg-glass px-4 py-2 shadow-md"
+                            >
+                                Services
+                            </Link>
+                        </motion.button>
+
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.2, duration: 0.3 }}
+                        >
+                            <Link
+                                href="/admin/bookings"
+                                className="flex justify-center rounded-2xl bg-glass px-4 py-2 shadow-md"
+                            >
+                                Bookings
+                            </Link>
+                        </motion.button>
+
                         <div
                             className="svg-container absolute left-5 top-1/2 -translate-x-1/2 -translate-y-1/2 transform cursor-pointer text-white"
                             onClick={toggleSidebar}
@@ -79,7 +117,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                         </svg>
                     </div>
                 )}
-            </div>
+            </motion.div>
         </div>
     );
 }
