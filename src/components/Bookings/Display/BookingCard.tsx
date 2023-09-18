@@ -6,6 +6,7 @@ import UpdateBooking from "../Update";
 import ModalDialog from "~/components/Modal";
 import { api } from "~/utils/api";
 import type { NormalizedServicesType } from "~/server/api/routers/service";
+import { motion } from "framer-motion";
 
 export default function BookingCard({
     booking,
@@ -52,51 +53,64 @@ export default function BookingCard({
     // TODO: Refactor update & delete to work as modals
 
     return (
-        <div className="flex flex-col gap-2 rounded-2xl bg-glass p-5 text-2xl text-white shadow-lg">
-            <div className="rounded-2xl bg-darkGlass px-4 py-2  shadow-md">
+        <div className="flex flex-col gap-2 rounded-2xl bg-darkGlass p-5 text-2xl text-white shadow-xl">
+            <div className="rounded-2xl bg-darkGlass px-4 py-2  shadow-lg">
                 {format(startDate, "E, MMM do, y")}
             </div>
-            <div className=" flex justify-center text-xl text-violet-300">
+            <div className=" flex justify-center text-xl text-violet-400">
                 {format(startDate, "paa")} to {format(endDate, "paa")}
             </div>
-            <div>
-                Status: <span className="text-violet-300">{status}</span>
+            <div className="text-xl">
+                Status: <span className="text-violet-400">{status}</span>
             </div>
             {type.split(", ").map((el, i) => (
-                <div key={i} className="rounded-2xl bg-darkGlass px-4 py-2  shadow-md">{el}</div>
+                <div
+                    key={i}
+                    className="rounded-2xl bg-darkGlass px-4 py-2  shadow-lg"
+                >
+                    {el}
+                </div>
             ))}
-            <div className="mt-5 flex justify-between gap-5 text-5xl font-bold">
+            <div className="mt-5 flex justify-center gap-5 text-lg font-bold">
                 {!showDelete && (
                     <>
-                        <button
+                        <motion.button
                             onClick={openModal}
-                            className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                            className="flex justify-center rounded-2xl bg-darkGlass px-6 py-2 text-violet-400 shadow-md"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            📝
-                        </button>
-                        <button
+                            Edit
+                        </motion.button>
+                        <motion.button
                             onClick={() => setShowDelete(true)}
-                            className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                            className="flex justify-center rounded-2xl bg-darkGlass px-6 py-2 text-violet-400 shadow-md"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            🗑️
-                        </button>
+                            Delete
+                        </motion.button>
                     </>
                 )}
 
                 {showDelete && (
                     <>
-                        <button
-                            className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                        <motion.button
+                            className="flex justify-center rounded-2xl bg-darkGlass px-6 py-2 text-violet-300 shadow-md"
                             onClick={deleteBooking}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            🔥
-                        </button>
-                        <button
-                            className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                            Delete 🫡
+                        </motion.button>
+                        <motion.button
+                            className="flex justify-center rounded-2xl bg-darkGlass px-6 py-2 text-violet-300 shadow-md"
                             onClick={() => setShowDelete(false)}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            ❎
-                        </button>
+                            Cancel
+                        </motion.button>
                     </>
                 )}
             </div>
