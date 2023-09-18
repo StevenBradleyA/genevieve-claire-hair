@@ -424,3 +424,9 @@
     opacity: 1 !important;
     background-color: #c4b5fd !important;
 }
+
+/* -------------       Admin       ------------- */
+
+.svg-container svg {
+    fill: rgb(254, 254, 254); 
+}
