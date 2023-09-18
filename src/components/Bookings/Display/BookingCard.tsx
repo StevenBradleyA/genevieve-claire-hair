@@ -52,14 +52,18 @@ export default function BookingCard({
     // TODO: Refactor update & delete to work as modals
 
     return (
-        <div className="rounded-2xl bg-glass p-5 text-4xl text-white shadow-lg">
-            <div>{format(startDate, "E, MMM do, y")}</div>
-            <div>
+        <div className="flex flex-col gap-2 rounded-2xl bg-glass p-5 text-2xl text-white shadow-lg">
+            <div className="rounded-2xl bg-darkGlass px-4 py-2  shadow-md">
+                {format(startDate, "E, MMM do, y")}
+            </div>
+            <div className=" flex justify-center text-xl text-violet-300">
                 {format(startDate, "paa")} to {format(endDate, "paa")}
             </div>
-            <div>Status: {status}</div>
+            <div>
+                Status: <span className="text-violet-300">{status}</span>
+            </div>
             {type.split(", ").map((el, i) => (
-                <div key={i}>{el}</div>
+                <div key={i} className="rounded-2xl bg-darkGlass px-4 py-2  shadow-md">{el}</div>
             ))}
             <div className="mt-5 flex justify-between gap-5 text-5xl font-bold">
                 {!showDelete && (
