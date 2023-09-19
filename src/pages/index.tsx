@@ -40,25 +40,40 @@ export default function Home() {
 
     return (
         <div className=" flex w-full flex-col items-center px-10">
-            <h1 className="mb-6 font-grand-hotel text-9xl text-white">
-                Genevieve Clare Hair
-            </h1>
-                <div className=" w-1/2">
+            {/* <div className="relative w-full">
+                <h1 className="absolute mb-6 w-full font-grand-hotel text-9xl text-white">
+                    Genevieve Clare Hair
+                </h1>
+            </div> */}
+            <div className="mb-60 flex w-full justify-end gap-5 rounded-2xl bg-lightPurple py-10 ">
+          
+            <Image
+                src={holo}
+                alt="geni"
+                width={600}
+                height={600}
+                // className="flex w-96 justify-center object-cover mr-5"
+                className=" absolute left-10 w-1/3 mr-5 flex justify-center object-cover p-10"
+            />
+
+         
+                <div className="flex w-3/4 justify-end">
                     <Spline
-                        // scene="https://draft.spline.design/W0kxTmyzdxLKFWxR/scene.splinecode"
-                        scene="https://draft.spline.design/a9lItDW84ilVFW7Y/scene.splinecode"
+                        scene="https://draft.spline.design/oFejiurOp1BiuT6R/scene.splinecode"
                         // onLoad={handleSceneLoad}
-                        className=" border border-dotted border-green-400"
+                        // className=" border border-dotted border-green-400"
                     />
                 </div>
-            <div className=" mb-60 flex justify-between gap-5 rounded-2xl bg-lightPurple ">
-                <Image
-                    src={holo}
-                    alt="geni"
-                    // className="flex w-96 justify-center object-cover mr-5"
-                    className=" mr-5 flex w-full justify-center object-cover p-10 sm:w-1/2 md:w-1/3 lg:w-1/4"
-                />
             </div>
+            {/* <div>
+            <Image
+                src={holo}
+                alt="geni"
+                // className="flex w-96 justify-center object-cover mr-5"
+                className=" mr-5 flex w-full justify-center object-cover p-10 sm:w-1/2 md:w-1/3 lg:w-1/4"
+            />
+
+            </div> */}
             <div className="container relative mx-auto mb-40 flex h-96 w-3/4 items-center justify-center">
                 {images.map((image, index) => {
                     const distanceFromCenter = index - currentIndex;
