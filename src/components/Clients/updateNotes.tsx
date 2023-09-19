@@ -66,7 +66,7 @@ export default function EditUserNotes({
             <textarea
                 value={notes || ""}
                 onChange={(e) => setNotes(e.target.value)}
-                className=" h-96 w-full rounded-2xl bg-lightPurple p-10 text-xl text-white shadow-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                className=" h-96 w-full rounded-2xl bg-darkGlass p-10 text-xl text-white shadow-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
             />
             <div className="mt-5 flex justify-center">
                 <button

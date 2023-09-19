@@ -20,7 +20,7 @@ export default function ClientBookings({ userId }: { userId: string }) {
     if (!data) return <div>Oops</div>;
 
     return (
-        <div className="flex gap-5 flex-wrap items-center justify-center text-white mb-20">
+        <div className="mb-20 flex flex-wrap items-center justify-center gap-10 text-white">
             {data.map((booking) => (
                 <BookingCard
                     key={booking.id}

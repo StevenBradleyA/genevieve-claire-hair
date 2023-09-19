@@ -74,7 +74,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                     </ModalDialog>
                 )}
             </div>
-            <div className=" mt-3 w-full rounded-2xl bg-chillPurple p-6">
+            <div className=" mt-3 w-full rounded-2xl bg-darkGlass p-6">
                 {user.notes &&
                     user.notes.split("\n").map((line, index) => (
                         <p key={index} className="text-xl">

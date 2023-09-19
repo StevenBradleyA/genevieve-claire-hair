@@ -56,7 +56,7 @@ const AdminViewBookings: NextPageWithLayout = () => {
                 </div>
                 <div>Upcoming</div>
             </div>
-            <div className="flex w-full flex-wrap justify-around gap-5 rounded-lg border-white p-5">
+            <div className="flex w-full flex-wrap justify-center gap-10 rounded-lg border-white p-5">
                 {isFuture &&
                     future &&
                     future.map((booking) => (
