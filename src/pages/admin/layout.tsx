@@ -22,13 +22,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     };
 
     return (
-        <div className=" flex w-full justify-between">
+        <div className=" flex w-full justify-between ">
             <div className=" flex w-full flex-col items-center">{children}</div>
 
             <motion.div
-                className={` sticky top-40  mt-5 flex h-[35rem] flex-col items-center rounded-l-3xl bg-glass  shadow-xl ${
-                    isSidebarOpen ? "p-10" : "p-5"
-                }`}
+                className={` sticky top-40  mt-5 flex h-[35rem] flex-col items-center rounded-l-3xl bg-glass  shadow-xl p-8 overflow-x-hidden`}
                 initial={{ width: "5rem" }}
                 animate={{ width: isSidebarOpen ? "15rem" : "0rem" }}
                 exit={{ width: "0rem" }}
@@ -110,7 +108,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     className="svg-container absolute left-2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform cursor-pointer"
                     onClick={toggleSidebar}
                     animate={{ rotate: isSidebarOpen ? 180 : 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

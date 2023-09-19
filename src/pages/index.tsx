@@ -39,23 +39,24 @@ export default function Home() {
     // };
 
     return (
-        <div className=" flex w-full flex-col items-center">
+        <div className=" flex w-full flex-col items-center px-10">
             <h1 className="mb-6 font-grand-hotel text-9xl text-white">
                 Genevieve Clare Hair
             </h1>
-            <div className="mx-10 mb-60 flex justify-between gap-5 rounded-2xl bg-lightPurple p-10 ">
-                <div className=" flex items-center justify-center">
+                <div className=" w-1/2">
                     <Spline
-                        scene="https://prod.spline.design/0xgZT5ytuvKdzqdh/scene.splinecode"
+                        // scene="https://draft.spline.design/W0kxTmyzdxLKFWxR/scene.splinecode"
+                        scene="https://draft.spline.design/a9lItDW84ilVFW7Y/scene.splinecode"
                         // onLoad={handleSceneLoad}
-                        style={{ transform: "scale(0.8)", marginLeft: "0%" }}
+                        className=" border border-dotted border-green-400"
                     />
                 </div>
+            <div className=" mb-60 flex justify-between gap-5 rounded-2xl bg-lightPurple ">
                 <Image
                     src={holo}
                     alt="geni"
                     // className="flex w-96 justify-center object-cover mr-5"
-                    className="mr-5 flex w-full justify-center object-cover sm:w-1/2 md:w-1/3 lg:w-1/4"
+                    className=" mr-5 flex w-full justify-center object-cover p-10 sm:w-1/2 md:w-1/3 lg:w-1/4"
                 />
             </div>
             <div className="container relative mx-auto mb-40 flex h-96 w-3/4 items-center justify-center">
