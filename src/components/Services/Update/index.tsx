@@ -2,6 +2,7 @@ import type { ServiceSubcategory } from "@prisma/client";
 import { useState } from "react";
 import type { ServicesType } from "~/server/api/routers/service";
 import { api } from "~/utils/api";
+import { motion } from "framer-motion";
 
 // id: number;
 // name: string;
@@ -47,44 +48,44 @@ export default function UpdateService({
     };
 
     return (
-        <div>
+        <div className="flex flex-col gap-10 text-xl">
             <label>
-                Name
+                Name     
                 <input
-                    className="text-black"
+                    className="rounded-md bg-glass p-2  text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
             </label>
             <label>
-                Price
+                Price     
                 <input
-                    className="text-black"
+                    className="rounded-md bg-glass p-2  text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                     value={price}
                     type="number"
                     onChange={(e) => setPrice(Number(e.target.value))}
                 />
             </label>
             <label>
-                Time
+                Time     
                 <input
-                    className="text-black"
+                    className="rounded-md bg-glass p-2  text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                     value={time}
                     onChange={(e) => setTime(Number(e.target.value))}
                 />
             </label>
             <label>
-                Bundle Time
+                Bundle Time     
                 <input
-                    className="text-black"
+                    className="rounded-md bg-glass p-2  text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                     value={bundleTime}
                     onChange={(e) => setBundleTime(Number(e.target.value))}
                 />
             </label>
             <label>
-                Require Consult?
+                Require Consult?     
                 <input
-                    className="text-black"
+                    className="rounded-md bg-glass p-2  text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                     value={requireConsult ? "yes" : "no"}
                     onChange={(e) =>
                         setRequireConsult(
@@ -95,9 +96,14 @@ export default function UpdateService({
                     }
                 />
             </label>
-            <button className="p-2" onClick={updateSubService}>
-                ✅
-            </button>
+            <motion.button
+                className="rounded-3xl bg-darkGlass p-2"
+                onClick={updateSubService}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+            >
+                Update Service
+            </motion.button>
         </div>
     );
 }
