@@ -15,9 +15,11 @@ import { motion } from "framer-motion";
 export default function UpdateService({
     subService,
     serviceData,
+    closeModal,
 }: {
     subService: ServiceSubcategory;
     serviceData: ServicesType[];
+    closeModal: () => void;
 }) {
     const [name, setName] = useState(subService.name);
     const [price, setPrice] = useState(subService.price);
@@ -31,6 +33,7 @@ export default function UpdateService({
     const { mutate } = api.service.updateSubcategory.useMutation({
         onSuccess: () => {
             void ctx.service.getAll.invalidate();
+            void ctx.service.getPrices.invalidate();
         },
     });
 
@@ -44,6 +47,7 @@ export default function UpdateService({
                 bundleTime,
                 requireConsult,
             });
+            closeModal();
         }
     };
 

@@ -76,7 +76,7 @@ const SubcategoryView = ({
                 </button>
             </li>
             <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                <UpdateService subService={subCat} serviceData={serviceData} />
+                <UpdateService subService={subCat} serviceData={serviceData} closeModal={closeModal} />
             </ModalDialog>
         </>
     );

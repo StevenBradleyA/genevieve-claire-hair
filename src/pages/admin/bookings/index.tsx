@@ -40,7 +40,14 @@ const AdminViewBookings: NextPageWithLayout = () => {
 
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
+
+            <div> Calendar that shows schedule </div>
+            <div className="mb-10">
+                {" "}
+                Ability to change calendar availability
+            </div>
             <div className="mb-96 mt-96">Calendar here</div>
+
             <div className="flex items-center gap-5 text-5xl font-bold">
                 <div className="">Past</div>
 

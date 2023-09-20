@@ -23,8 +23,6 @@ export default function Pricing() {
             </div>
         );
 
-    console.log(data);
-
     return isMobile ? (
         <div className="flex w-11/12 flex-col rounded-2xl  bg-glass p-5 shadow-xl">
             <div className="flex items-center justify-center gap-5">
