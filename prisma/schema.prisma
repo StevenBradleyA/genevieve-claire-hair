@@ -67,6 +67,7 @@ model Images {
 model ServiceCategory {
     id             Int                  @id @default(autoincrement())
     name           String
+    price          Int?
     requireConsult Boolean              @default(false)
     subcategories  ServiceSubcategory[]
 }

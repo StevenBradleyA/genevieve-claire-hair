@@ -147,6 +147,7 @@ async function main() {
     await prisma.serviceCategory.create({
         data: {
             name: "Vivids",
+            price: 135,
             requireConsult: true,
         },
     });
@@ -155,6 +156,7 @@ async function main() {
     await prisma.serviceCategory.create({
         data: {
             name: "Color Corrections",
+            price: 150,
             requireConsult: true,
         },
     });
