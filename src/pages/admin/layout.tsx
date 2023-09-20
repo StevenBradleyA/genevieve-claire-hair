@@ -26,7 +26,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className=" flex w-full flex-col items-center">{children}</div>
 
             <motion.div
-                className={` sticky top-40  mt-5 flex h-[35rem] flex-col items-center rounded-l-3xl bg-glass  shadow-xl p-8 overflow-x-hidden`}
+                className={` sticky top-40  mt-5 flex h-[35rem] flex-col items-center overflow-x-hidden rounded-l-3xl  bg-glass p-8 shadow-xl`}
                 initial={{ width: "5rem" }}
                 animate={{ width: isSidebarOpen ? "15rem" : "0rem" }}
                 exit={{ width: "0rem" }}
