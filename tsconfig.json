@@ -28,7 +28,8 @@
         "**/*.ts",
         "**/*.tsx",
         "**/*.cjs",
-        "**/*.mjs"
+        "**/*.mjs",
+        "flubber.d.ts"
     ],
     "exclude": ["node_modules"]
 }

@@ -5,9 +5,13 @@ import lsp3 from "../../public/3.png";
 import holo from "../../public/geniWithText.png";
 import { useState } from "react";
 import Spline from "@splinetool/react-spline";
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { downArrow } from "../../public/svgs/angles-down-solid.svg";
+import blonding from "../../public/svgs/blonding.svg";
+import mensCuts from "../../public/svgs/mensCuts.svg";
+import vivids from "../../public/svgs/Vivids.svg";
+import downArrow from "../../public/svgs/angles-down-solid.svg";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+
 
 export default function Home() {
     // TODO 3D 3 picture carosuel that has a review under it
@@ -29,6 +33,12 @@ export default function Home() {
 
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
+    const paths = [blonding, mensCuts, vivids];
+    const colors = ["#00cc88", "#0099ff", "#8855ff"];
+    // const [pathIndex, setPathIndex] = useState(0);
+    // const progress = useMotionValue(pathIndex);
+    // const fill = useTransform(progress, paths.map(getIndex), colors);
+    // const path = useFlubber(progress, paths);
 
     const handleCarouselClick = (index: number): void => {
         if (index !== currentIndex) {
@@ -62,17 +72,11 @@ export default function Home() {
             </div>
             <motion.div className="flex items-center gap-2">
                 <div>scroll down </div>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 448 512"
-                    width="16"
-                    height="16"
-                >
-                    <path
-                        d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"
-                        fill="white"
-                    />
-                </svg>
+                <Image
+                    src={downArrow as string}
+                    alt="down arrow"
+                    className="w-3"
+                />
             </motion.div>
             <div className="mt-32 flex w-full">
                 <div className=" relative flex h-96 w-3/4">
@@ -141,6 +145,10 @@ export default function Home() {
             </div>
 
             <div> it would be cool to have a sliding text bar here</div>
+            <Image alt="blonding" src={blonding as string} />
+            <Image alt="mens cuts" src={mensCuts as string} />
+            <Image alt="vivids" src={vivids as string} />
+
             <div>
                 {" "}
                 that says color corrections, then mens cuts, then all services
