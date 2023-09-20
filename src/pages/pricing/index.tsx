@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import colorLogo from "../../../public/color-logo.png";
 import { useMobile } from "~/components/MobileContext";
+import { api } from "~/utils/api";
 
 export default function Pricing() {
     // todo want Geni to be able to change these prices
@@ -15,7 +16,7 @@ export default function Pricing() {
 
     return isMobile ? (
         <div className="flex w-11/12 flex-col rounded-2xl  bg-glass p-5 shadow-xl">
-            <div className="flex justify-center gap-5 items-center">
+            <div className="flex items-center justify-center gap-5">
                 <h1 className="flex text-6xl text-purple-300">Pricing</h1>
                 <Image
                     src={colorLogo}
@@ -26,14 +27,12 @@ export default function Pricing() {
                 />
             </div>
             <div className="flex justify-between">
-                <div className="mb-5 flex flex-col w-1/2 text-[10px] p-2">
+                <div className="mb-5 flex w-1/2 flex-col p-2 text-[10px]">
                     <h2 className=" text-image mb-3">
                         +All prices are considered a starting point and are
                         subject to change based on color usage and extra time
                     </h2>
-                    <h2 className=" text-image mb-1">
-                        I do not offer
-                    </h2>
+                    <h2 className=" text-image mb-1">I do not offer</h2>
                     <h2 className=" text-image mt-1">
                         Permanent services such as perms, relaxers, or keratin
                         smoothing services.
@@ -43,7 +42,7 @@ export default function Pricing() {
                         Treatments
                     </h2>
                 </div>
-                <ul className=" w-1/2 text-[11px] text-white bg-glass p-2 mb-3 shadow-md rounded-2xl">
+                <ul className=" mb-3 w-1/2 rounded-2xl bg-glass p-2 text-[11px] text-white shadow-md">
                     <li className=" text-image mb-1">Short Length H/C - $35</li>
                     <li className=" text-image mb-1">Long Length H/C - $60</li>
                     <li className=" text-image mb-1">

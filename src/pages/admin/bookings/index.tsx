@@ -37,6 +37,7 @@ const AdminViewBookings: NextPageWithLayout = () => {
     // TODO Want to refactor this to be a calendar so it is easier to visualize
     // lets have a calendar that shows all bookings for the selected day
     // Below the calendar lets keep this past and upcoming feature but restyle to be more readable
+
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
             <div className="mb-96 mt-96">Calendar here</div>
