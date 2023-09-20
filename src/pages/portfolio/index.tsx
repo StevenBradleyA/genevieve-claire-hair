@@ -4,8 +4,8 @@ import Image from "next/image";
 import instagramLogo from "../../../public/insta.png";
 import blonding from "../../../public/portfolio/blonding.png";
 import vivids from "../../../public/portfolio/vivids.png";
-import colorCorrection from "../../../public/portfolio/color-correction.png";
 import slc from "../../../public/portfolio/slc.png";
+import newColorCorrection from "../../../public/portfolio/newCorrection.png";
 
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion } from "framer-motion";
@@ -108,7 +108,7 @@ export default function Portfolio() {
                         <h1>Color Correction</h1>
                     </div>
                     <Image
-                        src={colorCorrection}
+                        src={newColorCorrection}
                         alt="color correction"
                         className="w-auto rounded-2xl"
                     />
@@ -198,7 +198,7 @@ export default function Portfolio() {
                         </h1>
                     </div>
                     <Image
-                        src={colorCorrection}
+                        src={newColorCorrection}
                         alt="color correction"
                         className="w-auto rounded-2xl"
                     />

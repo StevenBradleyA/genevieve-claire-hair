@@ -2,7 +2,7 @@ import Image from "next/image";
 import lsp1 from "../../public/1.png";
 import lsp2 from "../../public/2.png";
 import lsp3 from "../../public/3.png";
-import holo from "../../public/Holographic/holo-wavy.png";
+import holo from "../../public/geniWithText.png";
 import { useState } from "react";
 import Spline from "@splinetool/react-spline";
 
@@ -45,21 +45,21 @@ export default function Home() {
                     Genevieve Clare Hair
                 </h1>
             </div> */}
-            <div className="mb-60 flex w-full justify-end gap-5 rounded-2xl bg-lightPurple py-10 ">
-          
-            <Image
-                src={holo}
-                alt="geni"
-                width={600}
-                height={600}
-                // className="flex w-96 justify-center object-cover mr-5"
-                className=" absolute left-10 w-1/3 mr-5 flex justify-center object-cover p-10"
-            />
+            <div className="relative mb-60 flex w-full justify-end gap-5 rounded-2xl bg-lightPurple py-10 ">
 
-         
+                <Image
+                    src={holo}
+                    alt="geni"
+                    width={600}
+                    height={600}
+                    className=" absolute left-0 top-0 mr-5 flex w-1/3 justify-center rounded-3xl object-cover p-10"
+                    style={{borderRadius: "60px"}}
+                />
+
+
                 <div className="flex w-3/4 justify-end">
                     <Spline
-                        scene="https://draft.spline.design/oFejiurOp1BiuT6R/scene.splinecode"
+                        scene="https://draft.spline.design/jLVrvSOfFRqjjTzB/scene.splinecode"
                         // onLoad={handleSceneLoad}
                         // className=" border border-dotted border-green-400"
                     />
