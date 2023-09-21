@@ -17,6 +17,5 @@ export const scheduleRouter = createTRPCRouter({
 
         //  Validate and return the filtered schedule days
         return filteredScheduleDays;
-        
     }),
 });

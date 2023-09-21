@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import type { BookedDateType, BookingDetailsType } from "./";
 import { useMobile } from "~/components/MobileContext";
 import { useSchedule } from "~/components/ScheduleContext";
+import { api } from "~/utils/api";
+import { DotLoader } from "react-spinners";
 
 /**
  * Monday: 9am - 1pm
@@ -85,14 +87,27 @@ export default function TimeSlotPicker({
 }) {
     const [currTime, setCurrTime] = useState<Date[]>();
     const { isMobile } = useMobile();
-    const { schedule } = useSchedule() as {
-        schedule: { [key: number]: number[] };
-    };
+    // const { schedule } = useSchedule() as {
+    //     schedule: { [key: number]: number[] };
+    // };
+
+    const { data, isLoading } = api.schedule.getAllDays.useQuery();
+
+    const schedule: { [key: number]: number[] } | null = {};
+    if (data) {
+        data.forEach((e) => {
+            schedule[e.dayOfWeek] = [e.startTime, e.endTime];
+        });
+    } else {
+        console.log("Data is undefined or loading.");
+    }
+
     /**
      * Monday: 9am - 1pm
      * Tuesday: 9am - 5pm
      * Wed-Fri: 10am - 7pm
      */
+
     // const [schedule, setSchedule] = useState<{ [key: number]: number[] }>({
     //     1: [9, 13],
     //     2: [9, 17],
@@ -127,6 +142,14 @@ export default function TimeSlotPicker({
             return;
         } else setCurrTime(undefined);
     }, [date, setTimeSlot]);
+
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Loading Schedule</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     return (
         <div className="flex flex-wrap justify-between gap-1 align-top">
