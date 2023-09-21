@@ -58,7 +58,7 @@ export default function ScheduleChange() {
         setIsThursdayActive(4 in schedule);
         setIsFridayActive(5 in schedule);
         setIsSaturdayActive(6 in schedule);
-    }, [schedule]);
+    }, [schedule, dayTimes]);
 
     console.log("sched", schedule);
     console.log("daytimes", dayTimes);
@@ -68,6 +68,27 @@ export default function ScheduleChange() {
         // setSchedule(dayTimes);
         setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
         // TODO may want to void booking stuf to update the sched
+    };
+
+    const handleAddDay = (dayOfWeek: number) => {
+        // Check if the day already exists in dayTimes, and if not, add it with a default value
+        if (!(dayOfWeek in dayTimes)) {
+            setDayTimes({
+                ...dayTimes,
+                [dayOfWeek]: [0, 0], // Default start and end times (you can set your own defaults)
+            });
+        }
+    };
+
+    const handleRemoveDay = (dayOfWeek: number) => {
+        // Create a copy of dayTimes without the specified day
+        if (dayOfWeek in dayTimes) {
+            const updatedDayTimes = { ...dayTimes };
+            delete updatedDayTimes[dayOfWeek];
+
+            // Update the state with the modified dayTimes
+            setDayTimes(updatedDayTimes);
+        }
     };
 
     return (
@@ -113,12 +134,23 @@ export default function ScheduleChange() {
                             </select>
                         </div>
 
-                        <div className="rounded-2xl bg-darkGlass px-4 py-2 text-red-600">
+                        <div
+                            onClick={() => handleRemoveDay(1)}
+                            className="rounded-2xl bg-darkGlass px-4 py-2 text-red-600"
+                        >
                             remove day availability
                         </div>
                     </>
                 ) : (
-                    <div>disabled</div>
+                    <>
+                        <div>disabled</div>
+                        <div
+                            onClick={() => handleAddDay(1)}
+                            className="rounded-2xl bg-darkGlass px-4 py-2 text-green-600"
+                        >
+                            add day availability
+                        </div>
+                    </>
                 )}
             </div>
             {/* Tuesday */}
