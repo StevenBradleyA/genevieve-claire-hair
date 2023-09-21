@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import type { Matcher } from "react-day-picker";
 import { DayPicker } from "react-day-picker";
 import TimeSlotPicker from "~/components/Bookings/Create/TimeSlotPicker";
+import { useSchedule } from "~/components/ScheduleContext";
+import ScheduleChange from "~/components/Bookings/Schedule";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -74,7 +76,7 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
 };
 
 const AdminViewBookings: NextPageWithLayout = () => {
-    // const [view, setView] = useState("future");
+
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
@@ -115,8 +117,10 @@ const AdminViewBookings: NextPageWithLayout = () => {
         if (!timeSlot) return true;
         return false;
     };
+
+    // new new
+
  
-    
 
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
@@ -127,31 +131,34 @@ const AdminViewBookings: NextPageWithLayout = () => {
             </div>
 
             <div className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg">
-            <DayPicker
-                mode="single"
-                selected={date}
-                onSelect={(e) => {
-                    setDate(e);
-                }}
-                className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
-                {...createCalendarOptions(future)}
-            />
-            <div className="flex w-60 flex-col">
-                <TimeSlotPicker
-                    date={date}
-                    details={details}
-                    bookedDates={future}
-                    timeSlot={timeSlot}
-                    setTimeSlot={setTimeSlot}
+                <DayPicker
+                    mode="single"
+                    selected={date}
+                    onSelect={(e) => {
+                        setDate(e);
+                    }}
+                    className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
+                    {...createCalendarOptions(future)}
                 />
-                <button 
-                    disabled={checkConflicts()}
-                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
-                    
-                >
-                    Book now!
-                </button>
+                <div className="flex w-60 flex-col">
+                    <TimeSlotPicker
+                        date={date}
+                        details={details}
+                        bookedDates={future}
+                        timeSlot={timeSlot}
+                        setTimeSlot={setTimeSlot}
+                    />
+                    <button
+                        disabled={checkConflicts()}
+                        className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
+                    >
+                        Book now!
+                    </button>
+                </div>
             </div>
+            <div className="mt-10">
+               <ScheduleChange/>
+
             </div>
 
             <div className="mb-96 mt-96">Calendar here</div>
