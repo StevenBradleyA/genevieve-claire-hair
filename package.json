@@ -26,7 +26,6 @@
         "aws-sdk": "^2.1413.0",
         "axios": "^1.4.0",
         "date-fns": "^2.30.0",
-        "flubber": "^0.4.2",
         "framer-motion": "^10.13.1",
         "next": "^13.4.2",
         "next-auth": "^4.22.1",

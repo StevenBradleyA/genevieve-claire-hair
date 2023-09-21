@@ -1,17 +1,17 @@
 import Image from "next/image";
-import lsp1 from "../../public/1.png";
-import lsp2 from "../../public/2.png";
-import lsp3 from "../../public/3.png";
-import holo from "../../public/geniWithText.png";
-import { useState } from "react";
+import lsp1 from "@public/1.png";
+import lsp2 from "@public/2.png";
+import lsp3 from "@public/3.png";
+import holo from "@public/geniWithText.png";
+import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
-import blonding from "../../public/svgs/blonding.svg";
-import mensCuts from "../../public/svgs/mensCuts.svg";
-import vivids from "../../public/svgs/Vivids.svg";
-import downArrow from "../../public/svgs/angles-down-solid.svg";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+// import blonding from "@public/svgs/blonding.svg";
+// import mensCuts from "@public/svgs/mensCuts.svg";
+// import vivids from "@public/svgs/Vivids.svg";
 
+import downArrow from "@public/svgs/angles-down-solid.svg";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
     // TODO 3D 3 picture carosuel that has a review under it
@@ -30,15 +30,10 @@ export default function Home() {
     // logos of hair product companies she uses
 
     // ----------------------------------------------------------------------------------------------------------------
-
+    // console.log(blonding);
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
-    const paths = [blonding, mensCuts, vivids];
-    const colors = ["#00cc88", "#0099ff", "#8855ff"];
-    // const [pathIndex, setPathIndex] = useState(0);
-    // const progress = useMotionValue(pathIndex);
-    // const fill = useTransform(progress, paths.map(getIndex), colors);
-    // const path = useFlubber(progress, paths);
+    const script = ["mens cuts", "blonding", "vivids", "color correction"];
 
     const handleCarouselClick = (index: number): void => {
         if (index !== currentIndex) {
@@ -46,13 +41,33 @@ export default function Home() {
         }
     };
 
+    const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentScriptIndex((prevIndex) =>
+                prevIndex === script.length - 1 ? 0 : prevIndex + 1
+            );
+        }, 3000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    const bounceVariants = {
+        initial: { opacity: 1, y: 20, rotate: 0 },
+        bobble: {
+            opacity: 1,
+            y: [0, 10, 0],
+            rotate: [0, -5, 0],
+            transition: { duration: 2, yoyo: "loop", repeat: 7 },
+        },
+        exit: { opacity: 1, y: -20, rotate: 5 },
+    };
+
     return (
         <div className=" flex w-full flex-col items-center px-10 text-white">
-            {/* <div className="relative w-full">
-                <h1 className="absolute mb-6 w-full font-grand-hotel text-9xl text-white">
-                    Genevieve Clare Hair
-                </h1>
-            </div> */}
             <div className="relative flex w-full justify-end gap-5 rounded-2xl bg-lightPurple py-10 ">
                 <Image
                     src={holo}
@@ -70,7 +85,13 @@ export default function Home() {
                     />
                 </div>
             </div>
-            <motion.div className="flex items-center gap-2">
+            <motion.div
+                className="mt-3 flex items-center gap-2"
+                initial="initial"
+                animate="bobble"
+                exit="exit"
+                variants={bounceVariants}
+            >
                 <div>scroll down </div>
                 <Image
                     src={downArrow as string}
@@ -144,10 +165,18 @@ export default function Home() {
                 </div>
             </div>
 
-            <div> it would be cool to have a sliding text bar here</div>
-            <Image alt="blonding" src={blonding as string} />
-            <Image alt="mens cuts" src={mensCuts as string} />
-            <Image alt="vivids" src={vivids as string} />
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={currentScriptIndex}
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 50 }}
+                    transition={{ duration: 1 }}
+                    className="text-6xl"
+                >
+                    {script[currentScriptIndex]}
+                </motion.div>
+            </AnimatePresence>
 
             <div>
                 {" "}
