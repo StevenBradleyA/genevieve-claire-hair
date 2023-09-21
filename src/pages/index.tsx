@@ -6,9 +6,6 @@ import holo from "@public/geniWithText.png";
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
-// import blonding from "@public/svgs/blonding.svg";
-// import mensCuts from "@public/svgs/mensCuts.svg";
-// import vivids from "@public/svgs/Vivids.svg";
 
 import downArrow from "@public/svgs/angles-down-solid.svg";
 import { AnimatePresence, motion } from "framer-motion";
