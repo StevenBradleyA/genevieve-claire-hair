@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import type { BookedDateType, BookingDetailsType } from "./";
 import { useMobile } from "~/components/MobileContext";
+import { useSchedule } from "~/components/ScheduleContext";
 
 /**
  * Monday: 9am - 1pm
@@ -17,13 +18,13 @@ import { useMobile } from "~/components/MobileContext";
  * Wed-Fri: 10am - 7pm
  */
 
-const schedule: { [key: number]: number[] } = {
-    1: [9, 13],
-    2: [9, 17],
-    3: [10, 19],
-    4: [10, 19],
-    5: [10, 19],
-};
+// const schedule: { [key: number]: number[] } = {
+//     1: [9, 13],
+//     2: [9, 17],
+//     3: [10, 19],
+//     4: [10, 19],
+//     5: [10, 19],
+// };
 
 const createTimeIntervals = (start: Date, end: Date) => {
     const timeArray = [];
@@ -84,6 +85,21 @@ export default function TimeSlotPicker({
 }) {
     const [currTime, setCurrTime] = useState<Date[]>();
     const { isMobile } = useMobile();
+    const { schedule } = useSchedule() as {
+        schedule: { [key: number]: number[] };
+    };
+    /**
+     * Monday: 9am - 1pm
+     * Tuesday: 9am - 5pm
+     * Wed-Fri: 10am - 7pm
+     */
+    // const [schedule, setSchedule] = useState<{ [key: number]: number[] }>({
+    //     1: [9, 13],
+    //     2: [9, 17],
+    //     3: [10, 19],
+    //     4: [10, 19],
+    //     5: [10, 19],
+    // });
 
     useEffect(() => {
         // TODO: Reset time slot if new selection doesn't have that time slot
