@@ -24,6 +24,14 @@ export type NormalizedServicesType = {
     [key: string]: ServicesType;
 };
 
+export type PricesType = {
+    [key: string]:
+        | {
+              [key: string]: number;
+          }
+        | number;
+};
+
 export const serviceRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
         const data = await ctx.prisma.serviceCategory.findMany({
@@ -41,6 +49,38 @@ export const serviceRouter = createTRPCRouter({
         const res: NormalizedServicesType = {};
 
         data.forEach((el) => (res[el.name] = el));
+
+        return res;
+    }),
+
+    getPrices: publicProcedure.query(async ({ ctx }) => {
+        const data = await ctx.prisma.serviceCategory.findMany({
+            include: {
+                subcategories: {
+                    select: {
+                        name: true,
+                        price: true,
+                    },
+                },
+            },
+        });
+
+        const res: PricesType = {};
+
+        data.forEach((el) => {
+            el.subcategories.forEach((sub) => {
+                if (!res[el.name]) {
+                    res[el.name] = {};
+                }
+                res[el.name][sub.name] = sub.price;
+            });
+
+            console.log(el);
+
+            if (!el.subcategories.length && el.price) {
+                res[el.name] = el.price;
+            }
+        });
 
         return res;
     }),

@@ -31,15 +31,10 @@ const AdminPage: NextPageWithLayout = () => {
     return (
         <div className="text-4xl text-white ">
             <div>Client Checkout</div>
+            <div> Estimated Cost of Upcoming Service</div>
             <div className="mb-20"> Product Checkout dropdown </div>
 
-            <div> Calendar that shows schedule </div>
-            <div className="mb-10">
-                {" "}
-                Ability to change calendar availability
-            </div>
-
-            <div className="mb-5"> Ability to change pricing </div>
+          
         </div>
     );
 };

@@ -11,12 +11,12 @@ const AdminViewServices: NextPageWithLayout = () => {
     const { data } = api.service.getAll.useQuery();
 
     return (
-        <div>
+        <div className="flex w-2/3 flex-col gap-10 rounded-2xl bg-glass p-10 ">
             {data &&
                 data.map((el) => {
                     return (
                         <div
-                            className="flex flex-col items-center gap-10 rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl"
+                            className=" flex flex-col rounded-2xl bg-darkGlass p-5 text-white shadow-2xl"
                             key={el.id}
                         >
                             <div className="text-5xl font-bold">{el.name}</div>
@@ -57,7 +57,10 @@ const SubcategoryView = ({
 
     return (
         <>
-            <li key={subCat.id}>
+            <li
+                key={subCat.id}
+                className="mb-5 flex items-center justify-between rounded-2xl bg-darkGlass px-5"
+            >
                 {subCat.name}
                 <div>${subCat.price}</div>
                 <div>{subCat.time} minutes</div>
@@ -65,15 +68,15 @@ const SubcategoryView = ({
                 <div>
                     Require consult: {subCat.requireConsult ? "yes" : "no"}
                 </div>
+                <button
+                    onClick={openModal}
+                    className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                >
+                    💅
+                </button>
             </li>
-            <button
-                onClick={openModal}
-                className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
-            >
-                💅
-            </button>
             <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                <UpdateService subService={subCat} serviceData={serviceData} />
+                <UpdateService subService={subCat} serviceData={serviceData} closeModal={closeModal} />
             </ModalDialog>
         </>
     );

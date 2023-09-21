@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import colorLogo from "../../../public/color-logo.png";
 import { useMobile } from "~/components/MobileContext";
+import { api } from "~/utils/api";
+import { DotLoader } from "react-spinners";
 
 export default function Pricing() {
-    // todo want Geni to be able to change these prices
-
     const { isMobile } = useMobile();
 
     const pageVariants = {
@@ -13,9 +13,19 @@ export default function Pricing() {
         visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
     };
 
+    const { data, isLoading } = api.service.getPrices.useQuery();
+
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Prices are loading</div>
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
+
     return isMobile ? (
         <div className="flex w-11/12 flex-col rounded-2xl  bg-glass p-5 shadow-xl">
-            <div className="flex justify-center gap-5 items-center">
+            <div className="flex items-center justify-center gap-5">
                 <h1 className="flex text-6xl text-purple-300">Pricing</h1>
                 <Image
                     src={colorLogo}
@@ -26,14 +36,12 @@ export default function Pricing() {
                 />
             </div>
             <div className="flex justify-between">
-                <div className="mb-5 flex flex-col w-1/2 text-[10px] p-2">
+                <div className="mb-5 flex w-1/2 flex-col p-2 text-[10px]">
                     <h2 className=" text-image mb-3">
                         +All prices are considered a starting point and are
                         subject to change based on color usage and extra time
                     </h2>
-                    <h2 className=" text-image mb-1">
-                        I do not offer
-                    </h2>
+                    <h2 className=" text-image mb-1">I do not offer</h2>
                     <h2 className=" text-image mt-1">
                         Permanent services such as perms, relaxers, or keratin
                         smoothing services.
@@ -43,23 +51,90 @@ export default function Pricing() {
                         Treatments
                     </h2>
                 </div>
-                <ul className=" w-1/2 text-[11px] text-white bg-glass p-2 mb-3 shadow-md rounded-2xl">
-                    <li className=" text-image mb-1">Short Length H/C - $35</li>
-                    <li className=" text-image mb-1">Long Length H/C - $60</li>
+                <ul className=" mb-3 w-1/2 rounded-2xl bg-glass p-2 text-[11px] text-white shadow-md">
                     <li className=" text-image mb-1">
-                        Transformative H/C - $90
-                    </li>
-                    <li className=" text-image mb-1">All Over Color - $115+</li>
-                    <li className=" text-image mb-1 ml-5">Roots Only - $80</li>
-                    <li className=" text-image mb-1">
-                        Partial Blonding - $170+
-                    </li>
-                    <li className=" text-image mb-1">Full Blonding - $220+</li>
-                    <li className=" text-image mb-1">
-                        Vivid Colors - $135 an hour*
+                        Short Length H/C - ${" "}
+                        <span>
+                            {typeof data?.Haircut === "object"
+                                ? data.Haircut.Short || "35"
+                                : data?.Haircut}
+                        </span>
                     </li>
                     <li className=" text-image mb-1">
-                        Color Corrections - $150 an hour*
+                        Long Length H/C - $
+                        <span>
+                            {typeof data?.Haircut === "object"
+                                ? data.Haircut.Long || "60"
+                                : data?.Haircut}
+                        </span>
+                    </li>
+                    <li className=" text-image mb-1">
+                        Transformative H/C - $
+                        <span>
+                            {typeof data?.Haircut === "object"
+                                ? data.Haircut.Transformative || "90"
+                                : data?.Haircut}
+                        </span>
+                    </li>
+                    <li className=" text-image mb-1">
+                        All Over Color - $
+                        <span>
+                            {data &&
+                            typeof data["All Over Color"] === "object" &&
+                            typeof data["All Over Color"]["Roots to ends"] ===
+                                "number"
+                                ? data["All Over Color"][
+                                      "Roots to ends"
+                                  ].toString()
+                                : data &&
+                                  typeof data["All Over Color"] === "number"
+                                ? data["All Over Color"].toString()
+                                : "115"}
+                        </span>
+                        +
+                    </li>
+                    <li className=" text-image mb-1 ml-5">
+                        Roots Only - $
+                        <span>
+                            {data &&
+                            typeof data["All Over Color"] === "object" &&
+                            typeof data["All Over Color"]["Roots only"] ===
+                                "number"
+                                ? data["All Over Color"][
+                                      "Roots only"
+                                  ].toString()
+                                : data &&
+                                  typeof data["All Over Color"] === "number"
+                                ? data["All Over Color"].toString()
+                                : "115"}
+                        </span>
+                    </li>
+                    <li className=" text-image mb-1">
+                        Partial Blonding - $
+                        <span>
+                            {typeof data?.Blonding === "object"
+                                ? data.Blonding.Partial || "35"
+                                : data?.Blonding}
+                        </span>
+                        +
+                    </li>
+                    <li className=" text-image mb-1">
+                        Full Blonding - ${" "}
+                        <span>
+                            {typeof data?.Blonding === "object"
+                                ? data.Blonding.Full || "220"
+                                : data?.Blonding}
+                        </span>
+                        +
+                    </li>
+                    <li className=" text-image mb-1">
+                        Vivid Colors - $<span>{data?.Vivids?.toString()}</span>{" "}
+                        an hour*
+                    </li>
+                    <li className=" text-image mb-1">
+                        Color Corrections - $
+                        <span>{data?.["Color Corrections"]?.toString()}</span>{" "}
+                        an hour*
                     </li>
                 </ul>
             </div>
@@ -108,24 +183,89 @@ export default function Pricing() {
                     />
                 </div>
                 <ul className="z-20 mt-10 text-4xl text-white">
-                    <li className=" text-image mb-1">Short Length H/C - $35</li>
-                    <li className=" text-image mb-1">Long Length H/C - $60</li>
                     <li className=" text-image mb-1">
-                        Transformative H/C - $90
+                        Short Length H/C - $
+                        <span>
+                            {typeof data?.Haircut === "object"
+                                ? data.Haircut.Short || "35"
+                                : data?.Haircut}
+                        </span>
                     </li>
-                    <li className=" text-image mb-1">All Over Color - $115+</li>
+                    <li className=" text-image mb-1">
+                        Long Length H/C - $
+                        <span>
+                            {typeof data?.Haircut === "object"
+                                ? data.Haircut.Long || "60"
+                                : data?.Haircut}
+                        </span>
+                    </li>
+                    <li className=" text-image mb-1">
+                        Transformative H/C - $
+                        <span>
+                            {typeof data?.Haircut === "object"
+                                ? data.Haircut.Transformative || "90"
+                                : data?.Haircut}
+                        </span>
+                    </li>
+                    <li className=" text-image mb-1">
+                        All Over Color - $
+                        <span>
+                            {data &&
+                            typeof data["All Over Color"] === "object" &&
+                            typeof data["All Over Color"]["Roots to ends"] ===
+                                "number"
+                                ? data["All Over Color"][
+                                      "Roots to ends"
+                                  ].toString()
+                                : data &&
+                                  typeof data["All Over Color"] === "number"
+                                ? data["All Over Color"].toString()
+                                : "115"}
+                        </span>
+                        +
+                    </li>
                     <li className=" text-image mb-1 ml-12 text-3xl">
-                        Roots Only - $80
+                        Roots Only - $
+                        <span>
+                            {data &&
+                            typeof data["All Over Color"] === "object" &&
+                            typeof data["All Over Color"]["Roots only"] ===
+                                "number"
+                                ? data["All Over Color"][
+                                      "Roots only"
+                                  ].toString()
+                                : data &&
+                                  typeof data["All Over Color"] === "number"
+                                ? data["All Over Color"].toString()
+                                : "115"}
+                        </span>
                     </li>
                     <li className=" text-image mb-1">
-                        Partial Blonding - $170+
+                        Partial Blonding - $
+                        <span>
+                            {typeof data?.Blonding === "object"
+                                ? data.Blonding.Partial || "35"
+                                : data?.Blonding}
+                        </span>
+                        +
                     </li>
-                    <li className=" text-image mb-1">Full Blonding - $220+</li>
                     <li className=" text-image mb-1">
-                        Vivid Colors - $135 an hour*
+                        Full Blonding - $
+                        <span>
+                            {typeof data?.Blonding === "object"
+                                ? data.Blonding.Full || "220"
+                                : data?.Blonding}
+                        </span>
+                        +
                     </li>
                     <li className=" text-image mb-1">
-                        Color Corrections - $150 an hour*
+                        Vivid Colors - $<span>{data?.Vivids?.toString()}</span>{" "}
+                        an hour*
+                    </li>
+                    <li className=" text-image mb-1">
+                        Color Corrections - $
+                        <span>{data?.["Color Corrections"]?.toString()}</span>{" "}
+                        an hour*
                     </li>
                 </ul>
             </div>

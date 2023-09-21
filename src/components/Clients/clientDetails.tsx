@@ -4,6 +4,8 @@ import { DotLoader } from "react-spinners";
 import { api } from "~/utils/api";
 import ModalDialog from "~/components/Modal";
 import EditUserNotes from "./updateNotes";
+import ClientBookings from "./ClientBookings";
+import { motion } from "framer-motion";
 
 export default function ClientDetails({ userId }: { userId: string }) {
     const { data: user, isLoading } = api.user.getUserById.useQuery(userId);
@@ -29,8 +31,8 @@ export default function ClientDetails({ userId }: { userId: string }) {
     if (!user) return <div>Oops</div>;
 
     return (
-        <div className="flex flex-col items-center rounded-2xl bg-glass p-10 text-white shadow-2xl">
-            <div className="flex gap-5 text-5xl font-bold">
+        <div className="flex w-full flex-col items-center rounded-2xl bg-glass p-10 text-5xl text-white shadow-2xl ">
+            <div className=" mb-5 flex gap-5  font-bold">
                 <div>{user.firstName}</div>
                 <div>{user.lastName}</div>
             </div>
@@ -49,17 +51,19 @@ export default function ClientDetails({ userId }: { userId: string }) {
                     ))}
                 </div>
             )}
-            <div className="mt-5 text-5xl font-bold">Contact</div>
+            <div className="mt-5 font-bold">Contact</div>
             <div className=" mt-3 text-2xl">{user.email}</div>
 
-            <div className="mt-5 flex gap-5 text-5xl font-bold">
-                Notes{" "}
-                <button
+            <div className="mt-5 flex gap-5 font-bold">
+                Notes
+                <motion.button
                     onClick={openModal}
                     className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                 >
                     🧐
-                </button>
+                </motion.button>
                 {user && (
                     <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
                         <EditUserNotes
@@ -70,7 +74,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                     </ModalDialog>
                 )}
             </div>
-            <div className=" mt-3 w-full rounded-2xl bg-chillPurple p-6">
+            <div className=" mt-3 w-full rounded-2xl bg-darkGlass p-6">
                 {user.notes &&
                     user.notes.split("\n").map((line, index) => (
                         <p key={index} className="text-xl">
@@ -78,6 +82,8 @@ export default function ClientDetails({ userId }: { userId: string }) {
                         </p>
                     ))}
             </div>
+            <div className="my-5 flex gap-5 font-bold">Booking History</div>
+            {userId && <ClientBookings userId={userId} />}
         </div>
     );
 }

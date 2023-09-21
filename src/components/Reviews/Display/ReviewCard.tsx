@@ -241,7 +241,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                     <div>
                         <button
                             onClick={openModal}
-                            className="justify-centerp-3 flex transform rounded-xl bg-glass px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                            className="justify-center p-3 flex transform rounded-xl bg-glass px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
                         >
                             Edit Review
                         </button>
