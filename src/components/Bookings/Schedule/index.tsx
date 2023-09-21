@@ -51,22 +51,23 @@ export default function ScheduleChange() {
     };
 
     useEffect(() => {
-        setIsSundayActive(0 in schedule);
-        setIsMondayActive(1 in schedule);
-        setIsTuesdayActive(2 in schedule);
-        setIsWednesdayActive(3 in schedule);
-        setIsThursdayActive(4 in schedule);
-        setIsFridayActive(5 in schedule);
-        setIsSaturdayActive(6 in schedule);
-    }, [schedule, dayTimes]);
+        setIsSundayActive(0 in dayTimes);
+        setIsMondayActive(1 in dayTimes);
+        setIsTuesdayActive(2 in dayTimes);
+        setIsWednesdayActive(3 in dayTimes);
+        setIsThursdayActive(4 in dayTimes);
+        setIsFridayActive(5 in dayTimes);
+        setIsSaturdayActive(6 in dayTimes);
+    }, [dayTimes]);
 
     console.log("sched", schedule);
     console.log("daytimes", dayTimes);
 
     const handleUpdateClick = (e) => {
         e.preventDefault();
-        // setSchedule(dayTimes);
-        setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
+        setSchedule(dayTimes);
+        // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
+
         // TODO may want to void booking stuf to update the sched
     };
 
@@ -75,7 +76,7 @@ export default function ScheduleChange() {
         if (!(dayOfWeek in dayTimes)) {
             setDayTimes({
                 ...dayTimes,
-                [dayOfWeek]: [0, 0], // Default start and end times (you can set your own defaults)
+                [dayOfWeek]: [10, 19], // Default start and end times (you can set your own defaults)
             });
         }
     };
@@ -100,7 +101,7 @@ export default function ScheduleChange() {
                         <div>
                             Start Time:{" "}
                             <select
-                                value={dayTimes[1][0]}
+                                value={dayTimes[1]?.[0] || 0}
                                 onChange={(e) =>
                                     handleStartTimeChange(
                                         1,
@@ -117,7 +118,7 @@ export default function ScheduleChange() {
                             </select>
                             End Time:{" "}
                             <select
-                                value={dayTimes[1][1]}
+                                value={dayTimes[1]?.[1] || 0}
                                 onChange={(e) =>
                                     handleEndTimeChange(
                                         1,
@@ -134,22 +135,22 @@ export default function ScheduleChange() {
                             </select>
                         </div>
 
-                        <div
+                        <button
                             onClick={() => handleRemoveDay(1)}
                             className="rounded-2xl bg-darkGlass px-4 py-2 text-red-600"
                         >
                             remove day availability
-                        </div>
+                        </button>
                     </>
                 ) : (
                     <>
                         <div>disabled</div>
-                        <div
+                        <button
                             onClick={() => handleAddDay(1)}
                             className="rounded-2xl bg-darkGlass px-4 py-2 text-green-600"
                         >
                             add day availability
-                        </div>
+                        </button>
                     </>
                 )}
             </div>
@@ -360,6 +361,34 @@ export default function ScheduleChange() {
             </div>
         );
     }
+
+
+
+  // const scheduleData = [
+    //     { dayOfWeek: 1, startTime: 9, endTime: 13 },
+    //     { dayOfWeek: 2, startTime: 9, endTime: 17 },
+    //     { dayOfWeek: 3, startTime: 10, endTime: 19 },
+    //     { dayOfWeek: 4, startTime: 10, endTime: 19 },
+    //     { dayOfWeek: 5, startTime: 10, endTime: 19 },
+    // ];
+
+    // for (const data of scheduleData) {
+    //     await prisma.schedule.create({
+    //         data,
+    //     });
+    // }
+    // model Schedule {
+//     id        Int @id @default(autoincrement())
+//     dayOfWeek Int
+//     startTime Int
+//     endTime   Int
+// }
+
+
+
+
+
+
 
 
 
