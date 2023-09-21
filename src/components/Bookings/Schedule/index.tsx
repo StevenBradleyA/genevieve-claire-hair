@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSchedule } from "~/components/ScheduleContext";
 
 interface Schedule {
     schedule: { [key: number]: number[] };
-    setSchedule: (schedule: { [key: number]: number[] }) => void;
+    // setSchedule: (schedule: { [key: number]: number[] }) => void;
 }
 
-export default function ScheduleChange() {
-    const { schedule, setSchedule } = useSchedule() as Schedule;
+export default function ScheduleChange({ schedule }: Schedule) {
     const [isMondayActive, setIsMondayActive] = useState<boolean>(false);
     const [isTuesdayActive, setIsTuesdayActive] = useState<boolean>(false);
     const [isWednesdayActive, setIsWednesdayActive] = useState<boolean>(false);
@@ -18,6 +16,9 @@ export default function ScheduleChange() {
     const [dayTimes, setDayTimes] = useState<{ [key: number]: number[] }>(
         schedule
     );
+
+    // TODO create update tRPC route for schedule all the handles need new logic
+    // TODO to remove a day you can just set startTIme and endTime to 0
 
     /**
      * Monday: 9am - 1pm
@@ -65,7 +66,8 @@ export default function ScheduleChange() {
 
     const handleUpdateClick = (e) => {
         e.preventDefault();
-        setSchedule(dayTimes);
+        console.log("update");
+        // setSchedule(dayTimes);
         // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
 
         // TODO may want to void booking stuf to update the sched

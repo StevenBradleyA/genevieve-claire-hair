@@ -8,7 +8,6 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Layout from "../components/layout";
 import MobileProvider from "~/components/MobileContext";
-import ScheduleProvider from "~/components/ScheduleContext";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -31,9 +30,7 @@ const MyApp: AppType<SessionType> = ({
     return (
         <SessionProvider session={session}>
             <MobileProvider>
-                <ScheduleProvider>
-                    <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
-                </ScheduleProvider>
+                <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
             </MobileProvider>
         </SessionProvider>
     );

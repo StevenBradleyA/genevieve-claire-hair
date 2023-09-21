@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 import type { Matcher } from "react-day-picker";
 import { DayPicker } from "react-day-picker";
 import TimeSlotPicker from "~/components/Bookings/Create/TimeSlotPicker";
-import { useSchedule } from "~/components/ScheduleContext";
 import ScheduleChange from "~/components/Bookings/Schedule";
 
 export interface CalendarOptions {
@@ -76,7 +75,6 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
 };
 
 const AdminViewBookings: NextPageWithLayout = () => {
-
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
@@ -91,11 +89,26 @@ const AdminViewBookings: NextPageWithLayout = () => {
     const { data: past, isLoading: pastLoading } =
         api.booking.getPast.useQuery();
     const { data: serviceData } = api.service.getAllNormalized.useQuery();
+    const { data: scheduleData, isLoading: scheduleDataLoading } =
+        api.schedule.getAllDays.useQuery();
+
+    const schedule: { [key: number]: number[] } | null = {};
+    if (scheduleData) {
+        scheduleData.forEach((e) => {
+            schedule[e.dayOfWeek] = [e.startTime, e.endTime];
+        });
+    } else {
+        console.log("Data is undefined or loading.");
+    }
 
     if (pastLoading)
         return <DotLoader size={50} color={"#ffffff"} loading={pastLoading} />;
 
     if (futureLoading)
+        return (
+            <DotLoader size={50} color={"#ffffff"} loading={futureLoading} />
+        );
+    if (scheduleDataLoading)
         return (
             <DotLoader size={50} color={"#ffffff"} loading={futureLoading} />
         );
@@ -119,8 +132,6 @@ const AdminViewBookings: NextPageWithLayout = () => {
     };
 
     // new new
-
- 
 
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
@@ -157,8 +168,7 @@ const AdminViewBookings: NextPageWithLayout = () => {
                 </div>
             </div>
             <div className="mt-10">
-               <ScheduleChange/>
-
+                <ScheduleChange schedule={schedule} />
             </div>
 
             <div className="mb-96 mt-96">Calendar here</div>
