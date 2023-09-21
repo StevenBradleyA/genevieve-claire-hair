@@ -15,6 +15,9 @@ export default function ScheduleChange() {
     const [isFridayActive, setIsFridayActive] = useState<boolean>(false);
     const [isSaturdayActive, setIsSaturdayActive] = useState<boolean>(false);
     const [isSundayActive, setIsSundayActive] = useState<boolean>(false);
+    const [dayTimes, setDayTimes] = useState<{ [key: number]: number[] }>(
+        schedule
+    );
 
     /**
      * Monday: 9am - 1pm
@@ -29,6 +32,24 @@ export default function ScheduleChange() {
     //     5: [10, 19],
     // });
 
+    // Create an array of hours from 0 to 23
+    const hours = Array.from({ length: 24 }, (_, i) => i);
+
+    // Event handler for updating start and end times
+    const handleStartTimeChange = (dayOfWeek: number, newStartTime: number) => {
+        setDayTimes({
+            ...dayTimes,
+            [dayOfWeek]: [newStartTime, dayTimes[dayOfWeek][1]],
+        });
+    };
+
+    const handleEndTimeChange = (dayOfWeek: number, newEndTime: number) => {
+        setDayTimes({
+            ...dayTimes,
+            [dayOfWeek]: [dayTimes[dayOfWeek][0], newEndTime],
+        });
+    };
+
     useEffect(() => {
         setIsSundayActive(0 in schedule);
         setIsMondayActive(1 in schedule);
@@ -39,6 +60,16 @@ export default function ScheduleChange() {
         setIsSaturdayActive(6 in schedule);
     }, [schedule]);
 
+    console.log("sched", schedule);
+    console.log("daytimes", dayTimes);
+
+    const handleUpdateClick = (e) => {
+        e.preventDefault();
+        // setSchedule(dayTimes);
+        setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
+        // TODO may want to void booking stuf to update the sched
+    };
+
     return (
         <div className="flex flex-col gap-5">
             <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
@@ -46,9 +77,42 @@ export default function ScheduleChange() {
                 {isMondayActive ? (
                     <>
                         <div>
-                            Start Time: {schedule[1][0]}, End Time:{" "}
-                            {schedule[1][1]}
+                            Start Time:{" "}
+                            <select
+                                value={dayTimes[1][0]}
+                                onChange={(e) =>
+                                    handleStartTimeChange(
+                                        1,
+                                        parseInt(e.target.value)
+                                    )
+                                }
+                                className="mr-3 rounded-2xl bg-darkGlass"
+                            >
+                                {hours.map((hour) => (
+                                    <option key={hour} value={hour}>
+                                        {hour}:00
+                                    </option>
+                                ))}
+                            </select>
+                            End Time:{" "}
+                            <select
+                                value={dayTimes[1][1]}
+                                onChange={(e) =>
+                                    handleEndTimeChange(
+                                        1,
+                                        parseInt(e.target.value)
+                                    )
+                                }
+                                className="rounded-2xl bg-darkGlass"
+                            >
+                                {hours.map((hour) => (
+                                    <option key={hour} value={hour}>
+                                        {hour}:00
+                                    </option>
+                                ))}
+                            </select>
                         </div>
+
                         <div className="rounded-2xl bg-darkGlass px-4 py-2 text-red-600">
                             remove day availability
                         </div>
@@ -194,6 +258,12 @@ export default function ScheduleChange() {
                     </>
                 )}
             </div>
+            <button
+                className="rounded-2xl bg-darkGlass px-4 py-2"
+                onClick={handleUpdateClick}
+            >
+                Update
+            </button>
         </div>
     );
 }
