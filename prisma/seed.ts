@@ -161,6 +161,22 @@ async function main() {
         },
     });
 
+    const scheduleData = [
+        { dayOfWeek: 0, startTime: 0, endTime: 0 },
+        { dayOfWeek: 1, startTime: 9, endTime: 13 },
+        { dayOfWeek: 2, startTime: 9, endTime: 17 },
+        { dayOfWeek: 3, startTime: 10, endTime: 19 },
+        { dayOfWeek: 4, startTime: 10, endTime: 19 },
+        { dayOfWeek: 5, startTime: 10, endTime: 19 },
+        { dayOfWeek: 6, startTime: 0, endTime: 0 },
+    ];
+
+    for (const data of scheduleData) {
+        await prisma.schedule.create({
+            data,
+        });
+    }
+
     // //? Geni
     // await prisma.user.create({
     //     data: {

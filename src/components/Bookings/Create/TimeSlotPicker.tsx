@@ -10,20 +10,8 @@ import {
 import { useEffect, useState } from "react";
 import type { BookedDateType, BookingDetailsType } from "./";
 import { useMobile } from "~/components/MobileContext";
-
-/**
- * Monday: 9am - 1pm
- * Tuesday: 9am - 5pm
- * Wed-Fri: 10am - 7pm
- */
-
-const schedule: { [key: number]: number[] } = {
-    1: [9, 13],
-    2: [9, 17],
-    3: [10, 19],
-    4: [10, 19],
-    5: [10, 19],
-};
+import { api } from "~/utils/api";
+import { DotLoader } from "react-spinners";
 
 const createTimeIntervals = (start: Date, end: Date) => {
     const timeArray = [];
@@ -43,8 +31,6 @@ const checkOverlappingBooking = (
     details: BookingDetailsType
 ) => {
     const endOfBooking = addMinutes(date, details.totalTime);
-
-    console.log(bookedDates);
 
     for (const { startDate, endDate } of bookedDates) {
         // Check if new start is within existing booking times
@@ -85,11 +71,34 @@ export default function TimeSlotPicker({
     const [currTime, setCurrTime] = useState<Date[]>();
     const { isMobile } = useMobile();
 
+    const { data, isLoading } = api.schedule.getFilteredDays.useQuery();
+
+    const schedule: { [key: number]: number[] } | null = {};
+
+    /**
+     * Monday: 9am - 1pm
+     * Tuesday: 9am - 5pm
+     * Wed-Fri: 10am - 7pm
+     */
+
+    // const [schedule, setSchedule] = useState<{ [key: number]: number[] }>({
+    //     1: [9, 13],
+    //     2: [9, 17],
+    //     3: [10, 19],
+    //     4: [10, 19],
+    //     5: [10, 19],
+    // });
+
+    // TODO WEEKENDS not showing up even if in schedule. Not sure if disabled or something...?
+
     useEffect(() => {
         // TODO: Reset time slot if new selection doesn't have that time slot
         setTimeSlot(undefined);
 
-        if (date) {
+        if (date && data) {
+            data.forEach((e) => {
+                schedule[e.dayOfWeek] = [e.startTime, e.endTime];
+            });
             const [startTime, endTime] = schedule[date.getDay()] as number[];
 
             if (startTime && endTime) {
@@ -110,7 +119,15 @@ export default function TimeSlotPicker({
 
             return;
         } else setCurrTime(undefined);
-    }, [date, setTimeSlot]);
+    }, [date, setTimeSlot, data]);
+
+    if (isLoading)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Loading Schedule</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
+            </div>
+        );
 
     return (
         <div className="flex flex-wrap justify-between gap-1 align-top">

@@ -85,6 +85,13 @@ model ServiceSubcategory {
     serviceCategory ServiceCategory @relation(fields: [serviceCategoryId], references: [id])
 }
 
+model Schedule {
+    id        Int @id @default(autoincrement())
+    dayOfWeek Int @unique
+    startTime Int
+    endTime   Int
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
