@@ -6,7 +6,7 @@ import {
 } from "~/server/api/trpc";
 
 export const scheduleRouter = createTRPCRouter({
-    getAllDays: publicProcedure.query(async ({ ctx }) => {
+    getFilteredDays: publicProcedure.query(async ({ ctx }) => {
         // Fetch all schedule days from the database
         const scheduleDays = await ctx.prisma.schedule.findMany();
 
@@ -19,7 +19,14 @@ export const scheduleRouter = createTRPCRouter({
         return filteredScheduleDays;
     }),
 
-    updateSchedule: protectedProcedure
+    getAllDays: publicProcedure.query(async ({ ctx }) => {
+        return ctx.prisma.schedule.findMany();
+    }),
+
+    // updateSchedule: protectedProcedure.input()
+
+    // weirdly working but on refresh don't know why the update is invalid...
+    updateMultipleSchedule: protectedProcedure
         .input(
             z.array(
                 z.object({
@@ -33,39 +40,21 @@ export const scheduleRouter = createTRPCRouter({
             const updatedSchedulesPromises = input.map(async (scheduleData) => {
                 const { dayOfWeek, startTime, endTime } = scheduleData;
 
-                console.log(
-                    "\n\n\n\n NEWWWW DATA \n\n\n",
-                    dayOfWeek,
-                    startTime,
-                    endTime
-                );
-
-                // Find the schedule to update based on the dayOfWeek
-                const existingSchedule = await ctx.prisma.schedule.findUnique({
+                // Update the existing schedule
+                const updateSchedule = await ctx.prisma.schedule.update({
                     where: {
                         dayOfWeek: dayOfWeek,
                     },
+                    data: {
+                        startTime,
+                        endTime,
+                    },
                 });
-                console.log("\n\n\n\n HELLLLOOOOO \n\n\n", existingSchedule);
 
-                if (existingSchedule) {
-                    // Update the existing schedule
-                    const updateSchedule = await ctx.prisma.schedule.update({
-                        where: {
-                            id: existingSchedule.id,
-                        },
-                        data: {
-                            startTime,
-                            endTime,
-                        },
-                    });
-
-                    return updateSchedule;
-                }
-
-                return null;
+                return updateSchedule;
             });
 
+            // Wait for all promises to resolve before returning
             const updatedSchedules = await Promise.all(
                 updatedSchedulesPromises
             );

@@ -8,7 +8,10 @@ import { motion } from "framer-motion";
 import type { Matcher } from "react-day-picker";
 import { DayPicker } from "react-day-picker";
 import TimeSlotPicker from "~/components/Bookings/Create/TimeSlotPicker";
-import ScheduleChange from "~/components/Bookings/Schedule";
+
+import ModalDialog from "~/components/Modal";
+import type { Schedule } from "@prisma/client";
+import EachSchedule from "~/components/Bookings/Schedule";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -38,6 +41,8 @@ export type BookingDetailsType = {
     totalTime: number;
     services: string;
 };
+
+
 
 const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
     const today = new Date();
@@ -75,6 +80,15 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
 };
 
 const AdminViewBookings: NextPageWithLayout = () => {
+    const { data: future, isLoading: futureLoading } =
+        api.booking.getFuture.useQuery();
+    const { data: past, isLoading: pastLoading } =
+        api.booking.getPast.useQuery();
+    const { data: serviceData } = api.service.getAllNormalized.useQuery();
+
+    const { data: scheduleData, isLoading: scheduleDataLoading } =
+        api.schedule.getAllDays.useQuery();
+
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
@@ -83,23 +97,15 @@ const AdminViewBookings: NextPageWithLayout = () => {
         totalTime: 0,
         services: "",
     });
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const { data: future, isLoading: futureLoading } =
-        api.booking.getFuture.useQuery();
-    const { data: past, isLoading: pastLoading } =
-        api.booking.getPast.useQuery();
-    const { data: serviceData } = api.service.getAllNormalized.useQuery();
-    const { data: scheduleData, isLoading: scheduleDataLoading } =
-        api.schedule.getAllDays.useQuery();
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
 
-    const schedule: { [key: number]: number[] } | null = {};
-    if (scheduleData) {
-        scheduleData.forEach((e) => {
-            schedule[e.dayOfWeek] = [e.startTime, e.endTime];
-        });
-    } else {
-        console.log("Data is undefined or loading.");
-    }
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     if (pastLoading)
         return <DotLoader size={50} color={"#ffffff"} loading={pastLoading} />;
@@ -168,7 +174,15 @@ const AdminViewBookings: NextPageWithLayout = () => {
                 </div>
             </div>
             <div className="mt-10">
-                <ScheduleChange schedule={schedule} />
+                <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                    {scheduleData.map((schedule: Schedule, i: number) => (
+                        <EachSchedule
+                            key={i}
+                            closeModal={closeModal}
+                            schedule={schedule}
+                        />
+                    ))}
+                </ModalDialog>
             </div>
 
             <div className="mb-96 mt-96">Calendar here</div>

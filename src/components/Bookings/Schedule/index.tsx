@@ -6,7 +6,7 @@ interface Schedule {
     // setSchedule: (schedule: { [key: number]: number[] }) => void;
 }
 
-export default function ScheduleChange({ schedule }: Schedule) {
+export default function EachSchedule({ schedule }: Schedule) {
     const [isMondayActive, setIsMondayActive] = useState<boolean>(false);
     const [isTuesdayActive, setIsTuesdayActive] = useState<boolean>(false);
     const [isWednesdayActive, setIsWednesdayActive] = useState<boolean>(false);
@@ -17,13 +17,19 @@ export default function ScheduleChange({ schedule }: Schedule) {
     const [dayTimes, setDayTimes] = useState<{ [key: number]: number[] }>(
         schedule
     );
-    const ctx = api.useContext();
+    const [startTime, setStartTime] = useState(0);
+    const [endTime, setEndTime] = useState(0);
 
-    // TODO create update tRPC route for schedule all the handles need new logic
-    // TODO to remove a day you can just set startTIme and endTime to 0
+    // what is the purpose of dayTimes...
+    // I need to refactor that we only update one at a time
+
+    console.log("pog", schedule);
+
+    const ctx = api.useContext();
 
     const { mutate } = api.schedule.updateSchedule.useMutation({
         onSuccess: () => {
+            void ctx.schedule.getFilteredDays.invalidate();
             void ctx.schedule.getAllDays.invalidate();
         },
     });
@@ -45,29 +51,30 @@ export default function ScheduleChange({ schedule }: Schedule) {
     const hours = Array.from({ length: 24 }, (_, i) => i);
 
     // Event handler for updating start and end times
-    const handleStartTimeChange = (dayOfWeek: number, newStartTime: number) => {
-        setDayTimes({
-            ...dayTimes,
-            [dayOfWeek]: [newStartTime, dayTimes[dayOfWeek][1]],
-        });
-    };
+    // const handleStartTimeChange = (dayOfWeek: number, newStartTime: number) => {
+    //     setDayTimes({
+    //         ...dayTimes,
+    //         [dayOfWeek]: [newStartTime, dayTimes[dayOfWeek][1]],
+    //     });
+    // };
 
-    const handleEndTimeChange = (dayOfWeek: number, newEndTime: number) => {
-        setDayTimes({
-            ...dayTimes,
-            [dayOfWeek]: [dayTimes[dayOfWeek][0], newEndTime],
-        });
-    };
+    // const handleEndTimeChange = (dayOfWeek: number, newEndTime: number) => {
+    //     setDayTimes({
+    //         ...dayTimes,
+    //         [dayOfWeek]: [dayTimes[dayOfWeek][0], newEndTime],
+    //     });
+    // };
 
     useEffect(() => {
-        setIsSundayActive(0 in dayTimes);
-        setIsMondayActive(1 in dayTimes);
-        setIsTuesdayActive(2 in dayTimes);
-        setIsWednesdayActive(3 in dayTimes);
-        setIsThursdayActive(4 in dayTimes);
-        setIsFridayActive(5 in dayTimes);
-        setIsSaturdayActive(6 in dayTimes);
-    }, [dayTimes]);
+        setIsSundayActive(0 in schedule);
+        setIsMondayActive(1 in schedule);
+        setIsTuesdayActive(2 in schedule);
+        setIsWednesdayActive(3 in schedule);
+        setIsThursdayActive(4 in schedule);
+        setIsFridayActive(5 in schedule);
+        setIsSaturdayActive(6 in schedule);
+    }, [schedule]);
+
     // console.log("daytimes", dayTimes);
 
     const handleUpdateClick = (e: React.FormEvent) => {
@@ -81,9 +88,9 @@ export default function ScheduleChange({ schedule }: Schedule) {
                 endTime,
             })
         );
-        if (dayTimes && result) {
-            mutate(result);
-        }
+        // if (dayTimes && result) {
+        //     mutate(result);
+        // }
 
         // setSchedule(dayTimes);
         // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
@@ -122,12 +129,7 @@ export default function ScheduleChange({ schedule }: Schedule) {
                             Start Time:{" "}
                             <select
                                 value={dayTimes[1]?.[0] || 0}
-                                onChange={(e) =>
-                                    handleStartTimeChange(
-                                        1,
-                                        parseInt(e.target.value)
-                                    )
-                                }
+                                // onChange={}
                                 className="mr-3 rounded-2xl bg-darkGlass"
                             >
                                 {hours.map((hour) => (
@@ -139,12 +141,7 @@ export default function ScheduleChange({ schedule }: Schedule) {
                             End Time:{" "}
                             <select
                                 value={dayTimes[1]?.[1] || 0}
-                                onChange={(e) =>
-                                    handleEndTimeChange(
-                                        1,
-                                        parseInt(e.target.value)
-                                    )
-                                }
+                                // onChange={}
                                 className="rounded-2xl bg-darkGlass"
                             >
                                 {hours.map((hour) => (
