@@ -32,8 +32,6 @@ const checkOverlappingBooking = (
 ) => {
     const endOfBooking = addMinutes(date, details.totalTime);
 
-    console.log(bookedDates);
-
     for (const { startDate, endDate } of bookedDates) {
         // Check if new start is within existing booking times
         if (isAfter(date, startDate) && isBefore(date, endDate)) return true;
@@ -76,13 +74,6 @@ export default function TimeSlotPicker({
     const { data, isLoading } = api.schedule.getFilteredDays.useQuery();
 
     const schedule: { [key: number]: number[] } | null = {};
-    if (data) {
-        data.forEach((e) => {
-            schedule[e.dayOfWeek] = [e.startTime, e.endTime];
-        });
-    } else {
-        console.log("Data is undefined or loading.");
-    }
 
     /**
      * Monday: 9am - 1pm
@@ -102,7 +93,10 @@ export default function TimeSlotPicker({
         // TODO: Reset time slot if new selection doesn't have that time slot
         setTimeSlot(undefined);
 
-        if (date) {
+        if (date && data) {
+            data.forEach((e) => {
+                schedule[e.dayOfWeek] = [e.startTime, e.endTime];
+            });
             const [startTime, endTime] = schedule[date.getDay()] as number[];
 
             if (startTime && endTime) {
@@ -123,7 +117,7 @@ export default function TimeSlotPicker({
 
             return;
         } else setCurrTime(undefined);
-    }, [date, setTimeSlot]);
+    }, [date, setTimeSlot, data]);
 
     if (isLoading)
         return (
