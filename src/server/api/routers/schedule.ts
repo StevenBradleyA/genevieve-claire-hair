@@ -23,42 +23,62 @@ export const scheduleRouter = createTRPCRouter({
         return ctx.prisma.schedule.findMany();
     }),
 
-    // updateSchedule: protectedProcedure.input()
-
-    // weirdly working but on refresh don't know why the update is invalid...
-    updateMultipleSchedule: protectedProcedure
+    updateSchedule: protectedProcedure
         .input(
-            z.array(
-                z.object({
-                    dayOfWeek: z.number(),
-                    startTime: z.number(),
-                    endTime: z.number(),
-                })
-            )
+            z.object({
+                id: z.number(),
+                dayOfWeek: z.number(),
+                startTime: z.number(),
+                endTime: z.number(),
+            })
         )
         .mutation(async ({ input, ctx }) => {
-            const updatedSchedulesPromises = input.map(async (scheduleData) => {
-                const { dayOfWeek, startTime, endTime } = scheduleData;
-
-                // Update the existing schedule
-                const updateSchedule = await ctx.prisma.schedule.update({
-                    where: {
-                        dayOfWeek: dayOfWeek,
-                    },
-                    data: {
-                        startTime,
-                        endTime,
-                    },
-                });
-
-                return updateSchedule;
+            const updatedSchedule = await ctx.prisma.schedule.update({
+                where: {
+                    id: input.id,
+                },
+                data: {
+                    startTime: input.startTime,
+                    endTime: input.endTime,
+                },
             });
-
-            // Wait for all promises to resolve before returning
-            const updatedSchedules = await Promise.all(
-                updatedSchedulesPromises
-            );
-
-            return updatedSchedules;
+            return updatedSchedule;
         }),
+
+    // weirdly working but on refresh don't know why the update is invalid...
+    // updateMultipleSchedule: protectedProcedure
+    //     .input(
+    //         z.array(
+    //             z.object({
+    //                 dayOfWeek: z.number(),
+    //                 startTime: z.number(),
+    //                 endTime: z.number(),
+    //             })
+    //         )
+    //     )
+    //     .mutation(async ({ input, ctx }) => {
+    //         const updatedSchedulesPromises = input.map(async (scheduleData) => {
+    //             const { dayOfWeek, startTime, endTime } = scheduleData;
+
+    //             // Update the existing schedule
+    //             const updateSchedule = await ctx.prisma.schedule.update({
+    //                 where: {
+    //                     dayOfWeek: dayOfWeek,
+    //                 },
+    //                 data: {
+    //                     startTime,
+    //                     endTime,
+    //                 },
+    //             });
+
+    //             return updateSchedule;
+    //         });
+
+    //         // Wait for all promises to resolve before returning
+    //         const updatedSchedules = await Promise.all(
+    //             updatedSchedulesPromises
+    //         );
+
+    //         return updatedSchedules;
+    //     }),
 });

@@ -8,139 +8,73 @@ interface ScheduleProps {
 }
 
 export default function EachSchedule({ schedule, closeModal }: ScheduleProps) {
-    console.log(schedule);
-
-    // const [isMondayActive, setIsMondayActive] = useState<boolean>(false);
-    // const [isTuesdayActive, setIsTuesdayActive] = useState<boolean>(false);
-    // const [isWednesdayActive, setIsWednesdayActive] = useState<boolean>(false);
-    // const [isThursdayActive, setIsThursdayActive] = useState<boolean>(false);
-    // const [isFridayActive, setIsFridayActive] = useState<boolean>(false);
-    // const [isSaturdayActive, setIsSaturdayActive] = useState<boolean>(false);
-    // const [isSundayActive, setIsSundayActive] = useState<boolean>(false);
-    // const [dayTimes, setDayTimes] = useState<{ [key: number]: number[] }>(
-    //     schedule
-    // );
     const [startTime, setStartTime] = useState(schedule.startTime);
     const [endTime, setEndTime] = useState(schedule.endTime);
 
-    // what is the purpose of dayTimes...
-    // I need to refactor that we only update one at a time
+    const ctx = api.useContext();
 
-    console.log("pog", schedule);
+    const { mutate } = api.schedule.updateSchedule.useMutation({
+        onSuccess: () => {
+            void ctx.schedule.getFilteredDays.invalidate();
+            void ctx.schedule.getAllDays.invalidate();
+        },
+    });
 
-    // const ctx = api.useContext();
+    const handleScheduleUpdate = (e: React.FormEvent) => {
+        e.preventDefault();
 
-    // const { mutate } = api.schedule.updateSchedule.useMutation({
-    //     onSuccess: () => {
-    //         void ctx.schedule.getFilteredDays.invalidate();
-    //         void ctx.schedule.getAllDays.invalidate();
-    //     },
-    // });
+        data = {
+            id: schedule.id,
+            dayOfWeek: schedule.dayOfWeek,
+            startTime,
+            endTime,
+        };
 
-    /**
-     * Monday: 9am - 1pm
-     * Tuesday: 9am - 5pm
-     * Wed-Fri: 10am - 7pm
-     */
-    // const [schedule, setSchedule] = useState<{ [key: number]: number[] }>({
-    //     1: [9, 13],
-    //     2: [9, 17],
-    //     3: [10, 19],
-    //     4: [10, 19],
-    //     5: [10, 19],
-    // });
+        mutate(data)
+    };
 
-    // Create an array of hours from 0 to 23
     const hours = Array.from({ length: 24 }, (_, i) => i);
 
-    // Event handler for updating start and end times
-    // const handleStartTimeChange = (dayOfWeek: number, newStartTime: number) => {
-    //     setDayTimes({
-    //         ...dayTimes,
-    //         [dayOfWeek]: [newStartTime, dayTimes[dayOfWeek][1]],
-    //     });
-    // };
-
-    // const handleEndTimeChange = (dayOfWeek: number, newEndTime: number) => {
-    //     setDayTimes({
-    //         ...dayTimes,
-    //         [dayOfWeek]: [dayTimes[dayOfWeek][0], newEndTime],
-    //     });
-    // };
-
-    // useEffect(() => {
-    //     setIsSundayActive(0 in schedule);
-    //     setIsMondayActive(1 in schedule);
-    //     setIsTuesdayActive(2 in schedule);
-    //     setIsWednesdayActive(3 in schedule);
-    //     setIsThursdayActive(4 in schedule);
-    //     setIsFridayActive(5 in schedule);
-    //     setIsSaturdayActive(6 in schedule);
-    // }, [schedule]);
-
-    // console.log("daytimes", dayTimes);
-
-    // const handleUpdateClick = (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     // console.log(dayTimes);
-
-    //     const result = Object.entries(dayTimes).map(
-    //         ([dayOfWeek, [startTime, endTime]]) => ({
-    //             dayOfWeek: parseInt(dayOfWeek),
-    //             startTime,
-    //             endTime,
-    //         })
-    //     );
-    // if (dayTimes && result) {
-    //     mutate(result);
-    // }
-
-    // setSchedule(dayTimes);
-    // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
-
-    // TODO may want to void booking stuf to update the sched
-    // };
-
-    // const handleAddDay = (dayOfWeek: number) => {
-    //     // Check if the day already exists in dayTimes, and if not, add it with a default value
-    //     if (!(dayOfWeek in dayTimes)) {
-    //         setDayTimes({
-    //             ...dayTimes,
-    //             [dayOfWeek]: [10, 19], // Default start and end times (you can set your own defaults)
-    //         });
-    //     }
-    // };
-
-    // const handleRemoveDay = (dayOfWeek: number) => {
-    //     // Create a copy of dayTimes without the specified day
-    //     if (dayOfWeek in dayTimes) {
-    //         const updatedDayTimes = { ...dayTimes };
-    //         delete updatedDayTimes[dayOfWeek];
-
-    //         // Update the state with the modified dayTimes
-    //         setDayTimes(updatedDayTimes);
-    //     }
-    // };
-
     return (
-        <form className="flex justify-between">
-            <div className="rounded-2xl bg-darkGlass p-4">
-                {schedule.dayOfWeek}
+        <form className="mb-5 flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
+            <div className="">
+                {
+                    [
+                        "Sunday",
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                    ][schedule.dayOfWeek]
+                }
             </div>
-            <select value={startTime} className="mr-3 rounded-2xl bg-darkGlass">
+            <select
+                value={startTime}
+                onChange={(e) => setStartTime(parseInt(e.target.value, 10))}
+                className="mr-3 rounded-2xl bg-darkGlass p-2"
+            >
                 {hours.map((hour) => (
                     <option key={hour} value={hour}>
                         {hour}:00
                     </option>
                 ))}
             </select>
-            <select value={endTime} className="mr-3 rounded-2xl bg-darkGlass">
+            <select
+                value={endTime}
+                onChange={(e) => setEndTime(parseInt(e.target.value, 10))}
+                className="mr-3 rounded-2xl bg-darkGlass p-2"
+            >
                 {hours.map((hour) => (
                     <option key={hour} value={hour}>
                         {hour}:00
                     </option>
                 ))}
             </select>
+            <button className="rounded-2xl bg-darkGlass px-4 py-2">
+                Update
+            </button>
         </form>
     );
 }
