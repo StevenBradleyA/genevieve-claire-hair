@@ -135,14 +135,15 @@ const AdminViewBookings: NextPageWithLayout = () => {
         return false;
     };
 
-    // new new
+    //    TODO Allow ability to approve pending appointments
+    // TODO Allow geni to book for any selected client in the db any service
 
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
-            <div> Calendar that shows schedule </div>
-            <div className="mb-10">
+            <div> This needs to be redesigned </div>
+            <div>
                 {" "}
-                Ability to change calendar availability
+                we want ability for geni to book for anyone for any service{" "}
             </div>
 
             <div className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg">
@@ -171,37 +172,13 @@ const AdminViewBookings: NextPageWithLayout = () => {
                     </button>
                 </div>
             </div>
-            {scheduleData && (
-                <div className="mt-10 flex flex-col gap-10">
-                    <button
-                        onClick={openModal}
-                        className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
-                    >
-                        Change Schedule
-                    </button>
-                    <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                        <div>
-                        {scheduleData.map((schedule: Schedule, i: number) => (
-                            <EachSchedule
-                                key={i}
-                                closeModal={closeModal}
-                                schedule={schedule}
-                            />
-                        ))}
 
-                        </div>
-                    </ModalDialog>
-                </div>
-            )}
-
-            <div className="mb-96 mt-96">Calendar here</div>
-
-            <div className="flex items-center gap-5 text-5xl font-bold">
+            <div className="mt-20 flex items-center gap-5 text-5xl font-bold">
                 <div className="">Past</div>
 
                 <div
                     className="switch w-28 p-2"
-                    data-isFuture={isFuture}
+                    data-isfuture={isFuture}
                     onClick={toggleSwitch}
                 >
                     <motion.div
@@ -232,6 +209,29 @@ const AdminViewBookings: NextPageWithLayout = () => {
                         />
                     ))}
             </div>
+            {scheduleData && (
+                <div className="mb-10 mt-10 flex flex-col gap-10">
+                    <button
+                        onClick={openModal}
+                        className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                    >
+                        Change Schedule
+                    </button>
+                    <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                        <div>
+                            {scheduleData.map(
+                                (schedule: Schedule, i: number) => (
+                                    <EachSchedule
+                                        key={i}
+                                        closeModal={closeModal}
+                                        schedule={schedule}
+                                    />
+                                )
+                            )}
+                        </div>
+                    </ModalDialog>
+                </div>
+            )}
         </div>
     );
 };

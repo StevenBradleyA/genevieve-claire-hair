@@ -431,7 +431,7 @@
     cursor: pointer;
 }
 
-.switch[data-isFuture="true"] {
+.switch[data-isfuture="true"] {
     justify-content: flex-end;
 }
 

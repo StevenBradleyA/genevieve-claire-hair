@@ -89,6 +89,8 @@ export default function TimeSlotPicker({
     //     5: [10, 19],
     // });
 
+    // TODO WEEKENDS not showing up even if in schedule. Not sure if disabled or something...?
+
     useEffect(() => {
         // TODO: Reset time slot if new selection doesn't have that time slot
         setTimeSlot(undefined);
