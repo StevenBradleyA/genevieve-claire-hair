@@ -42,8 +42,6 @@ export type BookingDetailsType = {
     services: string;
 };
 
-
-
 const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -173,17 +171,28 @@ const AdminViewBookings: NextPageWithLayout = () => {
                     </button>
                 </div>
             </div>
-            <div className="mt-10">
-                <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                    {scheduleData.map((schedule: Schedule, i: number) => (
-                        <EachSchedule
-                            key={i}
-                            closeModal={closeModal}
-                            schedule={schedule}
-                        />
-                    ))}
-                </ModalDialog>
-            </div>
+            {scheduleData && (
+                <div className="mt-10 flex flex-col gap-10">
+                    <button
+                        onClick={openModal}
+                        className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+                    >
+                        Change Schedule
+                    </button>
+                    <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                        <div>
+                        {scheduleData.map((schedule: Schedule, i: number) => (
+                            <EachSchedule
+                                key={i}
+                                closeModal={closeModal}
+                                schedule={schedule}
+                            />
+                        ))}
+
+                        </div>
+                    </ModalDialog>
+                </div>
+            )}
 
             <div className="mb-96 mt-96">Calendar here</div>
 

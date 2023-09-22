@@ -1,38 +1,41 @@
 import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
+import type { Schedule } from "@prisma/client";
 
-interface Schedule {
-    schedule: { [key: number]: number[] };
-    // setSchedule: (schedule: { [key: number]: number[] }) => void;
+interface ScheduleProps {
+    schedule: Schedule;
+    closeModal: () => void;
 }
 
-export default function EachSchedule({ schedule }: Schedule) {
-    const [isMondayActive, setIsMondayActive] = useState<boolean>(false);
-    const [isTuesdayActive, setIsTuesdayActive] = useState<boolean>(false);
-    const [isWednesdayActive, setIsWednesdayActive] = useState<boolean>(false);
-    const [isThursdayActive, setIsThursdayActive] = useState<boolean>(false);
-    const [isFridayActive, setIsFridayActive] = useState<boolean>(false);
-    const [isSaturdayActive, setIsSaturdayActive] = useState<boolean>(false);
-    const [isSundayActive, setIsSundayActive] = useState<boolean>(false);
-    const [dayTimes, setDayTimes] = useState<{ [key: number]: number[] }>(
-        schedule
-    );
-    const [startTime, setStartTime] = useState(0);
-    const [endTime, setEndTime] = useState(0);
+export default function EachSchedule({ schedule, closeModal }: ScheduleProps) {
+    console.log(schedule);
+
+    // const [isMondayActive, setIsMondayActive] = useState<boolean>(false);
+    // const [isTuesdayActive, setIsTuesdayActive] = useState<boolean>(false);
+    // const [isWednesdayActive, setIsWednesdayActive] = useState<boolean>(false);
+    // const [isThursdayActive, setIsThursdayActive] = useState<boolean>(false);
+    // const [isFridayActive, setIsFridayActive] = useState<boolean>(false);
+    // const [isSaturdayActive, setIsSaturdayActive] = useState<boolean>(false);
+    // const [isSundayActive, setIsSundayActive] = useState<boolean>(false);
+    // const [dayTimes, setDayTimes] = useState<{ [key: number]: number[] }>(
+    //     schedule
+    // );
+    const [startTime, setStartTime] = useState(schedule.startTime);
+    const [endTime, setEndTime] = useState(schedule.endTime);
 
     // what is the purpose of dayTimes...
     // I need to refactor that we only update one at a time
 
     console.log("pog", schedule);
 
-    const ctx = api.useContext();
+    // const ctx = api.useContext();
 
-    const { mutate } = api.schedule.updateSchedule.useMutation({
-        onSuccess: () => {
-            void ctx.schedule.getFilteredDays.invalidate();
-            void ctx.schedule.getAllDays.invalidate();
-        },
-    });
+    // const { mutate } = api.schedule.updateSchedule.useMutation({
+    //     onSuccess: () => {
+    //         void ctx.schedule.getFilteredDays.invalidate();
+    //         void ctx.schedule.getAllDays.invalidate();
+    //     },
+    // });
 
     /**
      * Monday: 9am - 1pm
@@ -65,63 +68,86 @@ export default function EachSchedule({ schedule }: Schedule) {
     //     });
     // };
 
-    useEffect(() => {
-        setIsSundayActive(0 in schedule);
-        setIsMondayActive(1 in schedule);
-        setIsTuesdayActive(2 in schedule);
-        setIsWednesdayActive(3 in schedule);
-        setIsThursdayActive(4 in schedule);
-        setIsFridayActive(5 in schedule);
-        setIsSaturdayActive(6 in schedule);
-    }, [schedule]);
+    // useEffect(() => {
+    //     setIsSundayActive(0 in schedule);
+    //     setIsMondayActive(1 in schedule);
+    //     setIsTuesdayActive(2 in schedule);
+    //     setIsWednesdayActive(3 in schedule);
+    //     setIsThursdayActive(4 in schedule);
+    //     setIsFridayActive(5 in schedule);
+    //     setIsSaturdayActive(6 in schedule);
+    // }, [schedule]);
 
     // console.log("daytimes", dayTimes);
 
-    const handleUpdateClick = (e: React.FormEvent) => {
-        e.preventDefault();
-        // console.log(dayTimes);
+    // const handleUpdateClick = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     // console.log(dayTimes);
 
-        const result = Object.entries(dayTimes).map(
-            ([dayOfWeek, [startTime, endTime]]) => ({
-                dayOfWeek: parseInt(dayOfWeek),
-                startTime,
-                endTime,
-            })
-        );
-        // if (dayTimes && result) {
-        //     mutate(result);
-        // }
+    //     const result = Object.entries(dayTimes).map(
+    //         ([dayOfWeek, [startTime, endTime]]) => ({
+    //             dayOfWeek: parseInt(dayOfWeek),
+    //             startTime,
+    //             endTime,
+    //         })
+    //     );
+    // if (dayTimes && result) {
+    //     mutate(result);
+    // }
 
-        // setSchedule(dayTimes);
-        // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
+    // setSchedule(dayTimes);
+    // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
 
-        // TODO may want to void booking stuf to update the sched
-    };
+    // TODO may want to void booking stuf to update the sched
+    // };
 
-    const handleAddDay = (dayOfWeek: number) => {
-        // Check if the day already exists in dayTimes, and if not, add it with a default value
-        if (!(dayOfWeek in dayTimes)) {
-            setDayTimes({
-                ...dayTimes,
-                [dayOfWeek]: [10, 19], // Default start and end times (you can set your own defaults)
-            });
-        }
-    };
+    // const handleAddDay = (dayOfWeek: number) => {
+    //     // Check if the day already exists in dayTimes, and if not, add it with a default value
+    //     if (!(dayOfWeek in dayTimes)) {
+    //         setDayTimes({
+    //             ...dayTimes,
+    //             [dayOfWeek]: [10, 19], // Default start and end times (you can set your own defaults)
+    //         });
+    //     }
+    // };
 
-    const handleRemoveDay = (dayOfWeek: number) => {
-        // Create a copy of dayTimes without the specified day
-        if (dayOfWeek in dayTimes) {
-            const updatedDayTimes = { ...dayTimes };
-            delete updatedDayTimes[dayOfWeek];
+    // const handleRemoveDay = (dayOfWeek: number) => {
+    //     // Create a copy of dayTimes without the specified day
+    //     if (dayOfWeek in dayTimes) {
+    //         const updatedDayTimes = { ...dayTimes };
+    //         delete updatedDayTimes[dayOfWeek];
 
-            // Update the state with the modified dayTimes
-            setDayTimes(updatedDayTimes);
-        }
-    };
+    //         // Update the state with the modified dayTimes
+    //         setDayTimes(updatedDayTimes);
+    //     }
+    // };
 
     return (
-        <div className="flex flex-col gap-5">
-            <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
+        <form className="flex justify-between">
+            <div className="rounded-2xl bg-darkGlass p-4">
+                {schedule.dayOfWeek}
+            </div>
+            <select value={startTime} className="mr-3 rounded-2xl bg-darkGlass">
+                {hours.map((hour) => (
+                    <option key={hour} value={hour}>
+                        {hour}:00
+                    </option>
+                ))}
+            </select>
+            <select value={endTime} className="mr-3 rounded-2xl bg-darkGlass">
+                {hours.map((hour) => (
+                    <option key={hour} value={hour}>
+                        {hour}:00
+                    </option>
+                ))}
+            </select>
+        </form>
+    );
+}
+
+/*
+
+<div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
                 <div className="rounded-2xl bg-darkGlass p-2">Monday</div>
                 {isMondayActive ? (
                     <>
@@ -171,7 +197,7 @@ export default function EachSchedule({ schedule }: Schedule) {
                     </>
                 )}
             </div>
-            {/* Tuesday */}
+
             <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
                 <div className="rounded-2xl bg-darkGlass p-2">Tuesday</div>
                 {isTuesdayActive ? (
@@ -194,7 +220,7 @@ export default function EachSchedule({ schedule }: Schedule) {
                 )}
             </div>
 
-            {/* Wednesday */}
+
             <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
                 <div className="rounded-2xl bg-darkGlass p-2">Wednesday</div>
                 {isWednesdayActive ? (
@@ -217,7 +243,7 @@ export default function EachSchedule({ schedule }: Schedule) {
                 )}
             </div>
 
-            {/* Thursday */}
+
             <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
                 <div className="rounded-2xl bg-darkGlass p-2">Thursday</div>
                 {isThursdayActive ? (
@@ -240,7 +266,6 @@ export default function EachSchedule({ schedule }: Schedule) {
                 )}
             </div>
 
-            {/* Friday */}
             <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
                 <div className="rounded-2xl bg-darkGlass p-2">Friday</div>
                 {isFridayActive ? (
@@ -263,7 +288,7 @@ export default function EachSchedule({ schedule }: Schedule) {
                 )}
             </div>
 
-            {/* Saturday */}
+
             <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
                 <div className="rounded-2xl bg-darkGlass p-2">Saturday</div>
                 {isSaturdayActive ? (
@@ -286,7 +311,6 @@ export default function EachSchedule({ schedule }: Schedule) {
                 )}
             </div>
 
-            {/* Sunday */}
             <div className="flex items-center justify-between gap-5 rounded-2xl bg-darkGlass px-6 py-2">
                 <div className="rounded-2xl bg-darkGlass p-2">Sunday</div>
                 {isSundayActive ? (
@@ -314,11 +338,15 @@ export default function EachSchedule({ schedule }: Schedule) {
             >
                 Update
             </button>
-        </div>
-    );
-}
 
-/*
+
+
+
+
+
+
+
+
   const daysOfWeek = [
         { name: "Monday", index: 1 },
         { name: "Tuesday", index: 2 },
