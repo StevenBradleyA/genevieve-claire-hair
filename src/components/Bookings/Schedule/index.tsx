@@ -81,10 +81,9 @@ export default function ScheduleChange({ schedule }: Schedule) {
                 endTime,
             })
         );
-
-        console.log(result);
-
-        // mutate(dayTimes);
+        if (dayTimes && result) {
+            mutate(result);
+        }
 
         // setSchedule(dayTimes);
         // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));

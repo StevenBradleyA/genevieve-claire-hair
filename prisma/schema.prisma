@@ -87,7 +87,7 @@ model ServiceSubcategory {
 
 model Schedule {
     id        Int @id @default(autoincrement())
-    dayOfWeek Int
+    dayOfWeek Int @unique
     startTime Int
     endTime   Int
 }
