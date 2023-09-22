@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { api } from "~/utils/api";
 
 interface Schedule {
     schedule: { [key: number]: number[] };
@@ -16,9 +17,16 @@ export default function ScheduleChange({ schedule }: Schedule) {
     const [dayTimes, setDayTimes] = useState<{ [key: number]: number[] }>(
         schedule
     );
+    const ctx = api.useContext();
 
     // TODO create update tRPC route for schedule all the handles need new logic
     // TODO to remove a day you can just set startTIme and endTime to 0
+
+    const { mutate } = api.schedule.updateSchedule.useMutation({
+        onSuccess: () => {
+            void ctx.schedule.getAllDays.invalidate();
+        },
+    });
 
     /**
      * Monday: 9am - 1pm
@@ -60,13 +68,24 @@ export default function ScheduleChange({ schedule }: Schedule) {
         setIsFridayActive(5 in dayTimes);
         setIsSaturdayActive(6 in dayTimes);
     }, [dayTimes]);
+    // console.log("daytimes", dayTimes);
 
-    console.log("sched", schedule);
-    console.log("daytimes", dayTimes);
-
-    const handleUpdateClick = (e) => {
+    const handleUpdateClick = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("update");
+        // console.log(dayTimes);
+
+        const result = Object.entries(dayTimes).map(
+            ([dayOfWeek, [startTime, endTime]]) => ({
+                dayOfWeek: parseInt(dayOfWeek),
+                startTime,
+                endTime,
+            })
+        );
+
+        console.log(result);
+
+        // mutate(dayTimes);
+
         // setSchedule(dayTimes);
         // setSchedule((prevSchedule) => ({ ...prevSchedule, ...dayTimes }));
 
