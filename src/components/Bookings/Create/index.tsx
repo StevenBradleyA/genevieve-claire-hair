@@ -178,14 +178,14 @@ export default function CreateBooking({
     });
 
     return isMobile ? (
-        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 font-quattrocento shadow-lg">
+        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-darkGlass p-5 font-quattrocento shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}
                 onSelect={(e) => {
                     setDate(e);
                 }}
-                className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
+                className="rounded-lg bg-darkGlass text-white shadow-2xl "
                 {...createCalendarOptions(futureBookings)}
             />
             <div className="flex w-60 flex-col">
@@ -206,14 +206,14 @@ export default function CreateBooking({
             </div>
         </div>
     ) : (
-        <div className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg">
+        <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}
                 onSelect={(e) => {
                     setDate(e);
                 }}
-                className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
+                className="rounded-lg bg-darkGlass text-white shadow-2xl "
                 {...createCalendarOptions(futureBookings)}
             />
             <div className="flex w-60 flex-col">
