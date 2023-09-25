@@ -68,11 +68,24 @@ export default function Home() {
     return (
         <div className=" flex w-full flex-col items-center overflow-x-hidden bg-blue-400 text-white">
             <div className="flex w-full justify-between bg-green-300">
-                <div className="flex w-2/3 h-1/3 justify-start rounded-2xl bg-red-300 p-5">
-                    <Spline
-                        scene="https://draft.spline.design/jLVrvSOfFRqjjTzB/scene.splinecode"
-                        // className=" border border-dotted border-green-400"
-                    />
+                <div className="flex h-1/3 w-2/3 flex-col items-center p-5">
+                    <div className="flex w-full rounded-2xl bg-yellow-300 p-2 shadow-2xl">
+                        <Spline scene="https://draft.spline.design/druXKwRT8-szzjLA/scene.splinecode" />
+                    </div>
+                    <motion.div
+                        className="mt-20 flex items-center gap-2"
+                        initial="initial"
+                        animate="bobble"
+                        exit="exit"
+                        variants={bounceVariants}
+                    >
+                        <div className="text-2xl">scroll down </div>
+                        <Image
+                            src={downArrow as string}
+                            alt="down arrow"
+                            className="w-4"
+                        />
+                    </motion.div>
                 </div>
                 <Image
                     src={geni}
@@ -83,20 +96,6 @@ export default function Home() {
                     style={{ borderBottomLeftRadius: "30px" }}
                 />
             </div>
-            <motion.div
-                className="mt-3 flex items-center gap-2"
-                initial="initial"
-                animate="bobble"
-                exit="exit"
-                variants={bounceVariants}
-            >
-                <div>scroll down </div>
-                <Image
-                    src={downArrow as string}
-                    alt="down arrow"
-                    className="w-3"
-                />
-            </motion.div>
             <div className="mt-32 flex w-full">
                 <div className=" relative flex h-96 w-3/4">
                     {images.map((image, index) => {
