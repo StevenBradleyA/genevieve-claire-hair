@@ -4,14 +4,13 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
-import bookNowSvg from "@public/svgs/Geni.svg";
 
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 
 import downArrow from "@public/svgs/angles-down-solid.svg";
-import { AnimatePresence, motion,  } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
 
 export default function Home() {
@@ -68,11 +67,11 @@ export default function Home() {
     };
 
     return (
-        <div className=" flex w-full flex-col items-center overflow-x-hidden bg-blue-400 text-white">
-            <div className="flex w-full justify-between bg-green-300">
-                <div className="flex h-1/3 w-2/3 flex-col items-center p-5">
-                    <div className="flex w-full rounded-2xl bg-yellow-300 p-2 shadow-2xl">
-                        <Spline scene="https://draft.spline.design/tDJvfkbcPZ7FZ-2m/scene.splinecode" />
+        <div className=" flex w-full flex-col items-center overflow-x-hidden  text-white">
+            <div className="flex w-full justify-between ">
+                <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
+                    <div className="flex w-full rounded-2xl bg-lightPurple p-4">
+                        <Spline scene="https://draft.spline.design/IyXwTM8Xes7VfH7t/scene.splinecode" />
                     </div>
                     <motion.div
                         className="mt-20 flex items-center gap-2"
@@ -81,11 +80,11 @@ export default function Home() {
                         exit="exit"
                         variants={bounceVariants}
                     >
-                        <div className="text-2xl">scroll down </div>
+                        <div className="text-4xl">scroll down </div>
                         <Image
                             src={downArrow as string}
                             alt="down arrow"
-                            className="w-4"
+                            className="w-6"
                         />
                     </motion.div>
                 </div>
@@ -99,17 +98,9 @@ export default function Home() {
                         style={{ borderBottomLeftRadius: "30px" }}
                     />
 
-                    {/* <button>
-                        <Image
-                            src={bookNowSvg}
-                            alt="book now"
-                            className="absolute bottom-10 left-5 w-2/3 "
-                        />
-                    </button> */}
-                    <div className="absolute bottom-10 left-5 w-1/3 ">
-
-                    <BookNowSvg  />
-                    </div>
+                    <button className="absolute -bottom-40 left-5">
+                        <BookNowSvg />
+                    </button>
                 </div>
             </div>
             <div className="mt-32 flex w-full">
