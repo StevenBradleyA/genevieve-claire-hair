@@ -4,13 +4,15 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
+import bookNowSvg from "@public/svgs/Geni.svg";
 
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 
 import downArrow from "@public/svgs/angles-down-solid.svg";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion,  } from "framer-motion";
+import BookNowSvg from "~/components/HomePage/bookNowSvg";
 
 export default function Home() {
     // TODO 3D 3 picture carosuel that has a review under it
@@ -70,7 +72,7 @@ export default function Home() {
             <div className="flex w-full justify-between bg-green-300">
                 <div className="flex h-1/3 w-2/3 flex-col items-center p-5">
                     <div className="flex w-full rounded-2xl bg-yellow-300 p-2 shadow-2xl">
-                        <Spline scene="https://draft.spline.design/druXKwRT8-szzjLA/scene.splinecode" />
+                        <Spline scene="https://draft.spline.design/tDJvfkbcPZ7FZ-2m/scene.splinecode" />
                     </div>
                     <motion.div
                         className="mt-20 flex items-center gap-2"
@@ -87,14 +89,28 @@ export default function Home() {
                         />
                     </motion.div>
                 </div>
-                <Image
-                    src={geni}
-                    alt="geni"
-                    width={geni.width}
-                    height={geni.height}
-                    className=" h-1/2 w-1/3 object-cover"
-                    style={{ borderBottomLeftRadius: "30px" }}
-                />
+                <div className="relative h-1/2 w-1/3 ">
+                    <Image
+                        src={geni}
+                        alt="geni"
+                        width={geni.width}
+                        height={geni.height}
+                        className=" w-full object-cover"
+                        style={{ borderBottomLeftRadius: "30px" }}
+                    />
+
+                    {/* <button>
+                        <Image
+                            src={bookNowSvg}
+                            alt="book now"
+                            className="absolute bottom-10 left-5 w-2/3 "
+                        />
+                    </button> */}
+                    <div className="absolute bottom-10 left-5 w-1/3 ">
+
+                    <BookNowSvg  />
+                    </div>
+                </div>
             </div>
             <div className="mt-32 flex w-full">
                 <div className=" relative flex h-96 w-3/4">
