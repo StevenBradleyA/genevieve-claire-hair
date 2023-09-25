@@ -33,7 +33,14 @@ export default function Home() {
     // console.log(blonding);
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
-    const script = ["mens cuts", "blonding", "vivids", "color correction"];
+    const script = [
+        "blonding",
+        "vivids",
+        "color correction",
+        "all over color",
+        "blowouts",
+        "haircuts",
+    ];
 
     const handleCarouselClick = (index: number): void => {
         if (index !== currentIndex) {
@@ -70,7 +77,12 @@ export default function Home() {
         <div className=" flex w-full flex-col items-center overflow-x-hidden  text-white">
             <div className="flex w-full justify-between ">
                 <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
-                    <div className="flex w-full rounded-2xl bg-lightPurple p-4">
+                    <div
+                        className="flex w-full rounded-2xl bg-lightPurple p-4 "
+                        style={{
+                            boxShadow: "10px 10px 20px rgba(0, 0, 0, 0.1)",
+                        }}
+                    >
                         <Spline scene="https://draft.spline.design/IyXwTM8Xes7VfH7t/scene.splinecode" />
                     </div>
                     <motion.div
@@ -94,7 +106,7 @@ export default function Home() {
                         alt="geni"
                         width={geni.width}
                         height={geni.height}
-                        className=" w-full object-cover"
+                        className=" w-full object-cover "
                         style={{ borderBottomLeftRadius: "30px" }}
                     />
 
@@ -103,7 +115,7 @@ export default function Home() {
                     </button>
                 </div>
             </div>
-            <div className="mt-32 flex w-full">
+            <div className="relative mt-32 flex w-full">
                 <div className=" relative flex h-96 w-3/4">
                     {images.map((image, index) => {
                         const distanceFromCenter = index - currentIndex;
@@ -155,15 +167,18 @@ export default function Home() {
                     })}
                 </div>
 
-                <div className="flex w-1/4 items-center justify-center font-grand-hotel text-6xl">
+                <div className="absolute right-28 top-20 flex w-1/3 items-center justify-center  text-6xl">
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                         // className="hover:underline"
                     >
                         <Link href="/portfolio" aria-label="Portfolio">
-                            Youre Pretty when you get here, Prettier when you
-                            leave
+                            You're{" "}
+                            <span className="text-violet-300">pretty</span> when
+                            you get here,{" "}
+                            <span className="text-violet-300">prettier</span>{" "}
+                            when you leave
                         </Link>
                     </motion.button>
                 </div>
@@ -176,39 +191,40 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 50 }}
                     transition={{ duration: 1 }}
-                    className="text-6xl"
+                    className="mt-20 text-8xl"
                 >
                     {script[currentScriptIndex]}
                 </motion.div>
             </AnimatePresence>
 
-            <div>
-                {" "}
-                that says color corrections, then mens cuts, then all services
-                etc.{" "}
-            </div>
-
-            <div>Need something that says book now or something</div>
             <h1 className="m-20 mt-44 font-quattrocento text-8xl">
-                {" "}
                 hi, im geni and I do hair stuff
             </h1>
             <div className="mb-32 flex p-10  ">
-                <div className=" mx-40 font-quattrocento text-4xl">
-                    Genevieve (Geni) Evanson is a hairstylist based out of
-                    Bellevue, Washington and has been styling hair
-                    professionally since 2017. Whilst she completed cosmetology
-                    school in Washington, she went through specialized training
-                    in Dallas, Texas. After her move back to Washington in 2020,
-                    Geni took on the daunting task of covid color corrections.
-                    During this time, she became an expert at being able to
-                    match the color, style, and flow of ones hair to the person;
-                    not the trends. Geni has always believed that your hair
-                    should be a reflection of who you are, not always what's
-                    popular. With extensive experience in carving and sculpting
-                    hair in her cutting techniques, Geni finds great joy in all
-                    things hair. Picture your dream look, and let Genevieve
-                    Clare Hair make that dream your reality.
+                <div className=" mx-40 flex flex-col gap-5 text-4xl">
+                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
+                        Genevieve (Geni) Evanson is a hairstylist based out of
+                        Bellevue, Washington and has been styling hair
+                        professionally since 2017.
+                    </div>
+                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
+                        Whilst she completed cosmetology school in Washington,
+                        she went through specialized training in Dallas, Texas.
+                        After her move back to Washington in 2020, Geni took on
+                        the daunting task of covid color corrections. During
+                        this time, she became an expert at being able to match
+                        the color, style, and flow of ones hair to the person;
+                        not the trends.{" "}
+                    </div>
+                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
+                        Geni has always believed that your hair should be a
+                        reflection of who you are, not always what's popular.
+                    </div>
+                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
+                        With extensive experience in carving and sculpting hair
+                        in her cutting techniques, Geni finds great joy in all
+                        things hair.
+                    </div>
                 </div>
 
                 <Image
@@ -221,10 +237,18 @@ export default function Home() {
                 />
             </div>
 
-            <div>
-                {" "}
-                Products maybe a section about what products I use and why?{" "}
-            </div>
+<div className="mb-20 flex w-3/4 px-20 justify-center">
+            <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className=" text-8xl"
+            >
+                Picture your <span className="text-violet-300">dream</span>{" "}
+                look, and let Genevieve Clare Hair make that{" "}
+                <span className="text-violet-300">dream</span> your reality.
+            </motion.div>
+
+</div>
         </div>
     );
 }
