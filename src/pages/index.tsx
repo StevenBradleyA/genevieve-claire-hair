@@ -3,6 +3,8 @@ import lsp1 from "@public/1.png";
 import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
+import geni from "@public/landing/geni-test.png";
+
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
@@ -64,23 +66,22 @@ export default function Home() {
     };
 
     return (
-        <div className=" flex w-full flex-col items-center px-10 text-white">
-            <div className="relative flex w-full justify-end gap-5 rounded-2xl bg-lightPurple py-10 ">
-                <Image
-                    src={holo}
-                    alt="geni"
-                    width={600}
-                    height={600}
-                    className=" absolute left-0 top-0 mr-5 flex w-1/3 justify-center rounded-3xl object-cover p-10"
-                    style={{ borderRadius: "60px" }}
-                />
-
-                <div className="flex w-3/4 justify-end">
+        <div className=" flex w-full flex-col items-center overflow-x-hidden bg-blue-400 text-white">
+            <div className="flex w-full justify-between bg-green-300">
+                <div className="flex w-2/3 h-1/3 justify-start rounded-2xl bg-red-300 p-5">
                     <Spline
                         scene="https://draft.spline.design/jLVrvSOfFRqjjTzB/scene.splinecode"
                         // className=" border border-dotted border-green-400"
                     />
                 </div>
+                <Image
+                    src={geni}
+                    alt="geni"
+                    width={geni.width}
+                    height={geni.height}
+                    className=" h-1/2 w-1/3 object-cover"
+                    style={{ borderBottomLeftRadius: "30px" }}
+                />
             </div>
             <motion.div
                 className="mt-3 flex items-center gap-2"
