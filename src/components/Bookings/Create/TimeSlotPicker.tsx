@@ -152,7 +152,7 @@ export default function TimeSlotPicker({
                             className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[9px] font-semibold transition ${
                                 timeSlot === el
                                     ? "bg-violet-300 text-white shadow-md"
-                                    : "bg-glass text-purple-500 shadow-md hover:bg-violet-100 hover:text-violet-600"
+                                    : "bg-darkGlass text-white shadow-md hover:bg-violet-100 hover:text-violet-600"
                             } p-1 shadow-2xl `}
                             key={time}
                         >
@@ -164,10 +164,10 @@ export default function TimeSlotPicker({
                                 setTimeSlot(el);
                                 console.log(el);
                             }}
-                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[11px] font-semibold transition ${
+                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[10px] font-semibold transition ${
                                 timeSlot === el
                                     ? "bg-violet-300 text-white shadow-md"
-                                    : "bg-glass text-purple-500 shadow-md hover:bg-violet-100 hover:text-violet-600"
+                                    : "bg-darkGlass text-white shadow-md hover:bg-violet-100 hover:text-violet-600"
                             } p-1 shadow-2xl `}
                             key={time}
                         >

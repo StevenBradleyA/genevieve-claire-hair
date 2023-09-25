@@ -10,6 +10,7 @@ import type { ServicesType } from "~/server/api/routers/service";
 const AdminViewServices: NextPageWithLayout = () => {
     const { data } = api.service.getAll.useQuery();
 
+    console.log(data);
     return (
         <div className="flex w-2/3 flex-col gap-10 rounded-2xl bg-glass p-10 ">
             {data &&
@@ -76,7 +77,11 @@ const SubcategoryView = ({
                 </button>
             </li>
             <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                <UpdateService subService={subCat} serviceData={serviceData} closeModal={closeModal} />
+                <UpdateService
+                    subService={subCat}
+                    serviceData={serviceData}
+                    closeModal={closeModal}
+                />
             </ModalDialog>
         </>
     );
