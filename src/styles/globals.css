@@ -379,6 +379,15 @@
 
 /* -------------       first-time-client       ------------- */
 
+#ftc-container {
+    overflow: hidden;
+}
+
+body,
+html {
+    /* overflow: hidden; */
+}
+
 .custom-checkbox {
     position: relative;
     width: 24px;

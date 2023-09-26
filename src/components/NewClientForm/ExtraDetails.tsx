@@ -300,7 +300,7 @@ export default function ExtraDetails({
             </button>
         </form>
     ) : (
-        <form className="flex flex-col items-center  rounded-2xl bg-glass p-20 font-quattrocento text-3xl text-white shadow-xl">
+        <form className="w-full bg-red-300 flex items-center rounded-2xl  p-20 font-quattrocento text-3xl text-white shadow-xl">
             <div className="mb-5 flex justify-center text-4xl">
                 Please provide your full name
             </div>

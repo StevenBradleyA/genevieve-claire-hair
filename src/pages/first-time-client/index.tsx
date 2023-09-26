@@ -44,6 +44,29 @@ export default function FirstTimeClient() {
         } else newNum < 0 ? setPage(0) : setPage(form.length - 1);
     };
 
+    const toggleOverflow = (shouldHide: boolean) => {
+        const body = document.body;
+        const html = document.documentElement;
+
+        if (shouldHide) {
+            body.style.overflow = "hidden";
+            html.style.overflow = "hidden";
+            window.scrollTo(0, 0);
+        } else {
+            body.style.overflow = "";
+            html.style.overflow = "";
+        }
+    };
+
+    useEffect(() => {
+        if (typeof isNew === "boolean") {
+            toggleOverflow(isNew);
+        }
+        return () => {
+            toggleOverflow(false);
+        };
+    }, [isNew]);
+
     const form = [
         <ServiceOptions key={0} setNotes={setServiceNotes} />,
         <ColorHistory key={1} setNotes={setColorHistoryNotes} />,
@@ -63,16 +86,18 @@ export default function FirstTimeClient() {
     ];
 
     return isNew ? (
-        <div className="flex flex-col items-center justify-center gap-5"
->
-            <h1 className="font-grand-hotel text-white mobile:text-3xl sm:text-8xl">
+        <div
+            className=" flex w-full flex-col items-center justify-center gap-5"
+            id="ftc-container"
+        >
+            <h1 className="font-grand-hotel text-white mobile:text-3xl sm:text-6xl full:text-8xl">
                 First Time Client
             </h1>
 
-            <div>
-                <div>{form[page]}</div>
+            <div className="w-full">
+                <div className="w-full">{form[page]}</div>
 
-                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-2xl">
+                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-lg full:text-2xl">
                     <button
                         onClick={() => changePages(-1)}
                         className="transform rounded-md bg-glass px-4 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"

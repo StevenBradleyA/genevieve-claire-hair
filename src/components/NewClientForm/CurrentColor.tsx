@@ -139,7 +139,7 @@ export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
             <div className="mb-5 flex justify-center text-4xl">
                 What is your current hair color?
             </div>
-            <div className="flex flex-col text-3xl">
+            <div className="flex flex-col text-3xl ">
                 <label className="flex cursor-pointer items-center gap-5">
                     Black/Dark Brown
                     <input
