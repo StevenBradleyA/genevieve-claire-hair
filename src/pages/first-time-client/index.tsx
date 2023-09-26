@@ -21,7 +21,11 @@ export default function FirstTimeClient() {
     const { data: session } = useSession();
     const router = useRouter();
 
+    console.log("hello");
+    // console.log(session)
     const isNew = session?.user.isNew;
+
+    console.log(isNew);
 
     useEffect(() => {
         async function redirectIfNotNew() {
@@ -68,10 +72,12 @@ export default function FirstTimeClient() {
                 First Time Client
             </h1>
 
-            <div>
-                <div>{form[page]}</div>
+            <div className="w-full">
+                <div className="flex w-full flex-col items-center px-10">
+                    {form[page]}
+                </div>
 
-                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-2xl">
+                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-lg full:text-2xl">
                     <button
                         onClick={() => changePages(-1)}
                         className="transform rounded-md bg-glass px-4 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"

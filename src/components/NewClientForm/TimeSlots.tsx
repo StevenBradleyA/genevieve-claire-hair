@@ -152,11 +152,13 @@ export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
             </div>
         </form>
     ) : (
-        <form className="flex flex-col font-quattrocento text-3xl text-white">
+        <form className="flex flex-col items-center font-quattrocento text-3xl text-white">
             <div className="mb-5 flex justify-center text-4xl">
                 What days/times are you most likely to book?
             </div>
-            <div className="flex flex-col items-start text-3xl">
+            {/* <div className="w-96 flex justify-center bg-red-200"> */}
+
+            <div className="flex w-1/3 flex-col text-3xl">
                 <label className="flex cursor-pointer items-center gap-5">
                     Monday
                     <input
@@ -238,6 +240,8 @@ export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
                     ></input>
                 </label>
             </div>
+
+            {/* </div> */}
         </form>
     );
 }

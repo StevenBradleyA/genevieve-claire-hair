@@ -8,6 +8,7 @@ import {
 export type ServicesType = {
     id: number;
     name: string;
+    price: number | null;
     requireConsult: boolean;
     subcategories: {
         id: number;
@@ -75,8 +76,6 @@ export const serviceRouter = createTRPCRouter({
                 res[el.name][sub.name] = sub.price;
             });
 
-            console.log(el);
-
             if (!el.subcategories.length && el.price) {
                 res[el.name] = el.price;
             }
@@ -99,6 +98,24 @@ export const serviceRouter = createTRPCRouter({
         )
         .mutation(async ({ input, ctx }) => {
             const newService = await ctx.prisma.serviceSubcategory.update({
+                where: { id: input.id },
+                data: input,
+            });
+
+            return newService;
+        }),
+
+    updateMainCategory: protectedProcedure
+        .input(
+            z.object({
+                id: z.number(),
+                name: z.string(),
+                price: z.number(),
+                requireConsult: z.boolean(),
+            })
+        )
+        .mutation(async ({ input, ctx }) => {
+            const newService = await ctx.prisma.serviceCategory.update({
                 where: { id: input.id },
                 data: input,
             });
