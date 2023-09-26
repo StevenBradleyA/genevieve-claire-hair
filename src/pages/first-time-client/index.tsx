@@ -86,16 +86,13 @@ export default function FirstTimeClient() {
     ];
 
     return isNew ? (
-        <div
-            className=" flex w-full flex-col items-center justify-center gap-5"
-            id="ftc-container"
-        >
+        <div className=" flex w-full flex-col items-center justify-center gap-5">
             <h1 className="font-grand-hotel text-white mobile:text-3xl sm:text-6xl full:text-8xl">
                 First Time Client
             </h1>
 
             <div className="w-full">
-                <div className="w-full">{form[page]}</div>
+                <div className="w-full flex flex-col items-center px-10">{form[page]}</div>
 
                 <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-lg full:text-2xl">
                     <button
