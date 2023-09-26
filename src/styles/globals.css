@@ -79,6 +79,13 @@
 
 /* mobile Burger */
 
+.burger-container {
+    position: relative;
+    height: 28px;
+    width: 36px;
+    cursor: pointer;
+}
+
 .line-top,
 .line-middle,
 .line-bottom {

@@ -35,8 +35,7 @@ export default function NavBar() {
 
     return isMobile ? (
         <nav
-            className="z-20 mb-10 flex items-center justify-between
-            overflow-auto bg-glass px-5 text-white"
+            className="z-20 mb-10 flex items-center justify-between bg-glass px-5 text-white"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
@@ -44,7 +43,7 @@ export default function NavBar() {
             </Link>
             <div className="mr-10 flex flex-col">
                 <div
-                    className={`container ${
+                    className={`burger-container ${
                         isMenuOpen ? "is-open" : "is-closed"
                     }`}
                     onClick={toggleMenu}

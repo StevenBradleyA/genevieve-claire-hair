@@ -63,7 +63,8 @@ export default function FirstTimeClient() {
     ];
 
     return isNew ? (
-        <div className="flex flex-col items-center justify-center gap-5">
+        <div className="flex flex-col items-center justify-center gap-5"
+>
             <h1 className="font-grand-hotel text-white mobile:text-3xl sm:text-8xl">
                 First Time Client
             </h1>
