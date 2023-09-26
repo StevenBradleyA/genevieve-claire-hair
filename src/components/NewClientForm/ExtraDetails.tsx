@@ -300,68 +300,43 @@ export default function ExtraDetails({
             </button>
         </form>
     ) : (
-        <form className="flex flex-col items-center rounded-2xl bg-red-300  p-10 font-quattrocento text-xl text-white shadow-xl">
-            <div className="flex gap-10">
+        <form className="flex flex-col items-center  rounded-2xl bg-glass p-20 font-quattrocento text-3xl text-white shadow-xl">
+            <div className="mb-5 flex justify-center text-4xl">
+                Please provide your full name
+            </div>
+            <div className=" mb-10 flex gap-5">
+                <input
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                    placeholder="First Name"
+                ></input>
+                <input
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                    placeholder="Last Name"
+                ></input>
+            </div>
+            {errors.firstName && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.firstName}
+                </p>
+            )}
+            {errors.lastName && (
+                <p className="create-listing-errors text-red-500">
+                    {errors.lastName}
+                </p>
+            )}
 
-
-
-
-
-
-                <div className="flex flex-col ">
-
-
-
-
-                    <div className=" flex text-3xl">
-                        Please provide your full name
-                    </div>
-                    <div className=" my-5 flex gap-5">
-                        <input
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                            placeholder="First Name"
-                        ></input>
-                        <input
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                            placeholder="Last Name"
-                        ></input>
-                    </div>
-                    {errors.firstName && (
-                        <p className="create-listing-errors text-red-500">
-                            {errors.firstName}
-                        </p>
-                    )}
-                    {errors.lastName && (
-                        <p className="create-listing-errors text-red-500">
-                            {errors.lastName}
-                        </p>
-                    )}
-                    <div className="mb-5 flex text-3xl">
-                        {`Anything you'd like me to know?`}
-                    </div>
-                    <textarea
-                        value={formData}
-                        onChange={(e) => setFormData(e.target.value)}
-                        className=" h-32 w-96 rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                    ></textarea>
-                </div>
-
-
-
-
-
-
-                        <div className="flex flex-col">
-
-
-
-
-
-
+            <div className="mb-5 flex justify-center text-4xl">
+                {`Anything you'd like me to know?`}
+            </div>
+            <textarea
+                value={formData}
+                onChange={(e) => setFormData(e.target.value)}
+                className=" h-40 w-80 rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+            ></textarea>
 
             <div className="mt-5 flex justify-center text-4xl">
                 Upload photos of your hair
@@ -451,11 +426,6 @@ export default function ExtraDetails({
             >
                 {isSubmitting ? "Uploading..." : "Submit Review"}
             </button>
-
-
-                        </div>
-            </div>
-
         </form>
     );
 }

@@ -44,7 +44,7 @@ export default function NavBar() {
             </Link>
             <div className="mr-10 flex flex-col">
                 <div
-                    className={`container ${
+                    className={`burger-container ${
                         isMenuOpen ? "is-open" : "is-closed"
                     }`}
                     onClick={toggleMenu}

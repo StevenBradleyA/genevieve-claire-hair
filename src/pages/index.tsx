@@ -14,23 +14,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
 
 export default function Home() {
-    // TODO 3D 3 picture carosuel that has a review under it
-    // as each photo is click review under it changes
 
-    // right side this slogan which links to portfolio
+    // console.log('hello')
 
-    // Your pretty when you get here
-    // youre prettier when you leave
-
-    // another page length below
-
-    // a little more personal about me section
-
-    // very bottom of page
-    // logos of hair product companies she uses
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // console.log(blonding);
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
     const script = [
@@ -50,17 +36,17 @@ export default function Home() {
 
     const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentScriptIndex((prevIndex) =>
-                prevIndex === script.length - 1 ? 0 : prevIndex + 1
-            );
-        }, 3000);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         setCurrentScriptIndex((prevIndex) =>
+    //             prevIndex === script.length - 1 ? 0 : prevIndex + 1
+    //         );
+    //     }, 3000);
 
-        return () => {
-            clearInterval(interval);
-        };
-    }, []);
+    //     return () => {
+    //         clearInterval(interval);
+    //     };
+    // }, []);
 
     const bounceVariants = {
         initial: { opacity: 1, y: 20, rotate: 0 },

@@ -21,7 +21,11 @@ export default function FirstTimeClient() {
     const { data: session } = useSession();
     const router = useRouter();
 
+    console.log("hello");
+    // console.log(session)
     const isNew = session?.user.isNew;
+
+    console.log(isNew);
 
     useEffect(() => {
         async function redirectIfNotNew() {
@@ -43,29 +47,6 @@ export default function FirstTimeClient() {
             setPage(newNum);
         } else newNum < 0 ? setPage(0) : setPage(form.length - 1);
     };
-
-    const toggleOverflow = (shouldHide: boolean) => {
-        const body = document.body;
-        const html = document.documentElement;
-
-        if (shouldHide) {
-            body.style.overflow = "hidden";
-            html.style.overflow = "hidden";
-            window.scrollTo(0, 0);
-        } else {
-            body.style.overflow = "";
-            html.style.overflow = "";
-        }
-    };
-
-    useEffect(() => {
-        if (typeof isNew === "boolean") {
-            toggleOverflow(isNew);
-        }
-        return () => {
-            toggleOverflow(false);
-        };
-    }, [isNew]);
 
     const form = [
         <ServiceOptions key={0} setNotes={setServiceNotes} />,
@@ -92,7 +73,9 @@ export default function FirstTimeClient() {
             </h1>
 
             <div className="w-full">
-                <div className="w-full flex flex-col items-center px-10">{form[page]}</div>
+                <div className="flex w-full flex-col items-center px-10">
+                    {form[page]}
+                </div>
 
                 <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-lg full:text-2xl">
                     <button
