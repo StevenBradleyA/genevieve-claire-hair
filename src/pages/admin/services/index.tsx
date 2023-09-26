@@ -4,8 +4,9 @@ import { useState, type ReactElement } from "react";
 import type { NextPageWithLayout } from "~/pages/_app";
 import type { ServiceSubcategory } from "@prisma/client";
 import ModalDialog from "~/components/Modal";
-import UpdateService from "~/components/Services/Update";
+import UpdateSubService from "~/components/Services/UpdateSubService";
 import type { ServicesType } from "~/server/api/routers/service";
+import UpdateMainService from "~/components/Services/UpdateMainService";
 
 const AdminViewServices: NextPageWithLayout = () => {
     const { data } = api.service.getAll.useQuery();
@@ -21,16 +22,14 @@ const AdminViewServices: NextPageWithLayout = () => {
                             key={el.id}
                         >
                             <div className="text-5xl font-bold">{el.name}</div>
-                            {el.subcategories.length && (
+                            {el.subcategories.length ? (
                                 <ul>
                                     {el.subcategories.map((sub, i) => (
-                                        <SubcategoryView
-                                            key={i}
-                                            subCat={sub}
-                                            serviceData={data}
-                                        />
+                                        <SubcategoryView key={i} subCat={sub} />
                                     ))}
                                 </ul>
+                            ) : (
+                                <WithoutSubCatView key={el.name} mainCat={el} />
                             )}
                         </div>
                     );
@@ -39,13 +38,42 @@ const AdminViewServices: NextPageWithLayout = () => {
     );
 };
 
-const SubcategoryView = ({
-    subCat,
-    serviceData,
-}: {
-    subCat: ServiceSubcategory;
-    serviceData: ServicesType[];
-}) => {
+const WithoutSubCatView = ({ mainCat }: { mainCat: ServicesType }) => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+    return (
+        <>
+            <li className="mb-5 flex items-center justify-between rounded-2xl bg-darkGlass px-5">
+                {mainCat.name}
+                <div>${mainCat.price}</div>
+                <div>
+                    Require consult: {mainCat.requireConsult ? "yes" : "no"}
+                </div>
+                <button
+                    onClick={openModal}
+                    className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                >
+                    💅
+                </button>
+            </li>
+            <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
+                <UpdateMainService
+                    mainService={mainCat}
+                    closeModal={closeModal}
+                />
+            </ModalDialog>
+        </>
+    );
+};
+
+const SubcategoryView = ({ subCat }: { subCat: ServiceSubcategory }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const openModal = () => {
@@ -58,10 +86,7 @@ const SubcategoryView = ({
 
     return (
         <>
-            <li
-                key={subCat.id}
-                className="mb-5 flex items-center justify-between rounded-2xl bg-darkGlass px-5"
-            >
+            <li className="mb-5 flex items-center justify-between rounded-2xl bg-darkGlass px-5">
                 {subCat.name}
                 <div>${subCat.price}</div>
                 <div>{subCat.time} minutes</div>
@@ -77,11 +102,7 @@ const SubcategoryView = ({
                 </button>
             </li>
             <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                <UpdateService
-                    subService={subCat}
-                    serviceData={serviceData}
-                    closeModal={closeModal}
-                />
+                <UpdateSubService subService={subCat} closeModal={closeModal} />
             </ModalDialog>
         </>
     );

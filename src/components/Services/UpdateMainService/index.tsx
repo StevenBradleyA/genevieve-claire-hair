@@ -1,8 +1,7 @@
-import type { ServiceSubcategory } from "@prisma/client";
 import { useState } from "react";
-import type { ServicesType } from "~/server/api/routers/service";
 import { api } from "~/utils/api";
 import { motion } from "framer-motion";
+import type { ServicesType } from "~/server/api/routers/service";
 
 // id: number;
 // name: string;
@@ -12,25 +11,21 @@ import { motion } from "framer-motion";
 // requireConsult: boolean;
 // serviceCategoryId: number;
 
-export default function UpdateService({
-    subService,
-    serviceData,
+export default function UpdateMainService({
+    mainService,
     closeModal,
 }: {
-    subService: ServiceSubcategory;
-    serviceData: ServicesType[];
+    mainService: ServicesType;
     closeModal: () => void;
 }) {
-    const [name, setName] = useState(subService.name);
-    const [price, setPrice] = useState(subService.price);
-    const [time, setTime] = useState(subService.time);
-    const [bundleTime, setBundleTime] = useState(subService.bundleTime);
+    const [name, setName] = useState(mainService.name);
+    const [price, setPrice] = useState(mainService.price ?? 100);
     const [requireConsult, setRequireConsult] = useState(
-        subService.requireConsult
+        mainService.requireConsult
     );
 
     const ctx = api.useContext();
-    const { mutate } = api.service.updateSubcategory.useMutation({
+    const { mutate } = api.service.updateMainCategory.useMutation({
         onSuccess: () => {
             void ctx.service.getAll.invalidate();
             void ctx.service.getPrices.invalidate();
@@ -38,13 +33,11 @@ export default function UpdateService({
     });
 
     const updateSubService = () => {
-        if (name && price && time && bundleTime) {
+        if (name && price) {
             mutate({
-                ...subService,
+                ...mainService,
                 name,
                 price,
-                time,
-                bundleTime,
                 requireConsult,
             });
             closeModal();
@@ -68,22 +61,6 @@ export default function UpdateService({
                     value={price}
                     type="number"
                     onChange={(e) => setPrice(Number(e.target.value))}
-                />
-            </label>
-            <label>
-                Time     
-                <input
-                    className="rounded-md bg-glass p-2  text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                    value={time}
-                    onChange={(e) => setTime(Number(e.target.value))}
-                />
-            </label>
-            <label>
-                Bundle Time     
-                <input
-                    className="rounded-md bg-glass p-2  text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                    value={bundleTime}
-                    onChange={(e) => setBundleTime(Number(e.target.value))}
                 />
             </label>
             <label>
