@@ -57,6 +57,8 @@ export default function ExtraDetails({
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const maxFileSize = 6 * 1024 * 1024;
 
+    // TODO Hot toast for submission saying ftc form completed!
+
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
             try {

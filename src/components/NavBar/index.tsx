@@ -12,6 +12,8 @@ export default function NavBar() {
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const { data: sessionData } = useSession();
     const { isMobile } = useMobile();
+    const isNew = sessionData?.user.isNew;
+
 
     const toggleMenu = () => {
         setIsMenuOpen((prevOpen) => !prevOpen);

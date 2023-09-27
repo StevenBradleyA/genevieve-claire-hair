@@ -25,8 +25,6 @@ export default function FirstTimeClient() {
     // console.log(session)
     const isNew = session?.user.isNew;
 
-    console.log(isNew);
-
     useEffect(() => {
         async function redirectIfNotNew() {
             if (!isNew) {
