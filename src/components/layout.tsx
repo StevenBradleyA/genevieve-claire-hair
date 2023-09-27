@@ -3,14 +3,14 @@ import NavBar from "./NavBar";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { signIn } from "next-auth/react";
-import toast from "react-hot-toast";
+// import { signIn } from "next-auth/react";
+// import toast from "react-hot-toast";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session } = useSession();
     const router = useRouter();
     const isNew = session?.user.isNew;
-    const isCurrentPageBookings = router.asPath === "/bookings";
+    // const isCurrentPageBookings = router.asPath === "/bookings";
 
     useEffect(() => {
         const isCurrentPageFirstTimeClient =
@@ -19,18 +19,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             void router.push("/first-time-client");
         }
 
-        if (isCurrentPageBookings && session === null) {
-            toast.success("Sign in to book an appointment!", {
-                icon: "😱",
-                style: {
-                    borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
-                },
-            });
+        // if (isCurrentPageBookings && session === null) {
+        //     toast.success("Sign in to book an appointment!", {
+        //         icon: "😱",
+        //         style: {
+        //             borderRadius: "10px",
+        //             background: "#333",
+        //             color: "#fff",
+        //         },
+        //     });
 
-            void signIn();
-        }
+        //     void signIn();
+        // }
     }, [isNew, router.asPath, session]);
 
     return (
