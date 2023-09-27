@@ -4,20 +4,21 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
-
 import downArrow from "@public/svgs/angles-down-solid.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
+import { useInView } from "react-intersection-observer";
 
 export default function Home() {
-//Todo set script switch only on homepage and at a certain scroll range
+    //Todo set script switch only on homepage and at a certain scroll range
 
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
+    const scriptRef = useRef(null);
+    const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
     const script = [
         "blonding",
         "vivids",
@@ -33,8 +34,6 @@ export default function Home() {
         }
     };
 
-    const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
-
     // useEffect(() => {
     //     const interval = setInterval(() => {
     //         setCurrentScriptIndex((prevIndex) =>
@@ -46,6 +45,28 @@ export default function Home() {
     //         clearInterval(interval);
     //     };
     // }, []);
+
+    const [ref, inView] = useInView({
+        triggerOnce: true, // Set to true if you want it to trigger only once
+        threshold: 0.5, // Adjust the threshold as needed
+    });
+
+    useEffect(() => {
+        if (inView) {
+            // The target div is in view, start your script here
+            console.log('inview')
+            const interval = setInterval(() => {
+                setCurrentScriptIndex((prevIndex) =>
+                    prevIndex === script.length - 1 ? 0 : prevIndex + 1
+                );
+            }, 3000);
+
+            return () => {
+                clearInterval(interval);
+            };
+        }
+        console.log('out of view')
+    }, [inView]);
 
     const bounceVariants = {
         initial: { opacity: 1, y: 20, rotate: 0 },
@@ -177,6 +198,7 @@ export default function Home() {
                     exit={{ opacity: 0, x: 50 }}
                     transition={{ duration: 1 }}
                     className="mt-20 text-8xl"
+                    ref={ref}
                 >
                     {script[currentScriptIndex]}
                 </motion.div>
