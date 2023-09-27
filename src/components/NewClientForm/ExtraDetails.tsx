@@ -5,6 +5,7 @@ import Image from "next/image";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import { useRouter } from "next/router";
 import { useMobile } from "../MobileContext";
+import toast from "react-hot-toast";
 
 interface FirstTimeClientProps {
     extraNotes: string;
@@ -57,9 +58,19 @@ export default function ExtraDetails({
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const maxFileSize = 6 * 1024 * 1024;
 
+    // TODO Hot toast for submission saying ftc form completed!
+
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
             try {
+                toast.success("First time client form complete!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
                 void ctx.user.getAllUsers.invalidate();
                 void ctx.user.invalidate();
                 await update();
@@ -424,7 +435,7 @@ export default function ExtraDetails({
                         : "text-purple-300"
                 }`}
             >
-                {isSubmitting ? "Uploading..." : "Submit Review"}
+                {isSubmitting ? "Uploading..." : "Submit"}
             </button>
         </form>
     );
