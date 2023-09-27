@@ -29,9 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 },
             });
 
-            setTimeout(() => {
-                void signIn();
-            }, 2000);
+            void signIn();
         }
     }, [isNew, router.asPath, session]);
 
