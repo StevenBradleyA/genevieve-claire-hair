@@ -15,7 +15,7 @@ export default function EachSchedule({ schedule, closeModal }: ScheduleProps) {
 
     const { mutate } = api.schedule.updateSchedule.useMutation({
         onSuccess: () => {
-            void ctx.schedule.getFilteredDays.invalidate();
+            void ctx.schedule.getNormalizedDays.invalidate();
             void ctx.schedule.getAllDays.invalidate();
             closeModal();
         },

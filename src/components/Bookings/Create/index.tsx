@@ -12,6 +12,8 @@ import type {
 } from "~/components/NewBookingForm/Specifications";
 import { useMobile } from "~/components/MobileContext";
 import type { NormalizedServicesType } from "~/server/api/routers/service";
+import { DotLoader } from "react-spinners";
+import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -42,7 +44,7 @@ export type BookingDetailsType = {
     services: string;
 };
 
-const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
+const createCalendarOptions = (schedule: ScheduleType): CalendarOptions => {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const yesterday = new Date(
@@ -52,16 +54,22 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
     );
 
     const disabled = [
-        // ...booked,
         { from: startOfMonth, to: yesterday },
-        { dayOfWeek: [0, 6] },
+        {
+            dayOfWeek: Object.keys(schedule)
+                .filter(
+                    (el) =>
+                        !schedule[Number(el) as DaysType].startTime ||
+                        !schedule[Number(el) as DaysType].endTime
+                )
+                .map((el) => Number(el)),
+        },
     ];
 
     const options = {
         disabled,
         fromYear: today.getFullYear(),
         fromMonth: today,
-        // modifiers: { booked },
         modifiers: { booked: [] },
         modifiersStyles: {
             booked: {
@@ -94,9 +102,8 @@ export default function CreateBooking({
         totalTime: 0,
         services: "",
     });
-    let { data: futureBookings } = api.booking.getFuture.useQuery();
-
-    if (!futureBookings) futureBookings = [];
+    const { data: futureBookings } = api.booking.getFuture.useQuery();
+    const { data: schedule } = api.schedule.getNormalizedDays.useQuery();
 
     useEffect(() => {
         const storage = localStorage.getItem("Specifications");
@@ -177,6 +184,14 @@ export default function CreateBooking({
         },
     });
 
+    if (!futureBookings || !schedule)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Loading Schedule</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={true} />
+            </div>
+        );
+
     return isMobile ? (
         <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-darkGlass p-5 font-quattrocento shadow-lg">
             <DayPicker
@@ -186,12 +201,13 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-darkGlass text-white shadow-2xl "
-                {...createCalendarOptions(futureBookings)}
+                {...createCalendarOptions(schedule)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
+                    schedule={schedule}
                     bookedDates={futureBookings}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
@@ -214,12 +230,13 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-darkGlass text-white shadow-2xl "
-                {...createCalendarOptions(futureBookings)}
+                {...createCalendarOptions(schedule)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
+                    schedule={schedule}
                     bookedDates={futureBookings}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}

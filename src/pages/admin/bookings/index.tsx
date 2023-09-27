@@ -12,6 +12,7 @@ import TimeSlotPicker from "~/components/Bookings/Create/TimeSlotPicker";
 import ModalDialog from "~/components/Modal";
 import type { Schedule } from "@prisma/client";
 import EachSchedule from "~/components/Bookings/Schedule";
+import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -42,7 +43,7 @@ export type BookingDetailsType = {
     services: string;
 };
 
-const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
+const createCalendarOptions = (schedule: ScheduleType): CalendarOptions => {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const yesterday = new Date(
@@ -52,16 +53,22 @@ const createCalendarOptions = (booked: BookedDateType[]): CalendarOptions => {
     );
 
     const disabled = [
-        // ...booked,
         { from: startOfMonth, to: yesterday },
-        { dayOfWeek: [0, 6] },
+        {
+            dayOfWeek: Object.keys(schedule)
+                .filter(
+                    (el) =>
+                        !schedule[Number(el) as DaysType].startTime ||
+                        !schedule[Number(el) as DaysType].endTime
+                )
+                .map((el) => Number(el)),
+        },
     ];
 
     const options = {
         disabled,
         fromYear: today.getFullYear(),
         fromMonth: today,
-        // modifiers: { booked },
         modifiers: { booked: [] },
         modifiersStyles: {
             booked: {
@@ -86,6 +93,8 @@ const AdminViewBookings: NextPageWithLayout = () => {
 
     const { data: scheduleData, isLoading: scheduleDataLoading } =
         api.schedule.getAllDays.useQuery();
+
+    const { data: fullSchedule } = api.schedule.getNormalizedDays.useQuery();
 
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
@@ -119,6 +128,14 @@ const AdminViewBookings: NextPageWithLayout = () => {
 
     if (!serviceData)
         return <DotLoader size={50} color={"#ffffff"} loading={serviceData} />;
+
+    if (!future || !fullSchedule)
+        return (
+            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
+                <div className="text-lg text-white">Loading Schedule</div>{" "}
+                <DotLoader size={50} color={"#ffffff"} loading={true} />
+            </div>
+        );
 
     const toggleSwitch = () => setIsFuture(!isFuture);
     const spring = {
@@ -154,12 +171,13 @@ const AdminViewBookings: NextPageWithLayout = () => {
                         setDate(e);
                     }}
                     className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
-                    {...createCalendarOptions(future)}
+                    {...createCalendarOptions(fullSchedule)}
                 />
                 <div className="flex w-60 flex-col">
                     <TimeSlotPicker
                         date={date}
                         details={details}
+                        schedule={fullSchedule}
                         bookedDates={future}
                         timeSlot={timeSlot}
                         setTimeSlot={setTimeSlot}
