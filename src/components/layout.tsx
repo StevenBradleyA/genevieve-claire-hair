@@ -11,7 +11,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const isNew = session?.user.isNew;
     const isCurrentPageBookings = router.asPath === "/bookings";
-    // TODO hot toast when someone gets redirected
 
     useEffect(() => {
         const isCurrentPageFirstTimeClient =
@@ -21,12 +20,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         }
 
         if (isCurrentPageBookings && session === null) {
-            // TODO hot toast here then set timeout the router
-            toast.success("Sign in to book an appointment!");
+            toast.success("Sign in to book an appointment!", {
+                icon: "😱",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
 
             setTimeout(() => {
                 void signIn();
-            }, 3000); // Delay the redirection for 2 seconds (adjust as needed)
+            }, 2000);
         }
     }, [isNew, router.asPath, session]);
 
