@@ -14,8 +14,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
 
 export default function Home() {
-
-    // console.log('hello')
+//Todo set script switch only on homepage and at a certain scroll range
 
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
@@ -223,18 +222,17 @@ export default function Home() {
                 />
             </div>
 
-<div className="mb-20 flex w-3/4 px-20 justify-center">
-            <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className=" text-8xl"
-            >
-                Picture your <span className="text-violet-300">dream</span>{" "}
-                look, and let Genevieve Clare Hair make that{" "}
-                <span className="text-violet-300">dream</span> your reality.
-            </motion.div>
-
-</div>
+            <div className="mb-20 flex w-3/4 justify-center px-20">
+                <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className=" text-8xl"
+                >
+                    Picture your <span className="text-violet-300">dream</span>{" "}
+                    look, and let Genevieve Clare Hair make that{" "}
+                    <span className="text-violet-300">dream</span> your reality.
+                </motion.div>
+            </div>
         </div>
     );
 }
