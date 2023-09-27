@@ -10,8 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import type { BookedDateType, BookingDetailsType } from "./";
 import { useMobile } from "~/components/MobileContext";
-import { api } from "~/utils/api";
-import { DotLoader } from "react-spinners";
+import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 
 const createTimeIntervals = (start: Date, end: Date) => {
     const timeArray = [];
@@ -58,22 +57,20 @@ const checkOverlappingBooking = (
 export default function TimeSlotPicker({
     date,
     details,
+    schedule,
     bookedDates,
     timeSlot,
     setTimeSlot,
 }: {
     date: Date | undefined;
     details: BookingDetailsType;
+    schedule: ScheduleType;
     bookedDates: BookedDateType[];
     timeSlot: Date | undefined;
     setTimeSlot: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }) {
     const [currTime, setCurrTime] = useState<Date[]>();
     const { isMobile } = useMobile();
-
-    const { data, isLoading } = api.schedule.getFilteredDays.useQuery();
-
-    const schedule: { [key: number]: number[] } | null = {};
 
     /**
      * Monday: 9am - 1pm
@@ -95,11 +92,8 @@ export default function TimeSlotPicker({
         // TODO: Reset time slot if new selection doesn't have that time slot
         setTimeSlot(undefined);
 
-        if (date && data) {
-            data.forEach((e) => {
-                schedule[e.dayOfWeek] = [e.startTime, e.endTime];
-            });
-            const [startTime, endTime] = schedule[date.getDay()] as number[];
+        if (date && schedule) {
+            const { startTime, endTime } = schedule[date.getDay() as DaysType];
 
             if (startTime && endTime) {
                 let start = new Date(date.getTime());
@@ -119,15 +113,7 @@ export default function TimeSlotPicker({
 
             return;
         } else setCurrTime(undefined);
-    }, [date, setTimeSlot, data]);
-
-    if (isLoading)
-        return (
-            <div className=" mt-10 flex flex-col items-center justify-center gap-16">
-                <div className="text-lg text-white">Loading Schedule</div>{" "}
-                <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
-            </div>
-        );
+    }, [date, setTimeSlot, schedule]);
 
     return (
         <div className="flex flex-wrap justify-between gap-1 align-top">
