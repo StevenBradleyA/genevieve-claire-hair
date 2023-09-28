@@ -28,7 +28,6 @@ const form = [
 // TODO: Geni orders by price and time
 
 export default function Booking() {
-    // const { data: session } = useSession(); // TODO: Redirect if not logged in
     const [page, setPage] = useState(0);
     const [requireConsult, setRequireConsult] = useState<string>("");
     const { data: serviceData } = api.service.getAllNormalized.useQuery();

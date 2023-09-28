@@ -14,6 +14,8 @@ import { useMobile } from "~/components/MobileContext";
 import type { NormalizedServicesType } from "~/server/api/routers/service";
 import { DotLoader } from "react-spinners";
 import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -94,6 +96,7 @@ export default function CreateBooking({
 }) {
     const { data: session } = useSession();
     const { isMobile } = useMobile();
+    const router = useRouter();
 
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
@@ -181,6 +184,15 @@ export default function CreateBooking({
             void ctx.booking.getFuture.invalidate();
             localStorage.removeItem("Services");
             localStorage.removeItem("Specifications");
+            toast.success("Booking Confirmed!", {
+                icon: "👏",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
+            void router.push("/bookings/confirmed");
         },
     });
 
