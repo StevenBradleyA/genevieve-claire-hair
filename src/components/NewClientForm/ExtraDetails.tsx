@@ -34,6 +34,7 @@ interface UserData {
     firstName: string;
     lastName: string;
     notes: string;
+    phoneNumber: string;
     images?: Image[];
 }
 

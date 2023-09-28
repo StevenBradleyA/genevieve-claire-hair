@@ -53,6 +53,9 @@ export default function ClientDetails({ userId }: { userId: string }) {
             )}
             <div className="mt-5 font-bold">Contact</div>
             <div className=" mt-3 text-2xl">{user.email}</div>
+            {user.phoneNumber !== null && (
+                <div className=" mt-3 text-2xl">{user.phoneNumber}</div>
+            )}
 
             <div className="mt-5 flex gap-5 font-bold">
                 Notes

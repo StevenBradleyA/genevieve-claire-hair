@@ -57,6 +57,7 @@ export const userRouter = createTRPCRouter({
         .mutation(async ({ input, ctx }) => {
             const { userId, firstName, lastName, notes, images, phoneNumber } =
                 input;
+            // TODO allow geni to update any user
             if (ctx.session.user.id === userId) {
                 const updatedUser = await ctx.prisma.user.update({
                     where: { id: ctx.session.user.id },
@@ -64,7 +65,7 @@ export const userRouter = createTRPCRouter({
                         firstName,
                         lastName,
                         notes,
-                        phoneNumber,
+                        phoneNumber: phoneNumber === "" ? null : phoneNumber,
                         isNew: false,
                     },
                 });
