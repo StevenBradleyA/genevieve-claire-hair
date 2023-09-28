@@ -23,6 +23,7 @@ interface ErrorsObj {
     firstName?: string;
     lastName?: string;
     imageLarge?: string;
+    phoneNumber?: string;
 }
 
 interface Image {
@@ -52,6 +53,7 @@ export default function ExtraDetails({
     const [formData, setFormData] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
@@ -89,6 +91,12 @@ export default function ExtraDetails({
         }
         if (!lastName.length) {
             errorsObj.lastName = "Please provide your last name";
+        }
+        if (phoneNumber.length > 0) {
+            if (!/^\d+$/.test(phoneNumber) || phoneNumber.length !== 10) {
+                errorsObj.phoneNumber =
+                    "Phone number must be exactly 10 digits and contain only numbers";
+            }
         }
 
         if (imageFiles.length > 5) {
@@ -225,7 +233,7 @@ export default function ExtraDetails({
                 Upload photos of your hair
             </div>
             <div className=" text-center text-xs">
-                (this will only be seen by me )
+                (this will only be seen by Geni )
             </div>
             <div className="py-4">
                 <label className="relative inline-block h-16 w-16">
@@ -339,6 +347,19 @@ export default function ExtraDetails({
                     {errors.lastName}
                 </p>
             )}
+            <div className="text-center text-4xl">
+                Provide your phone number
+            </div>
+            <div className="mb-5 text-center text-xl">
+                (Optional if you want text reminders)
+            </div>
+
+            <input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                placeholder="(999) 999-9999"
+            ></input>
 
             <div className="mb-5 flex justify-center text-4xl">
                 {`Anything you'd like me to know?`}
