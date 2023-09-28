@@ -116,7 +116,7 @@ export default function ExtraDetails({
 
     useEffect(() => {
         handleInputErrors();
-    }, [imageFiles, firstName, lastName]);
+    }, [imageFiles, firstName, lastName, phoneNumber]);
 
     useEffect(() => {
         const updatedNotes = `Anything you'd like me to know? \n ${formData}`;
@@ -219,8 +219,22 @@ export default function ExtraDetails({
                     {errors.lastName}
                 </p>
             )}
+            <div className="text-center text-lg">Provide your phone number</div>
+            <div className="mb-5 text-center text-sm">
+                (Optional if you want text reminders)
+            </div>
 
-            <div className="mb-5 text-center text-lg">
+            <input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className=" rounded-md p-3 text-xs text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                placeholder="(999) 999-9999"
+            ></input>
+            {errors.phoneNumber && (
+                <p className="text-xs text-red-400">{errors.phoneNumber}</p>
+            )}
+
+            <div className="my-5 text-center text-lg">
                 {`Anything you'd like me to know?`}
             </div>
             <textarea
@@ -338,14 +352,10 @@ export default function ExtraDetails({
                 ></input>
             </div>
             {errors.firstName && (
-                <p className="create-listing-errors text-red-500">
-                    {errors.firstName}
-                </p>
+                <p className="text-xl text-red-400">{errors.firstName}</p>
             )}
             {errors.lastName && (
-                <p className="create-listing-errors text-red-500">
-                    {errors.lastName}
-                </p>
+                <p className="text-xl text-red-400">{errors.lastName}</p>
             )}
             <div className="text-center text-4xl">
                 Provide your phone number
@@ -360,8 +370,11 @@ export default function ExtraDetails({
                 className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                 placeholder="(999) 999-9999"
             ></input>
+            {errors.phoneNumber && (
+                <p className="text-xl text-red-400">{errors.phoneNumber}</p>
+            )}
 
-            <div className="mb-5 flex justify-center text-4xl">
+            <div className="my-5 flex justify-center text-4xl">
                 {`Anything you'd like me to know?`}
             </div>
             <textarea
