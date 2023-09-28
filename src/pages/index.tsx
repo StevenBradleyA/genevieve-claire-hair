@@ -4,7 +4,7 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 import downArrow from "@public/svgs/angles-down-solid.svg";
@@ -17,7 +17,6 @@ export default function Home() {
 
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
-    const scriptRef = useRef(null);
     const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
     const script = [
         "blonding",
@@ -34,27 +33,13 @@ export default function Home() {
         }
     };
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setCurrentScriptIndex((prevIndex) =>
-    //             prevIndex === script.length - 1 ? 0 : prevIndex + 1
-    //         );
-    //     }, 3000);
-
-    //     return () => {
-    //         clearInterval(interval);
-    //     };
-    // }, []);
-
     const [ref, inView] = useInView({
-        triggerOnce: true, // Set to true if you want it to trigger only once
-        threshold: 0.5, // Adjust the threshold as needed
+        triggerOnce: true,
+        threshold: 0.5,
     });
 
     useEffect(() => {
         if (inView) {
-            // The target div is in view, start your script here
-            console.log('inview')
             const interval = setInterval(() => {
                 setCurrentScriptIndex((prevIndex) =>
                     prevIndex === script.length - 1 ? 0 : prevIndex + 1
@@ -65,7 +50,6 @@ export default function Home() {
                 clearInterval(interval);
             };
         }
-        console.log('out of view')
     }, [inView]);
 
     const bounceVariants = {
@@ -180,10 +164,12 @@ export default function Home() {
                         // className="hover:underline"
                     >
                         <Link href="/portfolio" aria-label="Portfolio">
-                            You're{" "}
+                            You&apos;re 
                             <span className="text-violet-300">pretty</span> when
-                            you get here,{" "}
-                            <span className="text-violet-300">prettier</span>{" "}
+                            you get here, 
+                            <span className="text-violet-300">
+                                prettier 
+                            </span>
                             when you leave
                         </Link>
                     </motion.button>

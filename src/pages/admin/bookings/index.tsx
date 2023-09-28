@@ -156,21 +156,15 @@ const AdminViewBookings: NextPageWithLayout = () => {
     // TODO Allow geni to book for any selected client in the db any service
 
     return (
-        <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass px-10 pb-10 text-white shadow-2xl">
-            <div> This needs to be redesigned </div>
-            <div>
-                {" "}
-                we want ability for geni to book for anyone for any service{" "}
-            </div>
-
-            <div className="flex items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg">
+        <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass p-10  text-white shadow-2xl">
+            <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 shadow-lg">
                 <DayPicker
                     mode="single"
                     selected={date}
                     onSelect={(e) => {
                         setDate(e);
                     }}
-                    className="rounded-lg bg-gradient-to-br from-fuchsia-100 to-blue-200 text-purple-500 shadow-2xl "
+                    className="rounded-lg bg-darkGlass shadow-2xl "
                     {...createCalendarOptions(fullSchedule)}
                 />
                 <div className="flex w-60 flex-col">
