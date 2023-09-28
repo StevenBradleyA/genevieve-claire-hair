@@ -139,6 +139,7 @@ export default function ExtraDetails({
                     firstName,
                     lastName,
                     notes,
+                    phoneNumber,
                 };
 
                 setIsSubmitting(true);

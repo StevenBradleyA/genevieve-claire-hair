@@ -44,6 +44,7 @@ export const userRouter = createTRPCRouter({
                 firstName: z.string(),
                 lastName: z.string(),
                 notes: z.string(),
+                phoneNumber: z.string().optional(),
                 images: z
                     .array(
                         z.object({
@@ -54,11 +55,18 @@ export const userRouter = createTRPCRouter({
             })
         )
         .mutation(async ({ input, ctx }) => {
-            const { userId, firstName, lastName, notes, images } = input;
+            const { userId, firstName, lastName, notes, images, phoneNumber } =
+                input;
             if (ctx.session.user.id === userId) {
                 const updatedUser = await ctx.prisma.user.update({
                     where: { id: ctx.session.user.id },
-                    data: { firstName, lastName, notes, isNew: false },
+                    data: {
+                        firstName,
+                        lastName,
+                        notes,
+                        phoneNumber,
+                        isNew: false,
+                    },
                 });
 
                 if (images) {
