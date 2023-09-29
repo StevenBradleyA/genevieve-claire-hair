@@ -3,8 +3,15 @@ import NavBar from "./NavBar";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import localFont from "next/font/local";
 // import { signIn } from "next-auth/react";
 // import toast from "react-hot-toast";
+
+const raleway = localFont({
+    src: "../../public/fonts/Raleway-VariableFont_wght.ttf",
+    display: "swap",
+    variable: "--font-mooli",
+});
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session } = useSession();
@@ -44,7 +51,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="flex min-h-screen flex-col bg-gradient-to-br from-fuchsia-100 to-blue-200  mobile:overflow-auto sm:overflow-visible ">
+            <div
+                className={`flex min-h-screen flex-col bg-gradient-to-br from-fuchsia-100 to-blue-200  mobile:overflow-auto sm:overflow-visible ${raleway.className} `}
+            >
                 <NavBar />
                 <main className="flex flex-col items-center justify-center">
                     {children}

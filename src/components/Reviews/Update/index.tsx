@@ -363,7 +363,7 @@ export default function UpdateReview({
                 className=" h-40 w-96 rounded-md bg-glass p-2 text-xl text-purple-300 placeholder:text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
             />
             <div className="flex items-center text-white ">
-                <span className="font-quattrocento text-3xl">Star Rating</span>
+                <span className="text-3xl">Star Rating</span>
                 <div className="m-2 flex items-center">
                     {[1, 2, 3, 4, 5].map((rating) => (
                         <Star
@@ -398,7 +398,7 @@ export default function UpdateReview({
                         }}
                     />
                     <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <span className="text-center font-quattrocento">
+                        <span className="text-center ">
                             Choose Files
                         </span>
                     </div>

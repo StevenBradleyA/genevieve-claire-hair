@@ -73,7 +73,7 @@ export default function FirstTimeClient() {
                     {form[page]}
                 </div>
 
-                <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-white mobile:text-sm sm:text-lg full:text-2xl">
+                <div className="mb-20 mt-10 flex items-center justify-center gap-10  text-white mobile:text-sm sm:text-lg full:text-2xl">
                     <button
                         onClick={() => changePages(-1)}
                         className="transform rounded-md bg-glass px-4 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"

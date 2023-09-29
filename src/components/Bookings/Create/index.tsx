@@ -205,7 +205,7 @@ export default function CreateBooking({
         );
 
     return isMobile ? (
-        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-darkGlass p-5 font-quattrocento shadow-lg">
+        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-darkGlass p-5 shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}

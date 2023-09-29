@@ -142,7 +142,7 @@ export default function Booking() {
                         })
                     )}
 
-                    <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                    <div className="mb-20 mt-10 flex items-center justify-center gap-10 text-2xl text-white">
                         <button
                             onClick={() => changePages(-1)}
                             className="transform rounded-md bg-glass px-6 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
@@ -214,7 +214,7 @@ export default function Booking() {
                             })
                         )}
 
-                        <div className="mb-20 mt-10 flex items-center justify-center gap-10 font-quattrocento text-2xl text-white">
+                        <div className="mb-20 mt-10 flex items-center justify-center gap-10 text-2xl text-white">
                             <motion.button
                                 onClick={() => changePages(-1)}
                                 className=" rounded-md bg-glass px-12 py-2 text-purple-300 shadow-md"

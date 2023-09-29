@@ -59,7 +59,7 @@ export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
     };
 
     return isMobile ? (
-        <form className="flex flex-col items-center  font-quattrocento text-xl text-white">
+        <form className="flex flex-col items-center text-xl text-white">
             <div className="mb-5 text-center text-lg">
                 What is your current hair color?
             </div>
@@ -135,7 +135,7 @@ export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
             </div>
         </form>
     ) : (
-        <form className="flex flex-col items-center  font-quattrocento text-3xl text-white">
+        <form className="flex flex-col items-center text-3xl text-white">
             <div className="mb-5 flex justify-center text-4xl">
                 What is your current hair color?
             </div>

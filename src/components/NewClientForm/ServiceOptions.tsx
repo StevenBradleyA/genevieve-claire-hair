@@ -36,7 +36,7 @@ export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
     };
 
     return isMobile ? (
-        <form className="flex flex-col items-center justify-center font-quattrocento text-xl text-white">
+        <form className="flex flex-col items-center justify-center  text-xl text-white">
             <div className="flex flex-col items-center gap-1">
                 <div className="text-sm">
                     Which services do you see yourself using?
@@ -97,7 +97,7 @@ export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
             </div>
         </form>
     ) : (
-        <form className="flex flex-col items-center justify-center font-quattrocento text-3xl text-white">
+        <form className="flex flex-col items-center justify-center text-3xl text-white">
             <div className="flex items-center gap-5">
                 <div className="text-4xl">
                     Which services do you see yourself using?

@@ -64,7 +64,7 @@ export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
     };
 
     return isMobile ? (
-        <form className="flex flex-col font-quattrocento text-xl text-white">
+        <form className="flex flex-col text-xl text-white">
             <div className="mb-5 w-72 text-center text-lg">
                 What days/times are you most likely to book?
             </div>
@@ -152,7 +152,7 @@ export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
             </div>
         </form>
     ) : (
-        <form className="flex flex-col items-center font-quattrocento text-3xl text-white">
+        <form className="flex flex-col items-center  text-3xl text-white">
             <div className="mb-5 flex justify-center text-4xl">
                 What days/times are you most likely to book?
             </div>

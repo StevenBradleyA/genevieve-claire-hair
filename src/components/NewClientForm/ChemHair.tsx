@@ -41,7 +41,7 @@ export default function ChemHair({ setNotes }: FirstTimeClientProps) {
     };
 
     return isMobile ? (
-        <form className="flex flex-col items-center justify-center font-quattrocento text-xl text-white">
+        <form className="flex flex-col items-center justify-center  text-xl text-white">
             <div className="w-72 text-center text-lg">
                 Have you had any chemical treatments done on your hair?
             </div>
@@ -104,7 +104,7 @@ export default function ChemHair({ setNotes }: FirstTimeClientProps) {
             )}
         </form>
     ) : (
-        <form className="flex flex-col items-center justify-center font-quattrocento text-3xl text-white">
+        <form className="flex flex-col items-center justify-center  text-3xl text-white">
             <div className="text-4xl">
                 Have you had any chemical treatments done on your hair?
             </div>

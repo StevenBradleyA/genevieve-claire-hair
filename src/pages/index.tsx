@@ -190,7 +190,7 @@ export default function Home() {
                 </motion.div>
             </AnimatePresence>
 
-            <h1 className="m-20 mt-44 font-quattrocento text-8xl">
+            <h1 className="m-20 mt-44 text-8xl">
                 hi, im geni and I do hair stuff
             </h1>
             <div className="mb-32 flex p-10  ">

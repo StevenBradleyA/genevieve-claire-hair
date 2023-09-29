@@ -61,7 +61,7 @@ export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
         setFormData(newData);
     };
     return isMobile ? (
-        <form className="flex flex-col items-center  font-quattrocento text-xl text-white">
+        <form className="flex flex-col items-center text-xl text-white">
             <div className="flex justify-center text-lg">
                 Have you had color before?
             </div>
@@ -123,7 +123,7 @@ export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
             )}
         </form>
     ) : (
-        <form className="flex flex-col items-center  font-quattrocento text-3xl text-white">
+        <form className="flex flex-col items-center text-3xl text-white">
             <div className="flex justify-center text-4xl">
                 Have you had color before?
             </div>
