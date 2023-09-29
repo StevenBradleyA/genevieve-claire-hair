@@ -30,11 +30,7 @@ const AdminPage: NextPageWithLayout = () => {
 
     return (
         <div className="text-4xl text-white ">
-            <div>Client Checkout</div>
-            <div> Estimated Cost of Upcoming Service</div>
-            <div className="mb-20"> Product Checkout dropdown </div>
-
-          
+            <div> Geni Profile Notes here</div>
         </div>
     );
 };

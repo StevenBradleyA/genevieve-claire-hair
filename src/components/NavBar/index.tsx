@@ -14,7 +14,6 @@ export default function NavBar() {
     const { isMobile } = useMobile();
     const isNew = sessionData?.user.isNew;
 
-
     const toggleMenu = () => {
         setIsMenuOpen((prevOpen) => !prevOpen);
     };
@@ -185,7 +184,7 @@ export default function NavBar() {
                         <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                     </div>
                 </div>
-                <div className="group relative font-grand-hotel text-5xl text-violet-300">
+                <div className="group relative text-3xl text-violet-300">
                     <Link href="/admin" aria-label="Feature">
                         Admin
                     </Link>
@@ -204,7 +203,7 @@ function AuthController() {
         <div className=" mr-10 flex flex-col items-center justify-center gap-1 text-white ">
             <button
                 aria-label={sessionData ? "Sign out" : "Sign in"}
-                className="font-grand-hotel mobile:mb-5 mobile:text-3xl sm:mb-0 sm:text-5xl "
+                className=" mobile:mb-5 mobile:text-3xl sm:mb-0 sm:text-3xl "
                 onClick={
                     sessionData ? () => void signOut() : () => void signIn()
                 }
