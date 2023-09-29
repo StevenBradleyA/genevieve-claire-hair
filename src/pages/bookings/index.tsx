@@ -25,7 +25,9 @@ const form = [
     (props: FormProps) => <CreateBooking {...props} />,
 ];
 
-// TODO: Geni orders by price and time
+// TODO Add button for Text or Email Confirmation
+// TODO on the text Geni page we should removed the back / submit buttons maybe give more explanation 
+
 
 export default function Booking() {
     const [page, setPage] = useState(0);

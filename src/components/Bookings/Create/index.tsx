@@ -105,8 +105,12 @@ export default function CreateBooking({
         totalTime: 0,
         services: "",
     });
+    const [textSelect, setTextSelect] = useState<boolean>(false);
+    const [emailSelect, setEmailSelect] = useState<boolean>(true);
+
     const { data: futureBookings } = api.booking.getFuture.useQuery();
     const { data: schedule } = api.schedule.getNormalizedDays.useQuery();
+    console.log("hello", session);
 
     useEffect(() => {
         const storage = localStorage.getItem("Specifications");
@@ -234,14 +238,14 @@ export default function CreateBooking({
             </div>
         </div>
     ) : (
-        <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 shadow-lg">
+        <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 text-white shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}
                 onSelect={(e) => {
                     setDate(e);
                 }}
-                className="rounded-lg bg-darkGlass text-white shadow-2xl "
+                className="rounded-lg bg-darkGlass shadow-2xl "
                 {...createCalendarOptions(schedule)}
             />
             <div className="flex w-60 flex-col">
@@ -253,9 +257,30 @@ export default function CreateBooking({
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
+                {session?.user.phoneNumber !== null && (
+                    <div className="my-5 flex gap-5 text-sm">
+                        <button
+                            className={`rounded-lg ${
+                                textSelect ? "bg-violet-300" : "bg-darkGlass"
+                            } px-4 py-2 `}
+                            onClick={() => setTextSelect(!textSelect)}
+                        >
+                            Text Confirmation
+                        </button>
+                        <button
+                            className={`rounded-lg ${
+                                emailSelect ? "bg-violet-300" : "bg-darkGlass"
+                            } px-4 py-2 `}
+                            onClick={() => setEmailSelect(!emailSelect)}
+                        >
+                            Email Confirmation
+                        </button>
+                    </div>
+                )}
+
                 <button // TODO: remove this with button refactor
                     disabled={checkConflicts()}
-                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
+                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
                     onClick={book}
                 >
                     Book now!

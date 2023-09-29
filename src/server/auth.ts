@@ -23,6 +23,7 @@ declare module "next-auth" {
             isNew: boolean;
             firstName: string;
             lastName: string;
+            phoneNumber: string;
         } & DefaultSession["user"];
     }
 
