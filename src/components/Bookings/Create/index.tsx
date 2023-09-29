@@ -110,7 +110,6 @@ export default function CreateBooking({
 
     const { data: futureBookings } = api.booking.getFuture.useQuery();
     const { data: schedule } = api.schedule.getNormalizedDays.useQuery();
-    console.log("hello", session);
 
     useEffect(() => {
         const storage = localStorage.getItem("Specifications");
@@ -176,6 +175,8 @@ export default function CreateBooking({
             setDate(undefined);
 
             return mutate(data);
+            // TODO if email true resend component
+            // TODO if text true twilio component
         } else {
             throw new Error("Hot Toast Incoming!!!");
         }
