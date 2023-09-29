@@ -5,6 +5,7 @@ import Image from "next/image";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import { useRouter } from "next/router";
 import { useMobile } from "../MobileContext";
+import toast from "react-hot-toast";
 
 interface FirstTimeClientProps {
     extraNotes: string;
@@ -22,6 +23,7 @@ interface ErrorsObj {
     firstName?: string;
     lastName?: string;
     imageLarge?: string;
+    phoneNumber?: string;
 }
 
 interface Image {
@@ -32,6 +34,7 @@ interface UserData {
     firstName: string;
     lastName: string;
     notes: string;
+    phoneNumber: string;
     images?: Image[];
 }
 
@@ -51,15 +54,26 @@ export default function ExtraDetails({
     const [formData, setFormData] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const maxFileSize = 6 * 1024 * 1024;
 
+    // TODO Hot toast for submission saying ftc form completed!
+
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
             try {
+                toast.success("First time client form complete!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
                 void ctx.user.getAllUsers.invalidate();
                 void ctx.user.invalidate();
                 await update();
@@ -79,6 +93,12 @@ export default function ExtraDetails({
         if (!lastName.length) {
             errorsObj.lastName = "Please provide your last name";
         }
+        if (phoneNumber.length > 0) {
+            if (!/^\d+$/.test(phoneNumber) || phoneNumber.length !== 10) {
+                errorsObj.phoneNumber =
+                    "Phone number must be exactly 10 digits and contain only numbers";
+            }
+        }
 
         if (imageFiles.length > 5) {
             errorsObj.imageExcess = "Cannot provide more than 5 photos";
@@ -97,7 +117,7 @@ export default function ExtraDetails({
 
     useEffect(() => {
         handleInputErrors();
-    }, [imageFiles, firstName, lastName]);
+    }, [imageFiles, firstName, lastName, phoneNumber]);
 
     useEffect(() => {
         const updatedNotes = `Anything you'd like me to know? \n ${formData}`;
@@ -120,6 +140,7 @@ export default function ExtraDetails({
                     firstName,
                     lastName,
                     notes,
+                    phoneNumber,
                 };
 
                 setIsSubmitting(true);
@@ -200,8 +221,22 @@ export default function ExtraDetails({
                     {errors.lastName}
                 </p>
             )}
+            <div className="text-center text-lg">Provide your phone number</div>
+            <div className="mb-5 text-center text-sm">
+                (Optional if you want text reminders)
+            </div>
 
-            <div className="mb-5 text-center text-lg">
+            <input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className=" rounded-md p-3 text-xs text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                placeholder="(999) 999-9999"
+            ></input>
+            {errors.phoneNumber && (
+                <p className="text-xs text-red-400">{errors.phoneNumber}</p>
+            )}
+
+            <div className="my-5 text-center text-lg">
                 {`Anything you'd like me to know?`}
             </div>
             <textarea
@@ -214,7 +249,7 @@ export default function ExtraDetails({
                 Upload photos of your hair
             </div>
             <div className=" text-center text-xs">
-                (this will only be seen by me )
+                (this will only be seen by Geni )
             </div>
             <div className="py-4">
                 <label className="relative inline-block h-16 w-16">
@@ -319,17 +354,29 @@ export default function ExtraDetails({
                 ></input>
             </div>
             {errors.firstName && (
-                <p className="create-listing-errors text-red-500">
-                    {errors.firstName}
-                </p>
+                <p className="text-xl text-red-400">{errors.firstName}</p>
             )}
             {errors.lastName && (
-                <p className="create-listing-errors text-red-500">
-                    {errors.lastName}
-                </p>
+                <p className="text-xl text-red-400">{errors.lastName}</p>
+            )}
+            <div className="text-center text-4xl">
+                Provide your phone number
+            </div>
+            <div className="mb-5 text-center text-xl">
+                (Optional if you want text reminders)
+            </div>
+
+            <input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                placeholder="(999) 999-9999"
+            ></input>
+            {errors.phoneNumber && (
+                <p className="text-xl text-red-400">{errors.phoneNumber}</p>
             )}
 
-            <div className="mb-5 flex justify-center text-4xl">
+            <div className="my-5 flex justify-center text-4xl">
                 {`Anything you'd like me to know?`}
             </div>
             <textarea
@@ -424,7 +471,7 @@ export default function ExtraDetails({
                         : "text-purple-300"
                 }`}
             >
-                {isSubmitting ? "Uploading..." : "Submit Review"}
+                {isSubmitting ? "Uploading..." : "Submit"}
             </button>
         </form>
     );

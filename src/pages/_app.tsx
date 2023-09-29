@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Layout from "../components/layout";
 import MobileProvider from "~/components/MobileContext";
+import { Toaster } from "react-hot-toast";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -29,9 +30,12 @@ const MyApp: AppType<SessionType> = ({
 
     return (
         <SessionProvider session={session}>
-            <MobileProvider>
-                <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
-            </MobileProvider>
+            <div>
+                <Toaster />
+                <MobileProvider>
+                    <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
+                </MobileProvider>
+            </div>
         </SessionProvider>
     );
 };

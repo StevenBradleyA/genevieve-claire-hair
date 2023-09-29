@@ -5,15 +5,29 @@ import {
     protectedProcedure,
 } from "~/server/api/trpc";
 
+export type DaysType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export type ScheduleType = {
+    [key in DaysType]: {
+        startTime: number;
+        endTime: number;
+    };
+};
+
 export const scheduleRouter = createTRPCRouter({
-    getFilteredDays: publicProcedure.query(async ({ ctx }) => {
+    getNormalizedDays: publicProcedure.query(async ({ ctx }) => {
         const scheduleDays = await ctx.prisma.schedule.findMany();
 
-        const filteredScheduleDays = scheduleDays.filter(
-            (day) => day.startTime !== 0 || day.endTime !== 0
-        );
+        const scheduleObj: Partial<ScheduleType> = {};
 
-        return filteredScheduleDays;
+        scheduleDays.forEach(({ dayOfWeek, startTime, endTime }) => {
+            scheduleObj[dayOfWeek as DaysType] = {
+                startTime,
+                endTime,
+            };
+        });
+
+        return scheduleObj as ScheduleType;
     }),
 
     getAllDays: publicProcedure.query(async ({ ctx }) => {

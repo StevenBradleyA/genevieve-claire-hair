@@ -4,21 +4,20 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
-
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
-
 import downArrow from "@public/svgs/angles-down-solid.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
+import { useInView } from "react-intersection-observer";
 
 export default function Home() {
-
-    // console.log('hello')
+    //Todo set script switch only on homepage and at a certain scroll range
 
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
+    const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
     const script = [
         "blonding",
         "vivids",
@@ -34,19 +33,24 @@ export default function Home() {
         }
     };
 
-    const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
+    const [ref, inView] = useInView({
+        triggerOnce: true,
+        threshold: 0.5,
+    });
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setCurrentScriptIndex((prevIndex) =>
-    //             prevIndex === script.length - 1 ? 0 : prevIndex + 1
-    //         );
-    //     }, 3000);
+    useEffect(() => {
+        if (inView) {
+            const interval = setInterval(() => {
+                setCurrentScriptIndex((prevIndex) =>
+                    prevIndex === script.length - 1 ? 0 : prevIndex + 1
+                );
+            }, 3000);
 
-    //     return () => {
-    //         clearInterval(interval);
-    //     };
-    // }, []);
+            return () => {
+                clearInterval(interval);
+            };
+        }
+    }, [inView]);
 
     const bounceVariants = {
         initial: { opacity: 1, y: 20, rotate: 0 },
@@ -160,10 +164,12 @@ export default function Home() {
                         // className="hover:underline"
                     >
                         <Link href="/portfolio" aria-label="Portfolio">
-                            You're{" "}
+                            You&apos;re 
                             <span className="text-violet-300">pretty</span> when
-                            you get here,{" "}
-                            <span className="text-violet-300">prettier</span>{" "}
+                            you get here, 
+                            <span className="text-violet-300">
+                                prettier 
+                            </span>
                             when you leave
                         </Link>
                     </motion.button>
@@ -178,6 +184,7 @@ export default function Home() {
                     exit={{ opacity: 0, x: 50 }}
                     transition={{ duration: 1 }}
                     className="mt-20 text-8xl"
+                    ref={ref}
                 >
                     {script[currentScriptIndex]}
                 </motion.div>
@@ -223,18 +230,17 @@ export default function Home() {
                 />
             </div>
 
-<div className="mb-20 flex w-3/4 px-20 justify-center">
-            <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className=" text-8xl"
-            >
-                Picture your <span className="text-violet-300">dream</span>{" "}
-                look, and let Genevieve Clare Hair make that{" "}
-                <span className="text-violet-300">dream</span> your reality.
-            </motion.div>
-
-</div>
+            <div className="mb-20 flex w-3/4 justify-center px-20">
+                <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className=" text-8xl"
+                >
+                    Picture your <span className="text-violet-300">dream</span>{" "}
+                    look, and let Genevieve Clare Hair make that{" "}
+                    <span className="text-violet-300">dream</span> your reality.
+                </motion.div>
+            </div>
         </div>
     );
 }

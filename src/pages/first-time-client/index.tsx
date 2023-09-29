@@ -21,11 +21,7 @@ export default function FirstTimeClient() {
     const { data: session } = useSession();
     const router = useRouter();
 
-    console.log("hello");
-    // console.log(session)
     const isNew = session?.user.isNew;
-
-    console.log(isNew);
 
     useEffect(() => {
         async function redirectIfNotNew() {
