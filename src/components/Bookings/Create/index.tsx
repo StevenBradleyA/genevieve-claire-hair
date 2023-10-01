@@ -181,11 +181,11 @@ export default function CreateBooking({
 
             mutate(data);
             if (emailSelect) {
-                // console.log("send email");
                 const emailData = {
                     userEmail: user.email as string,
                     firstName: user.firstName,
                     lastName: user.lastName,
+                    startDate,
                     type,
                 };
                 sendEmail(emailData);
@@ -195,7 +195,6 @@ export default function CreateBooking({
                 console.log("send text");
             }
 
-            // TODO if email true resend component
             // TODO if text true twilio component
         } else {
             throw new Error("Hot Toast Incoming!!!");

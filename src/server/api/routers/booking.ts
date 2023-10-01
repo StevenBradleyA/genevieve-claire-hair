@@ -107,11 +107,12 @@ export const bookingRouter = createTRPCRouter({
                 userEmail: z.string(),
                 firstName: z.string(),
                 lastName: z.string(),
+                startDate: z.date(),
                 type: z.string(),
             })
         )
-        .mutation(async ({ input, ctx }) => {
-            const { userEmail, firstName, lastName, type } = input;
+        .mutation(async ({ input }) => {
+            const { userEmail, firstName, lastName, type, startDate } = input;
             try {
                 const data = await resend.emails.send({
                     from: "GenevieveClareHair <onboarding@resend.dev>",
@@ -120,13 +121,14 @@ export const bookingRouter = createTRPCRouter({
                     react: EmailConfirmation({
                         firstName,
                         lastName,
+                        startDate,
                         type,
                     }),
                 });
 
-                return data; // Assuming you want to return the data sent by the email service.
+                return data;
             } catch (error) {
-                throw new Error(error); // Throw an error if the email sending fails.
+                throw new Error("Email did not send");
             }
         }),
 
