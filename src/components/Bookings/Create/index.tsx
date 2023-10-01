@@ -16,6 +16,8 @@ import { DotLoader } from "react-spinners";
 import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import TextConfirmation from "../Confirmation/twilio";
+import { sendEmail } from "~/pages/api/resend/utils";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -165,16 +167,26 @@ export default function CreateBooking({
         e.preventDefault();
 
         if (session && session.user && session.user.id && date) {
+            const user = session.user;
+            const startDate = timeSlot ?? date;
+            const type = details.services;
             const data = {
-                startDate: timeSlot ?? date,
+                startDate,
                 endDate: addMinutes(timeSlot ?? date, details.totalTime),
-                type: details.services,
+                type,
                 userId: session.user.id,
             };
 
             setDate(undefined);
 
-            return mutate(data);
+            mutate(data);
+            if (emailSelect) {
+                sendEmail({ user, startDate, type });
+            }
+            if (textSelect) {
+                TextConfirmation(user, startDate, type);
+            }
+
             // TODO if email true resend component
             // TODO if text true twilio component
         } else {
