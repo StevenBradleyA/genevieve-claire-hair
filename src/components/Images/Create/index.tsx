@@ -8,14 +8,14 @@ interface ErrorsObj {
     imageExcess?: string;
 }
 interface CreateImageProps {
-    setHasSubmittedImages: React.Dispatch<React.SetStateAction<boolean>>,
-    resourceType: string,
-    resourceId: string,
+    setHasSubmittedImages: React.Dispatch<React.SetStateAction<boolean>>;
+    resourceType: string;
+    resourceId: string;
 }
 
 export default function CreateImage({
     setHasSubmittedImages,
-    resourceType
+    resourceType,
 }: CreateImageProps) {
     const { data: session } = useSession();
     const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -80,8 +80,8 @@ export default function CreateImage({
                     const imageUrl = await uploadFileToS3(buffer);
                     imageUrlArr.push(imageUrl);
                 }
-                // create payload without resourceType and resourceId 
-                // we won't send 
+                // create payload without resourceType and resourceId
+                // we won't send
                 const payload = {
                     images: imageUrlArr.map((imageUrl) => ({
                         link: imageUrl || "",
@@ -106,7 +106,7 @@ export default function CreateImage({
     return (
         <form
             encType="multipart/form-data"
-            className="flex flex-col items-center justify-center font-quattrocento"
+            className="flex flex-col items-center justify-center"
         >
             {hasSubmitted && errors.image && (
                 <p className="create-listing-errors">{errors.image}</p>
@@ -131,9 +131,7 @@ export default function CreateImage({
                         }}
                     />
                     <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <span className="text-center font-quattrocento">
-                            Choose Files
-                        </span>
+                        <span className="text-center">Choose Files</span>
                     </div>
                 </label>
             </div>
@@ -153,7 +151,7 @@ export default function CreateImage({
             </div>
 
             <button
-                className="] rounded-lg bg-glass px-4 py-2 font-quattrocento text-white shadow-md hover:bg-purple-300"
+                className="]  rounded-lg bg-glass px-4 py-2 text-white shadow-md hover:bg-purple-300"
                 type="submit"
                 onClick={(e) => {
                     e.preventDefault();

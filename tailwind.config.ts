@@ -18,10 +18,10 @@ export default {
             },
             fontFamily: {
                 "dm-serif-display": ['"DM Serif Display"', "serif"],
-                quattrocento: ['"Quattrocento"', "serif"],
                 cookie: ['"Cookie"', "cursive"],
-                "grand-hotel": ['"Grand Hotel"', "cursive"],
+                "grand-hotel": ["Grand Hotel", "cursive"],
                 "dancing-script": ['"Dancing Script"', "cursive"],
+                raleway: ["var(--font-raleway)"],
             },
             screens: {
                 mobile: "320px",

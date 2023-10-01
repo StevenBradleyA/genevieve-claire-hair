@@ -105,6 +105,9 @@ export default function CreateBooking({
         totalTime: 0,
         services: "",
     });
+    const [textSelect, setTextSelect] = useState<boolean>(false);
+    const [emailSelect, setEmailSelect] = useState<boolean>(true);
+
     const { data: futureBookings } = api.booking.getFuture.useQuery();
     const { data: schedule } = api.schedule.getNormalizedDays.useQuery();
 
@@ -162,16 +165,35 @@ export default function CreateBooking({
         e.preventDefault();
 
         if (session && session.user && session.user.id && date) {
+            const user = session.user;
+            const startDate = timeSlot ?? date;
+            const type = details.services;
             const data = {
-                startDate: timeSlot ?? date,
+                startDate,
                 endDate: addMinutes(timeSlot ?? date, details.totalTime),
-                type: details.services,
+                type,
                 userId: session.user.id,
             };
 
             setDate(undefined);
 
-            return mutate(data);
+            mutate(data);
+            if (emailSelect) {
+                const emailData = {
+                    userEmail: user.email as string,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    startDate,
+                    type,
+                };
+                sendEmail(emailData);
+            }
+            if (textSelect) {
+                // TextConfirmation(user, startDate, type);
+                console.log("send text");
+            }
+
+            // TODO if text true twilio component
         } else {
             throw new Error("Hot Toast Incoming!!!");
         }
@@ -196,6 +218,21 @@ export default function CreateBooking({
         },
     });
 
+    const { mutate: sendEmail } = api.booking.sendEmailConfirmation.useMutation(
+        {
+            onSuccess: () => {
+                toast.success("Email Sent!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
+            },
+        }
+    );
+
     if (!futureBookings || !schedule)
         return (
             <div className=" mt-10 flex flex-col items-center justify-center gap-16">
@@ -205,7 +242,7 @@ export default function CreateBooking({
         );
 
     return isMobile ? (
-        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-darkGlass p-5 font-quattrocento shadow-lg">
+        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-darkGlass p-5 shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}
@@ -234,14 +271,14 @@ export default function CreateBooking({
             </div>
         </div>
     ) : (
-        <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 shadow-lg">
+        <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 text-white shadow-lg">
             <DayPicker
                 mode="single"
                 selected={date}
                 onSelect={(e) => {
                     setDate(e);
                 }}
-                className="rounded-lg bg-darkGlass text-white shadow-2xl "
+                className="rounded-lg bg-darkGlass shadow-2xl "
                 {...createCalendarOptions(schedule)}
             />
             <div className="flex w-60 flex-col">
@@ -253,9 +290,30 @@ export default function CreateBooking({
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
+                {session?.user.phoneNumber !== null && (
+                    <div className="my-5 flex gap-5 text-sm">
+                        <button
+                            className={`rounded-lg ${
+                                textSelect ? "bg-violet-300" : "bg-darkGlass"
+                            } px-4 py-2 `}
+                            onClick={() => setTextSelect(!textSelect)}
+                        >
+                            Text Confirmation
+                        </button>
+                        <button
+                            className={`rounded-lg ${
+                                emailSelect ? "bg-violet-300" : "bg-darkGlass"
+                            } px-4 py-2 `}
+                            onClick={() => setEmailSelect(!emailSelect)}
+                        >
+                            Email Confirmation
+                        </button>
+                    </div>
+                )}
+
                 <button // TODO: remove this with button refactor
                     disabled={checkConflicts()}
-                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
+                    className="mt-4 rounded-lg bg-violet-300 px-4 py-2 transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
                     onClick={book}
                 >
                     Book now!

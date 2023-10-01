@@ -193,7 +193,7 @@ export default function ExtraDetails({
     };
 
     return isMobile ? (
-        <form className="flex w-72 flex-col  items-center rounded-2xl bg-glass p-5 font-quattrocento text-xl text-white shadow-xl">
+        <form className="flex w-72 flex-col  items-center rounded-2xl bg-glass p-5 text-xl text-white shadow-xl">
             <div className="mb-5 text-center text-lg">
                 Please provide your full name
             </div>
@@ -268,7 +268,7 @@ export default function ExtraDetails({
                         }}
                     />
                     <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <span className="text-center font-quattrocento text-xs">
+                        <span className="text-center  text-xs">
                             Choose Files
                         </span>
                     </div>
@@ -335,7 +335,7 @@ export default function ExtraDetails({
             </button>
         </form>
     ) : (
-        <form className="flex flex-col items-center  rounded-2xl bg-glass p-20 font-quattrocento text-3xl text-white shadow-xl">
+        <form className="flex flex-col items-center  rounded-2xl bg-glass p-20 text-3xl text-white shadow-xl">
             <div className="mb-5 flex justify-center text-4xl">
                 Please provide your full name
             </div>
@@ -408,9 +408,7 @@ export default function ExtraDetails({
                         }}
                     />
                     <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <span className="text-center font-quattrocento">
-                            Choose Files
-                        </span>
+                        <span className="text-center">Choose Files</span>
                     </div>
                 </label>
             </div>

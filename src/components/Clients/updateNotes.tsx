@@ -2,6 +2,7 @@ import { DotLoader } from "react-spinners";
 import type { User } from "@prisma/client";
 import React, { useState } from "react";
 import { api } from "~/utils/api";
+import { SessionContext } from "next-auth/react";
 
 interface UserNotesProps {
     closeModal: () => void;
@@ -28,6 +29,7 @@ export default function EditUserNotes({
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
 
+    // TODO how to invalidate the session? not working even with user invalidated...
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: () => {
             void ctx.user.getAllUsers.invalidate();

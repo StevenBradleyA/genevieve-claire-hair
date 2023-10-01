@@ -170,7 +170,7 @@ export default function UpdateBooking({
     }, [booking, serviceData]);
 
     return isMobile ? (
-        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 font-quattrocento shadow-lg">
+        <div className="flex flex-col items-center justify-center gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 shadow-lg">
             <ServiceSelector serviceData={serviceData} />
             <DayPicker
                 mode="single"
@@ -201,7 +201,7 @@ export default function UpdateBooking({
             </div>
         </div>
     ) : (
-        <div className="flex flex-col gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 font-quattrocento shadow-lg">
+        <div className="flex flex-col gap-10 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-10 shadow-lg">
             <ServiceSelector serviceData={serviceData} />
             <div className="flex items-center justify-center">
                 <DayPicker
