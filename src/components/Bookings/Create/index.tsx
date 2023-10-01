@@ -181,10 +181,18 @@ export default function CreateBooking({
 
             mutate(data);
             if (emailSelect) {
-                sendEmail({ user, startDate, type });
+                // console.log("send email");
+                const emailData = {
+                    userEmail: user.email as string,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    type,
+                };
+                sendEmail(emailData);
             }
             if (textSelect) {
-                TextConfirmation(user, startDate, type);
+                // TextConfirmation(user, startDate, type);
+                console.log("send text");
             }
 
             // TODO if email true resend component
@@ -212,6 +220,21 @@ export default function CreateBooking({
             void router.push("/bookings/confirmed");
         },
     });
+
+    const { mutate: sendEmail } = api.booking.sendEmailConfirmation.useMutation(
+        {
+            onSuccess: () => {
+                toast.success("Email Sent!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
+            },
+        }
+    );
 
     if (!futureBookings || !schedule)
         return (

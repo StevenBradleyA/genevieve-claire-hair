@@ -1,9 +1,13 @@
 import { z } from "zod";
+import EmailConfirmation from "~/components/Bookings/Confirmation/EmailConfirmation";
+import { Resend } from "resend";
 import {
     createTRPCRouter,
     publicProcedure,
     protectedProcedure,
 } from "~/server/api/trpc";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const bookingRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
@@ -95,6 +99,35 @@ export const bookingRouter = createTRPCRouter({
             }
 
             throw new Error("Invalid userId");
+        }),
+
+    sendEmailConfirmation: protectedProcedure
+        .input(
+            z.object({
+                userEmail: z.string(),
+                firstName: z.string(),
+                lastName: z.string(),
+                type: z.string(),
+            })
+        )
+        .mutation(async ({ input, ctx }) => {
+            const { userEmail, firstName, lastName, type } = input;
+            try {
+                const data = await resend.emails.send({
+                    from: "GenevieveClareHair <onboarding@resend.dev>",
+                    to: [userEmail],
+                    subject: "Hair Appointment Confirmation",
+                    react: EmailConfirmation({
+                        firstName,
+                        lastName,
+                        type,
+                    }),
+                });
+
+                return data; // Assuming you want to return the data sent by the email service.
+            } catch (error) {
+                throw new Error(error); // Throw an error if the email sending fails.
+            }
         }),
 
     update: protectedProcedure
