@@ -16,8 +16,6 @@ import { DotLoader } from "react-spinners";
 import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import TextConfirmation from "../Confirmation/twilio";
-import { sendEmail } from "~/pages/api/resend/utils";
 
 export interface CalendarOptions {
     disabled: Matcher[];

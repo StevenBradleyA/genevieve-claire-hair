@@ -11,18 +11,20 @@ export default function EmailConfirmation({
     type,
     startDate,
 }: EmailConfirmationProps) {
-    // todo this needs to take in a date / email
-    // send an immediate confirmation email
-    // send a one week reminder email if the date is more than 7 days away
-    // send a one day reminder email
-
-    console.log(startDate);
+    const formattedDate = startDate.toLocaleString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+    });
 
     return (
         <div>
-            <div>
-                {`Hi ${firstName} ${lastName}, This is an confirmation for your ${type} appointment on date format here. Thank you for booking! `}
-            </div>
+            {`Hi ${firstName} ${lastName}, This is an confirmation for your ${type} appointment on ${formattedDate}. Thank you for booking! 
+                - Geni
+            `}
         </div>
     );
 }
