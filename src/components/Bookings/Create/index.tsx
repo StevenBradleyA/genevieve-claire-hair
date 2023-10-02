@@ -176,8 +176,8 @@ export default function CreateBooking({
             };
 
             setDate(undefined);
-
             mutate(data);
+
             if (emailSelect) {
                 const emailData = {
                     userEmail: user.email as string,
@@ -188,12 +188,18 @@ export default function CreateBooking({
                 };
                 sendEmail(emailData);
             }
+
             if (textSelect) {
-                // TextConfirmation(user, startDate, type);
+                const textData = {
+                    phoneNumber: user.phoneNumber,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    startDate,
+                    type,
+                };
+
                 console.log("send text");
             }
-
-            // TODO if text true twilio component
         } else {
             throw new Error("Hot Toast Incoming!!!");
         }

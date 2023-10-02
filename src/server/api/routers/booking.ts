@@ -8,6 +8,8 @@ import {
 } from "~/server/api/trpc";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const twilioAuth= process.env.TWILIO_AUTH_TOKEN
+const twilioSid =process.env.TWILIO_SID_KEY
 
 export const bookingRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
@@ -130,6 +132,20 @@ export const bookingRouter = createTRPCRouter({
             } catch (error) {
                 throw new Error("Email did not send");
             }
+        }),
+
+    sendTextConfirmation: protectedProcedure
+        .input(
+            z.object({
+                phoneNumber: z.string(),
+                firstName: z.string(),
+                lastName: z.string(),
+                startDate: z.date(),
+                type: z.string(),
+            })
+        )
+        .mutation(async ({ input }) => {
+            const { phoneNumber, firstName, lastName, type, startDate } = input;
         }),
 
     update: protectedProcedure
