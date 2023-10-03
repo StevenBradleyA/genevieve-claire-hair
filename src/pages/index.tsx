@@ -4,6 +4,7 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
+import giraffe from "@public/giraffe.png";
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
@@ -100,9 +101,9 @@ export default function Home() {
                         style={{ borderBottomLeftRadius: "30px" }}
                     />
 
-                    <button className="absolute -bottom-40 left-5">
+                    <Link href="/bookings" className="absolute -bottom-40 left-5">
                         <BookNowSvg />
-                    </button>
+                    </Link>
                 </div>
             </div>
             <div className="relative mt-32 flex w-full">
@@ -147,7 +148,7 @@ export default function Home() {
                                     top: "0%",
                                     marginLeft:
                                         distanceFromCenter === 0
-                                            ? "-10%"
+                                            ? "-9%"
                                             : "-20%",
                                     transformOrigin: "center center",
                                 }}
@@ -157,7 +158,7 @@ export default function Home() {
                     })}
                 </div>
 
-                <div className="absolute right-28 top-20 flex w-1/3 items-center justify-center  text-6xl">
+                <div className="absolute sm:right-5 full:right-28 full:top-20 sm:top-12 flex full:w-1/3 sm:w-2/5 items-center justify-center sm:text-5xl  full:text-6xl ">
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
@@ -167,9 +168,7 @@ export default function Home() {
                             You&apos;re 
                             <span className="text-violet-300">pretty</span> when
                             you get here, 
-                            <span className="text-violet-300">
-                                prettier 
-                            </span>
+                            <span className="text-violet-300">prettier </span>
                             when you leave
                         </Link>
                     </motion.button>
@@ -240,6 +239,21 @@ export default function Home() {
                     look, and let Genevieve Clare Hair make that{" "}
                     <span className="text-violet-300">dream</span> your reality.
                 </motion.div>
+            </div>
+            <div className="mt-32 flex w-full items-center justify-center gap-32 bg-violet-300 p-10">
+                <div className="flex flex-col">
+                    <div className="opacity-75">
+                        inspired by the capes Geni uses in her salon
+                    </div>
+                    <div>
+                        Powered by <button>Hacktime</button> | @ 2023 Genevieve
+                        Clare Hair{" "}
+                    </div>
+                </div>
+                <Image alt="giraffe-logo" src={giraffe} className="w-20" />
+                <div className="opacity-75">
+                    contact | genevieveclare.hair@outlook.com{" "}
+                </div>
             </div>
         </div>
     );
