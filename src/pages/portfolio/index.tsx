@@ -10,6 +10,7 @@ import newColorCorrection from "../../../public/portfolio/newCorrection.png";
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion } from "framer-motion";
 import { useMobile } from "~/components/MobileContext";
+import Footer from "~/components/HomePage/footer";
 
 interface InstagramFeedItem {
     id: string;
@@ -126,96 +127,99 @@ export default function Portfolio() {
             </div>
         </div>
     ) : (
-        <motion.div
-            className="flex"
-            initial="hidden"
-            animate="visible"
-            variants={pageVariants}
-        >
-            {/* Left half*/}
-            <div className=" w-2/3 px-10 full:w-2/3">
-                <div className=" instagram-header mb-12 flex h-20 items-center justify-center rounded-2xl shadow-xl">
-                    <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
-                        Instagram
-                    </h1>
-                    <Image
-                        alt="instagram"
-                        src={instagramLogo}
-                        className=" w-40 cursor-pointer object-cover"
-                        onClick={handleInstaClick}
-                    />
-                </div>
-                <div className="flex flex-wrap justify-center rounded-2xl bg-glass p-10 shadow-2xl">
-                    {instaFeed.map((post, index) => (
-                        <div
-                            key={index}
-                            className="insta-image-sizing w-full overflow-hidden"
-                        >
-                            <div className="zoom-effect h-full w-full rounded-lg object-cover">
-                                <Image
-                                    src={post.media_url}
-                                    alt={post.caption || ""}
-                                    width={300}
-                                    height={300}
-                                    className="h-full w-full"
-                                />
+        <div className="flex flex-col">
+            <motion.div
+                className="flex"
+                initial="hidden"
+                animate="visible"
+                variants={pageVariants}
+            >
+                {/* Left half*/}
+                <div className=" w-2/3 px-10 full:w-2/3">
+                    <div className=" instagram-header mb-12 flex h-20 items-center justify-center rounded-2xl shadow-xl">
+                        <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
+                            Instagram
+                        </h1>
+                        <Image
+                            alt="instagram"
+                            src={instagramLogo}
+                            className=" w-40 cursor-pointer object-cover"
+                            onClick={handleInstaClick}
+                        />
+                    </div>
+                    <div className="flex flex-wrap justify-center rounded-2xl bg-glass p-10 shadow-2xl">
+                        {instaFeed.map((post, index) => (
+                            <div
+                                key={index}
+                                className="insta-image-sizing w-full overflow-hidden"
+                            >
+                                <div className="zoom-effect h-full w-full rounded-lg object-cover">
+                                    <Image
+                                        src={post.media_url}
+                                        alt={post.caption || ""}
+                                        width={300}
+                                        height={300}
+                                        className="h-full w-full"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            {/* Right half*/}
-            <div className="flex w-1/3 flex-col items-center px-10">
-                <div className="mb-10 flex flex-col items-center">
-                    <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
-                        <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
-                            Blonding
-                        </h1>
+                {/* Right half*/}
+                <div className="flex w-1/3 flex-col items-center px-10">
+                    <div className="mb-10 flex flex-col items-center">
+                        <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                            <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
+                                Blonding
+                            </h1>
+                        </div>
+                        <Image
+                            src={blonding}
+                            alt="blonding"
+                            className=" w-auto rounded-2xl"
+                        />
                     </div>
-                    <Image
-                        src={blonding}
-                        alt="blonding"
-                        className=" w-auto rounded-2xl"
-                    />
-                </div>
-                <div className="mb-10 flex flex-col items-center">
-                    <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
-                        <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
-                            Vivids
-                        </h1>
+                    <div className="mb-10 flex flex-col items-center">
+                        <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                            <h1 className=" gap-5 font-grand-hotel text-8xl text-white">
+                                Vivids
+                            </h1>
+                        </div>
+                        <Image
+                            src={vivids}
+                            alt="vivids"
+                            className="w-auto rounded-2xl"
+                        />
                     </div>
-                    <Image
-                        src={vivids}
-                        alt="vivids"
-                        className="w-auto rounded-2xl"
-                    />
-                </div>
-                <div className="mb-10 flex flex-col items-center ">
-                    <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
-                        <h1 className=" gap-5 font-grand-hotel text-7xl text-white">
-                            Color Correction
-                        </h1>
+                    <div className="mb-10 flex flex-col items-center ">
+                        <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                            <h1 className=" gap-5 font-grand-hotel text-7xl text-white">
+                                Color Correction
+                            </h1>
+                        </div>
+                        <Image
+                            src={newColorCorrection}
+                            alt="color correction"
+                            className="w-auto rounded-2xl"
+                        />
                     </div>
-                    <Image
-                        src={newColorCorrection}
-                        alt="color correction"
-                        className="w-auto rounded-2xl"
-                    />
-                </div>
-                <div className="mb-10 flex flex-col items-center">
-                    <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
-                        <h1 className=" gap-5 font-grand-hotel text-7xl text-white">
-                            Short Length Cut
-                        </h1>
+                    <div className="mb-10 flex flex-col items-center">
+                        <div className=" instagram-header mb-12 flex h-20 w-full items-center justify-center rounded-2xl shadow-xl">
+                            <h1 className=" gap-5 font-grand-hotel text-7xl text-white">
+                                Short Length Cut
+                            </h1>
+                        </div>
+                        <Image
+                            src={slc}
+                            alt="short length cut"
+                            className="w-auto rounded-2xl"
+                        />
                     </div>
-                    <Image
-                        src={slc}
-                        alt="short length cut"
-                        className="w-auto rounded-2xl"
-                    />
                 </div>
-            </div>
-        </motion.div>
+            </motion.div>
+            <Footer />
+        </div>
     );
 }

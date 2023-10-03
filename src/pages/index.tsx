@@ -4,6 +4,7 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
+import giraffe from "@public/giraffe.png";
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import downArrow from "@public/svgs/angles-down-solid.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
 import { useInView } from "react-intersection-observer";
+import Footer from "~/components/HomePage/footer";
 
 export default function Home() {
     //Todo set script switch only on homepage and at a certain scroll range
@@ -100,9 +102,12 @@ export default function Home() {
                         style={{ borderBottomLeftRadius: "30px" }}
                     />
 
-                    <button className="absolute -bottom-40 left-5">
+                    <Link
+                        href="/bookings"
+                        className="absolute -bottom-40 left-5"
+                    >
                         <BookNowSvg />
-                    </button>
+                    </Link>
                 </div>
             </div>
             <div className="relative mt-32 flex w-full">
@@ -147,7 +152,7 @@ export default function Home() {
                                     top: "0%",
                                     marginLeft:
                                         distanceFromCenter === 0
-                                            ? "-10%"
+                                            ? "-9%"
                                             : "-20%",
                                     transformOrigin: "center center",
                                 }}
@@ -157,20 +162,22 @@ export default function Home() {
                     })}
                 </div>
 
-                <div className="absolute right-28 top-20 flex w-1/3 items-center justify-center  text-6xl">
+                <div className="absolute flex items-center justify-center sm:right-5 sm:top-12 sm:w-2/5 sm:text-5xl full:right-28 full:top-20 full:w-1/3  full:text-6xl ">
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        // className="hover:underline"
+                        className="portfolio-button"
                     >
                         <Link href="/portfolio" aria-label="Portfolio">
-                            You&apos;re 
-                            <span className="text-violet-300">pretty</span> when
-                            you get here, 
-                            <span className="text-violet-300">
-                                prettier 
+                            You&apos;re&nbsp;
+                            <span className="portfolio-button-span text-violet-300">
+                                pretty
+                            </span>{" "}
+                            when you get here,&nbsp;
+                            <span className="portfolio-button-span text-violet-300">
+                                prettier
                             </span>
-                            when you leave
+                            &nbsp;when you leave
                         </Link>
                     </motion.button>
                 </div>
@@ -231,16 +238,13 @@ export default function Home() {
             </div>
 
             <div className="mb-20 flex w-3/4 justify-center px-20">
-                <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className=" text-8xl"
-                >
+                <div className=" text-6xl">
                     Picture your <span className="text-violet-300">dream</span>{" "}
                     look, and let Genevieve Clare Hair make that{" "}
                     <span className="text-violet-300">dream</span> your reality.
-                </motion.div>
+                </div>
             </div>
+            <Footer />
         </div>
     );
 }
