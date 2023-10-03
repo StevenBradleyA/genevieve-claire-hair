@@ -197,7 +197,7 @@ export default function CreateBooking({
                     startDate,
                     type,
                 };
-                sendText(textData);
+                // sendText(textData);
                 console.log("send text");
             }
         } else {
@@ -238,18 +238,18 @@ export default function CreateBooking({
             },
         }
     );
-    const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
-        onSuccess: () => {
-            toast.success("Text Sent!", {
-                icon: "👏",
-                style: {
-                    borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
-                },
-            });
-        },
-    });
+    // const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
+    //     onSuccess: () => {
+    //         toast.success("Text Sent!", {
+    //             icon: "👏",
+    //             style: {
+    //                 borderRadius: "10px",
+    //                 background: "#333",
+    //                 color: "#fff",
+    //             },
+    //         });
+    //     },
+    // });
 
     if (!futureBookings || !schedule)
         return (

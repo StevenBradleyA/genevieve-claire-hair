@@ -10,10 +10,12 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
 const twilioSid = process.env.TWILIO_SID_KEY;
-// const twilioClient = new Twilio(twilioSid, twilioAuth);
-const twilioClient = require("twilio")(twilioSid, twilioAuth);
+const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
+const twilioService = process.env.TWILIO_SERVICE;
+
+// const twilioClient = require("twilio")(twilioSid, twilioAuth);
+const twilioClient = new Twilio(twilioSid, twilioAuth);
 
 export const bookingRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
@@ -138,35 +140,40 @@ export const bookingRouter = createTRPCRouter({
             }
         }),
 
-    sendTextConfirmation: protectedProcedure
-        .input(
-            z.object({
-                phoneNumber: z.string(),
-                firstName: z.string(),
-                lastName: z.string(),
-                startDate: z.date(),
-                type: z.string(),
-            })
-        )
-        .mutation(async ({ input }) => {
-            const { phoneNumber, firstName, lastName, type, startDate } = input;
-            //todo going to have to add a plus +1 to the front of the phonenumber string
-            // also need startdate logic for reminders so we are effectively going to send three texts to the api if the date is far enough in advance
+    // sendTextConfirmation: protectedProcedure
+    //     .input(
+    //         z.object({
+    //             phoneNumber: z.string(),
+    //             firstName: z.string(),
+    //             lastName: z.string(),
+    //             startDate: z.date(),
+    //             type: z.string(),
+    //         })
+    //     )
+    //     .mutation(async ({ input }) => {
+    //         const { phoneNumber, firstName, lastName, type, startDate } = input;
+    //         //todo going to have to add a plus +1 to the front of the phonenumber string
+    //         // todo E.164 number format - doing this here cuz only want us numbers for fees
+    //         // may want to refactor to a toll free number when site is live?
+    //         // also need startdate logic for reminders so we are effectively going to send three texts to the api if the date is far enough in advance
+    //         // route working with messaging servive but we arent us compliant so it won't send
+    //         // while the fees are small about $3 a month for a local number us compliance has to be passed.
+    //         // we don't need a local number, so refactor we will refactor toll free when site is live.
 
-            try {
-                const message = await twilioClient.messages.create({
-                    body: `Hello ${firstName} ${lastName}, your ${type} appointment on ${startDate.toDateString()} is confirmed. Thank you!`,
-                    from: "+18447346903",
-                    to: "+14253012397",
-                    // to: phoneNumber,
-                });
+    //         try {
+    //             const message = await twilioClient.messages.create({
+    //                 body: `Hello ${firstName} ${lastName}, your ${type} appointment on ${startDate.toDateString()} is confirmed. Thank you!`,
+    //                 messagingServiceSid: twilioService,
+    //                 to: "+14253012397",
+    //                 // to: phoneNumber,
+    //             });
 
-                return message;
-            } catch (error) {
-                // Handle error and return an error response
-                throw new Error("Email did not send");
-            }
-        }),
+    //             return message;
+    //         } catch (error) {
+    //             console.error("Error sending text message:", error);
+    //             throw new Error("Text did not send");
+    //         }
+    //     }),
 
     update: protectedProcedure
         .input(
