@@ -101,7 +101,10 @@ export default function Home() {
                         style={{ borderBottomLeftRadius: "30px" }}
                     />
 
-                    <Link href="/bookings" className="absolute -bottom-40 left-5">
+                    <Link
+                        href="/bookings"
+                        className="absolute -bottom-40 left-5"
+                    >
                         <BookNowSvg />
                     </Link>
                 </div>
@@ -158,18 +161,22 @@ export default function Home() {
                     })}
                 </div>
 
-                <div className="absolute sm:right-5 full:right-28 full:top-20 sm:top-12 flex full:w-1/3 sm:w-2/5 items-center justify-center sm:text-5xl  full:text-6xl ">
+                <div className="absolute flex items-center justify-center sm:right-5 sm:top-12 sm:w-2/5 sm:text-5xl full:right-28 full:top-20 full:w-1/3  full:text-6xl ">
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        // className="hover:underline"
+                        className="portfolio-button"
                     >
                         <Link href="/portfolio" aria-label="Portfolio">
-                            You&apos;re 
-                            <span className="text-violet-300">pretty</span> when
-                            you get here, 
-                            <span className="text-violet-300">prettier </span>
-                            when you leave
+                            You&apos;re&nbsp;
+                            <span className="portfolio-button-span text-violet-300">
+                                pretty
+                            </span>{" "}
+                            when you get here,&nbsp;
+                            <span className="portfolio-button-span text-violet-300">
+                                prettier
+                            </span>
+                            &nbsp;when you leave
                         </Link>
                     </motion.button>
                 </div>
@@ -230,17 +237,13 @@ export default function Home() {
             </div>
 
             <div className="mb-20 flex w-3/4 justify-center px-20">
-                <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className=" text-8xl"
-                >
+                <div className=" text-6xl">
                     Picture your <span className="text-violet-300">dream</span>{" "}
                     look, and let Genevieve Clare Hair make that{" "}
                     <span className="text-violet-300">dream</span> your reality.
-                </motion.div>
+                </div>
             </div>
-            <div className="mt-32 flex w-full items-center justify-center gap-32 bg-violet-300 p-10">
+            <div className="mt-32 flex w-full items-center justify-center gap-32 bg-darkGlass p-10">
                 <div className="flex flex-col">
                     <div className="opacity-75">
                         inspired by the capes Geni uses in her salon

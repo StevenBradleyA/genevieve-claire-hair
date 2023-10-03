@@ -212,6 +212,12 @@
 
 /* -------------       Home       ------------- */
 
+.portfolio-button:hover .portfolio-button-span {
+    color: #be93fd;
+    /* text-decoration: underline;
+    text-decoration-thickness: 4px;  */
+}
+
 /* -------------       Portfolio       ------------- */
 
 .zoom-effect {
