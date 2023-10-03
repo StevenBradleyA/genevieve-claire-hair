@@ -12,6 +12,7 @@ import downArrow from "@public/svgs/angles-down-solid.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
 import { useInView } from "react-intersection-observer";
+import Footer from "~/components/HomePage/footer";
 
 export default function Home() {
     //Todo set script switch only on homepage and at a certain scroll range
@@ -243,21 +244,7 @@ export default function Home() {
                     <span className="text-violet-300">dream</span> your reality.
                 </div>
             </div>
-            <div className="mt-32 flex w-full items-center justify-center gap-32 bg-darkGlass p-10">
-                <div className="flex flex-col">
-                    <div className="opacity-75">
-                        inspired by the capes Geni uses in her salon
-                    </div>
-                    <div>
-                        Powered by <button>Hacktime</button> | @ 2023 Genevieve
-                        Clare Hair{" "}
-                    </div>
-                </div>
-                <Image alt="giraffe-logo" src={giraffe} className="w-20" />
-                <div className="opacity-75">
-                    contact | genevieveclare.hair@outlook.com{" "}
-                </div>
-            </div>
+            <Footer />
         </div>
     );
 }

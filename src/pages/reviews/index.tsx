@@ -3,11 +3,12 @@ import DisplayReviews from "~/components/Reviews/Display";
 import { useMobile } from "~/components/MobileContext";
 import ChooseReview from "~/components/Reviews/Create/chooseReview";
 import ScriptButton from "./scriptButton";
+import Footer from "~/components/HomePage/footer";
 
 export default function Reviews() {
     // TODO Test Modals on mobile
     // TODO Give admin god power to delete a review
-    
+
     const { data: session } = useSession();
     const { isMobile } = useMobile();
 
@@ -41,6 +42,7 @@ export default function Reviews() {
                 </div>
             )}
             <DisplayReviews />
+            <Footer />
         </div>
     );
 }
