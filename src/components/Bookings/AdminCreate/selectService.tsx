@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { ServicesType } from "~/server/api/routers/service";
 import { api } from "~/utils/api";
 
+
+
 interface SelectServiceType {
     selectedServices: string[];
     setSelectedServices: React.Dispatch<React.SetStateAction<string[]>>;
@@ -119,7 +121,7 @@ export default function AdminBookingSelectService({
             </div>
             <button
                 onClick={handleClearSelection}
-                className="mt-4 rounded-2xl bg-blue-300 px-6 py-2 text-xl"
+                className="my-4 rounded-2xl bg-blue-300 px-6 py-2 text-xl"
             >
                 Clear Selection
             </button>

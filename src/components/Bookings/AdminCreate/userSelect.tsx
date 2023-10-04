@@ -36,10 +36,13 @@ export default function AdminBookingSelectUser({
                     lastName={selectedUser.lastName || ""}
                 />
             ) : (
-                <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 text-2xl shadow-xl">
+                <div
+                    className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 text-2xl shadow-xl"
+                    // style={{ height: '300px', overflowY: 'auto' }}
+                >
                     {users.map((user: User, i: number) => (
                         <button
-                            className="flex"
+                            className="mb-3 flex rounded-2xl bg-darkGlass px-6 py-2"
                             key={i}
                             onClick={() => {
                                 setSelectedUser(user);
