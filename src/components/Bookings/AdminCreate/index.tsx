@@ -19,6 +19,7 @@ export default function AdminCreateBooking({
     const [type, setType] = useState<string>("");
 
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
+    const [isSelected, setIsSelected] = useState<boolean>(false);
 
     const { data: serviceData } = api.service.getAllNormalized.useQuery();
 
@@ -58,11 +59,13 @@ export default function AdminCreateBooking({
                 ...prevServices,
                 serviceName,
             ]);
+            setIsSelected(true);
         }
     };
 
     const handleClearSelection = () => {
         // Clears all selected services
+        setIsSelected(false);
         setSelectedServices([]);
         const selects = document.querySelectorAll("select");
         selects.forEach((select) => {
@@ -71,14 +74,23 @@ export default function AdminCreateBooking({
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center justify-center">
             <div className="flex gap-2">
                 {serviceData &&
                     Object.values(serviceData).map((service: ServicesType) => (
                         <div key={service.id}>
                             {service.subcategories.length > 0 ? (
                                 <select
-                                    className="rounded-2xl bg-darkGlass px-6 py-2 text-xl"
+                                    className={`rounded-2xl px-6 py-2 text-xl ${
+                                        service.subcategories.some(
+                                            (subcategory) =>
+                                                selectedServices.includes(
+                                                    `${service.name}: ${subcategory.name}`
+                                                )
+                                        )
+                                            ? "bg-gradient-to-br from-fuchsia-200 to-blue-300 "
+                                            : "bg-darkGlass"
+                                    }`}
                                     onChange={(e) =>
                                         handleServiceSelect(
                                             service,
@@ -104,15 +116,11 @@ export default function AdminCreateBooking({
                                 <button
                                     key={service.id}
                                     onClick={() => handleServiceSelect(service)}
-                                    className="rounded-2xl px-6 py-2 text-xl"
-                                    style={{
-                                        backgroundColor:
-                                            selectedServices.includes(
-                                                service.name
-                                            )
-                                                ? "blue" // Change to your desired background color for selected services
-                                                : "gray", // Change to your desired background color for unselected services
-                                    }}
+                                    className={`rounded-2xl px-6 py-2 text-xl ${
+                                        selectedServices.includes(service.name)
+                                            ? "bg-gradient-to-br from-fuchsia-200 to-blue-300 "
+                                            : "bg-darkGlass"
+                                    }`}
                                 >
                                     {service.name}
                                 </button>
@@ -122,7 +130,7 @@ export default function AdminCreateBooking({
             </div>
             <button
                 onClick={handleClearSelection}
-                className="mt-4 rounded-2xl px-6 py-2 text-xl"
+                className="mt-4 rounded-2xl bg-blue-300 px-6 py-2 text-xl"
             >
                 Clear Selection
             </button>
