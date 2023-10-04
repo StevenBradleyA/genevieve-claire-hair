@@ -13,6 +13,7 @@ import ModalDialog from "~/components/Modal";
 import type { Schedule } from "@prisma/client";
 import EachSchedule from "~/components/Bookings/Schedule";
 import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
+import AdminBookingSelectUser from "~/components/Bookings/AdminCreate/userSelect";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -105,6 +106,8 @@ const AdminViewBookings: NextPageWithLayout = () => {
         services: "",
     });
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isBookingModalOpen, setIsBookingModalOpen] =
+        useState<boolean>(false);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -151,7 +154,13 @@ const AdminViewBookings: NextPageWithLayout = () => {
         if (!timeSlot) return true;
         return false;
     };
+    const openBookingModal = () => {
+        setIsBookingModalOpen(true);
+    };
 
+    const closeBookingModal = () => {
+        setIsBookingModalOpen(false);
+    };
     //    TODO Allow ability to approve pending appointments
 
     return (
@@ -184,9 +193,16 @@ const AdminViewBookings: NextPageWithLayout = () => {
                 className="mt-10 rounded-3xl bg-darkGlass px-6 py-2 text-2xl"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={openBookingModal}
             >
                 Book an Appointment
             </motion.button>
+            <ModalDialog
+                isOpen={isBookingModalOpen}
+                onClose={closeBookingModal}
+            >
+                <AdminBookingSelectUser closeModal={closeBookingModal} />
+            </ModalDialog>
 
             <div className="mt-20 flex items-center gap-5 text-5xl font-bold">
                 <div className="">Past</div>

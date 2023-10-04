@@ -64,7 +64,7 @@ export default function AdminBookingSelectService({
 
     return (
         <>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
                 {serviceData &&
                     Object.values(serviceData).map((service: ServicesType) => (
                         <div key={service.id}>

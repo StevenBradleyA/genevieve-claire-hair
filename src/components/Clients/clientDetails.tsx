@@ -110,14 +110,11 @@ export default function ClientDetails({ userId }: { userId: string }) {
                 onClose={closeBookingModal}
             >
                 <AdminCreateBooking
-                closeModal={closeBookingModal}
-                userId={user.id}
-                
+                    closeModal={closeBookingModal}
+                    userId={user.id}
+                    firstName={user.firstName || ""}
+                    lastName={user.lastName || ""}
                 />
-
-
-
-
             </ModalDialog>
 
             {userId && <ClientBookings userId={userId} />}
