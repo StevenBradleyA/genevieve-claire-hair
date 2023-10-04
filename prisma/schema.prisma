@@ -92,6 +92,12 @@ model Schedule {
     endTime   Int
 }
 
+model TimeOff {
+    id        Int      @id @default(autoincrement())
+    startDate DateTime
+    endDate   DateTime
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
