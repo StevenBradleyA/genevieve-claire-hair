@@ -25,8 +25,7 @@ const form = [
     (props: FormProps) => <CreateBooking {...props} />,
 ];
 
-// TODO Add button for Text or Email Confirmation
-// TODO on the text Geni page we should removed the back / submit buttons maybe give more explanation 
+// TODO on the text Geni page we should remove the back / submit buttons maybe give more explanation 
 
 
 export default function Booking() {

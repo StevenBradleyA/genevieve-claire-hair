@@ -153,10 +153,11 @@ const AdminViewBookings: NextPageWithLayout = () => {
     };
 
     //    TODO Allow ability to approve pending appointments
-    // TODO Allow geni to book for any selected client in the db any service
 
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass p-10  text-white shadow-2xl">
+            <div className="mb-5 text-5xl font-bold">Schedule</div>
+            <div>this will show all appointments for the day selected</div>
             <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 shadow-lg">
                 <DayPicker
                     mode="single"
@@ -176,14 +177,16 @@ const AdminViewBookings: NextPageWithLayout = () => {
                         timeSlot={timeSlot}
                         setTimeSlot={setTimeSlot}
                     />
-                    <button
-                        disabled={checkConflicts()}
-                        className="mt-4 rounded-lg bg-violet-300 px-4 py-2 text-white transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
-                    >
-                        Book now!
-                    </button>
                 </div>
             </div>
+
+            <motion.button
+                className="mt-10 rounded-3xl bg-darkGlass px-6 py-2 text-2xl"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+            >
+                Book an Appointment
+            </motion.button>
 
             <div className="mt-20 flex items-center gap-5 text-5xl font-bold">
                 <div className="">Past</div>
