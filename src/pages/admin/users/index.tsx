@@ -10,7 +10,7 @@ import type { ReactElement } from "react";
 
 const AdminViewUsers: NextPageWithLayout = () => {
     const { data: users, isLoading } = api.user.getAllUsers.useQuery();
-    
+
     if (isLoading)
         return (
             <div className=" mt-10 flex flex-col items-center justify-center gap-16">
@@ -33,7 +33,7 @@ const AdminViewUsers: NextPageWithLayout = () => {
                     className="w-24 object-cover"
                 />
             </div>
-            <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 shadow-xl text-2xl">
+            <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 text-2xl shadow-xl">
                 {users.map((user: User, i: number) => {
                     return <EachClientCard key={i} user={user} i={i} />;
                 })}
