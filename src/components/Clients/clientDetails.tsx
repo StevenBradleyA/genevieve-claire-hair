@@ -6,11 +6,14 @@ import ModalDialog from "~/components/Modal";
 import EditUserNotes from "./updateNotes";
 import ClientBookings from "./ClientBookings";
 import { motion } from "framer-motion";
+import AdminCreateBooking from "../Bookings/AdminCreate";
 
 export default function ClientDetails({ userId }: { userId: string }) {
     const { data: user, isLoading } = api.user.getUserById.useQuery(userId);
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isBookingModalOpen, setIsBookingModalOpen] =
+        useState<boolean>(false);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -18,6 +21,13 @@ export default function ClientDetails({ userId }: { userId: string }) {
 
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+    const openBookingModal = () => {
+        setIsBookingModalOpen(true);
+    };
+
+    const closeBookingModal = () => {
+        setIsBookingModalOpen(false);
     };
 
     if (isLoading)
@@ -37,7 +47,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                 <div>{user.lastName}</div>
             </div>
             {user.images && user.images.length > 0 && (
-                <div className="flex items-center justify-center gap-5">
+                <div className="mb-5 flex items-center justify-center gap-5">
                     {user.images.map((e, i) => (
                         <div key={i}>
                             <Image
@@ -45,13 +55,13 @@ export default function ClientDetails({ userId }: { userId: string }) {
                                 alt="client"
                                 width={200}
                                 height={200}
-                                className="w-40"
+                                className="w-40 "
                             />
                         </div>
                     ))}
                 </div>
             )}
-            <div className="mt-5 font-bold">Contact</div>
+            <div className=" font-bold">Contact</div>
             <div className=" mt-3 text-2xl">{user.email}</div>
             {user.phoneNumber !== null && (
                 <div className=" mt-3 text-2xl">{user.phoneNumber}</div>
@@ -85,7 +95,28 @@ export default function ClientDetails({ userId }: { userId: string }) {
                         </p>
                     ))}
             </div>
-            <div className="my-5 flex gap-5 font-bold">Booking History</div>
+
+            <div className="my-5 flex gap-5 ">Booking</div>
+            <motion.button
+                className="mb-10 rounded-3xl bg-darkGlass px-6 py-2 text-2xl"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={openBookingModal}
+            >
+                Book an Appointment
+            </motion.button>
+            <ModalDialog
+                isOpen={isBookingModalOpen}
+                onClose={closeBookingModal}
+            >
+                <AdminCreateBooking
+                    closeModal={closeBookingModal}
+                    userId={user.id}
+                    firstName={user.firstName || ""}
+                    lastName={user.lastName || ""}
+                />
+            </ModalDialog>
+
             {userId && <ClientBookings userId={userId} />}
         </div>
     );
