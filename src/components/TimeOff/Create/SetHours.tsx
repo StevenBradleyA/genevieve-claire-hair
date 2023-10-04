@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import type { DateRange } from "react-day-picker";
+import { api } from "~/utils/api";
 
 const spring = {
     type: "spring",
@@ -10,17 +11,52 @@ const spring = {
 
 export default function SetHours({
     dateRange,
+    setDateRange,
 }: {
     dateRange: DateRange | undefined;
+    setDateRange: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
 }) {
     const [allDay, setAllDay] = useState(true);
-    const [from, setFrom] = useState("");
-    const [to, setTo] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+
+    const ctx = api.useContext();
+
+    const onSuccess = () => {
+        setStartTime("");
+        setEndTime("");
+        setDateRange(undefined);
+        void ctx.schedule.getTimeOff.invalidate();
+    };
+
+    const { mutate: fullTimeOff } = api.schedule.createFullTimeOff.useMutation({
+        onSuccess,
+    });
+
+    const { mutate: specificTimeOff } =
+        api.schedule.createSpecificTimeOff.useMutation({
+            onSuccess,
+        });
 
     const disableSubmit = () => {
         if (!dateRange) return true;
-        if (!allDay && (!from || !to)) return true;
+        if (!allDay && (!startTime || !endTime)) return true;
         return false;
+    };
+
+    const submit = () => {
+        if (!dateRange || !dateRange.from)
+            throw new Error("Hot Toast Incoming!!!");
+
+        if (allDay)
+            fullTimeOff({ startDate: dateRange.from, endDate: dateRange.to });
+        else
+            specificTimeOff({
+                startDate: dateRange.from,
+                endDate: dateRange.to,
+                startTime,
+                endTime,
+            });
     };
 
     return (
@@ -52,8 +88,8 @@ export default function SetHours({
                     <input
                         className="bg-transparent outline-none"
                         type="time"
-                        value={from}
-                        onChange={(e) => setFrom(e.target.value)}
+                        value={startTime}
+                        onChange={(e) => setStartTime(e.target.value)}
                         disabled={allDay}
                     />
                 </span>
@@ -62,14 +98,14 @@ export default function SetHours({
                     <input
                         className="bg-transparent outline-none"
                         type="time"
-                        value={to}
-                        onChange={(e) => setTo(e.target.value)}
+                        value={endTime}
+                        onChange={(e) => setEndTime(e.target.value)}
                         disabled={allDay}
                     />
                 </span>
             </div>
             <motion.button
-                onClick={() => "hey"}
+                onClick={submit}
                 className={`mb-3 rounded-md bg-glass px-12 py-2 shadow-md ${
                     disableSubmit() ? "text-slate-200" : "text-violet-300"
                 }`}
