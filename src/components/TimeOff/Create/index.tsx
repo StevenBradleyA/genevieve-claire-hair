@@ -62,7 +62,7 @@ export default function CreateTimeOff() {
                 {...createCalendarOptions()}
             />
 
-            <SetHours dateRange={dateRange} />
+            <SetHours dateRange={dateRange} setDateRange={setDateRange} />
         </div>
     );
 }
