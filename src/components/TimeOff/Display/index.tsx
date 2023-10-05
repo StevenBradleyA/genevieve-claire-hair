@@ -9,7 +9,7 @@ export default function DisplayTimeOff() {
 
     return (
         <div>
-            {data.map((date) => (
+            {[...data.full, ...data.partial].map((date) => (
                 <div key={date.id} className="m-3 border-2 border-white p-3">
                     <div>From {format(date.startDate, "PPp")}</div>
                     <div>To {format(date.endDate, "PPp")}</div>
