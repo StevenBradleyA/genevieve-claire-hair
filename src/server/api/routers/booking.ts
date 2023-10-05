@@ -1,7 +1,7 @@
 import { z } from "zod";
 import EmailConfirmation from "~/components/Bookings/Confirmation/EmailConfirmation";
 import { Resend } from "resend";
-import { Twilio } from "twilio";
+// import { Twilio } from "twilio";
 import {
     createTRPCRouter,
     publicProcedure,
@@ -10,12 +10,12 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const twilioSid = process.env.TWILIO_SID_KEY;
-const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
-const twilioService = process.env.TWILIO_SERVICE;
+// const twilioSid = process.env.TWILIO_SID_KEY;
+// const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
+// const twilioService = process.env.TWILIO_SERVICE;
 
 // const twilioClient = require("twilio")(twilioSid, twilioAuth);
-const twilioClient = new Twilio(twilioSid, twilioAuth);
+// const twilioClient = new Twilio(twilioSid, twilioAuth);
 
 export const bookingRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
