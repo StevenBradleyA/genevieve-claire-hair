@@ -1,7 +1,6 @@
 import "react-day-picker/dist/style.css";
 import type { DateRange } from "react-day-picker";
 import type { CalendarOptions } from "../../Bookings/Create";
-import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import SetHours from "./SetHours";
@@ -15,18 +14,7 @@ const createCalendarOptions = (): CalendarOptions => {
         today.getDate() - 1
     );
 
-    const disabled = [
-        { from: startOfMonth, to: yesterday },
-        // {
-        //     dayOfWeek: Object.keys(schedule)
-        //         .filter(
-        //             (el) =>
-        //                 !schedule[Number(el) as DaysType].startTime ||
-        //                 !schedule[Number(el) as DaysType].endTime
-        //         )
-        //         .map((el) => Number(el)),
-        // },
-    ];
+    const disabled = [{ from: startOfMonth, to: yesterday }];
 
     const options = {
         disabled,
