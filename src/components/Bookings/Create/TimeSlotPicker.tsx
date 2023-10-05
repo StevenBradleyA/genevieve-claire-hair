@@ -72,22 +72,6 @@ export default function TimeSlotPicker({
     const [currTime, setCurrTime] = useState<Date[]>();
     const { isMobile } = useMobile();
 
-    /**
-     * Monday: 9am - 1pm
-     * Tuesday: 9am - 5pm
-     * Wed-Fri: 10am - 7pm
-     */
-
-    // const [schedule, setSchedule] = useState<{ [key: number]: number[] }>({
-    //     1: [9, 13],
-    //     2: [9, 17],
-    //     3: [10, 19],
-    //     4: [10, 19],
-    //     5: [10, 19],
-    // });
-
-    // TODO WEEKENDS not showing up even if in schedule. Not sure if disabled or something...?
-
     useEffect(() => {
         // TODO: Reset time slot if new selection doesn't have that time slot
         setTimeSlot(undefined);
@@ -115,52 +99,61 @@ export default function TimeSlotPicker({
         } else setCurrTime(undefined);
     }, [date, setTimeSlot, schedule]);
 
+    let renderTimes;
+
+    if (currTime) {
+        renderTimes = currTime.map((el) => {
+            if (checkOverlappingBooking(el, bookedDates, details)) return null;
+
+            const hour = el.getHours();
+            const minutes = `${el.getMinutes() || "00"}`;
+            const time =
+                hour >= 13
+                    ? `${hour - 12}:${minutes} pm`
+                    : `${hour}:${minutes} am`;
+
+            return isMobile ? (
+                <div
+                    onClick={() => {
+                        setTimeSlot(el);
+                        console.log(el);
+                    }}
+                    className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[9px] font-semibold transition ${
+                        timeSlot === el
+                            ? "bg-violet-300 text-white shadow-md"
+                            : "bg-darkGlass text-white shadow-md hover:bg-violet-100 hover:text-violet-600"
+                    } p-1 shadow-2xl `}
+                    key={time}
+                >
+                    {time}
+                </div>
+            ) : (
+                <div
+                    onClick={() => {
+                        setTimeSlot(el);
+                        console.log(el);
+                    }}
+                    className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[10px] font-semibold transition ${
+                        timeSlot === el
+                            ? "bg-violet-300 text-white shadow-md"
+                            : "bg-darkGlass text-white shadow-md hover:bg-violet-100 hover:text-violet-600"
+                    } p-1 shadow-2xl `}
+                    key={time}
+                >
+                    {time}
+                </div>
+            );
+        });
+
+        console.log(renderTimes);
+
+        if (!renderTimes.some((time) => time))
+            renderTimes = <div className="m-auto">No available time slots</div>;
+    }
+
     return (
         <div className="flex flex-wrap justify-between gap-1 align-top">
-            {currTime &&
-                currTime.map((el) => {
-                    if (checkOverlappingBooking(el, bookedDates, details))
-                        return null;
-
-                    const hour = el.getHours();
-                    const minutes = `${el.getMinutes() || "00"}`;
-                    const time =
-                        hour >= 13
-                            ? `${hour - 12}:${minutes} pm`
-                            : `${hour}:${minutes} am`;
-
-                    return isMobile ? (
-                        <div
-                            onClick={() => {
-                                setTimeSlot(el);
-                                console.log(el);
-                            }}
-                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[9px] font-semibold transition ${
-                                timeSlot === el
-                                    ? "bg-violet-300 text-white shadow-md"
-                                    : "bg-darkGlass text-white shadow-md hover:bg-violet-100 hover:text-violet-600"
-                            } p-1 shadow-2xl `}
-                            key={time}
-                        >
-                            {time}
-                        </div>
-                    ) : (
-                        <div
-                            onClick={() => {
-                                setTimeSlot(el);
-                                console.log(el);
-                            }}
-                            className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[10px] font-semibold transition ${
-                                timeSlot === el
-                                    ? "bg-violet-300 text-white shadow-md"
-                                    : "bg-darkGlass text-white shadow-md hover:bg-violet-100 hover:text-violet-600"
-                            } p-1 shadow-2xl `}
-                            key={time}
-                        >
-                            {time}
-                        </div>
-                    );
-                })}
+            {currTime && renderTimes}
         </div>
     );
 }
