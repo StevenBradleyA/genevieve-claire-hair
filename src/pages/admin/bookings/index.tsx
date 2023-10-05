@@ -147,13 +147,6 @@ const AdminViewBookings: NextPageWithLayout = () => {
         damping: 30,
     };
 
-    const checkConflicts = () => {
-        if (!date) return true;
-
-        // if (date && check && isEqual(check.startDate, date)) return true;
-        if (!timeSlot) return true;
-        return false;
-    };
     const openBookingModal = () => {
         setIsBookingModalOpen(true);
     };
