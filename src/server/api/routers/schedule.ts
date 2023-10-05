@@ -42,7 +42,17 @@ export const scheduleRouter = createTRPCRouter({
     }),
 
     getTimeOff: publicProcedure.query(async ({ ctx }) => {
-        return await ctx.prisma.timeOff.findMany();
+        const allTimeOff = await ctx.prisma.timeOff.findMany();
+
+        const full: typeof allTimeOff = [];
+        const partial: typeof allTimeOff = [];
+
+        for (const el of allTimeOff) {
+            if (el.startDate.getHours() === el.endDate.getHours())
+                full.push(el);
+            else partial.push(el);
+        }
+        return { full, partial };
     }),
 
     createFullTimeOff: protectedProcedure
@@ -61,7 +71,7 @@ export const scheduleRouter = createTRPCRouter({
             });
         }),
 
-    createSpecificTimeOff: protectedProcedure
+    createPartialTimeOff: protectedProcedure
         .input(
             z.object({
                 startDate: z.date(),

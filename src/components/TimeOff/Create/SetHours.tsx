@@ -33,8 +33,8 @@ export default function SetHours({
         onSuccess,
     });
 
-    const { mutate: specificTimeOff } =
-        api.schedule.createSpecificTimeOff.useMutation({
+    const { mutate: partialTimeOff } =
+        api.schedule.createPartialTimeOff.useMutation({
             onSuccess,
         });
 
@@ -51,7 +51,7 @@ export default function SetHours({
         if (allDay)
             fullTimeOff({ startDate: dateRange.from, endDate: dateRange.to });
         else
-            specificTimeOff({
+            partialTimeOff({
                 startDate: dateRange.from,
                 endDate: dateRange.to,
                 startTime,
