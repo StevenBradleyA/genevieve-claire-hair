@@ -18,8 +18,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import type { RouterOutputs } from "~/utils/api";
 
-type TimeOffType = RouterOutputs["schedule"]["getTimeOff"];
-
+export type TimeOffType = RouterOutputs["schedule"]["getTimeOff"];
 export interface CalendarOptions {
     disabled: Matcher[];
     fromYear: number;
@@ -51,7 +50,7 @@ export type BookingDetailsType = {
 
 const createCalendarOptions = (
     schedule: ScheduleType,
-    timeOff: TimeOffType
+    timeOff: TimeOffType["full"]
 ): CalendarOptions => {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -72,12 +71,7 @@ const createCalendarOptions = (
                 )
                 .map((el) => Number(el)),
         },
-        ...timeOff
-            .filter(
-                ({ startDate, endDate }) =>
-                    startDate.getHours() === endDate.getHours()
-            )
-            .map(({ startDate: from, endDate: to }) => ({ from, to })),
+        ...timeOff.map(({ startDate: from, endDate: to }) => ({ from, to })),
     ];
 
     const options = {
@@ -231,14 +225,14 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-darkGlass text-white shadow-2xl "
-                {...createCalendarOptions(schedule, timeOff)}
+                {...createCalendarOptions(schedule, timeOff.full)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
                     schedule={schedule}
-                    bookedDates={futureBookings}
+                    bookedDates={[...futureBookings, ...timeOff.partial]}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
@@ -260,14 +254,14 @@ export default function CreateBooking({
                     setDate(e);
                 }}
                 className="rounded-lg bg-darkGlass shadow-2xl "
-                {...createCalendarOptions(schedule, timeOff)}
+                {...createCalendarOptions(schedule, timeOff.full)}
             />
             <div className="flex w-60 flex-col">
                 <TimeSlotPicker
                     date={date}
                     details={details}
                     schedule={schedule}
-                    bookedDates={futureBookings}
+                    bookedDates={[...futureBookings, ...timeOff.partial]}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
                 />
