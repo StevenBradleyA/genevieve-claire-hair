@@ -4,6 +4,7 @@ import {
     publicProcedure,
     protectedProcedure,
 } from "~/server/api/trpc";
+import { eachDayOfInterval, add } from "date-fns";
 
 export type DaysType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -12,6 +13,12 @@ export type ScheduleType = {
         startTime: number;
         endTime: number;
     };
+};
+
+const formatTime = (time: string) => {
+    const [h, m] = time.split(":");
+
+    return { hours: Number(h), minutes: Number(m) };
 };
 
 export const scheduleRouter = createTRPCRouter({
@@ -31,8 +38,79 @@ export const scheduleRouter = createTRPCRouter({
     }),
 
     getAllDays: publicProcedure.query(async ({ ctx }) => {
-        return ctx.prisma.schedule.findMany();
+        return await ctx.prisma.schedule.findMany();
     }),
+
+    getTimeOff: publicProcedure.query(async ({ ctx }) => {
+        const allTimeOff = await ctx.prisma.timeOff.findMany();
+
+        const full: typeof allTimeOff = [];
+        const partial: typeof allTimeOff = [];
+
+        for (const el of allTimeOff) {
+            if (el.startDate.getHours() === el.endDate.getHours())
+                full.push(el);
+            else partial.push(el);
+        }
+        return { full, partial };
+    }),
+
+    createFullTimeOff: protectedProcedure
+        .input(
+            z.object({
+                startDate: z.date(),
+                endDate: z.date().optional(),
+            })
+        )
+        .mutation(async ({ input: { startDate, endDate }, ctx }) => {
+            return await ctx.prisma.timeOff.create({
+                data: {
+                    startDate,
+                    endDate: endDate || startDate,
+                },
+            });
+        }),
+
+    createPartialTimeOff: protectedProcedure
+        .input(
+            z.object({
+                startDate: z.date(),
+                endDate: z.date().optional(),
+                startTime: z.string(),
+                endTime: z.string(),
+            })
+        )
+        .mutation(
+            async ({
+                input: { startDate, endDate, startTime, endTime },
+                ctx,
+            }) => {
+                if (!endDate) {
+                    return await ctx.prisma.timeOff.create({
+                        data: {
+                            startDate: add(startDate, formatTime(startTime)),
+                            endDate: add(startDate, formatTime(endTime)),
+                        },
+                    });
+                }
+
+                const days = eachDayOfInterval({
+                    start: startDate,
+                    end: endDate,
+                });
+
+                for (const day of days) {
+                    await ctx.prisma.timeOff.create({
+                        data: {
+                            startDate: add(day, formatTime(startTime)),
+                            endDate: add(day, formatTime(endTime)),
+                        },
+                    });
+                }
+
+                return "Success";
+            }
+        ),
 
     updateSchedule: protectedProcedure
         .input(

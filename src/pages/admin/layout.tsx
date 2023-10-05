@@ -102,6 +102,21 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                 Bookings
                             </Link>
                         </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            custom={1}
+                            variants={variants}
+                            initial="hidden"
+                            animate="visible"
+                        >
+                            <Link
+                                href="/admin/time-off"
+                                className="flex justify-center rounded-2xl bg-glass px-4 py-2 shadow-md"
+                            >
+                                Time Off
+                            </Link>
+                        </motion.button>
                     </div>
                 )}
                 <motion.div
