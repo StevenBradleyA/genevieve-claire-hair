@@ -162,8 +162,6 @@ export default function CreateBooking({
 
     const checkConflicts = () => {
         if (!date) return true;
-
-        // if (date && check && isEqual(check.startDate, date)) return true;
         if (!timeSlot) return true;
         return false;
     };
@@ -257,7 +255,6 @@ export default function CreateBooking({
     //         });
     //     },
     // });
-
 
     if (!futureBookings || !schedule || !timeOff)
         return (
