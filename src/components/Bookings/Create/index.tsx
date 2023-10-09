@@ -162,8 +162,6 @@ export default function CreateBooking({
 
     const checkConflicts = () => {
         if (!date) return true;
-
-        // if (date && check && isEqual(check.startDate, date)) return true;
         if (!timeSlot) return true;
         return false;
     };
@@ -230,6 +228,34 @@ export default function CreateBooking({
             void router.push("/bookings/confirmed");
         },
     });
+
+    const { mutate: sendEmail } = api.booking.sendEmailConfirmation.useMutation(
+        {
+            onSuccess: () => {
+                toast.success("Email Sent!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
+            },
+        }
+    );
+    // const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
+    //     onSuccess: () => {
+    //         toast.success("Text Sent!", {
+    //             icon: "👏",
+    //             style: {
+    //                 borderRadius: "10px",
+    //                 background: "#333",
+    //                 color: "#fff",
+    //             },
+    //         });
+    //     },
+    // });
+
 
     if (!futureBookings || !schedule || !timeOff)
         return (
