@@ -97,7 +97,7 @@ export const bookingRouter = createTRPCRouter({
             })
         )
         .mutation(async ({ input, ctx }) => {
-            if (ctx.session.user.id === input.userId) {
+            if (ctx.session.user.id) {
                 const data = { ...input, status: "approved" };
                 const newBooking = await ctx.prisma.booking.create({
                     data,
