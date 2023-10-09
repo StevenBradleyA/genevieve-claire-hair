@@ -9,7 +9,7 @@ import {
     endOfDay,
 } from "date-fns";
 import { useEffect, useState } from "react";
-import type { BookedDateType, BookingDetailsType } from "../Create";
+import type { BookedDateType } from "../Create";
 
 const createTimeIntervals = (start: Date, end: Date) => {
     const timeArray = [];
@@ -26,9 +26,9 @@ const createTimeIntervals = (start: Date, end: Date) => {
 const checkOverlappingBooking = (
     date: Date,
     bookedDates: BookedDateType[],
-    details: BookingDetailsType
+    totalTime: number
 ) => {
-    const endOfBooking = addMinutes(date, details.totalTime);
+    const endOfBooking = addMinutes(date, totalTime);
 
     for (const { startDate, endDate } of bookedDates) {
         // Check if new start is within existing booking times
@@ -55,13 +55,13 @@ const checkOverlappingBooking = (
 
 export default function AdminTimeSlots({
     date,
-    details,
+    totalTime,
     bookedDates,
     timeSlot,
     setTimeSlot,
 }: {
     date: Date | undefined;
-    details: BookingDetailsType;
+    totalTime: number;
     bookedDates: BookedDateType[];
     timeSlot: Date | undefined;
     setTimeSlot: React.Dispatch<React.SetStateAction<Date | undefined>>;
@@ -84,13 +84,14 @@ export default function AdminTimeSlots({
                 setCurrTime(createTimeIntervals(start, end));
             else setCurrTime([]);
         } else setCurrTime(undefined);
-    }, [date, setTimeSlot]);
+    }, [date, totalTime, setTimeSlot]);
 
     let renderTimes;
 
     if (currTime) {
         renderTimes = currTime.map((el) => {
-            if (checkOverlappingBooking(el, bookedDates, details)) return null;
+            if (checkOverlappingBooking(el, bookedDates, totalTime))
+                return null;
 
             const hour = el.getHours();
             const minutes = `${el.getMinutes() || "00"}`;

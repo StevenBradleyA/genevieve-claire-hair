@@ -41,14 +41,14 @@ export default function AdminCalendar({
     setDate,
     timeSlot,
     setTimeSlot,
-    details,
+    totalTime,
     bookedDates,
 }: {
     date: Date | undefined;
     setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
     timeSlot: Date | undefined;
     setTimeSlot: React.Dispatch<React.SetStateAction<Date | undefined>>;
-    details: BookingDetailsType;
+    totalTime: number;
     bookedDates: BookedDateType[];
 }) {
     return (
@@ -65,7 +65,7 @@ export default function AdminCalendar({
             <div className="flex w-60 flex-col">
                 <AdminTimeSlots
                     date={date}
-                    details={details}
+                    totalTime={totalTime}
                     bookedDates={bookedDates}
                     timeSlot={timeSlot}
                     setTimeSlot={setTimeSlot}
