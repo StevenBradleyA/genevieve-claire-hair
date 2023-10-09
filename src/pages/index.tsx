@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
 import { useInView } from "react-intersection-observer";
 import Footer from "~/components/HomePage/footer";
+import "react-day-picker/dist/style.css";
 
 export default function Home() {
     //Todo set script switch only on homepage and at a certain scroll range
