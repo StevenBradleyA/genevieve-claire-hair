@@ -216,20 +216,12 @@ const AdminViewBookings: NextPageWithLayout = () => {
                 {isFuture &&
                     future &&
                     future.map((booking) => (
-                        <BookingCard
-                            key={booking.id}
-                            booking={booking}
-                            serviceData={serviceData}
-                        />
+                        <BookingCard key={booking.id} booking={booking} />
                     ))}
                 {!isFuture &&
                     past &&
                     past.map((booking) => (
-                        <BookingCard
-                            key={booking.id}
-                            booking={booking}
-                            serviceData={serviceData}
-                        />
+                        <BookingCard key={booking.id} booking={booking} />
                     ))}
             </div>
             {scheduleData && (
