@@ -12,7 +12,6 @@ export default function AdminBookingSelectService({
     setSelectedServices,
 }: SelectServiceType) {
     const { data: serviceData } = api.service.getAllNormalized.useQuery();
-    const [isSelected, setIsSelected] = useState<boolean>(false);
 
     const handleServiceSelect = (
         service: ServicesType,
@@ -48,13 +47,10 @@ export default function AdminBookingSelectService({
                 ...prevServices,
                 serviceName,
             ]);
-            setIsSelected(true);
         }
     };
 
     const handleClearSelection = () => {
-        // Clears all selected services
-        setIsSelected(false);
         setSelectedServices([]);
         const selects = document.querySelectorAll("select");
         selects.forEach((select) => {

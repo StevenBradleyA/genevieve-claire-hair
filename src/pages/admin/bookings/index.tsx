@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 import type { Matcher } from "react-day-picker";
 import { DayPicker } from "react-day-picker";
 import TimeSlotPicker from "~/components/Bookings/Create/TimeSlotPicker";
-
 import ModalDialog from "~/components/Modal";
 import type { Schedule } from "@prisma/client";
 import EachSchedule from "~/components/Bookings/Schedule";
@@ -147,13 +146,6 @@ const AdminViewBookings: NextPageWithLayout = () => {
         damping: 30,
     };
 
-    const checkConflicts = () => {
-        if (!date) return true;
-
-        // if (date && check && isEqual(check.startDate, date)) return true;
-        if (!timeSlot) return true;
-        return false;
-    };
     const openBookingModal = () => {
         setIsBookingModalOpen(true);
     };

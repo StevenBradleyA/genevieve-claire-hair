@@ -1,26 +1,15 @@
 import { useEffect, useState } from "react";
-import AdminBookingSelectService from "./selectService";
+import AdminBookingSelectService from "../AdminCreate/selectService";
 import { api } from "~/utils/api";
 import { DotLoader } from "react-spinners";
-import AdminCalendar from "./AdminCalendar";
-import PriceTimeAdjust from "./PriceTimeAdjust";
+import AdminCalendar from "../AdminCreate/AdminCalendar";
+import PriceTimeAdjust from "../AdminCreate/PriceTimeAdjust";
 import { addMinutes } from "date-fns";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import type { Booking } from "@prisma/client";
 
-interface AdminCreateBookingProps {
-    closeModal: () => void;
-    userId: string;
-    firstName: string;
-    lastName: string;
-}
-
-export default function AdminCreateBooking({
-    closeModal,
-    userId,
-    firstName,
-    lastName,
-}: AdminCreateBookingProps) {
+export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
     // TODO CUSTOM TIME SELECTION -- KEEPS TRACK OF OTHER BOOKINGS BUT DOESNT HAVE SCHEDULE TIME CONSTRAINTS
     // TODO have default service times as well as custom????
 
@@ -29,7 +18,9 @@ export default function AdminCreateBooking({
     // todo may want to pass user firstname and lastname so she knows who she is booking for
 
     const router = useRouter();
-    const [selectedServices, setSelectedServices] = useState<string[]>([]);
+    const [selectedServices, setSelectedServices] = useState<string[]>(
+        booking.type.split(", ")
+    );
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
     const [originalPrice, setOriginalPrice] = useState(0);
@@ -74,7 +65,7 @@ export default function AdminCreateBooking({
                 startDate,
                 endDate: addMinutes(timeSlot ?? date, customTime),
                 type,
-                userId,
+                userId: booking.userId,
             };
 
             setDate(undefined);
@@ -130,7 +121,6 @@ export default function AdminCreateBooking({
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <div className="mb-3 text-5xl">{`${firstName} ${lastName}`} </div>
             <AdminBookingSelectService
                 selectedServices={selectedServices}
                 setSelectedServices={setSelectedServices}
@@ -151,7 +141,9 @@ export default function AdminCreateBooking({
                 timeSlot={timeSlot}
                 setTimeSlot={setTimeSlot}
                 totalTime={customTime}
-                bookedDates={futureBookings}
+                bookedDates={futureBookings.filter(
+                    (el) => el.id !== booking.id
+                )}
             />
 
             <button

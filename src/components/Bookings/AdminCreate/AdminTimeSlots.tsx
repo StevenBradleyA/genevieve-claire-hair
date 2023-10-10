@@ -6,11 +6,10 @@ import {
     isToday,
     startOfHour,
     isEqual,
+    endOfDay,
 } from "date-fns";
 import { useEffect, useState } from "react";
-import type { BookedDateType, BookingDetailsType } from "./";
-import { useMobile } from "~/components/MobileContext";
-import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
+import type { BookedDateType } from "../Create";
 
 const createTimeIntervals = (start: Date, end: Date) => {
     const timeArray = [];
@@ -27,9 +26,9 @@ const createTimeIntervals = (start: Date, end: Date) => {
 const checkOverlappingBooking = (
     date: Date,
     bookedDates: BookedDateType[],
-    details: BookingDetailsType
+    totalTime: number
 ) => {
-    const endOfBooking = addMinutes(date, details.totalTime);
+    const endOfBooking = addMinutes(date, totalTime);
 
     for (const { startDate, endDate } of bookedDates) {
         // Check if new start is within existing booking times
@@ -54,56 +53,45 @@ const checkOverlappingBooking = (
     return false;
 };
 
-export default function TimeSlotPicker({
+export default function AdminTimeSlots({
     date,
-    details,
-    schedule,
+    totalTime,
     bookedDates,
     timeSlot,
     setTimeSlot,
 }: {
     date: Date | undefined;
-    details: BookingDetailsType;
-    schedule: ScheduleType;
+    totalTime: number;
     bookedDates: BookedDateType[];
     timeSlot: Date | undefined;
     setTimeSlot: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }) {
     const [currTime, setCurrTime] = useState<Date[]>();
-    const { isMobile } = useMobile();
 
     useEffect(() => {
         // TODO: Reset time slot if new selection doesn't have that time slot
         setTimeSlot(undefined);
 
-        if (date && schedule) {
-            const { startTime, endTime } = schedule[date.getDay() as DaysType];
+        if (date) {
+            let start = new Date(date.getTime());
+            const end = endOfDay(new Date(date.getTime()));
 
-            if (startTime && endTime) {
-                let start = new Date(date.getTime());
-                const end = new Date(date.getTime());
-                end.setHours(endTime);
-
-                if (isToday(date)) {
-                    start = startOfHour(addHours(new Date(), 1));
-                } else {
-                    start.setHours(startTime);
-                }
-
-                if (isBefore(start, end))
-                    setCurrTime(createTimeIntervals(start, end));
-                else setCurrTime([]);
+            if (isToday(date)) {
+                start = startOfHour(addHours(new Date(), 1));
             }
 
-            return;
+            if (isBefore(start, end))
+                setCurrTime(createTimeIntervals(start, end));
+            else setCurrTime([]);
         } else setCurrTime(undefined);
-    }, [date, setTimeSlot, schedule]);
+    }, [date, totalTime, setTimeSlot]);
 
     let renderTimes;
 
     if (currTime) {
         renderTimes = currTime.map((el) => {
-            if (checkOverlappingBooking(el, bookedDates, details)) return null;
+            if (checkOverlappingBooking(el, bookedDates, totalTime))
+                return null;
 
             const hour = el.getHours();
             const minutes = `${el.getMinutes() || "00"}`;
@@ -112,22 +100,7 @@ export default function TimeSlotPicker({
                     ? `${hour - 12}:${minutes} pm`
                     : `${hour}:${minutes} am`;
 
-            return isMobile ? (
-                <div
-                    onClick={() => {
-                        setTimeSlot(el);
-                        console.log(el);
-                    }}
-                    className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full text-[9px] font-semibold transition ${
-                        timeSlot === el
-                            ? "bg-violet-300 text-white shadow-md"
-                            : "bg-darkGlass text-white shadow-md hover:bg-violet-100 hover:text-violet-600"
-                    } p-1 shadow-2xl `}
-                    key={time}
-                >
-                    {time}
-                </div>
-            ) : (
+            return (
                 <div
                     onClick={() => {
                         setTimeSlot(el);
@@ -145,14 +118,12 @@ export default function TimeSlotPicker({
             );
         });
 
-        console.log(renderTimes);
-
         if (!renderTimes.some((time) => time))
             renderTimes = <div className="m-auto">No available time slots</div>;
     }
 
     return (
-        <div className="flex flex-wrap justify-between gap-1 align-top">
+        <div className="flex h-96 flex-wrap justify-between gap-1 overflow-y-scroll align-top">
             {currTime && renderTimes}
         </div>
     );

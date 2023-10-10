@@ -7,6 +7,7 @@ import ModalDialog from "~/components/Modal";
 import { api } from "~/utils/api";
 import type { NormalizedServicesType } from "~/server/api/routers/service";
 import { motion } from "framer-motion";
+import AdminUpdateBooking from "../AdminUpdate";
 
 export default function BookingCard({
     booking,
@@ -116,10 +117,7 @@ export default function BookingCard({
             </div>
             {session && (
                 <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                    <UpdateBooking
-                        booking={booking}
-                        serviceData={serviceData}
-                    />
+                    <AdminUpdateBooking booking={booking} />
                 </ModalDialog>
             )}
         </div>
