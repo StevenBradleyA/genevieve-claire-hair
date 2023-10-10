@@ -10,7 +10,8 @@
         "start": "next start"
     },
     "prisma": {
-        "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+        "seed-dev": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
+        "seed-prod": "node build/prisma/seed.ts"
     },
     "dependencies": {
         "@next-auth/prisma-adapter": "^1.0.5",
