@@ -22,11 +22,7 @@ export default function ClientBookings({ userId }: { userId: string }) {
     return (
         <div className="mb-20 flex flex-wrap items-center justify-center gap-10 text-white">
             {data.map((booking) => (
-                <BookingCard
-                    key={booking.id}
-                    booking={booking}
-                    serviceData={serviceData}
-                />
+                <BookingCard key={booking.id} booking={booking} />
             ))}
         </div>
     );
