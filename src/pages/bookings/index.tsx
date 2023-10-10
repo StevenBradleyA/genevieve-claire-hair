@@ -25,8 +25,7 @@ const form = [
     (props: FormProps) => <CreateBooking {...props} />,
 ];
 
-// TODO on the text Geni page we should remove the back / submit buttons maybe give more explanation 
-
+// TODO on the text Geni page we should remove the back / submit buttons maybe give more explanation
 
 export default function Booking() {
     const [page, setPage] = useState(0);
