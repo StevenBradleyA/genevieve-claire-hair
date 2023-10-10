@@ -4,16 +4,10 @@ import { format } from "date-fns";
 import type { Booking } from "@prisma/client";
 import ModalDialog from "~/components/Modal";
 import { api } from "~/utils/api";
-import type { NormalizedServicesType } from "~/server/api/routers/service";
 import { motion } from "framer-motion";
 import AdminUpdateBooking from "../AdminUpdate";
 
-export default function BookingCard({
-    booking,
-}: {
-    booking: Booking;
-    serviceData: NormalizedServicesType;
-}) {
+export default function BookingCard({ booking }: { booking: Booking }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
