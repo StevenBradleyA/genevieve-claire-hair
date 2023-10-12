@@ -1,5 +1,4 @@
 import type { Images } from "@prisma/client";
-import { useState } from "react";
 
 interface DeleteImageObj {
     [id: string]: string;

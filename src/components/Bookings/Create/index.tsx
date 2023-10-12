@@ -195,13 +195,13 @@ export default function CreateBooking({
             }
 
             if (textSelect) {
-                const textData = {
-                    phoneNumber: user.phoneNumber,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    startDate,
-                    type,
-                };
+                // const textData = {
+                //     phoneNumber: user.phoneNumber,
+                //     firstName: user.firstName,
+                //     lastName: user.lastName,
+                //     startDate,
+                //     type,
+                // };
                 // sendText(textData);
                 console.log("send text");
             }

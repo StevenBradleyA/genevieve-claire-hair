@@ -2,7 +2,6 @@ import { DotLoader } from "react-spinners";
 import type { User } from "@prisma/client";
 import React, { useState } from "react";
 import { api } from "~/utils/api";
-import { SessionContext } from "next-auth/react";
 
 interface UserNotesProps {
     closeModal: () => void;
@@ -64,7 +63,7 @@ export default function EditUserNotes({
     return (
         <form className="flex w-[600px] flex-col items-center justify-center text-xl text-white">
             <label>
-                Client's first name   
+                {"Client's first name   "}
                 <input
                     value={firstName || ""}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -73,7 +72,7 @@ export default function EditUserNotes({
                 />
             </label>
             <label>
-                Client's last name   
+                {"Client's last name   "}
                 <input
                     value={lastName || ""}
                     onChange={(e) => setLastName(e.target.value)}
@@ -82,7 +81,7 @@ export default function EditUserNotes({
                 />
             </label>
             <label>
-                Client's number   
+                {"Client's number   "}
                 <input
                     value={phoneNumber || ""}
                     onChange={(e) => setPhoneNumber(e.target.value)}

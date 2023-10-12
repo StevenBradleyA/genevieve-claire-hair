@@ -1,4 +1,3 @@
-import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import type { Booking } from "@prisma/client";
 import EachBookingCard from "./eachBooking";

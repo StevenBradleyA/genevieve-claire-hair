@@ -4,7 +4,7 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 import downArrow from "@public/svgs/angles-down-solid.svg";
@@ -20,14 +20,17 @@ export default function Home() {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
     const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
-    const script = [
-        "blonding",
-        "vivids",
-        "color correction",
-        "all over color",
-        "blowouts",
-        "haircuts",
-    ];
+    const script = useMemo(
+        () => [
+            "blonding",
+            "vivids",
+            "color correction",
+            "all over color",
+            "blowouts",
+            "haircuts",
+        ],
+        []
+    );
 
     const handleCarouselClick = (index: number): void => {
         if (index !== currentIndex) {
@@ -52,7 +55,7 @@ export default function Home() {
                 clearInterval(interval);
             };
         }
-    }, [inView]);
+    }, [inView, script]);
 
     const bounceVariants = {
         initial: { opacity: 1, y: 20, rotate: 0 },

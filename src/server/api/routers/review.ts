@@ -126,11 +126,10 @@ export const reviewRouter = createTRPCRouter({
                             await removeFileFromS3(image.link);
                         } catch (err) {
                             console.error(
-                                `Failed to remove file from S3: ${err}`
+                                `Failed to remove file from S3: `,
+                                err
                             );
-                            throw new Error(
-                                `Failed to remove file from S3: ${err}`
-                            );
+                            throw new Error(`Failed to remove file from S3: `);
                         }
                     });
 
@@ -171,11 +170,10 @@ export const reviewRouter = createTRPCRouter({
                             await removeFileFromS3(image.link);
                         } catch (err) {
                             console.error(
-                                `Failed to remove file from S3: ${err}`
+                                `Failed to remove file from S3: `,
+                                err
                             );
-                            throw new Error(
-                                `Failed to remove file from S3: ${err}`
-                            );
+                            throw new Error(`Failed to remove file from S3: `);
                         }
                     });
 
