@@ -1,19 +1,13 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { format } from "date-fns";
-import type { Booking } from "@prisma/client";
 import ModalDialog from "~/components/Modal";
 import { api } from "~/utils/api";
-import type { NormalizedServicesType } from "~/server/api/routers/service";
 import { motion } from "framer-motion";
-import AdminUpdateBooking from "../AdminUpdate";
+import type { TimeOff } from "@prisma/client";
+import UpdateTimeOff from "../Update";
 
-export default function BookingCard({
-    booking,
-}: {
-    booking: Booking;
-    serviceData: NormalizedServicesType;
-}) {
+export default function TimeOffCard({ timeOff }: { timeOff: TimeOff }) {
     const { data: session } = useSession();
     const [showDelete, setShowDelete] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -26,24 +20,18 @@ export default function BookingCard({
         setIsModalOpen(false);
     };
 
-    const { startDate, endDate, type, status } = booking;
-
     const ctx = api.useContext();
 
-    const { mutate } = api.booking.delete.useMutation({
+    const { mutate } = api.schedule.deleteTimeOff.useMutation({
         onSuccess: () => {
-            void ctx.booking.getByUserId.invalidate();
+            void ctx.schedule.getTimeOff.invalidate();
         },
     });
 
-    const deleteBooking = () => {
+    const deleteTimeOff = () => {
         setShowDelete(false);
         if (session && session.user) {
-            const data = {
-                id: booking.id,
-                userId: session.user.id,
-            };
-            return mutate(data);
+            return mutate(timeOff.id);
         } else {
             throw new Error("Hot Toast Incoming!!!");
         }
@@ -94,7 +82,7 @@ export default function BookingCard({
                     <>
                         <motion.button
                             className="flex justify-center rounded-2xl bg-darkGlass px-6 py-2 text-violet-300 shadow-md"
-                            onClick={deleteBooking}
+                            onClick={deleteTimeOff}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
                         >
@@ -113,7 +101,7 @@ export default function BookingCard({
             </div>
             {session && (
                 <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                    <AdminUpdateBooking booking={booking} />
+                    <UpdateTimeOff />
                 </ModalDialog>
             )}
         </div>
