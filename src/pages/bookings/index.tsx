@@ -1,6 +1,5 @@
 import { api } from "~/utils/api";
 import CreateBooking from "../../components/Bookings/Create";
-// import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Services, Specifications } from "~/components/NewBookingForm";
 import type { FormDataType } from "~/components/NewBookingForm/Services";
@@ -12,7 +11,6 @@ import type {
 import { useMobile } from "~/components/MobileContext";
 import { signIn, useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
 
 type FormProps = {
     key: number;

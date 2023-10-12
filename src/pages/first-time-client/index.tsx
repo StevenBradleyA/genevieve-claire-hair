@@ -23,6 +23,8 @@ export default function FirstTimeClient() {
 
     const isNew = session?.user.isNew;
 
+    // TODO: Check back here once account linking is implemented!
+
     useEffect(() => {
         async function redirectIfNotNew() {
             if (!isNew) {

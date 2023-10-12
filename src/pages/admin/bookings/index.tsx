@@ -99,7 +99,7 @@ const AdminViewBookings: NextPageWithLayout = () => {
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
-    const [details, setDetails] = useState({
+    const [details] = useState({
         totalPrice: 0,
         totalTime: 0,
         services: "",

@@ -21,7 +21,10 @@ export default function BookNowSvg() {
 
     useEffect(() => {
         // Animate the pathLength property based on scrollProgress
-        controls.start({ pathLength: scrollProgress, opacity: scrollProgress });
+        void controls.start({
+            pathLength: scrollProgress,
+            opacity: scrollProgress,
+        });
     }, [scrollProgress, controls]);
 
     // const svgStyle = {

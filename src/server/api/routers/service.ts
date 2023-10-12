@@ -25,13 +25,23 @@ export type NormalizedServicesType = {
     [key: string]: ServicesType;
 };
 
-export type PricesType = {
-    [key: string]:
-        | {
-              [key: string]: number;
-          }
-        | number;
+type PricesWithObjects = "Haircut" | "All Over Color" | "Blonding";
+
+type PlainPrices = "Vivids" | "Color Corrections";
+
+export type AllPriceOptionsType = PricesWithObjects | PlainPrices;
+
+type DynamicPriceType = {
+    [key in PricesWithObjects]: {
+        [key: string]: number;
+    };
 };
+
+type StaticPriceType = {
+    [key in PlainPrices]: number;
+};
+
+export type PricesType = DynamicPriceType & StaticPriceType;
 
 export const serviceRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
@@ -66,18 +76,18 @@ export const serviceRouter = createTRPCRouter({
             },
         });
 
-        const res: PricesType = {};
+        const res = {} as PricesType;
 
         data.forEach((el) => {
             el.subcategories.forEach((sub) => {
-                if (!res[el.name]) {
-                    res[el.name] = {};
+                if (!res[el.name as AllPriceOptionsType]) {
+                    res[el.name as PricesWithObjects] = {};
                 }
-                res[el.name][sub.name] = sub.price;
+                res[el.name as PricesWithObjects][sub.name] = sub.price;
             });
 
             if (!el.subcategories.length && el.price) {
-                res[el.name] = el.price;
+                res[el.name as PlainPrices] = el.price;
             }
         });
 

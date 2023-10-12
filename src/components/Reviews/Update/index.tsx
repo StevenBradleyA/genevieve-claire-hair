@@ -76,14 +76,14 @@ export default function UpdateReview({
     >([]);
     const { isMobile } = useMobile();
     const ctx = api.useContext();
-    const maxFileSize = 6 * 1024 * 1024;
 
     const { data: images, isLoading } = api.image.getAllByResourceId.useQuery({
         resourceType: "REVIEW",
         resourceId: review.id,
     });
 
-    const handleInputErrors = () => {
+    useEffect(() => {
+        const maxFileSize = 6 * 1024 * 1024;
         const errorsObj: ErrorsObj = {};
 
         const totalImageCount =
@@ -103,10 +103,6 @@ export default function UpdateReview({
         }
 
         setErrors(errorsObj);
-    };
-
-    useEffect(() => {
-        handleInputErrors();
     }, [imageFiles, activeDeletedImageIds, images]);
 
     const { mutate } = api.review.update.useMutation({
@@ -398,9 +394,7 @@ export default function UpdateReview({
                         }}
                     />
                     <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <span className="text-center ">
-                            Choose Files
-                        </span>
+                        <span className="text-center ">Choose Files</span>
                     </div>
                 </label>
             </div>
