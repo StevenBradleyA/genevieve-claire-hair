@@ -19,6 +19,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const isNew = session?.user.isNew;
     // const isCurrentPageBookings = router.asPath === "/bookings";
 
+    // TODO: Check back here once account linking is implemented!
+
     useEffect(() => {
         const isCurrentPageFirstTimeClient =
             router.asPath === "/first-time-client";

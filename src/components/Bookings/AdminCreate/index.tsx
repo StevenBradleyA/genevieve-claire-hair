@@ -16,7 +16,7 @@ interface AdminCreateBookingProps {
 }
 
 export default function AdminCreateBooking({
-    closeModal,
+    // closeModal,
     userId,
     firstName,
     lastName,

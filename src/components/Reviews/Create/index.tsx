@@ -70,9 +70,9 @@ export default function CreateReview({
     const ctx = api.useContext();
     const { data: session } = useSession();
     const { isMobile } = useMobile();
-    const maxFileSize = 6 * 1024 * 1024;
 
-    const handleInputErrors = () => {
+    useEffect(() => {
+        const maxFileSize = 6 * 1024 * 1024;
         const errorsObj: ErrorsObj = {};
         if (imageFiles.length > 3) {
             errorsObj.imageExcess = "Cannot provide more than 3 photos";
@@ -87,10 +87,6 @@ export default function CreateReview({
         }
 
         setErrors(errorsObj);
-    };
-
-    useEffect(() => {
-        handleInputErrors();
     }, [imageFiles]);
 
     const { mutate } = api.review.create.useMutation({
@@ -342,9 +338,7 @@ export default function CreateReview({
                         }}
                     />
                     <div className="flex h-full w-full cursor-pointer items-center justify-center rounded bg-glass text-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                        <span className="text-center ">
-                            Choose Files
-                        </span>
+                        <span className="text-center ">Choose Files</span>
                     </div>
                 </label>
             </div>
