@@ -4,7 +4,6 @@ import lsp2 from "@public/2.png";
 import lsp3 from "@public/3.png";
 import holo from "@public/geniWithText.png";
 import geni from "@public/landing/geni-test.png";
-import giraffe from "@public/giraffe.png";
 import { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
@@ -219,7 +218,8 @@ export default function Home() {
                     </div>
                     <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
                         Geni has always believed that your hair should be a
-                        reflection of who you are, not always what's popular.
+                        reflection of who you are, not always what&apos;s
+                        popular.
                     </div>
                     <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
                         With extensive experience in carving and sculpting hair
