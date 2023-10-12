@@ -15,8 +15,6 @@ import Footer from "~/components/HomePage/footer";
 import "react-day-picker/dist/style.css";
 
 export default function Home() {
-    //Todo set script switch only on homepage and at a certain scroll range
-
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
     const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
