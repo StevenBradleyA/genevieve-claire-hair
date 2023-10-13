@@ -1,5 +1,5 @@
 import Image from "next/image";
-import giraffe from "@public/giraffe.png";
+import giraffe from "@public/icons/giraffe.png";
 
 export default function Footer() {
     return (

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import lsp1 from "@public/1.png";
-import lsp2 from "@public/2.png";
-import lsp3 from "@public/3.png";
-import holo from "@public/geniWithText.png";
-import geni from "@public/landing/geni-test.png";
+import lsp1 from "@public/HomePage/1.png";
+import lsp2 from "@public/HomePage/2.png";
+import lsp3 from "@public/HomePage/3.png";
+import holo from "@public/HomePage/geniWithText.png";
+import geni from "@public/HomePage/geni-main.png";
 import { useEffect, useMemo, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
