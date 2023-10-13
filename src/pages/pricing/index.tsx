@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
-import colorLogo from "../../../public/color-logo.png";
+import colorLogo from "../../../public/icons/color-logo.png";
 import { useMobile } from "~/components/MobileContext";
 import { api } from "~/utils/api";
 import { DotLoader } from "react-spinners";
