@@ -1,9 +1,9 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import homeLogo from "../../../public/home-logo.png";
+import homeLogo from "../../../public/HomePage/home-logo.png";
 import holoColumn from "../../../public/Holographic/holo-column.png";
-import geniSignature from "../../../public/signature.png";
+import geniSignature from "../../../public/icons/signature.png";
 import { useState, useEffect } from "react";
 import { useMobile } from "../MobileContext";
 export default function NavBar() {
@@ -12,7 +12,6 @@ export default function NavBar() {
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const { data: sessionData } = useSession();
     const { isMobile } = useMobile();
-    const isNew = sessionData?.user.isNew;
 
     const toggleMenu = () => {
         setIsMenuOpen((prevOpen) => !prevOpen);

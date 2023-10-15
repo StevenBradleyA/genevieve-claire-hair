@@ -19,6 +19,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const isNew = session?.user.isNew;
     // const isCurrentPageBookings = router.asPath === "/bookings";
 
+    // TODO: Check back here once account linking is implemented!
+
     useEffect(() => {
         const isCurrentPageFirstTimeClient =
             router.asPath === "/first-time-client";
@@ -46,9 +48,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <title>Genevieve Clare Hair</title>
                 <meta
                     name="description"
-                    content="The one clone to rule them all"
+                    content="Genevieve Clare Hair. You're pretty when you get here, prettier when you leave."
                 />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon-heart.ico" />
             </Head>
 
             <div

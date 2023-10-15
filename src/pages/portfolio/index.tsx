@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { env } from "~/env.mjs";
 import Image from "next/image";
-import instagramLogo from "../../../public/insta.png";
+import instagramLogo from "../../../public/icons/insta.png";
 import blonding from "../../../public/portfolio/blonding.png";
 import vivids from "../../../public/portfolio/vivids.png";
 import slc from "../../../public/portfolio/slc.png";

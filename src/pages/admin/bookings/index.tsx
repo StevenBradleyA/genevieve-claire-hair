@@ -99,7 +99,7 @@ const AdminViewBookings: NextPageWithLayout = () => {
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
-    const [details, setDetails] = useState({
+    const [details] = useState({
         totalPrice: 0,
         totalTime: 0,
         services: "",
@@ -216,20 +216,12 @@ const AdminViewBookings: NextPageWithLayout = () => {
                 {isFuture &&
                     future &&
                     future.map((booking) => (
-                        <BookingCard
-                            key={booking.id}
-                            booking={booking}
-                            serviceData={serviceData}
-                        />
+                        <BookingCard key={booking.id} booking={booking} />
                     ))}
                 {!isFuture &&
                     past &&
                     past.map((booking) => (
-                        <BookingCard
-                            key={booking.id}
-                            booking={booking}
-                            serviceData={serviceData}
-                        />
+                        <BookingCard key={booking.id} booking={booking} />
                     ))}
             </div>
             {scheduleData && (

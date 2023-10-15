@@ -1,11 +1,10 @@
 import Image from "next/image";
-import lsp1 from "@public/1.png";
-import lsp2 from "@public/2.png";
-import lsp3 from "@public/3.png";
-import holo from "@public/geniWithText.png";
-import geni from "@public/landing/geni-test.png";
-import giraffe from "@public/giraffe.png";
-import { useEffect, useState } from "react";
+import lsp1 from "@public/HomePage/1.png";
+import lsp2 from "@public/HomePage/2.png";
+import lsp3 from "@public/HomePage/3.png";
+import holo from "@public/HomePage/geniWithText.png";
+import geni from "@public/HomePage/geni-main.png";
+import { useEffect, useMemo, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 import downArrow from "@public/svgs/angles-down-solid.svg";
@@ -16,19 +15,20 @@ import Footer from "~/components/HomePage/footer";
 import "react-day-picker/dist/style.css";
 
 export default function Home() {
-    //Todo set script switch only on homepage and at a certain scroll range
-
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [lsp1, lsp2, lsp3];
     const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
-    const script = [
-        "blonding",
-        "vivids",
-        "color correction",
-        "all over color",
-        "blowouts",
-        "haircuts",
-    ];
+    const script = useMemo(
+        () => [
+            "blonding",
+            "vivids",
+            "color correction",
+            "all over color",
+            "blowouts",
+            "haircuts",
+        ],
+        []
+    );
 
     const handleCarouselClick = (index: number): void => {
         if (index !== currentIndex) {
@@ -53,7 +53,7 @@ export default function Home() {
                 clearInterval(interval);
             };
         }
-    }, [inView]);
+    }, [inView, script]);
 
     const bounceVariants = {
         initial: { opacity: 1, y: 20, rotate: 0 },
@@ -219,7 +219,8 @@ export default function Home() {
                     </div>
                     <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
                         Geni has always believed that your hair should be a
-                        reflection of who you are, not always what's popular.
+                        reflection of who you are, not always what&apos;s
+                        popular.
                     </div>
                     <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
                         With extensive experience in carving and sculpting hair

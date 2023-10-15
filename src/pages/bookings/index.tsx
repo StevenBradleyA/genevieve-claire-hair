@@ -1,6 +1,5 @@
 import { api } from "~/utils/api";
 import CreateBooking from "../../components/Bookings/Create";
-// import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Services, Specifications } from "~/components/NewBookingForm";
 import type { FormDataType } from "~/components/NewBookingForm/Services";
@@ -12,7 +11,6 @@ import type {
 import { useMobile } from "~/components/MobileContext";
 import { signIn, useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
 
 type FormProps = {
     key: number;
@@ -25,8 +23,7 @@ const form = [
     (props: FormProps) => <CreateBooking {...props} />,
 ];
 
-// TODO on the text Geni page we should remove the back / submit buttons maybe give more explanation 
-
+// TODO on the text Geni page we should remove the back / submit buttons maybe give more explanation
 
 export default function Booking() {
     const [page, setPage] = useState(0);

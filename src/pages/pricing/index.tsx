@@ -1,27 +1,10 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
-import colorLogo from "../../../public/color-logo.png";
+import colorLogo from "../../../public/icons/color-logo.png";
 import { useMobile } from "~/components/MobileContext";
 import { api } from "~/utils/api";
 import { DotLoader } from "react-spinners";
-
-interface PricingData {
-    Haircut: {
-        Short: number;
-        Long: number;
-        Transformative: number;
-    };
-    "All Over Color": {
-        "Roots to ends": number;
-        "Roots only": number;
-    };
-    Blonding: {
-        Partial: number;
-        Full: number;
-    };
-    Vivids: number;
-    "Color Corrections": number;
-}
+import type { PricesType } from "~/server/api/routers/service";
 
 export default function Pricing() {
     const { isMobile } = useMobile();
@@ -33,33 +16,15 @@ export default function Pricing() {
 
     const { data, isLoading } = api.service.getPrices.useQuery();
 
-    const defaultPricingData: PricingData = {
-        Haircut: {
-            Short: 35,
-            Long: 60,
-            Transformative: 90,
-        },
-        "All Over Color": {
-            "Roots to ends": 115,
-            "Roots only": 80,
-        },
-        Blonding: {
-            Partial: 180,
-            Full: 220,
-        },
-        Vivids: 135,
-        "Color Corrections": 150,
-    };
-
-    const pricingData: PricingData = data || defaultPricingData;
-
-    if (isLoading)
+    if (isLoading || !data)
         return (
             <div className=" mt-10 flex flex-col items-center justify-center gap-16">
                 <div className="text-lg text-white">Prices are loading</div>
                 <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
             </div>
         );
+
+    const pricingData: PricesType = data;
 
     return isMobile ? (
         <div className="flex w-11/12 flex-col rounded-2xl  bg-glass p-5 shadow-xl">

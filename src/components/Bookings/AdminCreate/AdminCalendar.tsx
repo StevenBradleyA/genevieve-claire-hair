@@ -1,9 +1,5 @@
 import { DayPicker } from "react-day-picker";
-import type {
-    BookedDateType,
-    BookingDetailsType,
-    CalendarOptions,
-} from "../Create";
+import type { BookedDateType, CalendarOptions } from "../Create";
 import AdminTimeSlots from "./AdminTimeSlots";
 
 const createCalendarOptions = (): CalendarOptions => {

@@ -114,41 +114,41 @@ export const allServices: AllServicesType = {
     },
 };
 
-//? Geni only
-const legacy = {
-    extensions: {
-        // Geni manually adds only
-        name: "Extensions",
-        rate: 70,
-        bundleTime: 30,
-        full: {
-            name: "Full application",
-            requireConsult: true,
-        },
-        moveUp: {
-            name: "Maintenance move up",
-            time: 90,
-            price: 105,
-        },
-        removal: {
-            name: "Removal",
-            time: 60,
-            price: 70,
-        },
-    },
-    vivids: {
-        name: "Vivids",
-        rate: 110, // per hour
-        price: 135,
-        requireConsult: true,
-    },
-    colorCorrections: {
-        name: "Color Corrections",
-        rate: 150, // per hour
-        price: 150,
-        requireConsult: true,
-    },
-};
+// //? Geni only
+// const legacy = {
+//     extensions: {
+//         // Geni manually adds only
+//         name: "Extensions",
+//         rate: 70,
+//         bundleTime: 30,
+//         full: {
+//             name: "Full application",
+//             requireConsult: true,
+//         },
+//         moveUp: {
+//             name: "Maintenance move up",
+//             time: 90,
+//             price: 105,
+//         },
+//         removal: {
+//             name: "Removal",
+//             time: 60,
+//             price: 70,
+//         },
+//     },
+//     vivids: {
+//         name: "Vivids",
+//         rate: 110, // per hour
+//         price: 135,
+//         requireConsult: true,
+//     },
+//     colorCorrections: {
+//         name: "Color Corrections",
+//         rate: 150, // per hour
+//         price: 150,
+//         requireConsult: true,
+//     },
+// };
 
 //! Old - no longer needed
 // highlights: {

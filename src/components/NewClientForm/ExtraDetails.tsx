@@ -59,7 +59,6 @@ export default function ExtraDetails({
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-    const maxFileSize = 6 * 1024 * 1024;
 
     // TODO Hot toast for submission saying ftc form completed!
 
@@ -84,7 +83,8 @@ export default function ExtraDetails({
         },
     });
 
-    const handleInputErrors = () => {
+    useEffect(() => {
+        const maxFileSize = 6 * 1024 * 1024;
         const errorsObj: ErrorsObj = {};
 
         if (!firstName.length) {
@@ -113,10 +113,6 @@ export default function ExtraDetails({
         }
 
         setErrors(errorsObj);
-    };
-
-    useEffect(() => {
-        handleInputErrors();
     }, [imageFiles, firstName, lastName, phoneNumber]);
 
     useEffect(() => {

@@ -57,7 +57,7 @@ export const imageRouter = createTRPCRouter({
                 ),
             })
         )
-        .mutation(async ({ input, ctx }) => {
+        .mutation(({ input, ctx }) => {
             const { images } = input;
 
             const createdImages = images.map(async (image) => {
@@ -94,10 +94,8 @@ export const imageRouter = createTRPCRouter({
                     try {
                         await removeFileFromS3(image.link);
                     } catch (err) {
-                        console.error(`Failed to remove file from S3: ${err}`);
-                        throw new Error(
-                            `Failed to remove file from S3: ${err}`
-                        );
+                        console.error(`Failed to remove file from S3: `, err);
+                        throw new Error(`Failed to remove file from S3: `);
                     }
                 });
 

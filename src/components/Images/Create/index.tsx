@@ -24,7 +24,7 @@ export default function CreateImage({
     const [isSubmitting, setIsSubmitting] = useState(false);
     const ctx = api.useContext();
 
-    const handleInputErrors = () => {
+    useEffect(() => {
         const errorsObj: ErrorsObj = {};
         // ! should implement max file size upload could cap at like 50mb
         if (imageFiles.length < 1) {
@@ -34,10 +34,6 @@ export default function CreateImage({
             errorsObj.imageExcess = "Cannot provide more than 10 photos";
         }
         setErrors(errorsObj);
-    };
-
-    useEffect(() => {
-        handleInputErrors();
     }, [imageFiles]);
 
     const { mutate } = api.image.create.useMutation({
