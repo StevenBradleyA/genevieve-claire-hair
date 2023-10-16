@@ -76,12 +76,6 @@ export default function TermsOfService() {
                 <div className="mb-2 text-xl ">Cancellation Charges</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
                     {`Appointments canceled with less than 24 hours' notice will incur a charge equivalent to 50% of the total service cost. No-show appointments will be charged 100% of the service cost.`}
-                </p>{" "}
-                <div className="mb-5 text-4xl "> Links</div>
-                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
-                    {`Genevieveclaire.hair is not responsible for the contents of any
-                linked sites. The use of any linked website is at the user's own
-                risk.`}
                 </p>
                 <div className="mb-5 text-4xl "> Intellectual Property</div>
                 <div className="mb-2 text-xl "> Ownership</div>
@@ -93,7 +87,6 @@ export default function TermsOfService() {
                     {` Genevieve Clare Hair and any other trademarks, service marks, graphics, and logos used in connection with the Website are trademarks or registered trademarks of Genevieve Clare Hair or its licensors.`}
                 </p>
                 <div className="mb-5 text-4xl ">
-                    {" "}
                     Terms of Service Modification
                 </div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
@@ -160,27 +153,23 @@ export default function TermsOfService() {
                     to use the Website; (b) any unauthorized access to or use of
                     our servers and/or any personal information stored therein.
                 </p>
-                <div className="mb-5 text-4xl "> Review Policy</div>
-                <div className="mb-2 text-xl "> Content Moderation</div>
+                <div className="mb-5 text-4xl "> Disclaimer</div>
+                <div className="mb-2 text-xl "> Accuracy of Information</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
-                    {`At Genevieve Clare Hair, we value honest feedback and reviews from our customers. We encourage you to share your experiences on our Website. However, we reserve the right to moderate and remove any review that is deemed offensive, inappropriate, or violates our content guidelines.`}
+                    {`While we strive to provide accurate and up-to-date information on our Website, Genevieve Clare Hair makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability concerning the Website or the information, products, services, or related graphics contained on the Website for any purpose. Any reliance you place on such information is therefore strictly at your own risk.`}
                 </p>
-                <div className="mb-2 text-xl ">Offensive Content</div>
+                <div className="mb-2 text-xl ">Service Availability</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
-                    {`Reviews that contain offensive language, discriminatory remarks, or violate the privacy of our staff or other customers will be promptly removed. We believe in maintaining a respectful and positive online environment for everyone.`}
-                </p>{" "}
-                <div className="mb-2 text-xl ">Moderation Process </div>
+                    {` Genevieve Clare Hair reserves the right to modify, suspend, or discontinue any part of the Website or the services provided at any time without prior notice. We will not be liable if, for any reason, all or any part of the Website is unavailable at any time or for any period.`}
+                </p>
+                <div className="mb-2 text-xl ">Third-Party Links </div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
-                    {`Our moderation process aims to ensure that the reviews displayed on our Website are constructive, helpful, and relevant to the experiences of our customers. While we encourage your honest opinions, we request that you express them in a respectful manner.`}
-                </p>{" "}
-                <div className="mb-2 text-xl "> Right to Remove</div>
+                    {`Our Website may contain links to third-party websites or services that are not owned or controlled by Genevieve Clare Hair. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that Genevieve Clare Hair shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such websites or services.`}
+                </p>
+                <div className="mb-2 text-xl "> User Responsibilities</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
-                    {`We have the ability to remove any review that we find offensive to others. If you believe your review was removed in error, please contact our customer support team at genevieveclare.hair@outlook.com to address your concerns.`}
-                </p>{" "}
-                <div className="mb-2 text-xl "> Feedback Welcome</div>
-                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
-                    {`We appreciate your understanding and cooperation in maintaining a respectful review environment. If you have any feedback or questions about our review policy, please feel free to reach out to us.`}
-                </p>{" "}
+                    {`Users are responsible for their interactions with other users and third parties. Genevieve Clare Hair disclaims any liability arising from such interactions. Users are also responsible for maintaining the confidentiality of their account information and for ensuring the security of their passwords.`}
+                </p>
                 <div className="mb-5 text-4xl "> Contact</div>
                 <div className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
                     <h3>Genevieve Clare Hair</h3>
@@ -190,10 +179,6 @@ export default function TermsOfService() {
                     <h3>(425) 241-7865</h3>
                     <h3>genevieveclarehair@outlook.com</h3>
                 </div>
-                <div className="mb-2 text-xl "></div>
-                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
-                    {``}
-                </p>
             </div>
             <Footer />
         </>
