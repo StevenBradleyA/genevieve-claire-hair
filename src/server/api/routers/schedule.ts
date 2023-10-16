@@ -135,13 +135,15 @@ export const scheduleRouter = createTRPCRouter({
         }),
 
     deleteTimeOff: protectedProcedure
-        .input(z.number())
+        .input(z.record(z.boolean()))
         .mutation(async ({ input, ctx }) => {
-            await ctx.prisma.timeOff.delete({
-                where: {
-                    id: input,
-                },
-            });
+            for (const id in input) {
+                await ctx.prisma.timeOff.delete({
+                    where: {
+                        id: Number(id),
+                    },
+                });
+            }
 
             return "Successfully deleted";
         }),
