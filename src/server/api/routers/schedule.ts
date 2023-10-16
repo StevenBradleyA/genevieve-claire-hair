@@ -133,4 +133,18 @@ export const scheduleRouter = createTRPCRouter({
             });
             return updatedSchedule;
         }),
+
+    deleteTimeOff: protectedProcedure
+        .input(z.record(z.boolean()))
+        .mutation(async ({ input, ctx }) => {
+            for (const id in input) {
+                await ctx.prisma.timeOff.delete({
+                    where: {
+                        id: Number(id),
+                    },
+                });
+            }
+
+            return "Successfully deleted";
+        }),
 });

@@ -34,9 +34,7 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
     const { mutate } = api.booking.create.useMutation({
         onSuccess: () => {
             void ctx.booking.getFuture.invalidate();
-            localStorage.removeItem("Services");
-            localStorage.removeItem("Specifications");
-            toast.success("Booking Confirmed!", {
+            toast.success("Booking Updated!", {
                 icon: "👏",
                 style: {
                     borderRadius: "10px",
@@ -44,7 +42,7 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
                     color: "#fff",
                 },
             });
-            void router.push("/bookings/confirmed");
+            void router.push("/admin/bookings");
         },
     });
 

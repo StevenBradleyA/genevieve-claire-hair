@@ -43,8 +43,6 @@ export default function BookingCard({ booking }: { booking: Booking }) {
         }
     };
 
-    // TODO: Refactor update & delete to work as modals
-
     return (
         <div className="flex flex-col gap-2 rounded-2xl bg-darkGlass p-5 text-2xl text-white shadow-xl">
             <div className="rounded-2xl bg-darkGlass px-4 py-2  shadow-lg">

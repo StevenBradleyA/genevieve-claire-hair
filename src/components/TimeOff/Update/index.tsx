@@ -2,7 +2,12 @@ import type { DateRange } from "react-day-picker";
 import type { CalendarOptions } from "../../Bookings/Create";
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
-import SetHours from "./SetHours";
+import SetHours from "../Create/SetHours";
+import type { TimeOff } from "@prisma/client";
+
+//! --------------------------------------------------------------------
+// TODO: Remove if unused
+//! --------------------------------------------------------------------
 
 const createCalendarOptions = (): CalendarOptions => {
     const today = new Date();
@@ -34,8 +39,11 @@ const createCalendarOptions = (): CalendarOptions => {
     return options;
 };
 
-export default function CreateTimeOff() {
-    const [dateRange, setDateRange] = useState<DateRange>();
+export default function UpdateTimeOff({ timeOff }: { timeOff: TimeOff }) {
+    const [dateRange, setDateRange] = useState<DateRange | undefined>({
+        from: timeOff.startDate,
+        to: timeOff.endDate,
+    });
 
     return (
         <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 text-white shadow-lg">
@@ -43,7 +51,7 @@ export default function CreateTimeOff() {
                 mode="range"
                 selected={dateRange}
                 onSelect={setDateRange}
-                className="rounded-lg bg-darkGlass text-white shadow-2xl"
+                className="rounded-lg bg-darkGlass text-lg text-white shadow-2xl"
                 {...createCalendarOptions()}
             />
 
