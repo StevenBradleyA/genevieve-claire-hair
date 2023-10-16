@@ -5,6 +5,10 @@ import { DayPicker } from "react-day-picker";
 import SetHours from "../Create/SetHours";
 import type { TimeOff } from "@prisma/client";
 
+//! --------------------------------------------------------------------
+// TODO: Remove if unused
+//! --------------------------------------------------------------------
+
 const createCalendarOptions = (): CalendarOptions => {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -47,7 +51,7 @@ export default function UpdateTimeOff({ timeOff }: { timeOff: TimeOff }) {
                 mode="range"
                 selected={dateRange}
                 onSelect={setDateRange}
-                className="rounded-lg bg-darkGlass text-white shadow-2xl"
+                className="rounded-lg bg-darkGlass text-lg text-white shadow-2xl"
                 {...createCalendarOptions()}
             />
 
