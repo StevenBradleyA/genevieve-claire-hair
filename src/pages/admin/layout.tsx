@@ -23,7 +23,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     return (
         <div className=" flex w-full justify-between ">
-            <div className=" flex w-full flex-col items-center">{children}</div>
+            <div className="flex w-full flex-col items-center">{children}</div>
 
             <motion.div
                 className={` sticky top-40  mt-5 flex h-[35rem] flex-col items-center overflow-x-hidden rounded-l-3xl  bg-glass p-8 shadow-xl`}
