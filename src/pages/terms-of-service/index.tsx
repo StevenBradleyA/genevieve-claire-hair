@@ -1,9 +1,7 @@
 import Footer from "~/components/HomePage/footer";
+import Link from "next/link";
 
 export default function TermsOfService() {
-    // todo geni has the ability to delete any review
-    // todo geni has the right to refuse service. She can cancel any booking
-    // todo comment policy () - if you'd like to appeal
     // todo cancellation policy
 
     return (
@@ -43,11 +41,56 @@ export default function TermsOfService() {
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
                     {` You may not use the Website for any illegal or unauthorized purpose. You may not, in the use of the Website, violate any applicable laws, regulations, or rights of others.`}
                 </p>
+                <div className="mb-5 text-4xl "> Appointments and Services</div>
+                <div className="mb-2 text-xl "> Booking Appointments</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {` Genevieve Clare Hair offers online appointment booking services through our Website. All appointments are subject to availability. By booking an appointment through our Website, you agree to abide by the terms and conditions outlined in this section.`}
+                </p>
+                <div className="mb-2 text-xl "> Right to Refuse Service</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`  Genevieve Clare Hair reserves the right to refuse service to anyone for any reason at any time. We take pride in providing a safe and respectful environment for both our customers and our staff.`}
+                </p>
+                <div className="mb-2 text-xl ">
+                    Cancellation and Modification of Appointments
+                </div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {` Genevieve Clare Hair understands that plans can change. If you need to cancel or modify your appointment, we request that you do so within the timeframe specified in our cancellation policy, which can be found on the Website. Failure to adhere to the cancellation policy may result in applicable fees or penalties.`}
+                </p>
+                <div className="mb-2 text-xl ">{`Salon's Right to Cancel`}</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {` In rare circumstances, Genevieve Clare Hair may need to cancel a booked appointment due to unforeseen events or emergencies. In such cases, we will make every effort to reschedule your appointment at a convenient time for you.`}
+                </p>
+                <div className="mb-2 text-xl ">Rescheduling Appointments</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`If you wish to reschedule a booking, you are required to reach out to Genevieve Clare Hair promptly. Please contact us via phone or email to discuss the options for rescheduling your appointment. We appreciate your cooperation in maintaining our scheduling accuracy.`}
+                </p>
+                <div className="mb-2 text-xl ">Booking through the Website</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`When booking an appointment through our Website, you agree that you are bound by our cancellation policy. Booking through the site indicates your acceptance of the terms and conditions related to cancellations and modifications.`}
+                </p>
+                <div className="mb-5 text-4xl "> Cancellation Policy</div>
+                <div className="mb-2 text-xl ">Notice Period</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`To accommodate our high appointment demand, we kindly request a minimum of 24 hours' notice for any cancellations.`}
+                </p>
+                <div className="mb-2 text-xl ">Cancellation Charges</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`Appointments canceled with less than 24 hours' notice will incur a charge equivalent to 50% of the total service cost. No-show appointments will be charged 100% of the service cost.`}
+                </p>{" "}
                 <div className="mb-5 text-4xl "> Links</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
                     {`Genevieveclaire.hair is not responsible for the contents of any
                 linked sites. The use of any linked website is at the user's own
                 risk.`}
+                </p>
+                <div className="mb-5 text-4xl "> Intellectual Property</div>
+                <div className="mb-2 text-xl "> Ownership</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {` All content and materials available on the Website, including but not limited to text, graphics, logos, button icons, images, audio clips, data compilations, and software, are the property of Genevieve Clare Hair or its content suppliers and protected by copyright laws.`}
+                </p>
+                <div className="mb-2 text-xl "> Trademarks</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {` Genevieve Clare Hair and any other trademarks, service marks, graphics, and logos used in connection with the Website are trademarks or registered trademarks of Genevieve Clare Hair or its licensors.`}
                 </p>
                 <div className="mb-5 text-4xl ">
                     {" "}
@@ -58,16 +101,6 @@ export default function TermsOfService() {
                     its Website at any time without prior notice. By using this
                     Website, you are agreeing to be bound by the current version
                     of these Terms of Service.
-                </p>
-                <div className="mb-5 text-4xl ">
-                    Personal Information Request
-                </div>
-                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
-                    You have the right to request access to the personal
-                    information we collect from you, change that information, or
-                    delete it. To request to review, update, or delete your
-                    personal information, please visit: email
-                    genevieveclarehair@outlook.com to request data stored.
                 </p>
                 <div className="mb-5 text-4xl "> Review Policy</div>
                 <div className="mb-2 text-xl "> Content Moderation</div>
@@ -84,28 +117,70 @@ export default function TermsOfService() {
                 </p>{" "}
                 <div className="mb-2 text-xl "> Right to Remove</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
-                    {`We have the ability to remove any review that we find offensive to others. If you believe your review was removed in error, please contact our customer support team at genevieveclarehair@outlook.com to address your concerns.`}
+                    {`We have the ability to remove any review that we find offensive to others. If you believe your review was removed in error, please contact our customer support team at genevieveclare.hair@outlook.com to address your concerns.`}
                 </p>{" "}
                 <div className="mb-2 text-xl "> Feedback Welcome</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
                     {`We appreciate your understanding and cooperation in maintaining a respectful review environment. If you have any feedback or questions about our review policy, please feel free to reach out to us.`}
                 </p>{" "}
-                <div className="mb-5 text-4xl "> Disclaimer</div>
                 <div className="mb-5 text-4xl "> Privacy Policy</div>
-                <div className="mb-5 text-4xl "> Cookie Policy</div>
-                <div className="mb-5 text-4xl "> Cancellation Policy</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    If you use our Services, you must abide by our{" "}
+                    <Link
+                        href="/privacy-policy"
+                        aria-label="privacy policy"
+                        className="text-violet-300"
+                    >
+                        Privacy Policy
+                    </Link>
+                    . You acknowledge that you have read our Privacy Policy and
+                    understand that it sets forth how we collect, use, and store
+                    your information. If you do not agree with our Privacy
+                    Statement, then you must stop using the Services
+                    immediately. Any person, entity, or service collecting data
+                    from the Services must comply with our Privacy Statement.
+                    Misuse of any User&apos;s Personal Information is
+                    prohibited. If you collect any Personal Information from a
+                    User, you agree that you will only use the Personal
+                    Information you gather for the purpose for which the User
+                    has authorized it. You agree that you will reasonably secure
+                    any Personal Information you have gathered from the
+                    Services, and you will respond promptly to complaints,
+                    removal requests, and &apos;do not contact&apos; requests
+                    from us or Users.
+                </p>
                 <div className="mb-5 text-4xl "> Limitations</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
-                    To the fullest extent permitted by applicable law, [Your
-                    Hair Salon's Name] shall not be liable for any indirect,
-                    incidental, special, consequential, or punitive damages, or
-                    any loss of profits or revenues, whether incurred directly
-                    or indirectly, or any loss of data, use, goodwill, or other
+                    To the fullest extent permitted by applicable law, Genevieve
+                    Clare Hair shall not be liable for any indirect, incidental,
+                    special, consequential, or punitive damages, or any loss of
+                    profits or revenues, whether incurred directly or
+                    indirectly, or any loss of data, use, goodwill, or other
                     intangible losses, resulting from (a) your use or inability
                     to use the Website; (b) any unauthorized access to or use of
                     our servers and/or any personal information stored therein.
                 </p>
-                <div>this site uses cookies to check if you are logged in </div>
+                <div className="mb-5 text-4xl "> Review Policy</div>
+                <div className="mb-2 text-xl "> Content Moderation</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`At Genevieve Clare Hair, we value honest feedback and reviews from our customers. We encourage you to share your experiences on our Website. However, we reserve the right to moderate and remove any review that is deemed offensive, inappropriate, or violates our content guidelines.`}
+                </p>
+                <div className="mb-2 text-xl ">Offensive Content</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`Reviews that contain offensive language, discriminatory remarks, or violate the privacy of our staff or other customers will be promptly removed. We believe in maintaining a respectful and positive online environment for everyone.`}
+                </p>{" "}
+                <div className="mb-2 text-xl ">Moderation Process </div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`Our moderation process aims to ensure that the reviews displayed on our Website are constructive, helpful, and relevant to the experiences of our customers. While we encourage your honest opinions, we request that you express them in a respectful manner.`}
+                </p>{" "}
+                <div className="mb-2 text-xl "> Right to Remove</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`We have the ability to remove any review that we find offensive to others. If you believe your review was removed in error, please contact our customer support team at genevieveclare.hair@outlook.com to address your concerns.`}
+                </p>{" "}
+                <div className="mb-2 text-xl "> Feedback Welcome</div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {`We appreciate your understanding and cooperation in maintaining a respectful review environment. If you have any feedback or questions about our review policy, please feel free to reach out to us.`}
+                </p>{" "}
                 <div className="mb-5 text-4xl "> Contact</div>
                 <div className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
                     <h3>Genevieve Clare Hair</h3>
@@ -115,6 +190,10 @@ export default function TermsOfService() {
                     <h3>(425) 241-7865</h3>
                     <h3>genevieveclarehair@outlook.com</h3>
                 </div>
+                <div className="mb-2 text-xl "></div>
+                <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white ">
+                    {``}
+                </p>
             </div>
             <Footer />
         </>
