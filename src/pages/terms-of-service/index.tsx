@@ -2,8 +2,6 @@ import Footer from "~/components/HomePage/footer";
 import Link from "next/link";
 
 export default function TermsOfService() {
-    // todo cancellation policy
-
     return (
         <>
             <div className="w-1/2 text-violet-300">
@@ -144,14 +142,14 @@ export default function TermsOfService() {
                 </p>
                 <div className="mb-5 text-4xl "> Limitations</div>
                 <p className="mb-5 rounded-2xl bg-darkGlass p-4 text-white">
-                    To the fullest extent permitted by applicable law, Genevieve
+                    {`    To the fullest extent permitted by applicable law, Genevieve
                     Clare Hair shall not be liable for any indirect, incidental,
                     special, consequential, or punitive damages, or any loss of
                     profits or revenues, whether incurred directly or
                     indirectly, or any loss of data, use, goodwill, or other
                     intangible losses, resulting from (a) your use or inability
                     to use the Website; (b) any unauthorized access to or use of
-                    our servers and/or any personal information stored therein.
+                    our servers and/or any personal information stored therein.`}
                 </p>
                 <div className="mb-5 text-4xl "> Disclaimer</div>
                 <div className="mb-2 text-xl "> Accuracy of Information</div>
