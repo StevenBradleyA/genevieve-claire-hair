@@ -6,7 +6,6 @@ import ScriptButton from "./scriptButton";
 import Footer from "~/components/HomePage/footer";
 
 export default function Reviews() {
-    // TODO Test Modals on mobile
     // TODO Give admin god power to delete a review
 
     const { data: session } = useSession();

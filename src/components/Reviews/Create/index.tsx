@@ -93,6 +93,7 @@ export default function CreateReview({
         onSuccess: () => {
             closeModal();
             void ctx.review.getAll.invalidate();
+            void ctx.booking.getAllBookingsWithoutReviewsByUserId.invalidate();
         },
     });
 
