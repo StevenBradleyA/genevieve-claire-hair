@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     name="description"
                     content="Genevieve Clare Hair. You're pretty when you get here, prettier when you leave."
                 />
-                <link rel="icon" href="/favicon-heart.ico" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <div
