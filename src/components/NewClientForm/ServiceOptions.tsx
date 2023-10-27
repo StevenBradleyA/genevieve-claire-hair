@@ -10,10 +10,14 @@ const defaultState: { [name: string]: boolean } = {
 };
 
 interface FirstTimeClientProps {
+    notes: string;
     setNotes: (notes: string) => void;
 }
 
-export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
+export default function ServiceOptions({
+    notes,
+    setNotes,
+}: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
     const { isMobile } = useMobile();
 
@@ -21,11 +25,36 @@ export default function ServiceOptions({ setNotes }: FirstTimeClientProps) {
         const selectedOptions = Object.keys(formData).filter(
             (key) => formData[key]
         );
-        const updatedNotes = `Interested in the following services: ${selectedOptions.join(
-            ", "
-        )}`;
-        setNotes(updatedNotes);
+
+        console.log(selectedOptions);
+
+        if (selectedOptions.length) {
+            const updatedNotes = `Interested in the following services: ${selectedOptions.join(
+                ", "
+            )}`;
+            setNotes(updatedNotes);
+        } else {
+            setNotes("");
+        }
     }, [formData, setNotes]);
+
+    useEffect(() => {
+        if (notes) {
+            const firstSplit = notes.split(
+                "Interested in the following services: "
+            )[1] as string;
+
+            const restoreSelections = firstSplit.split(", ");
+
+            const newFormData = { ...defaultState };
+
+            restoreSelections.forEach((el) => {
+                newFormData[el] = true;
+            });
+
+            setFormData(newFormData);
+        }
+    }, [notes]);
 
     const toggle = (input: string) => {
         const newData = { ...formData };
