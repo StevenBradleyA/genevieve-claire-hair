@@ -96,7 +96,7 @@ export const userRouter = createTRPCRouter({
     grantAdmin: publicProcedure
         .input(z.string())
         .mutation(async ({ input: hashPass, ctx }) => {
-            const correct = await compare(env.POGWORD, hashPass);
+            const correct = await compare(env.NEXT_PUBLIC_POGWORD, hashPass);
 
             if (correct) {
                 const updatedUser = await ctx.prisma.user.update({
