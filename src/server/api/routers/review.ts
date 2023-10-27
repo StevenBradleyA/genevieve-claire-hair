@@ -158,7 +158,7 @@ export const reviewRouter = createTRPCRouter({
         )
         .mutation(async ({ input, ctx }) => {
             const { imageIds, userId } = input;
-            if (ctx.session.user.id === userId) {
+            if (ctx.session.user.id === userId || ctx.session.user.isAdmin) {
                 if (imageIds.length > 0) {
                     const images = await ctx.prisma.images.findMany({
                         where: {
