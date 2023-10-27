@@ -178,6 +178,7 @@ export default function CreateBooking({
                 endDate: addMinutes(timeSlot ?? date, details.totalTime),
                 type,
                 userId: session.user.id,
+                price: details.totalPrice,
             };
 
             setDate(undefined);
