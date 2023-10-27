@@ -22,6 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     // TODO: Check back here once account linking is implemented!
 
     useEffect(() => {
+        if (router.asPath === "/super/special/secret/admin/login") return;
         const isCurrentPageFirstTimeClient =
             router.asPath === "/first-time-client";
         if (isNew && !isCurrentPageFirstTimeClient) {
