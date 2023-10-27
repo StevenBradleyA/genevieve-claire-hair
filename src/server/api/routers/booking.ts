@@ -94,6 +94,7 @@ export const bookingRouter = createTRPCRouter({
                 endDate: z.date(),
                 type: z.string(),
                 userId: z.string(),
+                price: z.number(),
             })
         )
         .mutation(async ({ input, ctx }) => {
@@ -184,6 +185,7 @@ export const bookingRouter = createTRPCRouter({
                 endDate: z.date().optional(),
                 status: z.string().optional(),
                 type: z.string().optional(),
+                price: z.number().optional(),
             })
         )
         .mutation(async ({ input, ctx }) => {
