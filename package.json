@@ -25,6 +25,7 @@
         "@trpc/server": "^10.26.0",
         "aws-sdk": "^2.1413.0",
         "axios": "^1.4.0",
+        "bcryptjs": "^2.4.3",
         "date-fns": "^2.30.0",
         "framer-motion": "^10.13.1",
         "next": "^13.4.2",
@@ -43,6 +44,7 @@
         "zod": "^3.21.4"
     },
     "devDependencies": {
+        "@types/bcryptjs": "^2.4.5",
         "@types/eslint": "^8.37.0",
         "@types/node": "^18.16.0",
         "@types/prettier": "^2.7.2",
