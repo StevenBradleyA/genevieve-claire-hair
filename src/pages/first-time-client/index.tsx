@@ -23,8 +23,6 @@ export default function FirstTimeClient() {
 
     const isNew = session?.user.isNew;
 
-    // TODO: Check back here once account linking is implemented!
-
     useEffect(() => {
         async function redirectIfNotNew() {
             if (!isNew) {
@@ -47,11 +45,11 @@ export default function FirstTimeClient() {
     };
 
     const form = [
-        <ServiceOptions key={0} setNotes={setServiceNotes} />,
-        <ColorHistory key={1} setNotes={setColorHistoryNotes} />,
-        <ChemHair key={2} setNotes={setChemNotes} />,
-        <CurrentColor key={3} setNotes={setCurrentColorNotes} />,
-        <TimeSlots key={4} setNotes={setTimeNotes} />,
+        <ServiceOptions key={0} notes={serviceNotes} setNotes={setServiceNotes} />,
+        <ColorHistory key={1} notes={colorHistoryNotes} setNotes={setColorHistoryNotes} />,
+        <ChemHair key={2} notes={chemNotes} setNotes={setChemNotes} />,
+        <CurrentColor key={3} notes={currentColorNotes} setNotes={setCurrentColorNotes} />,
+        <TimeSlots key={4} notes={timeNotes} setNotes={setTimeNotes} />,
         <ExtraDetails
             key={5}
             extraNotes={extraNotes}
@@ -62,6 +60,14 @@ export default function FirstTimeClient() {
             currentColorNotes={currentColorNotes}
             timeNotes={timeNotes}
         />,
+    ];
+
+    const readyCheck = [
+        serviceNotes,
+        colorHistoryNotes,
+        chemNotes,
+        currentColorNotes,
+        timeNotes,
     ];
 
     return isNew ? (
@@ -87,6 +93,7 @@ export default function FirstTimeClient() {
                         <button
                             onClick={() => changePages(1)}
                             className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                            disabled={readyCheck[page].length ? false : true}
                         >
                             Next
                         </button>
