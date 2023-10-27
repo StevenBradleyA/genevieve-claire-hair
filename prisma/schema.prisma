@@ -27,27 +27,14 @@ model Booking {
     endDate   DateTime
     status    String
     type      String
+    price     Int
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     userId String
 
-    user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-    review      Review[]
-    transaction Transaction[]
-}
-
-model Transaction {
-    id     String @id @default(cuid())
-    cost   Int
-    type   String
-    status String
-
-    userId    String
-    bookingId String?
-
-    user    User     @relation(fields: [userId], references: [id])
-    booking Booking? @relation(fields: [bookingId], references: [id])
+    user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    review Review[]
 }
 
 model Images {
@@ -138,12 +125,11 @@ model User {
     isAdmin       Boolean   @default(false)
     isNew         Boolean   @default(true)
 
-    accounts     Account[]
-    sessions     Session[]
-    reviews      Review[]
-    bookings     Booking[]
-    transactions Transaction[]
-    images       Images[]
+    accounts Account[]
+    sessions Session[]
+    reviews  Review[]
+    bookings Booking[]
+    images   Images[]
 }
 
 model VerificationToken {
@@ -153,3 +139,9 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+// When ready to add employee functionality
+// model Employee
+// Links to User, User has employeeId
+// If User as eId, User is an Admin
+// If 

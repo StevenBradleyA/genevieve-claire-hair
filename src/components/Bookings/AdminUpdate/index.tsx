@@ -64,6 +64,7 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
                 endDate: addMinutes(timeSlot ?? date, customTime),
                 type,
                 userId: booking.userId,
+                price: customPrice,
             };
 
             setDate(undefined);
