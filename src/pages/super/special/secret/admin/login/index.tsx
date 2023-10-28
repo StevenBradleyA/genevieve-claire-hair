@@ -3,6 +3,7 @@ import { useState } from "react";
 import { api } from "~/utils/api";
 import { hash } from "bcryptjs";
 import { useSession } from "next-auth/react";
+import Custom404 from "~/pages/404";
 
 export default function SuperSpecialSecretAdminLogin() {
     const [pass, setPass] = useState("");
@@ -26,19 +27,7 @@ export default function SuperSpecialSecretAdminLogin() {
 
     if (status === "loading") return <></>;
 
-    if (!data && status === "unauthenticated")
-        return (
-            <div className="m-40 leading-10 text-white">
-                <h1 className="mr-5 inline-block border-r border-gray-300 pr-6 align-top text-2xl font-medium">
-                    404
-                </h1>
-                <div className="inline-block">
-                    <h2 className="text-base font-light leading-7">
-                        This page could not be found.
-                    </h2>
-                </div>
-            </div>
-        );
+    if (!data && status === "unauthenticated") return <Custom404 />;
 
     return (
         <>
