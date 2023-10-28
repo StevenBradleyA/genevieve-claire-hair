@@ -7,9 +7,18 @@ import { DotLoader } from "react-spinners";
 import type { User } from "@prisma/client";
 import type { NextPageWithLayout } from "~/pages/_app";
 import type { ReactElement } from "react";
+import { useSession } from "next-auth/react";
+import Custom404 from "~/pages/404";
 
 const AdminViewUsers: NextPageWithLayout = () => {
     const { data: users, isLoading } = api.user.getAllUsers.useQuery();
+    const { data: session } = useSession();
+
+    const accessDenied = !session || !session.user.isAdmin;
+
+    if (accessDenied) {
+        return <Custom404 />;
+    }
 
     if (isLoading)
         return (

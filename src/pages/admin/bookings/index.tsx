@@ -13,6 +13,8 @@ import type { Schedule } from "@prisma/client";
 import EachSchedule from "~/components/Bookings/Schedule";
 import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 import AdminBookingSelectUser from "~/components/Bookings/AdminCreate/userSelect";
+import Custom404 from "~/pages/404";
+import { useSession } from "next-auth/react";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -96,6 +98,9 @@ const AdminViewBookings: NextPageWithLayout = () => {
 
     const { data: fullSchedule } = api.schedule.getNormalizedDays.useQuery();
 
+    const { data: session } = useSession();
+
+
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
@@ -154,6 +159,15 @@ const AdminViewBookings: NextPageWithLayout = () => {
         setIsBookingModalOpen(false);
     };
     //    TODO Allow ability to approve pending appointments
+
+
+
+
+    const accessDenied = !session || !session.user.isAdmin;
+
+    if (accessDenied) {
+        return <Custom404 />;
+    }
 
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass p-10  text-white shadow-2xl">

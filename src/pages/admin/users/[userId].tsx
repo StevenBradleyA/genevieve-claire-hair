@@ -3,10 +3,20 @@ import type { NextPageWithLayout } from "~/pages/_app";
 import type { ReactElement } from "react";
 import AdminLayout from "../layout";
 import ClientDetails from "~/components/Clients/clientDetails";
+import { useSession } from "next-auth/react";
+import Custom404 from "~/pages/404";
 
 const ClientProfile: NextPageWithLayout = () => {
     const router = useRouter();
     const { userId } = router.query;
+
+    const { data: session } = useSession();
+
+    const accessDenied = !session || !session.user.isAdmin;
+
+    if (accessDenied) {
+        return <Custom404 />;
+    }
 
     return (
         <div className="flex w-3/4 flex-col">
