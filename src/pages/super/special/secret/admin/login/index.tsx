@@ -3,7 +3,10 @@ import { useState } from "react";
 import { api } from "~/utils/api";
 import { hash } from "bcryptjs";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Custom404 from "~/pages/404";
+import hacktime from "@public/Gifs/hackerman-gif.gif";
+import matrix from "@public/Gifs/matrix.gif";
 
 export default function SuperSpecialSecretAdminLogin() {
     const [pass, setPass] = useState("");
@@ -30,10 +33,28 @@ export default function SuperSpecialSecretAdminLogin() {
     if (!data && status === "unauthenticated") return <Custom404 />;
 
     return (
-        <>
-            <label>secret hacker message</label>
-            <input value={pass} onChange={(e) => setPass(e.target.value)} />
-            <button onClick={() => void hackerHash()}>hack</button>
-        </>
+        <div className="absolute top-0 z-10 flex h-full w-full justify-center bg-indigo-950 p-20 text-green-500 ">
+            <div className=" relative z-0 mt-40 flex w-2/3 flex-col items-center justify-center   ">
+                <Image src={hacktime} alt="hacking time" className="z-50" />
+                <Image
+                    src={matrix}
+                    alt="hacking time"
+                    className="matrix-time absolute left-0 top-0 h-full w-full opacity-90 rounded-2xl "
+                />
+
+                <input
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
+                    className="mb-5 rounded border border-green-500 bg-black px-4 py-2 text-green-500 placeholder-green-500 focus:border-green-700 focus:outline-none"
+                    placeholder="It's Hacking Time"
+                />
+                <button
+                    onClick={() => void hackerHash()}
+                    className="rounded-2xl bg-black px-6 py-1"
+                >
+                    hack
+                </button>
+            </div>
+        </div>
     );
 }
