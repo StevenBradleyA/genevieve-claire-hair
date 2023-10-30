@@ -15,6 +15,7 @@ export default {
                 glass: "rgba(255, 255, 255, 0.2)",
                 darkGlass: "rgba(0, 0, 0, 0.05)",
                 clear: "rgba(255, 255, 255, 0)",
+                hackingtime: "#222",
             },
             fontFamily: {
                 "dm-serif-display": ['"DM Serif Display"', "serif"],

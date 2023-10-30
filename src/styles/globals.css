@@ -443,12 +443,7 @@ html {
 }
 
 /* -------------       It's Hacking Time     ------------- */
-/* .matrix-time::before {
-    background-image: url("../../public/Gifs/matrix.gif");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: right center;
-} */
+
 .matrix-time {
     z-index: -1;
 }

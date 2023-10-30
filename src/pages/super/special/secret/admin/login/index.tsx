@@ -33,13 +33,13 @@ export default function SuperSpecialSecretAdminLogin() {
     if (!data && status === "unauthenticated") return <Custom404 />;
 
     return (
-        <div className="absolute top-0 z-10 flex h-full w-full justify-center bg-indigo-950 p-20 text-green-500 ">
-            <div className=" relative z-0 mt-40 flex w-2/3 flex-col items-center justify-center   ">
+        <div className="absolute top-0 z-10 flex h-full w-full justify-center bg-hackingtime p-20 text-green-500 ">
+            <div className=" relative z-0 mt-40 flex w-2/3 flex-col items-center justify-center rounded-2xl bg-black  ">
                 <Image src={hacktime} alt="hacking time" className="z-50" />
                 <Image
                     src={matrix}
                     alt="hacking time"
-                    className="matrix-time absolute left-0 top-0 h-full w-full opacity-90 rounded-2xl "
+                    className="matrix-time absolute left-0 top-0 h-full w-full rounded-2xl opacity-50 "
                 />
 
                 <input
@@ -50,9 +50,9 @@ export default function SuperSpecialSecretAdminLogin() {
                 />
                 <button
                     onClick={() => void hackerHash()}
-                    className="rounded-2xl bg-black px-6 py-1"
+                    className="rounded-2xl bg-green-500 px-6 py-1 text-black  hover:bg-hackingtime hover:text-green-500"
                 >
-                    hack
+                    {`C:\\\\> Hack`}
                 </button>
             </div>
         </div>
