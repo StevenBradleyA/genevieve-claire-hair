@@ -184,49 +184,14 @@ export default function CreateBooking({
             setDate(undefined);
             mutate(data);
 
-            const daysOfWeek: string[] = [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-            ];
-            const monthsOfYear: string[] = [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-            ];
-
-            const dayOfWeek: string | undefined =
-                daysOfWeek[startDate?.getDay()];
-            const month: string | undefined =
-                monthsOfYear[startDate?.getMonth()];
-            const day: number = startDate.getDate();
-            const year: number = startDate.getFullYear();
-
-            let hours: number = startDate.getHours();
-
-            const minutes: number = startDate.getMinutes();
-            const timeFormat: string = hours >= 12 ? "PM" : "AM";
-
-            // Convert hours from 24-hour to 12-hour format
-            hours = hours % 12 || 12;
-
-            const formattedDate = `${hours.toString()}:${
-                (minutes < 10 ? "0" : "") + minutes.toString()
-            } ${timeFormat} ${dayOfWeek || ""} ${month || ""}, ${day} ${year} `;
-            console.log(formattedDate);
+            const formattedDate = startDate.toLocaleString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+            });
 
             if (emailSelect) {
                 const emailData = {
@@ -234,6 +199,7 @@ export default function CreateBooking({
                     firstName: user.firstName,
                     lastName: user.lastName,
                     startDate,
+                    displayDate: formattedDate,
                     type,
                 };
                 sendEmail(emailData);
@@ -249,7 +215,6 @@ export default function CreateBooking({
                     type,
                 };
                 sendText(textData);
-                // console.log("send text");
             }
         } else {
             throw new Error("Hot Toast Incoming!!!");

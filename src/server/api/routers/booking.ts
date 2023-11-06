@@ -117,11 +117,19 @@ export const bookingRouter = createTRPCRouter({
                 firstName: z.string(),
                 lastName: z.string(),
                 startDate: z.date(),
+                displayDate: z.string(),
                 type: z.string(),
             })
         )
         .mutation(async ({ input }) => {
-            const { userEmail, firstName, lastName, type, startDate } = input;
+            const {
+                userEmail,
+                firstName,
+                lastName,
+                type,
+                startDate,
+                displayDate,
+            } = input;
             try {
                 const data = await resend.emails.send({
                     from: "GenevieveClareHair <onboarding@resend.dev>",
@@ -131,6 +139,7 @@ export const bookingRouter = createTRPCRouter({
                         firstName,
                         lastName,
                         startDate,
+                        displayDate,
                         type,
                     }),
                 });
