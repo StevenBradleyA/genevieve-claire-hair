@@ -196,14 +196,14 @@ export default function CreateBooking({
             }
 
             if (textSelect) {
-                // const textData = {
-                //     phoneNumber: user.phoneNumber,
-                //     firstName: user.firstName,
-                //     lastName: user.lastName,
-                //     startDate,
-                //     type,
-                // };
-                // sendText(textData);
+                const textData = {
+                    phoneNumber: `+1${user.phoneNumber}`,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    startDate,
+                    type,
+                };
+                sendText(textData);
                 console.log("send text");
             }
         } else {
@@ -244,18 +244,18 @@ export default function CreateBooking({
             },
         }
     );
-    // const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
-    //     onSuccess: () => {
-    //         toast.success("Text Sent!", {
-    //             icon: "👏",
-    //             style: {
-    //                 borderRadius: "10px",
-    //                 background: "#333",
-    //                 color: "#fff",
-    //             },
-    //         });
-    //     },
-    // });
+    const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
+        onSuccess: () => {
+            toast.success("Text Sent!", {
+                icon: "👏",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
+        },
+    });
 
     if (!futureBookings || !schedule || !timeOff)
         return (
