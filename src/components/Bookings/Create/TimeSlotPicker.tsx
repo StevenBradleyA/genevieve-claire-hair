@@ -145,7 +145,7 @@ export default function TimeSlotPicker({
             );
         });
 
-        console.log(renderTimes);
+        // console.log(renderTimes);
 
         if (!renderTimes.some((time) => time))
             renderTimes = <div className="m-auto">No available time slots</div>;

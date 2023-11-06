@@ -12,7 +12,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const twilioSid = process.env.TWILIO_SID_KEY;
 const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
-const twilioService = process.env.TWILIO_SERVICE;
+// const twilioService = process.env.TWILIO_SERVICE;
 
 // const twilioClient = require("twilio")(twilioSid, twilioAuth);
 const twilioClient = new Twilio(twilioSid, twilioAuth);
@@ -148,22 +148,30 @@ export const bookingRouter = createTRPCRouter({
                 firstName: z.string(),
                 lastName: z.string(),
                 startDate: z.date(),
+                displayDate: z.string(),
                 type: z.string(),
             })
         )
         .mutation(async ({ input }) => {
-            const { phoneNumber, firstName, lastName, type, startDate } = input;
+            const {
+                phoneNumber,
+                firstName,
+                lastName,
+                type,
+                startDate,
+                displayDate,
+            } = input;
             // may want to refactor to a toll free number when site is live?
             // also need startdate logic for reminders so we are effectively going to send three texts to the api if the date is far enough in advance
             // route working with messaging servive but we arent us compliant so it won't send
-            
+            // add exact time
+            // need to setup reminder logic to send 3 texts
 
             try {
                 const message = await twilioClient.messages.create({
-                    body: `Hello ${firstName} ${lastName}, your ${type} appointment on ${startDate.toDateString()} is confirmed. Thank you!`,
-                    messagingServiceSid: twilioService,
+                    body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
                     to: phoneNumber,
-                    from: '+18447346903'
+                    from: "+18447346903",
                 });
 
                 return message;
