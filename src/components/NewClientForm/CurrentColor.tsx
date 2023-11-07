@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
 import { useMobile } from "../MobileContext";
 
-const defaultState = {
+type InputNames =
+    | "blackBrown"
+    | "brown"
+    | "lightBrownDarkBlonde"
+    | "blonde"
+    | "grayWhite"
+    | "other";
+
+type CurrentColorType = { [key in InputNames]: boolean } & { input: string };
+
+const defaultState: CurrentColorType = {
     blackBrown: false,
     brown: false,
     lightBrownDarkBlonde: false,
@@ -11,41 +21,54 @@ const defaultState = {
     input: "",
 };
 
-type InputNames =
-    | "blackBrown"
-    | "brown"
-    | "lightBrownDarkBlonde"
-    | "blonde"
-    | "grayWhite"
-    | "other";
-
 interface FirstTimeClientProps {
     setNotes: (notes: string) => void;
+    setReady: (ready: boolean) => void;
 }
 
-export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
+export default function CurrentColor({
+    setNotes,
+    setReady,
+}: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
     const { isMobile } = useMobile();
 
     useEffect(() => {
-        const selectedOptions = Object.keys(formData).filter(
-            (key) => formData[key as keyof typeof formData] && key !== "input"
-        );
+        const history = localStorage.getItem("ColorHistory");
 
-        if (formData.other && formData.input.trim() !== "") {
-            selectedOptions.push(`${formData.input}`);
+        if (history) {
+            const savedSelections = JSON.parse(history) as CurrentColorType;
+
+            setFormData(savedSelections);
         }
+    }, []);
 
-        const updatedNotes = `Current Hair Color: ${selectedOptions.join(
-            ": "
-        )}`;
-        setNotes(updatedNotes);
-    }, [formData, setNotes]);
+    useEffect(() => {
+        if (formData.other) {
+            if (formData.input.trim() !== "") {
+                setNotes(`Current Hair Color: ${formData.input.trim()}`);
+                setReady(true);
+            } else setReady(false);
+        } else {
+            const selected = Object.keys(formData).find(
+                (key) => key !== "input" && formData[key as InputNames]
+            );
+
+            if (selected) {
+                setNotes(`Current Hair Color: ${selected}`);
+                setReady(true);
+            } else {
+                setReady(false);
+            }
+        }
+    }, [formData, setNotes, setReady]);
 
     const setInput = (input: string) => {
         const newData = { ...formData };
 
         newData.input = input;
+
+        localStorage.setItem("ColorHistory", JSON.stringify(newData));
 
         setFormData(newData);
     };
@@ -54,6 +77,8 @@ export default function CurrentColor({ setNotes }: FirstTimeClientProps) {
         const newData = { ...defaultState };
 
         newData[input] = true;
+
+        localStorage.setItem("ColorHistory", JSON.stringify(newData));
 
         setFormData(newData);
     };
