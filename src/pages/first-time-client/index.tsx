@@ -18,6 +18,7 @@ export default function FirstTimeClient() {
     const [currentColorNotes, setCurrentColorNotes] = useState<string>("");
     const [timeNotes, setTimeNotes] = useState<string>("");
     const [extraNotes, setExtraNotes] = useState<string>("");
+    const [ready, setReady] = useState(true);
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -45,11 +46,23 @@ export default function FirstTimeClient() {
     };
 
     const form = [
-        <ServiceOptions key={0} notes={serviceNotes} setNotes={setServiceNotes} />,
-        <ColorHistory key={1} notes={colorHistoryNotes} setNotes={setColorHistoryNotes} />,
-        <ChemHair key={2} notes={chemNotes} setNotes={setChemNotes} />,
-        <CurrentColor key={3} notes={currentColorNotes} setNotes={setCurrentColorNotes} />,
-        <TimeSlots key={4} notes={timeNotes} setNotes={setTimeNotes} />,
+        <ServiceOptions
+            key={0}
+            setReady={setReady}
+            setNotes={setServiceNotes}
+        />,
+        <ColorHistory
+            key={1}
+            setReady={setReady}
+            setNotes={setColorHistoryNotes}
+        />,
+        <ChemHair key={2} setReady={setReady} setNotes={setChemNotes} />,
+        <CurrentColor
+            key={3}
+            setReady={setReady}
+            setNotes={setCurrentColorNotes}
+        />,
+        <TimeSlots key={4} setReady={setReady} setNotes={setTimeNotes} />,
         <ExtraDetails
             key={5}
             extraNotes={extraNotes}
@@ -60,14 +73,6 @@ export default function FirstTimeClient() {
             currentColorNotes={currentColorNotes}
             timeNotes={timeNotes}
         />,
-    ];
-
-    const readyCheck = [
-        serviceNotes,
-        colorHistoryNotes,
-        chemNotes,
-        currentColorNotes,
-        timeNotes,
     ];
 
     return isNew ? (
@@ -93,7 +98,7 @@ export default function FirstTimeClient() {
                         <button
                             onClick={() => changePages(1)}
                             className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
-                            disabled={readyCheck[page].length ? false : true}
+                            disabled={!ready}
                         >
                             Next
                         </button>
