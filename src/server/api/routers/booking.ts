@@ -7,12 +7,13 @@ import {
     publicProcedure,
     protectedProcedure,
 } from "~/server/api/trpc";
+import { env } from "~/env.mjs";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(env.RESEND_API_KEY);
 
-const twilioSid = process.env.TWILIO_SID_KEY;
-const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
-const twilioMessagingService = process.env.TWILIO_MESSAGING_SERVICE;
+const twilioSid = env.TWILIO_SID_KEY;
+const twilioAuth = env.TWILIO_AUTH_TOKEN;
+const twilioMessagingService = env.TWILIO_MESSAGING_SERVICE;
 const twilioClient = new Twilio(twilioSid, twilioAuth);
 
 export const bookingRouter = createTRPCRouter({
