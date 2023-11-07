@@ -31,7 +31,7 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_SECRET: z.string(),
         NEXT_PUBLIC_INSTA_APP_ID: z.string(),
         RESEND_API_KEY: z.string(),
-        NEXT_PUBLIC_POGWORD: z.string(),
+        POGWORD: z.string(),
     },
 
     /**
@@ -48,7 +48,6 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_TOKEN: z.string(),
         NEXT_PUBLIC_INSTA_SECRET: z.string(),
         NEXT_PUBLIC_INSTA_APP_ID: z.string(),
-        NEXT_PUBLIC_POGWORD: z.string(),
     },
 
     /**
@@ -72,7 +71,7 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_SECRET: process.env.NEXT_PUBLIC_INSTA_SECRET,
         NEXT_PUBLIC_INSTA_APP_ID: process.env.NEXT_PUBLIC_INSTA_APP_ID,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
-        NEXT_PUBLIC_POGWORD: process.env.NEXT_PUBLIC_POGWORD,
+        POGWORD: process.env.POGWORD,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
