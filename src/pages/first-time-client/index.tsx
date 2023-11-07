@@ -18,12 +18,11 @@ export default function FirstTimeClient() {
     const [currentColorNotes, setCurrentColorNotes] = useState<string>("");
     const [timeNotes, setTimeNotes] = useState<string>("");
     const [extraNotes, setExtraNotes] = useState<string>("");
+    const [ready, setReady] = useState(true);
     const { data: session } = useSession();
     const router = useRouter();
 
     const isNew = session?.user.isNew;
-
-    // TODO: Check back here once account linking is implemented!
 
     useEffect(() => {
         async function redirectIfNotNew() {
@@ -47,11 +46,23 @@ export default function FirstTimeClient() {
     };
 
     const form = [
-        <ServiceOptions key={0} setNotes={setServiceNotes} />,
-        <ColorHistory key={1} setNotes={setColorHistoryNotes} />,
-        <ChemHair key={2} setNotes={setChemNotes} />,
-        <CurrentColor key={3} setNotes={setCurrentColorNotes} />,
-        <TimeSlots key={4} setNotes={setTimeNotes} />,
+        <ServiceOptions
+            key={0}
+            setReady={setReady}
+            setNotes={setServiceNotes}
+        />,
+        <ColorHistory
+            key={1}
+            setReady={setReady}
+            setNotes={setColorHistoryNotes}
+        />,
+        <ChemHair key={2} setReady={setReady} setNotes={setChemNotes} />,
+        <CurrentColor
+            key={3}
+            setReady={setReady}
+            setNotes={setCurrentColorNotes}
+        />,
+        <TimeSlots key={4} setReady={setReady} setNotes={setTimeNotes} />,
         <ExtraDetails
             key={5}
             extraNotes={extraNotes}
@@ -87,6 +98,7 @@ export default function FirstTimeClient() {
                         <button
                             onClick={() => changePages(1)}
                             className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                            disabled={!ready}
                         >
                             Next
                         </button>
