@@ -248,25 +248,3 @@ export const bookingRouter = createTRPCRouter({
             throw new Error("Invalid userId");
         }),
 });
-
-// try {
-//     const message = await twilioClient.messages.create({
-//         body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
-//         to: phoneNumber,
-//         from: "+18447346903",
-//     });
-
-//     const reminder = await twilioClient.messages.create({
-//         body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
-//         to: phoneNumber,
-//         from: "+18447346903",
-//         sendAt: oneDayBefore,
-//         messagingServiceSid: twilioMessagingService,
-//         scheduleType: "fixed",
-//     });
-
-//     return { message, reminder };
-// } catch (error) {
-//     console.error("Error sending text message:", error);
-//     throw new Error("Text did not send");
-// }
