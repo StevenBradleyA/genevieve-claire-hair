@@ -101,8 +101,8 @@ export default function Home() {
                         height={geni.height}
                         className=" w-full object-cover "
                         style={{ borderBottomLeftRadius: "30px" }}
+                        priority={true}
                     />
-
                     <Link
                         href="/bookings"
                         className="absolute -bottom-40 left-5"
@@ -234,8 +234,8 @@ export default function Home() {
                     alt="geni"
                     width={600}
                     height={600}
-                    className="object-cover"
-                    style={{ borderRadius: "60px" }}
+                    className="object-cover w-auto"
+                    // style={{ borderRadius: "60px" }}
                 />
             </div>
 
