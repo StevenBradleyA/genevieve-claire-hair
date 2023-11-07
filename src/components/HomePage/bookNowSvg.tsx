@@ -7,29 +7,25 @@ export default function BookNowSvg() {
 
     const handleScroll = () => {
         const scrollY = window.scrollY;
-        const maxScroll = 80; // Adjust this value as needed
+        const maxScroll = 80;
         const progress = Math.min(scrollY / maxScroll, 1);
         setScrollProgress(progress);
     };
 
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
     useEffect(() => {
-        // Animate the pathLength property based on scrollProgress
         void controls.start({
             pathLength: scrollProgress,
             opacity: scrollProgress,
         });
     }, [scrollProgress, controls]);
 
-    // const svgStyle = {
-    //     filter: "drop-shadow(0px 0px 10px rgba(211, 123, 242, 0.4))",
-    // };
     return (
         <svg
             width="835"
@@ -37,7 +33,6 @@ export default function BookNowSvg() {
             viewBox="0 0 835 767"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            // style={svgStyle}
             className="w-2/3"
         >
             <motion.path
