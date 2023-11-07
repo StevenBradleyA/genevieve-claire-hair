@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMobile } from "../MobileContext";
 
-const defaultState = {
+type InputNames = "mon" | "tues" | "wed" | "thur" | "fri" | "sat" | "sun";
+
+type TimeSlotType = { [key in InputNames]: boolean } & { time: string };
+
+const defaultState: TimeSlotType = {
     mon: false,
     tues: false,
     wed: false,
@@ -13,18 +17,32 @@ const defaultState = {
 };
 interface FirstTimeClientProps {
     setNotes: (notes: string) => void;
+    setReady: (ready: boolean) => void;
 }
 
-type InputNames = "mon" | "tues" | "wed" | "thur" | "fri" | "sat" | "sun";
-
-export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
+export default function TimeSlots({
+    setNotes,
+    setReady,
+}: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
     const { isMobile } = useMobile();
 
     useEffect(() => {
+        const time = localStorage.getItem("TimeSlots");
+
+        if (time) {
+            const savedSelections = JSON.parse(time) as TimeSlotType;
+
+            setFormData(savedSelections);
+        }
+    }, []);
+
+    useEffect(() => {
         const selectedDays = Object.keys(formData).filter(
-            (key) => formData[key as keyof typeof formData] && key !== "time"
+            (key) => formData[key as InputNames] && key !== "time"
         );
+
+        if (!selectedDays.length || !formData.time) return setReady(false);
 
         const parsedTime = formData.time
             ? new Date(`1970-01-01T${formData.time}`)
@@ -44,13 +62,17 @@ export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
         const updatedNotes = `Most Likely to Book at: ${selectedDays.join(
             ", "
         )}, ${formattedTime}`;
+
         setNotes(updatedNotes);
-    }, [formData, setNotes]);
+        setReady(true);
+    }, [formData, setNotes, setReady]);
 
     const setTime = (input: string) => {
         const newData = { ...formData };
 
         newData.time = input;
+
+        localStorage.setItem("TimeSlots", JSON.stringify(newData));
 
         setFormData(newData);
     };
@@ -59,6 +81,8 @@ export default function TimeSlots({ setNotes }: FirstTimeClientProps) {
         const newData = { ...formData };
 
         newData[input] = !newData[input];
+
+        localStorage.setItem("TimeSlots", JSON.stringify(newData));
 
         setFormData(newData);
     };
