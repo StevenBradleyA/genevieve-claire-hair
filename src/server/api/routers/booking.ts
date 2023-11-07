@@ -168,11 +168,8 @@ export const bookingRouter = createTRPCRouter({
                 startDate,
                 displayDate,
             } = input;
-            // may want to refactor to a toll free number when site is live?
-            // also need startdate logic for reminders so we are effectively going to send three texts to the api if the date is far enough in advance
-            // route working with messaging servive but we arent us compliant so it won't send
-            // add exact time
-            // need to setup reminder logic to send 3 texts
+            // todo may want to send 3 texts instead of two
+            // todo should check the current time and only send out reminders if there is enough time too
             const oneDayBefore = new Date(startDate);
             oneDayBefore.setDate(startDate.getDate() - 1);
 
@@ -189,6 +186,7 @@ export const bookingRouter = createTRPCRouter({
                     from: "+18447346903",
                     sendAt: oneDayBefore,
                     messagingServiceSid: twilioMessagingService,
+                    scheduleType: "fixed",
                 });
 
                 return { message, reminder };
