@@ -59,6 +59,8 @@ export const userRouter = createTRPCRouter({
             const { userId, firstName, lastName, notes, images, phoneNumber } =
                 input;
             if (ctx.session.user.id === userId || ctx.session.user.isAdmin) {
+
+                
                 const updatedUser = await ctx.prisma.user.update({
                     where: { id: ctx.session.user.id },
                     data: {
@@ -95,7 +97,7 @@ export const userRouter = createTRPCRouter({
     grantAdmin: publicProcedure
         .input(z.string())
         .mutation(async ({ input: hashPass, ctx }) => {
-            const correct = await compare(env.NEXT_PUBLIC_POGWORD, hashPass);
+            const correct = await compare(env.POGWORD, hashPass);
 
             if (correct) {
                 const updatedUser = await ctx.prisma.user.update({
