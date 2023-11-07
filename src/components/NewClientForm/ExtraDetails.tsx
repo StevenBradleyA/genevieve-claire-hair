@@ -61,8 +61,6 @@ export default function ExtraDetails({
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [enableErrors, setEnableErrors] = useState<boolean>(false);
 
-    // TODO Hot toast for submission saying ftc form completed!
-
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
             try {
@@ -444,14 +442,19 @@ export default function ExtraDetails({
                     {errors.imageLarge}
                 </p>
             )}
-
             <button
                 onClick={(e) => {
                     e.preventDefault();
                     void submit(e);
                 }}
                 disabled={isSubmitting || hasSubmitted}
-                className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${isSubmitting? "text-slate-300": ""} ${hasSubmitted? "text-slate-300": ""} ${Object.values(errors).length? "text-slate-300": "text-purple-300"}`}
+                className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                    isSubmitting ? "text-slate-300" : ""
+                } ${hasSubmitted ? "text-slate-300" : ""} ${
+                    Object.values(errors).length
+                        ? "text-slate-300"
+                        : "text-purple-300"
+                }`}
             >
                 {isSubmitting ? "Uploading..." : "Submit"}
             </button>
