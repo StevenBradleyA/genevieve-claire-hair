@@ -12,9 +12,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const twilioSid = process.env.TWILIO_SID_KEY;
 const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
-// const twilioService = process.env.TWILIO_SERVICE;
-
-// const twilioClient = require("twilio")(twilioSid, twilioAuth);
+const twilioMessagingService = process.env.TWILIO_MESSAGING_SERVICE;
 const twilioClient = new Twilio(twilioSid, twilioAuth);
 
 export const bookingRouter = createTRPCRouter({
@@ -175,6 +173,8 @@ export const bookingRouter = createTRPCRouter({
             // route working with messaging servive but we arent us compliant so it won't send
             // add exact time
             // need to setup reminder logic to send 3 texts
+            const oneDayBefore = new Date(startDate);
+            oneDayBefore.setDate(startDate.getDate() - 1);
 
             try {
                 const message = await twilioClient.messages.create({
@@ -183,7 +183,15 @@ export const bookingRouter = createTRPCRouter({
                     from: "+18447346903",
                 });
 
-                return message;
+                const reminder = await twilioClient.messages.create({
+                    body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
+                    to: phoneNumber,
+                    from: "+18447346903",
+                    sendAt: oneDayBefore,
+                    messagingServiceSid: twilioMessagingService,
+                });
+
+                return { message, reminder };
             } catch (error) {
                 console.error("Error sending text message:", error);
                 throw new Error("Text did not send");
