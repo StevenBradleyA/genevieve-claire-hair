@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMobile } from "../MobileContext";
 
-const defaultState = {
+type InputNames = "yes" | "no" | "prof" | "home";
+
+type ColorHistoryType = { [key in InputNames]: boolean } & { ago: string };
+
+const defaultState: ColorHistoryType = {
     yes: false,
     no: false,
     ago: "",
@@ -9,15 +13,27 @@ const defaultState = {
     home: false,
 };
 
-type InputNames = "yes" | "no" | "prof" | "home";
-
 interface FirstTimeClientProps {
     setNotes: (notes: string) => void;
+    setReady: (ready: boolean) => void;
 }
 
-export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
+export default function ColorHistory({
+    setNotes,
+    setReady,
+}: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
     const { isMobile } = useMobile();
+
+    useEffect(() => {
+        const history = localStorage.getItem("ColorHistory");
+
+        if (history) {
+            const savedSelections = JSON.parse(history) as ColorHistoryType;
+
+            setFormData(savedSelections);
+        }
+    }, []);
 
     useEffect(() => {
         let newNotes = "Has had color before: ";
@@ -42,10 +58,21 @@ export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
         setNotes(newNotes);
     }, [formData, setNotes]);
 
+    useEffect(() => {
+        const { yes, no, ago, prof, home } = formData;
+
+        if (no) return setReady(true);
+        if (yes && ago && (prof || home)) return setReady(true);
+
+        return setReady(false);
+    }, [formData, setReady]);
+
     const setAgo = (input: string) => {
         const newData = { ...formData };
 
         newData.ago = input;
+
+        localStorage.setItem("ColorHistory", JSON.stringify(newData));
 
         setFormData(newData);
     };
@@ -58,8 +85,11 @@ export default function ColorHistory({ setNotes }: FirstTimeClientProps) {
             input === "yes" ? (newData.no = false) : (newData.yes = false);
         }
 
+        localStorage.setItem("ColorHistory", JSON.stringify(newData));
+
         setFormData(newData);
     };
+
     return isMobile ? (
         <form className="flex flex-col items-center text-xl text-white">
             <div className="flex justify-center text-lg">
