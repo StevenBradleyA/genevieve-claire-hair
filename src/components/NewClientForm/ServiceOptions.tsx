@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useMobile } from "../MobileContext";
 
-const defaultState: { [name: string]: boolean } = {
+type ServiceOptionsType = { [key: string]: boolean };
+
+const defaultState: ServiceOptionsType = {
     haircuts: false,
     color: false,
     vivid: false,
@@ -10,56 +12,50 @@ const defaultState: { [name: string]: boolean } = {
 };
 
 interface FirstTimeClientProps {
-    notes: string;
     setNotes: (notes: string) => void;
+    setReady: (ready: boolean) => void;
 }
 
 export default function ServiceOptions({
-    notes,
     setNotes,
+    setReady,
 }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
     const { isMobile } = useMobile();
+
+    useEffect(() => {
+        const services = localStorage.getItem("ServiceOptions");
+
+        if (services) {
+            const savedSelections = JSON.parse(services) as ServiceOptionsType;
+
+            setFormData(savedSelections);
+        }
+    }, []);
 
     useEffect(() => {
         const selectedOptions = Object.keys(formData).filter(
             (key) => formData[key]
         );
 
-        console.log(selectedOptions);
-
         if (selectedOptions.length) {
             const updatedNotes = `Interested in the following services: ${selectedOptions.join(
                 ", "
             )}`;
             setNotes(updatedNotes);
+            setReady(true);
         } else {
             setNotes("");
+            setReady(false);
         }
-    }, [formData, setNotes]);
-
-    useEffect(() => {
-        if (notes) {
-            const firstSplit = notes.split(
-                "Interested in the following services: "
-            )[1] as string;
-
-            const restoreSelections = firstSplit.split(", ");
-
-            const newFormData = { ...defaultState };
-
-            restoreSelections.forEach((el) => {
-                newFormData[el] = true;
-            });
-
-            setFormData(newFormData);
-        }
-    }, [notes]);
+    }, [formData, setNotes, setReady]);
 
     const toggle = (input: string) => {
         const newData = { ...formData };
 
         newData[input] = !newData[input];
+
+        localStorage.setItem("ServiceOptions", JSON.stringify(newData));
 
         setFormData(newData);
     };
