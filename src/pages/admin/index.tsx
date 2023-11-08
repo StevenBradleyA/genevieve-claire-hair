@@ -30,33 +30,39 @@ const AdminPage: NextPageWithLayout = () => {
     }
 
     return (
-        <div className="flex flex-col items-center text-2xl text-white ">
+        <div className="flex w-2/3 flex-col items-center text-2xl text-white ">
             <div className="flex items-center gap-5">
                 <div className="font-grand-hotel text-8xl">Admin </div>
                 <Image src={logo} alt="logo" width={100} height={100} />
             </div>
 
             {session && session.user && (
-                <div className="w-2/3 rounded-2xl bg-glass p-10 shadow-lg">
-                    <div className="relative mb-1 flex w-full justify-center">
-                        <div className=""> {session.user.firstName} notes</div>
+                <div className="w-full rounded-2xl bg-glass p-10 shadow-lg">
+                    <div className="relative flex w-full justify-center">
+                        <div className=" text-3xl">
+                            {" "}
+                            {session.user.firstName} notes
+                        </div>
                         <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
-                            className="absolute bottom-1 right-0 rounded-xl bg-glass shadow-md"
+                            className="absolute   right-0 rounded-xl bg-glass shadow-md"
                             onClick={openModal}
                         >
                             {displaySvg("adminEdit")}
                         </motion.button>
                     </div>
                     <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                        <EditUserNotes
-                            closeModal={closeModal}
-                        />
+                        <EditUserNotes closeModal={closeModal} />
                     </ModalDialog>
 
-                    <div className="rounded-2xl bg-darkGlass p-5">
-                        {session.user.notes}
+                    <div className="mt-1 w-full rounded-2xl bg-darkGlass p-6 text-xl">
+                        {session.user.notes &&
+                            session.user.notes
+                                .split("\n")
+                                .map((line, index) => (
+                                    <p key={index}>{line}</p>
+                                ))}
                     </div>
                 </div>
             )}
