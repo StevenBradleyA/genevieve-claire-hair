@@ -34,7 +34,7 @@ export default function CurrentColor({
     const { isMobile } = useMobile();
 
     useEffect(() => {
-        const history = localStorage.getItem("ColorHistory");
+        const history = localStorage.getItem("CurrentColor");
 
         if (history) {
             const savedSelections = JSON.parse(history) as CurrentColorType;
@@ -68,7 +68,7 @@ export default function CurrentColor({
 
         newData.input = input;
 
-        localStorage.setItem("ColorHistory", JSON.stringify(newData));
+        localStorage.setItem("CurrentColor", JSON.stringify(newData));
 
         setFormData(newData);
     };
@@ -78,7 +78,7 @@ export default function CurrentColor({
 
         newData[input] = true;
 
-        localStorage.setItem("ColorHistory", JSON.stringify(newData));
+        localStorage.setItem("CurrentColor", JSON.stringify(newData));
 
         setFormData(newData);
     };
