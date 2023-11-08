@@ -11,8 +11,6 @@
 
 /* -------------       Scroll Bar       ------------- */
 
-
-
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -429,6 +427,10 @@ html {
 .custom-checkbox:checked {
     background-color: #d4e9fc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
 }
 
 /* -------------       Bookings       ------------- */

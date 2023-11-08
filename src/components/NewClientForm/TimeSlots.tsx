@@ -180,8 +180,6 @@ export default function TimeSlots({
             <div className="mb-5 flex justify-center text-4xl">
                 What days/times are you most likely to book?
             </div>
-            {/* <div className="w-96 flex justify-center bg-red-200"> */}
-
             <div className="flex w-1/3 flex-col text-3xl">
                 <label className="flex cursor-pointer items-center gap-5">
                     Monday
@@ -255,17 +253,17 @@ export default function TimeSlots({
                 </label>
                 <label className="flex cursor-pointer items-center gap-5">
                     Time
-                    <input
-                        type="time"
-                        name="time"
-                        value={formData.time}
-                        onChange={(e) => setTime(e.target.value)}
-                        className="block rounded-md bg-glass px-4 py-2 text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-300"
-                    ></input>
+                    <div className="w-96">
+                        <input
+                            type="time"
+                            name="time"
+                            value={formData.time}
+                            onChange={(e) => setTime(e.target.value)}
+                            className=" rounded-xl bg-glass px-6 py-2 text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-300"
+                        ></input>
+                    </div>
                 </label>
             </div>
-
-            {/* </div> */}
         </form>
     );
 }
