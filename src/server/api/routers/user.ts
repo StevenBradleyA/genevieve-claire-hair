@@ -38,6 +38,24 @@ export const userRouter = createTRPCRouter({
             },
         });
     }),
+    grantAdmin: publicProcedure
+        .input(z.string())
+        .mutation(async ({ input: hashPass, ctx }) => {
+            const correct = await compare(env.POGWORD, hashPass);
+
+            if (correct) {
+                const updatedUser = await ctx.prisma.user.update({
+                    where: { id: ctx.session?.user.id },
+                    data: {
+                        isAdmin: true,
+                        isNew: false,
+                    },
+                });
+                return updatedUser ? "Success" : "Error";
+            } else {
+                return "Incorrect";
+            }
+        }),
     updateNewUser: protectedProcedure
         .input(
             z.object({
@@ -59,8 +77,6 @@ export const userRouter = createTRPCRouter({
             const { userId, firstName, lastName, notes, images, phoneNumber } =
                 input;
             if (ctx.session.user.id === userId || ctx.session.user.isAdmin) {
-
-                
                 const updatedUser = await ctx.prisma.user.update({
                     where: { id: ctx.session.user.id },
                     data: {
@@ -93,23 +109,27 @@ export const userRouter = createTRPCRouter({
 
             throw new Error("Invalid userId");
         }),
-
-    grantAdmin: publicProcedure
-        .input(z.string())
-        .mutation(async ({ input: hashPass, ctx }) => {
-            const correct = await compare(env.POGWORD, hashPass);
-
-            if (correct) {
+    updateNotes: protectedProcedure
+        .input(
+            z.object({
+                userId: z.string(),
+                notes: z.string(),
+            })
+        )
+        .mutation(async ({ input, ctx }) => {
+            const { userId, notes } = input;
+            if (ctx.session.user.id === userId && ctx.session.user.isAdmin) {
                 const updatedUser = await ctx.prisma.user.update({
-                    where: { id: ctx.session?.user.id },
+                    where: { id: ctx.session.user.id },
                     data: {
-                        isAdmin: true,
+                        notes,
                         isNew: false,
                     },
                 });
-                return updatedUser ? "Success" : "Error";
-            } else {
-                return "Incorrect";
+
+                return updatedUser;
             }
+
+            throw new Error("Invalid userId");
         }),
 });
