@@ -3,7 +3,7 @@ import { useState } from "react";
 import { DotLoader } from "react-spinners";
 import { api } from "~/utils/api";
 import ModalDialog from "~/components/Modal";
-import EditUserNotes from "./updateNotes";
+import EditUser from "./updateUser";
 import ClientBookings from "./ClientBookings";
 import { motion } from "framer-motion";
 import AdminCreateBooking from "../Bookings/AdminCreate";
@@ -79,7 +79,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                 </motion.button>
                 {user && (
                     <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                        <EditUserNotes
+                        <EditUser
                             closeModal={closeModal}
                             user={user}
                             isLoading={isLoading}
