@@ -1,10 +1,9 @@
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { api } from "~/utils/api";
 
 interface UserNotesProps {
     closeModal: () => void;
-    userId: string;
-    userNotes: string;
 }
 
 interface UserData {
@@ -14,26 +13,31 @@ interface UserData {
 
 export default function EditUserNotes({
     closeModal,
-    userId,
-    userNotes,
 }: UserNotesProps) {
     const ctx = api.useContext();
-    const [notes, setNotes] = useState(userNotes);
+    const { data: session, update } = useSession();
+
+    const [notes, setNotes] = useState(session?.user?.notes);
 
     const { mutate } = api.user.updateNotes.useMutation({
-        onSuccess: () => {
-            void ctx.user.getAllUsers.invalidate();
-            void ctx.user.getUserById.invalidate();
-            void ctx.user.invalidate();
-            closeModal();
+        onSuccess: async () => {
+            try {
+                void ctx.user.getAllUsers.invalidate();
+                void ctx.user.getUserById.invalidate();
+                void ctx.user.invalidate();
+                await update();
+                closeModal();
+            } catch (error) {
+                console.error("Error while navigating:", error);
+            }
         },
     });
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (userId && userNotes && notes) {
+        if (session && session.user && notes) {
             const data: UserData = {
-                userId,
+                userId: session.user.id,
                 notes: notes,
             };
             mutate(data);

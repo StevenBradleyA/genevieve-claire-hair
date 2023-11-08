@@ -52,8 +52,6 @@ const AdminPage: NextPageWithLayout = () => {
                     <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
                         <EditUserNotes
                             closeModal={closeModal}
-                            userId={session.user.id}
-                            userNotes={session.user.notes}
                         />
                     </ModalDialog>
 
