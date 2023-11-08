@@ -11,9 +11,7 @@ interface UserData {
     notes: string;
 }
 
-export default function EditUserNotes({
-    closeModal,
-}: UserNotesProps) {
+export default function EditUserNotes({ closeModal }: UserNotesProps) {
     const ctx = api.useContext();
     const { data: session, update } = useSession();
 
@@ -28,7 +26,7 @@ export default function EditUserNotes({
                 await update();
                 closeModal();
             } catch (error) {
-                console.error("Error while navigating:", error);
+                console.error("Error updating user notes:", error);
             }
         },
     });
@@ -56,7 +54,7 @@ export default function EditUserNotes({
                     onClick={submit}
                     className=" rounded-2xl bg-glass p-2 shadow-lg"
                 >
-                    Submit 😊
+                    Submit
                 </button>
             </div>
         </form>

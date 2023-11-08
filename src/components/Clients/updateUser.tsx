@@ -2,6 +2,7 @@ import { DotLoader } from "react-spinners";
 import type { User } from "@prisma/client";
 import React, { useState } from "react";
 import { api } from "~/utils/api";
+import { useSession } from "next-auth/react";
 
 interface UserNotesProps {
     closeModal: () => void;
@@ -23,17 +24,23 @@ export default function EditUser({
     isLoading,
 }: UserNotesProps) {
     const ctx = api.useContext();
+    const { update } = useSession();
     const [notes, setNotes] = useState(user.notes);
     const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber || "");
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
 
     const { mutate } = api.user.updateNewUser.useMutation({
-        onSuccess: () => {
-            void ctx.user.getAllUsers.invalidate();
-            void ctx.user.getUserById.invalidate();
-            void ctx.user.invalidate();
-            closeModal();
+        onSuccess: async () => {
+            try {
+                void ctx.user.getAllUsers.invalidate();
+                void ctx.user.getUserById.invalidate();
+                void ctx.user.invalidate();
+                await update();
+                closeModal();
+            } catch (error) {
+                console.error("Error updating user:", error);
+            }
         },
     });
 
@@ -98,7 +105,7 @@ export default function EditUser({
                     onClick={submit}
                     className=" rounded-2xl bg-glass p-2 shadow-lg"
                 >
-                    Submit 😊
+                    Submit
                 </button>
             </div>
         </form>
