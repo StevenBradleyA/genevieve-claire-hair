@@ -1,5 +1,6 @@
-// import { Input } from "postcss";
+import { compare } from "bcryptjs";
 import { z } from "zod";
+import { env } from "~/env.mjs";
 import {
     createTRPCRouter,
     publicProcedure,
@@ -57,8 +58,9 @@ export const userRouter = createTRPCRouter({
         .mutation(async ({ input, ctx }) => {
             const { userId, firstName, lastName, notes, images, phoneNumber } =
                 input;
-            // TODO allow geni to update any user
-            if (ctx.session.user.id === userId) {
+            if (ctx.session.user.id === userId || ctx.session.user.isAdmin) {
+
+                
                 const updatedUser = await ctx.prisma.user.update({
                     where: { id: ctx.session.user.id },
                     data: {
@@ -92,10 +94,22 @@ export const userRouter = createTRPCRouter({
             throw new Error("Invalid userId");
         }),
 
-    // updateNewUser: protectedProcedure.mutation(({ ctx }) => {
-    //     return ctx.prisma.user.update({
-    //         where: { id: ctx.session.user.id },
-    //         data: { isNew: false },
-    //     });
-    // }),
+    grantAdmin: publicProcedure
+        .input(z.string())
+        .mutation(async ({ input: hashPass, ctx }) => {
+            const correct = await compare(env.POGWORD, hashPass);
+
+            if (correct) {
+                const updatedUser = await ctx.prisma.user.update({
+                    where: { id: ctx.session?.user.id },
+                    data: {
+                        isAdmin: true,
+                        isNew: false,
+                    },
+                });
+                return updatedUser ? "Success" : "Error";
+            } else {
+                return "Incorrect";
+            }
+        }),
 });

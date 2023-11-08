@@ -9,6 +9,25 @@
     font-family: "Grand Hotel", cursive;
 }
 
+/* -------------       Scroll Bar       ------------- */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(67, 67, 67);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4bdfd;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ab98cc;
+}
+
 /* -------------       NavBar       ------------- */
 
 .diagonal-image-container {
@@ -410,6 +429,10 @@ html {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+input[type="time"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
 /* -------------       Bookings       ------------- */
 
 .rdp-day_selected,
@@ -440,6 +463,12 @@ html {
 .handle {
     background-color: white;
     border-radius: 40px;
+}
+
+/* -------------       It's Hacking Time     ------------- */
+
+.matrix-time {
+    z-index: -1;
 }
 
 /* -------------       Booking       ------------- */

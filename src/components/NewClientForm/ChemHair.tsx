@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMobile } from "../MobileContext";
 
-const defaultState = {
+type InputNames = "yes" | "no" | "keratin" | "waves" | "relaxers";
+
+type ChemHairType = { [key in InputNames]: boolean };
+
+const defaultState: ChemHairType = {
     yes: false,
     no: false,
     keratin: false,
@@ -9,25 +13,45 @@ const defaultState = {
     relaxers: false,
 };
 
-type InputNames = "yes" | "no" | "keratin" | "waves" | "relaxers";
-
 interface FirstTimeClientProps {
     setNotes: (notes: string) => void;
+    setReady: (ready: boolean) => void;
 }
 
-export default function ChemHair({ setNotes }: FirstTimeClientProps) {
+export default function ChemHair({ setNotes, setReady }: FirstTimeClientProps) {
     const [formData, setFormData] = useState(defaultState);
     const { isMobile } = useMobile();
+
+    useEffect(() => {
+        const chemicals = localStorage.getItem("ChemHair");
+
+        if (chemicals) {
+            const savedSelections = JSON.parse(chemicals) as ChemHairType;
+
+            setFormData(savedSelections);
+        }
+    }, []);
 
     useEffect(() => {
         const selectedOptions = Object.keys(formData).filter(
             (key) => formData[key as keyof typeof formData]
         );
+
         const updatedNotes = `Has had chemical treatments done to hair: ${selectedOptions.join(
             ", "
         )}`;
+
         setNotes(updatedNotes);
     }, [formData, setNotes]);
+
+    useEffect(() => {
+        const { yes, no, keratin, waves, relaxers } = formData;
+
+        if (no) return setReady(true);
+        if (yes && (keratin || waves || relaxers)) return setReady(true);
+
+        return setReady(false);
+    }, [formData, setReady]);
 
     const toggle = (input: InputNames) => {
         const newData = { ...formData };
@@ -36,6 +60,8 @@ export default function ChemHair({ setNotes }: FirstTimeClientProps) {
         if (newData.no === newData.yes && newData.no !== false) {
             input === "yes" ? (newData.no = false) : (newData.yes = false);
         }
+
+        localStorage.setItem("ChemHair", JSON.stringify(newData));
 
         setFormData(newData);
     };

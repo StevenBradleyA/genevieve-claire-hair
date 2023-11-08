@@ -49,11 +49,11 @@ Zaviar's
 
 <p align="center">
   <a href="https://www.linkedin.com/in/stevenanderson-dev/">
-    <img src="./public/devs/hackerman.png" alt="Steven Anderson" height="100" width="100" />
+    <img src="./public/Devs/hackerman.png" alt="Steven Anderson" height="100" width="100" />
   </a>
                     
   <a href="https://www.linkedin.com/in/caleb-cleghorn-31843b189/">
-    <img src="./public/devs/burgerman.png" alt="Zaviar Brown" height="100" width="100" />
+    <img src="./public/Devs/burgerman.png" alt="Zaviar Brown" height="100" width="100" />
   </a>
 </p>
 

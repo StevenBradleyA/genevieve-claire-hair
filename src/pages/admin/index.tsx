@@ -1,36 +1,34 @@
 import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "../_app";
 import AdminLayout from "./layout";
+import { useSession } from "next-auth/react";
+import Custom404 from "../404";
+import Image from "next/image";
+import logo from "@public/icons/heart.png";
 
 const AdminPage: NextPageWithLayout = () => {
-    // ! square texts her clients with she books them
-    // ! could we do an email confirmation to them? when they book?
     // TODO add admin only viewing or redirect if user is not admin
-    // TODO Going to need services db setup fixed cost optional rate optional
-    // TODO fix new client form so that notes and images are saving for a new client
-    // TODO MAYBE ONLY WANT TO SHOW NON NEWCLIENTS?? This could keep weird google profile names from showing etc...
-    // Want ability to change pricing page
-    // Geni can add stuff to calendar in the booking page probs
+    // todo add simple edit note button here
+    const { data: session } = useSession();
 
-    // maybe a calendar with a view?
+    const accessDenied = !session || !session.user.isAdmin;
 
-    // custom checkout here? custom calculator
-    // product drop down with checkout too.
-    // select service + additional time.
-
-    // would want to be able to close off books here or change calendar availability
-
-    // square checkout implementation
-
-    // list all clients alphabetically with a search
-    // clicking on a client opens a admin/clientId/# that shows clients prev services with date with photos of client and client notes
-
-    // purchase log
-    // sell product through this page????
+    if (accessDenied) {
+        return <Custom404 />;
+    }
 
     return (
-        <div className="text-4xl text-white ">
-            <div> Geni Profile Notes here</div>
+        <div className="flex flex-col items-center text-2xl text-white ">
+            <div className="flex items-center gap-5">
+                <div className="font-grand-hotel text-8xl">Admin </div>
+                <Image src={logo} alt="logo" width={100} height={100} />
+            </div>
+            <div className="w-2/3 rounded-2xl bg-glass p-10 shadow-lg">
+                <div className="text-center"> Geni notes</div>
+                <div className="rounded-2xl bg-darkGlass p-5">
+                    {session?.user?.notes}
+                </div>
+            </div>
         </div>
     );
 };

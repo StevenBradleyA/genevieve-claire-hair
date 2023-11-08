@@ -178,10 +178,20 @@ export default function CreateBooking({
                 endDate: addMinutes(timeSlot ?? date, details.totalTime),
                 type,
                 userId: session.user.id,
+                price: details.totalPrice,
             };
 
             setDate(undefined);
             mutate(data);
+
+            const formattedDate = startDate.toLocaleString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+            });
 
             if (emailSelect) {
                 const emailData = {
@@ -189,21 +199,22 @@ export default function CreateBooking({
                     firstName: user.firstName,
                     lastName: user.lastName,
                     startDate,
+                    displayDate: formattedDate,
                     type,
                 };
                 sendEmail(emailData);
             }
 
             if (textSelect) {
-                // const textData = {
-                //     phoneNumber: user.phoneNumber,
-                //     firstName: user.firstName,
-                //     lastName: user.lastName,
-                //     startDate,
-                //     type,
-                // };
-                // sendText(textData);
-                console.log("send text");
+                const textData = {
+                    phoneNumber: `+1${user.phoneNumber}`,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    displayDate: formattedDate,
+                    startDate,
+                    type,
+                };
+                sendText(textData);
             }
         } else {
             throw new Error("Hot Toast Incoming!!!");
@@ -243,18 +254,18 @@ export default function CreateBooking({
             },
         }
     );
-    // const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
-    //     onSuccess: () => {
-    //         toast.success("Text Sent!", {
-    //             icon: "👏",
-    //             style: {
-    //                 borderRadius: "10px",
-    //                 background: "#333",
-    //                 color: "#fff",
-    //             },
-    //         });
-    //     },
-    // });
+    const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
+        onSuccess: () => {
+            toast.success("Text Sent!", {
+                icon: "👏",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
+        },
+    });
 
     if (!futureBookings || !schedule || !timeOff)
         return (

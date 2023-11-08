@@ -7,7 +7,6 @@ import geniSignature from "../../../public/icons/signature.png";
 import { useState, useEffect } from "react";
 import { useMobile } from "../MobileContext";
 export default function NavBar() {
-    // TODO make admin  admin only
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const { data: sessionData } = useSession();
@@ -26,7 +25,7 @@ export default function NavBar() {
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
 
         return () => {
             window.removeEventListener("scroll", handleScroll);
@@ -95,14 +94,16 @@ export default function NavBar() {
                             Reviews
                         </Link>
 
-                        <Link
-                            href="/admin"
-                            aria-label="Feature"
-                            className="flex justify-center rounded-2xl bg-glass px-6 py-2 shadow-sm"
-                            onClick={toggleMenu}
-                        >
-                            Admin
-                        </Link>
+                        {sessionData?.user && sessionData.user.isAdmin && (
+                            <Link
+                                href="/admin"
+                                aria-label="Feature"
+                                className="flex justify-center rounded-2xl bg-glass px-6 py-2 shadow-sm"
+                                onClick={toggleMenu}
+                            >
+                                Admin
+                            </Link>
+                        )}
                         <div className="flex items-center justify-center rounded-2xl bg-glass px-6 py-2 shadow-sm">
                             <button
                                 aria-label={
@@ -183,12 +184,14 @@ export default function NavBar() {
                         <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
                     </div>
                 </div>
-                <div className="group relative text-3xl text-violet-300">
-                    <Link href="/admin" aria-label="Feature">
-                        Admin
-                    </Link>
-                    <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-violet-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div>
+                {sessionData?.user && sessionData.user.isAdmin && (
+                    <div className="group relative text-3xl text-violet-300">
+                        <Link href="/admin" aria-label="Feature">
+                            Admin
+                        </Link>
+                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-violet-200 transition-transform duration-300 group-hover:scale-x-100"></div>
+                    </div>
+                )}
                 <AuthController />
             </nav>
         </div>

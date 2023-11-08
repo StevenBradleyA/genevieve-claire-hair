@@ -236,33 +236,39 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                 </div>
             </div>
 
-            {session && session.user.id === review.userId && (
-                <div className="flex justify-center gap-5">
-                    <div>
-                        <button
-                            onClick={openModal}
-                            className="justify-center p-3 flex transform rounded-xl bg-glass px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
-                        >
-                            Edit Review
-                        </button>
-                        <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                            <UpdateReview
-                                review={review}
-                                session={session}
-                                closeModal={closeModal}
-                            />
-                        </ModalDialog>
-                    </div>
+            {session &&
+                (session.user.id === review.userId || session.user.isAdmin) && (
+                    <div className="flex justify-center gap-5">
+                        <div>
+                            {session.user.id === review.userId && (
+                                <button
+                                    onClick={openModal}
+                                    className="flex transform justify-center rounded-xl bg-glass p-3 px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                                >
+                                    Edit Review
+                                </button>
+                            )}
+                            <ModalDialog
+                                isOpen={isModalOpen}
+                                onClose={closeModal}
+                            >
+                                <UpdateReview
+                                    review={review}
+                                    session={session}
+                                    closeModal={closeModal}
+                                />
+                            </ModalDialog>
+                        </div>
 
-                    <DeleteReview
-                        id={review.id}
-                        session={session}
-                        showDelete={showDelete}
-                        setShowDelete={setShowDelete}
-                        images={images || []}
-                    />
-                </div>
-            )}
+                        <DeleteReview
+                            id={review.id}
+                            session={session}
+                            showDelete={showDelete}
+                            setShowDelete={setShowDelete}
+                            images={images || []}
+                        />
+                    </div>
+                )}
         </div>
     );
 }

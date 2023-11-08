@@ -30,7 +30,11 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_TOKEN: z.string(),
         NEXT_PUBLIC_INSTA_SECRET: z.string(),
         NEXT_PUBLIC_INSTA_APP_ID: z.string(),
+        TWILIO_AUTH_TOKEN: z.string(),
+        TWILIO_SID_KEY: z.string(),
+        TWILIO_MESSAGING_SERVICE: z.string(),
         RESEND_API_KEY: z.string(),
+        POGWORD: z.string(),
     },
 
     /**
@@ -69,7 +73,11 @@ export const env = createEnv({
         NEXT_PUBLIC_INSTA_TOKEN: process.env.NEXT_PUBLIC_INSTA_TOKEN,
         NEXT_PUBLIC_INSTA_SECRET: process.env.NEXT_PUBLIC_INSTA_SECRET,
         NEXT_PUBLIC_INSTA_APP_ID: process.env.NEXT_PUBLIC_INSTA_APP_ID,
+        TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
+        TWILIO_SID_KEY: process.env.TWILIO_SID_KEY,
+        TWILIO_MESSAGING_SERVICE: process.env.TWILIO_MESSAGING_SERVICE,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
+        POGWORD: process.env.POGWORD,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

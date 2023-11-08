@@ -59,8 +59,7 @@ export default function ExtraDetails({
     const [errors, setErrors] = useState<ErrorsObj>({});
     const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-    // TODO Hot toast for submission saying ftc form completed!
+    const [enableErrors, setEnableErrors] = useState<boolean>(false);
 
     const { mutate } = api.user.updateNewUser.useMutation({
         onSuccess: async () => {
@@ -122,6 +121,7 @@ export default function ExtraDetails({
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setEnableErrors(true);
         if (!Object.values(errors).length && !isSubmitting) {
             try {
                 const sessionUserId = session?.user?.id;
@@ -207,12 +207,12 @@ export default function ExtraDetails({
                     placeholder="Last Name"
                 ></input>
             </div>
-            {errors.firstName && (
+            {enableErrors && errors.firstName && (
                 <p className="create-listing-errors text-xs text-red-500">
                     {errors.firstName}
                 </p>
             )}
-            {errors.lastName && (
+            {enableErrors && errors.lastName && (
                 <p className="create-listing-errors text-xs text-red-500">
                     {errors.lastName}
                 </p>
@@ -349,10 +349,10 @@ export default function ExtraDetails({
                     placeholder="Last Name"
                 ></input>
             </div>
-            {errors.firstName && (
+            {enableErrors && errors.firstName && (
                 <p className="text-xl text-red-400">{errors.firstName}</p>
             )}
-            {errors.lastName && (
+            {enableErrors && errors.lastName && (
                 <p className="text-xl text-red-400">{errors.lastName}</p>
             )}
             <div className="text-center text-4xl">
@@ -368,7 +368,7 @@ export default function ExtraDetails({
                 className=" rounded-md p-3 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
                 placeholder="(999) 999-9999"
             ></input>
-            {errors.phoneNumber && (
+            {enableErrors && errors.phoneNumber && (
                 <p className="text-xl text-red-400">{errors.phoneNumber}</p>
             )}
 
@@ -442,25 +442,16 @@ export default function ExtraDetails({
                     {errors.imageLarge}
                 </p>
             )}
-
             <button
                 onClick={(e) => {
                     e.preventDefault();
                     void submit(e);
                 }}
-                disabled={
-                    (hasSubmitted && Object.values(errors).length > 0) ||
-                    isSubmitting ||
-                    (imageFiles.length > 0 &&
-                        (hasSubmitted || Object.values(errors).length > 0)) ||
-                    (!isSubmitting && (!firstName || !lastName))
-                }
+                disabled={isSubmitting || hasSubmitted}
                 className={`transform rounded-md bg-glass px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
-                    (hasSubmitted && Object.values(errors).length > 0) ||
-                    isSubmitting ||
-                    (imageFiles.length > 0 &&
-                        (hasSubmitted || Object.values(errors).length > 0)) ||
-                    (!isSubmitting && (!firstName || !lastName))
+                    isSubmitting ? "text-slate-300" : ""
+                } ${hasSubmitted ? "text-slate-300" : ""} ${
+                    Object.values(errors).length
                         ? "text-slate-300"
                         : "text-purple-300"
                 }`}

@@ -75,6 +75,7 @@ export default function AdminCreateBooking({
                 endDate: addMinutes(timeSlot ?? date, customTime),
                 type,
                 userId,
+                price: customPrice,
             };
 
             setDate(undefined);
