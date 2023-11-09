@@ -62,9 +62,13 @@ export default function ClientDetails({ userId }: { userId: string }) {
                     ))}
                 </div>
             )}
-            <div className=" mt-3 text-2xl bg-darkGlass px-6 py-2 rounded-2xl ">{user.email}</div>
+            <div className=" mt-3 rounded-2xl bg-darkGlass px-6 py-2 text-2xl ">
+                {user.email}
+            </div>
             {user.phoneNumber !== null && (
-                <div className=" mt-3 text-2xl bg-darkGlass px-6 py-2 rounded-2xl">{user.phoneNumber}</div>
+                <div className=" mt-3 rounded-2xl bg-darkGlass px-6 py-2 text-2xl">
+                    {user.phoneNumber}
+                </div>
             )}
 
             <div className="mt-5 flex gap-5 ">
@@ -109,12 +113,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                 isOpen={isBookingModalOpen}
                 onClose={closeBookingModal}
             >
-                <AdminCreateBooking
-                    userId={user.id}
-                    firstName={user.firstName || ""}
-                    lastName={user.lastName || ""}
-                    user={user}
-                />
+                <AdminCreateBooking user={user} />
             </ModalDialog>
 
             {userId && <ClientBookings userId={userId} />}

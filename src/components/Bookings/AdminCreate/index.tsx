@@ -10,18 +10,10 @@ import { useRouter } from "next/router";
 import type { User } from "@prisma/client";
 
 interface AdminCreateBookingProps {
-    userId: string;
-    firstName: string;
-    lastName: string;
     user: User;
 }
 
-export default function AdminCreateBooking({
-    user,
-    userId,
-    firstName,
-    lastName,
-}: AdminCreateBookingProps) {
+export default function AdminCreateBooking({ user }: AdminCreateBookingProps) {
     // TODO CUSTOM TIME SELECTION -- KEEPS TRACK OF OTHER BOOKINGS BUT DOESNT HAVE SCHEDULE TIME CONSTRAINTS
     // TODO have default service times as well as custom????
     // todo show calendar and normal booking stuffs
@@ -102,7 +94,7 @@ export default function AdminCreateBooking({
                 startDate,
                 endDate: addMinutes(timeSlot ?? date, customTime),
                 type,
-                userId,
+                userId: user.id,
                 price: customPrice,
             };
 

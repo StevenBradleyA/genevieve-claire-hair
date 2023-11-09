@@ -29,17 +29,9 @@ export default function AdminBookingSelectUser({
     return (
         <div>
             {isUserSelected && selectedUser !== null ? (
-                <AdminCreateBooking
-                    closeModal={closeModal}
-                    userId={selectedUser.id}
-                    firstName={selectedUser.firstName || ""}
-                    lastName={selectedUser.lastName || ""}
-                />
+                <AdminCreateBooking user={selectedUser} />
             ) : (
-                <div
-                    className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 text-2xl shadow-xl"
-                    // style={{ height: '300px', overflowY: 'auto' }}
-                >
+                <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 text-2xl shadow-xl">
                     {users.map((user: User, i: number) => (
                         <button
                             className="mb-3 flex rounded-2xl bg-darkGlass px-6 py-2"
