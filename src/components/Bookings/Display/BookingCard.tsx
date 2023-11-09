@@ -39,10 +39,8 @@ export default function BookingCard({ booking }: { booking: Booking }) {
                     color: "#fff",
                 },
             });
-            void ctx.booking.getByUserId.invalidate();
             void ctx.booking.getFuture.invalidate();
             void ctx.booking.getPast.invalidate();
-            void ctx.schedule.getNormalizedDays.invalidate();
             void ctx.schedule.getNormalizedDays.invalidate();
             void ctx.schedule.getAllDays.invalidate();
         },
@@ -218,7 +216,10 @@ export default function BookingCard({ booking }: { booking: Booking }) {
             </div>
             {session && (
                 <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                    <AdminUpdateBooking booking={booking} />
+                    <AdminUpdateBooking
+                        booking={booking}
+                        closeModal={closeModal}
+                    />
                 </ModalDialog>
             )}
         </div>
