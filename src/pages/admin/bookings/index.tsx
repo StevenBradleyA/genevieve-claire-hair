@@ -100,7 +100,6 @@ const AdminViewBookings: NextPageWithLayout = () => {
 
     const { data: session } = useSession();
 
-
     const [isFuture, setIsFuture] = useState<boolean>(false);
     const [date, setDate] = useState<Date>();
     const [timeSlot, setTimeSlot] = useState<Date>();
@@ -159,9 +158,6 @@ const AdminViewBookings: NextPageWithLayout = () => {
         setIsBookingModalOpen(false);
     };
     //    TODO Allow ability to approve pending appointments
-
-
-
 
     const accessDenied = !session || !session.user.isAdmin;
 
