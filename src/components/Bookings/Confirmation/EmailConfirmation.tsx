@@ -33,7 +33,7 @@ export default function EmailConfirmation({
             )}
             {classification === "delete" && (
                 <div>
-                    {`Hi ${firstName} ${lastName}, This is a confirmation that your ${type} appointment with Genevieve at ${displayDate} has been cancelled. If you have any questions please reach out!
+                    {`Hi ${firstName} ${lastName}, This is a confirmation that your ${type} appointment with Genevieve at ${displayDate} has been cancelled. If you have any questions, please reach out!
                     - Geni
                 `}
                 </div>
