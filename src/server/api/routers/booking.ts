@@ -118,6 +118,7 @@ export const bookingRouter = createTRPCRouter({
                 startDate: z.date(),
                 displayDate: z.string(),
                 type: z.string(),
+                classification: z.string(),
             })
         )
         .mutation(async ({ input }) => {
@@ -128,6 +129,7 @@ export const bookingRouter = createTRPCRouter({
                 type,
                 startDate,
                 displayDate,
+                classification,
             } = input;
             try {
                 const data = await resend.emails.send({
@@ -140,6 +142,7 @@ export const bookingRouter = createTRPCRouter({
                         startDate,
                         displayDate,
                         type,
+                        classification,
                     }),
                 });
 
@@ -158,6 +161,7 @@ export const bookingRouter = createTRPCRouter({
                 startDate: z.date(),
                 displayDate: z.string(),
                 type: z.string(),
+                classification: z.string(),
             })
         )
         .mutation(async ({ input }) => {
@@ -168,6 +172,7 @@ export const bookingRouter = createTRPCRouter({
                 type,
                 startDate,
                 displayDate,
+                classification,
             } = input;
             const oneDayBefore = new Date(startDate);
             oneDayBefore.setDate(startDate.getDate() - 1);
