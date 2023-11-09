@@ -9,7 +9,15 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import type { Booking } from "@prisma/client";
 
-export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
+interface AdminUpdateBookingProps {
+    booking: Booking;
+    closeModal: () => void;
+}
+
+export default function AdminUpdateBooking({
+    booking,
+    closeModal,
+}: AdminUpdateBookingProps) {
     // TODO CUSTOM TIME SELECTION -- KEEPS TRACK OF OTHER BOOKINGS BUT DOESNT HAVE SCHEDULE TIME CONSTRAINTS
     // TODO have default service times as well as custom????
 
@@ -17,7 +25,6 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
     // todo error handling for selecting a service
     // todo may want to pass user firstname and lastname so she knows who she is booking for
 
-    const router = useRouter();
     const [selectedServices, setSelectedServices] = useState<string[]>(
         booking.type.split(", ")
     );
@@ -35,9 +42,13 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
     const { data: serviceData } = api.service.getAllNormalized.useQuery();
     const { data: user } = api.user.getUserById.useQuery(booking.userId);
 
-    const { mutate } = api.booking.create.useMutation({
+    const { mutate } = api.booking.update.useMutation({
         onSuccess: () => {
             void ctx.booking.getFuture.invalidate();
+            void ctx.booking.getPast.invalidate();
+            void ctx.schedule.getNormalizedDays.invalidate();
+            void ctx.schedule.getAllDays.invalidate();
+
             toast.success("Booking Updated!", {
                 icon: "👏",
                 style: {
@@ -46,7 +57,7 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
                     color: "#fff",
                 },
             });
-            void router.push("/admin/bookings");
+            closeModal();
         },
     });
     const { mutate: sendEmail } = api.booking.sendEmailConfirmation.useMutation(
@@ -90,6 +101,7 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
             const startDate = timeSlot ?? date;
             const type = selectedServices.join(", ");
             const data = {
+                id: booking.id,
                 startDate,
                 endDate: addMinutes(timeSlot ?? date, customTime),
                 type,
