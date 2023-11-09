@@ -201,6 +201,7 @@ export default function CreateBooking({
                     startDate,
                     displayDate: formattedDate,
                     type,
+                    classification: "create",
                 };
                 sendEmail(emailData);
             }
@@ -213,6 +214,7 @@ export default function CreateBooking({
                     displayDate: formattedDate,
                     startDate,
                     type,
+                    classification: "create",
                 };
                 sendText(textData);
             }

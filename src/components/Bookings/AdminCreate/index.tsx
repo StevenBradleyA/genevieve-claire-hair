@@ -118,6 +118,7 @@ export default function AdminCreateBooking({ user }: AdminCreateBookingProps) {
                     startDate,
                     displayDate: formattedDate,
                     type,
+                    classification: "create",
                 };
                 sendEmail(emailData);
             }
@@ -135,6 +136,7 @@ export default function AdminCreateBooking({ user }: AdminCreateBookingProps) {
                     displayDate: formattedDate,
                     startDate,
                     type,
+                    classification: "create",
                 };
                 sendText(textData);
             }
