@@ -27,10 +27,14 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
     const [originalTime, setOriginalTime] = useState(0);
     const [customPrice, setCustomPrice] = useState(0);
     const [customTime, setCustomTime] = useState(0);
+    const [textSelect, setTextSelect] = useState<boolean>(false);
+    const [emailSelect, setEmailSelect] = useState<boolean>(true);
 
     const ctx = api.useContext();
     const { data: futureBookings } = api.booking.getFuture.useQuery();
     const { data: serviceData } = api.service.getAllNormalized.useQuery();
+    const { data: user } = api.user.getUserById.useQuery(booking.userId);
+
     const { mutate } = api.booking.create.useMutation({
         onSuccess: () => {
             void ctx.booking.getFuture.invalidate();
@@ -43,6 +47,32 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
                 },
             });
             void router.push("/admin/bookings");
+        },
+    });
+    const { mutate: sendEmail } = api.booking.sendEmailConfirmation.useMutation(
+        {
+            onSuccess: () => {
+                toast.success("Email Sent!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
+            },
+        }
+    );
+    const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
+        onSuccess: () => {
+            toast.success("Text Sent!", {
+                icon: "👏",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
         },
     });
 
@@ -69,6 +99,46 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
 
             setDate(undefined);
             mutate(data);
+
+            const formattedDate = startDate.toLocaleString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+            });
+
+            if (emailSelect && user && user.firstName && user.lastName) {
+                const emailData = {
+                    userEmail: user.email as string,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    startDate,
+                    displayDate: formattedDate,
+                    type,
+                    classification: "update",
+                };
+                sendEmail(emailData);
+            }
+            if (
+                textSelect &&
+                user &&
+                user.firstName &&
+                user.lastName &&
+                user.phoneNumber
+            ) {
+                const textData = {
+                    phoneNumber: `+1${user.phoneNumber}`,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    displayDate: formattedDate,
+                    startDate,
+                    type,
+                    classification: "update",
+                };
+                sendText(textData);
+            }
         } else {
             throw new Error("Hot Toast Incoming!!!");
         }
@@ -120,6 +190,11 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
 
     return (
         <div className="flex flex-col items-center justify-center">
+            {user && (
+                <div className="mb-2 text-5xl">
+                    {user.firstName} {user.lastName}
+                </div>
+            )}
             <AdminBookingSelectService
                 selectedServices={selectedServices}
                 setSelectedServices={setSelectedServices}
@@ -144,6 +219,26 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
                     (el) => el.id !== booking.id
                 )}
             />
+            {user && user.phoneNumber !== null && (
+                <div className="my-5 flex gap-5 text-sm">
+                    <button
+                        className={`rounded-lg ${
+                            textSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setTextSelect(!textSelect)}
+                    >
+                        Text Confirmation
+                    </button>
+                    <button
+                        className={`rounded-lg ${
+                            emailSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setEmailSelect(!emailSelect)}
+                    >
+                        Email Confirmation
+                    </button>
+                </div>
+            )}
 
             <button
                 disabled={checkConflicts()}
