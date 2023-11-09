@@ -174,49 +174,99 @@ export const bookingRouter = createTRPCRouter({
                 displayDate,
                 classification,
             } = input;
-            const oneDayBefore = new Date(startDate);
-            oneDayBefore.setDate(startDate.getDate() - 1);
 
-            const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-            const timeDifference = startDate.getTime() - Date.now();
+            let body = "";
 
-            if (timeDifference > oneDayInMilliseconds) {
-                try {
-                    const message = await twilioClient.messages.create({
-                        body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
-                        to: phoneNumber,
-                        from: "+18447346903",
-                    });
-
-                    const reminder = await twilioClient.messages.create({
-                        body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
-                        to: phoneNumber,
-                        from: "+18447346903",
-                        sendAt: oneDayBefore,
-                        messagingServiceSid: twilioMessagingService,
-                        scheduleType: "fixed",
-                    });
-
-                    return { message, reminder };
-                } catch (error) {
-                    console.error("Error sending text message:", error);
-                    throw new Error("Text did not send");
-                }
+            // Determine the body variable based on the classification
+            if (classification === "create") {
+                body = `Hi ${firstName} ${lastName}, This is a confirmation for your ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
+            } else if (classification === "update") {
+                body = `Hi ${firstName} ${lastName}, This is a confirmation for your updated ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
+            } else if (classification === "delete") {
+                body = `Hi ${firstName} ${lastName}, This is a confirmation that your ${type} appointment with Genevieve at ${displayDate} has been cancelled. If you have any questions, please reach out!`;
             } else {
-                try {
-                    const message = await twilioClient.messages.create({
-                        body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
-                        to: phoneNumber,
-                        from: "+18447346903",
-                    });
+                throw new Error("Invalid classification value");
+            }
 
-                    return { message };
-                } catch (error) {
-                    console.error("Error sending text message:", error);
-                    throw new Error("Text did not send");
-                }
+            try {
+                const message = await twilioClient.messages.create({
+                    body: body,
+                    to: phoneNumber,
+                    from: "+18447346903",
+                });
+
+                return { message };
+            } catch (error) {
+                console.error("Error sending text message:", error);
+                throw new Error("Text did not send");
             }
         }),
+    // todo refactor this to node-scheduler
+    // sendTextConfirmation: protectedProcedure
+    // .input(
+    //     z.object({
+    //         phoneNumber: z.string(),
+    //         firstName: z.string(),
+    //         lastName: z.string(),
+    //         startDate: z.date(),
+    //         displayDate: z.string(),
+    //         type: z.string(),
+    //         classification: z.string(),
+    //     })
+    // )
+    // .mutation(async ({ input }) => {
+    //     const {
+    //         phoneNumber,
+    //         firstName,
+    //         lastName,
+    //         type,
+    //         startDate,
+    //         displayDate,
+    //         classification,
+    //     } = input;
+    // const oneDayBefore = new Date(startDate);
+    // oneDayBefore.setDate(startDate.getDate() - 1);
+
+    // const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    // const timeDifference = startDate.getTime() - Date.now();
+
+    // if (timeDifference > oneDayInMilliseconds) {
+    //     try {
+    //         const message = await twilioClient.messages.create({
+    //             body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
+    //             to: phoneNumber,
+    //             from: "+18447346903",
+    //         });
+
+    //         const reminder = await twilioClient.messages.create({
+    //             body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
+    //             to: phoneNumber,
+    //             from: "+18447346903",
+    //             sendAt: oneDayBefore,
+    //             messagingServiceSid: twilioMessagingService,
+    //             scheduleType: "fixed",
+    //         });
+
+    //         return { message, reminder };
+    //     } catch (error) {
+    //         console.error("Error sending text message:", error);
+    //         throw new Error("Text did not send");
+    //     }
+    // } else {
+    // try {
+    //     const message = await twilioClient.messages.create({
+    //         body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
+    //         to: phoneNumber,
+    //         from: "+18447346903",
+    //     });
+
+    //     return { message };
+    // } catch (error) {
+    //     console.error("Error sending text message:", error);
+    //     throw new Error("Text did not send");
+    // }
+    // }
+    // }),
 
     update: protectedProcedure
         .input(
