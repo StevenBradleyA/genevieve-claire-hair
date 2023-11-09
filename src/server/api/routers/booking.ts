@@ -50,6 +50,24 @@ export const bookingRouter = createTRPCRouter({
 
         return bookedArr;
     }),
+    getOneWeekFuture: publicProcedure.query(async ({ ctx }) => {
+        const oneWeekLater = new Date();
+        oneWeekLater.setDate(oneWeekLater.getDate() + 7);
+
+        const bookedArr = await ctx.prisma.booking.findMany({
+            where: {
+                startDate: {
+                    gte: new Date(),
+                    lte: oneWeekLater
+                },
+            },
+            orderBy: {
+                startDate: "asc",
+            },
+        });
+
+        return bookedArr;
+    }),
 
     getByDate: publicProcedure
         .input(z.date().optional())
@@ -182,6 +200,8 @@ export const bookingRouter = createTRPCRouter({
                 body = `Hi ${firstName} ${lastName}, This is a confirmation for your ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
             } else if (classification === "update") {
                 body = `Hi ${firstName} ${lastName}, This is a confirmation for your updated ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
+            } else if (classification === "reminder") {
+                body = `Hi ${firstName} ${lastName}, This is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`;
             } else if (classification === "delete") {
                 body = `Hi ${firstName} ${lastName}, This is a confirmation that your ${type} appointment with Genevieve at ${displayDate} has been cancelled. If you have any questions, please reach out!`;
             } else {
