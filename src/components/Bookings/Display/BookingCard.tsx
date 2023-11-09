@@ -31,7 +31,20 @@ export default function BookingCard({ booking }: { booking: Booking }) {
 
     const { mutate } = api.booking.delete.useMutation({
         onSuccess: () => {
+            toast.success("Booking Deleted!", {
+                icon: "🗑️",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
             void ctx.booking.getByUserId.invalidate();
+            void ctx.booking.getFuture.invalidate();
+            void ctx.booking.getPast.invalidate();
+            void ctx.schedule.getNormalizedDays.invalidate();
+            void ctx.schedule.getNormalizedDays.invalidate();
+            void ctx.schedule.getAllDays.invalidate();
         },
     });
 
