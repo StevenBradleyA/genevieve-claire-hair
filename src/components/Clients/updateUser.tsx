@@ -103,7 +103,7 @@ export default function EditUser({
             <div className="mt-5 flex justify-center">
                 <button
                     onClick={submit}
-                    className=" rounded-2xl bg-glass p-2 shadow-lg"
+                    className=" rounded-2xl bg-glass px-6 py-2 shadow-lg"
                 >
                     Submit
                 </button>

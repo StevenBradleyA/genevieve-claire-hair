@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { api } from "~/utils/api";
+import { motion } from "framer-motion";
 
 interface UserNotesProps {
     closeModal: () => void;
@@ -50,12 +51,14 @@ export default function EditUserNotes({ closeModal }: UserNotesProps) {
                 className=" h-96 w-full rounded-2xl bg-darkGlass p-10 shadow-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
             />
             <div className="mt-5 flex justify-center">
-                <button
+                <motion.button
                     onClick={submit}
-                    className=" rounded-2xl bg-glass p-2 shadow-lg"
+                    className=" rounded-2xl bg-glass px-6 py-2 shadow-lg"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                 >
                     Submit
-                </button>
+                </motion.button>
             </div>
         </form>
     );
