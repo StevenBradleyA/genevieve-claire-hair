@@ -171,7 +171,7 @@ export default function BookingCard({ booking }: { booking: Booking }) {
 
                 {showDelete && (
                     <div className="flex flex-col">
-                        {session && session.user.phoneNumber !== null && (
+                        {user && user.phoneNumber !== null && (
                             <div className="my-5 flex gap-5 text-sm">
                                 <button
                                     className={`rounded-lg ${
