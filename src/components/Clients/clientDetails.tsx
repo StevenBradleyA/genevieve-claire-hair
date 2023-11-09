@@ -113,6 +113,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                     userId={user.id}
                     firstName={user.firstName || ""}
                     lastName={user.lastName || ""}
+                    user={user}
                 />
             </ModalDialog>
 

@@ -7,14 +7,17 @@ import PriceTimeAdjust from "./PriceTimeAdjust";
 import { addMinutes } from "date-fns";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import type { User } from "@prisma/client";
 
 interface AdminCreateBookingProps {
     userId: string;
     firstName: string;
     lastName: string;
+    user: User;
 }
 
 export default function AdminCreateBooking({
+    user,
     userId,
     firstName,
     lastName,
@@ -115,7 +118,7 @@ export default function AdminCreateBooking({
                 hour12: true,
             });
 
-            if (emailSelect) {
+            if (emailSelect && user.firstName && user.lastName) {
                 const emailData = {
                     userEmail: user.email as string,
                     firstName: user.firstName,
@@ -127,7 +130,12 @@ export default function AdminCreateBooking({
                 sendEmail(emailData);
             }
 
-            if (textSelect) {
+            if (
+                textSelect &&
+                user.firstName &&
+                user.lastName &&
+                user.phoneNumber
+            ) {
                 const textData = {
                     phoneNumber: `+1${user.phoneNumber}`,
                     firstName: user.firstName,
@@ -189,7 +197,11 @@ export default function AdminCreateBooking({
 
     return (
         <div className="flex flex-col items-center justify-center text-xl">
-            <div className="mb-3 text-5xl">{`${firstName} ${lastName}`} </div>
+            {user && user.firstName && user.lastName && (
+                <div className="mb-3 text-5xl">
+                    {`${user.firstName} ${user.lastName}`}
+                </div>
+            )}
             <AdminBookingSelectService
                 selectedServices={selectedServices}
                 setSelectedServices={setSelectedServices}
@@ -212,26 +224,26 @@ export default function AdminCreateBooking({
                 totalTime={customTime}
                 bookedDates={futureBookings}
             />
-            {/* {session?.user.phoneNumber !== null && (
-                    <div className="my-5 flex gap-5 text-sm">
-                        <button
-                            className={`rounded-lg ${
-                                textSelect ? "bg-violet-300" : "bg-darkGlass"
-                            } px-4 py-2 `}
-                            onClick={() => setTextSelect(!textSelect)}
-                        >
-                            Text Confirmation
-                        </button>
-                        <button
-                            className={`rounded-lg ${
-                                emailSelect ? "bg-violet-300" : "bg-darkGlass"
-                            } px-4 py-2 `}
-                            onClick={() => setEmailSelect(!emailSelect)}
-                        >
-                            Email Confirmation
-                        </button>
-                    </div>
-                )} */}
+            {user.phoneNumber !== null && (
+                <div className="my-5 flex gap-5 text-sm">
+                    <button
+                        className={`rounded-lg ${
+                            textSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setTextSelect(!textSelect)}
+                    >
+                        Text Confirmation
+                    </button>
+                    <button
+                        className={`rounded-lg ${
+                            emailSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setEmailSelect(!emailSelect)}
+                    >
+                        Email Confirmation
+                    </button>
+                </div>
+            )}
             <button
                 disabled={checkConflicts()}
                 className="mt-4 rounded-lg bg-violet-300 px-4 py-2 transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"
