@@ -50,15 +50,20 @@ export const bookingRouter = createTRPCRouter({
 
         return bookedArr;
     }),
-    getOneWeekFuture: publicProcedure.query(async ({ ctx }) => {
+    getReminderTextBookings: publicProcedure.query(async ({ ctx }) => {
         const oneWeekLater = new Date();
         oneWeekLater.setDate(oneWeekLater.getDate() + 7);
 
-        const bookedArr = await ctx.prisma.booking.findMany({
+        const upcomingBookings = await ctx.prisma.booking.findMany({
             where: {
                 startDate: {
                     gte: new Date(),
-                    lte: oneWeekLater
+                    lte: oneWeekLater,
+                },
+                user: {
+                    phoneNumber: {
+                        not: null,
+                    },
                 },
             },
             orderBy: {
@@ -66,7 +71,7 @@ export const bookingRouter = createTRPCRouter({
             },
         });
 
-        return bookedArr;
+        return upcomingBookings;
     }),
 
     getByDate: publicProcedure
@@ -200,8 +205,6 @@ export const bookingRouter = createTRPCRouter({
                 body = `Hi ${firstName} ${lastName}, This is a confirmation for your ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
             } else if (classification === "update") {
                 body = `Hi ${firstName} ${lastName}, This is a confirmation for your updated ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
-            } else if (classification === "reminder") {
-                body = `Hi ${firstName} ${lastName}, This is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`;
             } else if (classification === "delete") {
                 body = `Hi ${firstName} ${lastName}, This is a confirmation that your ${type} appointment with Genevieve at ${displayDate} has been cancelled. If you have any questions, please reach out!`;
             } else {
@@ -221,72 +224,50 @@ export const bookingRouter = createTRPCRouter({
                 throw new Error("Text did not send");
             }
         }),
-    // todo refactor this to node-scheduler
-    // sendTextConfirmation: protectedProcedure
-    // .input(
-    //     z.object({
-    //         phoneNumber: z.string(),
-    //         firstName: z.string(),
-    //         lastName: z.string(),
-    //         startDate: z.date(),
-    //         displayDate: z.string(),
-    //         type: z.string(),
-    //         classification: z.string(),
-    //     })
-    // )
-    // .mutation(async ({ input }) => {
-    //     const {
-    //         phoneNumber,
-    //         firstName,
-    //         lastName,
-    //         type,
-    //         startDate,
-    //         displayDate,
-    //         classification,
-    //     } = input;
-    // const oneDayBefore = new Date(startDate);
-    // oneDayBefore.setDate(startDate.getDate() - 1);
+    sendTextReminder: protectedProcedure
+        .input(
+            z.object({
+                phoneNumber: z.string(),
+                firstName: z.string(),
+                lastName: z.string(),
+                startDate: z.date(),
+                displayDate: z.string(),
+                type: z.string(),
+            })
+        )
+        .mutation(async ({ input }) => {
+            const {
+                phoneNumber,
+                firstName,
+                lastName,
+                type,
+                startDate,
+                displayDate,
+            } = input;
+            const oneDayBefore = new Date(startDate);
+            oneDayBefore.setDate(startDate.getDate() - 1);
 
-    // const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-    // const timeDifference = startDate.getTime() - Date.now();
+            const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+            const timeDifference = startDate.getTime() - Date.now();
 
-    // if (timeDifference > oneDayInMilliseconds) {
-    //     try {
-    //         const message = await twilioClient.messages.create({
-    //             body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
-    //             to: phoneNumber,
-    //             from: "+18447346903",
-    //         });
+            if (timeDifference > oneDayInMilliseconds) {
+                try {
+                    const reminder = await twilioClient.messages.create({
+                        body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
+                        to: phoneNumber,
+                        from: "+18447346903",
+                        sendAt: oneDayBefore,
+                        messagingServiceSid: twilioMessagingService,
+                        scheduleType: "fixed",
+                    });
 
-    //         const reminder = await twilioClient.messages.create({
-    //             body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
-    //             to: phoneNumber,
-    //             from: "+18447346903",
-    //             sendAt: oneDayBefore,
-    //             messagingServiceSid: twilioMessagingService,
-    //             scheduleType: "fixed",
-    //         });
-
-    //         return { message, reminder };
-    //     } catch (error) {
-    //         console.error("Error sending text message:", error);
-    //         throw new Error("Text did not send");
-    //     }
-    // } else {
-    // try {
-    //     const message = await twilioClient.messages.create({
-    //         body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
-    //         to: phoneNumber,
-    //         from: "+18447346903",
-    //     });
-
-    //     return { message };
-    // } catch (error) {
-    //     console.error("Error sending text message:", error);
-    //     throw new Error("Text did not send");
-    // }
-    // }
-    // }),
+                    return reminder;
+                } catch (error) {
+                    console.error("Error sending text message:", error);
+                    throw new Error("Text did not send");
+                }
+            }
+        }),
 
     update: protectedProcedure
         .input(

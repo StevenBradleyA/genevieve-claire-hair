@@ -8,7 +8,7 @@ import Image from "next/image";
 import logo from "@public/icons/heart.png";
 import { motion } from "framer-motion";
 import ModalDialog from "~/components/Modal";
-import EditUserNotes from "~/components/Clients/updatenotes";
+import EditUserNotes from "~/components/Clients/updateNotes";
 
 const AdminPage: NextPageWithLayout = () => {
     const { data: session } = useSession();
