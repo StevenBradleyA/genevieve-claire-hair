@@ -1,21 +1,34 @@
 // npm install node-schedule
 // npm install --save-dev @types/node-schedule
-
 import * as schedule from "node-schedule";
-import { bookingRouter } from "./routers/booking";
-import { appRouter } from "./root";
-import { api } from "~/utils/api";
 import { prisma } from "../db";
+import { Twilio } from "twilio";
+import { env } from "~/env.mjs";
+
+const twilioSid = env.TWILIO_SID_KEY;
+const twilioAuth = env.TWILIO_AUTH_TOKEN;
+const twilioMessagingService = env.TWILIO_MESSAGING_SERVICE;
+const twilioClient = new Twilio(twilioSid, twilioAuth);
+
+const reminderJob = schedule.scheduleJob(
+    { hour: 6, minute: 0, dayOfWeek: 0 },
+    async () => {
+        try {
+            await scheduleReminders();
+            console.log("Reminder job completed successfully");
+        } catch (error) {
+            console.error("Error in reminder job:", error);
+        }
+    }
+);
+
+console.log("Reminder job scheduled:", reminderJob.name);
 
 const scheduleReminders = async () => {
-    // todo for each booking we need to query for the user first
-    // then using that info call the tRPC route for a reminder classification
-    // going to need a new tRPC route for reminder texts with a sendAt tho
-
     const oneWeekLater = new Date();
     oneWeekLater.setDate(oneWeekLater.getDate() + 7);
 
-    const upcomingBookings = prisma.booking.findMany({
+    const upcomingBookings = await prisma.booking.findMany({
         where: {
             startDate: {
                 gte: new Date(),
@@ -30,37 +43,60 @@ const scheduleReminders = async () => {
         orderBy: {
             startDate: "asc",
         },
+        include: {
+            user: {
+                select: {
+                    phoneNumber: true,
+                    firstName: true,
+                    lastName: true,
+                },
+            },
+        },
     });
 
-    // for (const booking of upcomingBookings) {
-    //     const {
-    //         phoneNumber,
-    //         firstName,
-    //         lastName,
-    //         type,
-    //         startDate,
-    //         displayDate,
-    //     } = booking;
+    for (const booking of upcomingBookings) {
+        const {
+            user: { phoneNumber, firstName, lastName },
+            type,
+            startDate,
+        } = booking;
 
-    //     const oneDayBefore = new Date(startDate);
-    //     oneDayBefore.setDate(startDate.getDate() - 1);
+        const displayDate = startDate.toLocaleString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+        });
 
-    //     const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+        const oneDayBefore = new Date(startDate);
+        oneDayBefore.setDate(startDate.getDate() - 1);
 
-    //     try {
-    //         const reminder = await twilioClient.messages.create({
-    //             body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
-    //             to: phoneNumber,
-    //             from: "+18447346903",
-    //             sendAt: oneDayBefore,
-    //             messagingServiceSid: twilioMessagingService,
-    //             scheduleType: "fixed",
-    //         });
+        const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+        const timeDifference = startDate.getTime() - Date.now();
 
-    //         console.log("Reminder sent:", reminder);
-    //     } catch (error) {
-    //         console.error("Error sending text message:", error);
-    //         throw new Error("Text did not send");
-    //     }
-    // }
+        if (
+            firstName &&
+            lastName &&
+            phoneNumber &&
+            timeDifference > oneDayInMilliseconds
+        ) {
+            try {
+                const reminder = await twilioClient.messages.create({
+                    body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
+                    to: phoneNumber,
+                    from: "+18447346903",
+                    sendAt: oneDayBefore,
+                    messagingServiceSid: twilioMessagingService,
+                    scheduleType: "fixed",
+                });
+
+                console.log("Reminder sent:", reminder);
+            } catch (error) {
+                console.error("Error sending text message:", error);
+                throw new Error("Text did not send");
+            }
+        }
+    }
 };
