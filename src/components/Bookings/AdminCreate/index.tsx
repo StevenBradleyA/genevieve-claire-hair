@@ -7,26 +7,17 @@ import PriceTimeAdjust from "./PriceTimeAdjust";
 import { addMinutes } from "date-fns";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import type { User } from "@prisma/client";
 
 interface AdminCreateBookingProps {
-    closeModal: () => void;
-    userId: string;
-    firstName: string;
-    lastName: string;
+    user: User;
 }
 
-export default function AdminCreateBooking({
-    // closeModal,
-    userId,
-    firstName,
-    lastName,
-}: AdminCreateBookingProps) {
+export default function AdminCreateBooking({ user }: AdminCreateBookingProps) {
     // TODO CUSTOM TIME SELECTION -- KEEPS TRACK OF OTHER BOOKINGS BUT DOESNT HAVE SCHEDULE TIME CONSTRAINTS
     // TODO have default service times as well as custom????
-
     // todo show calendar and normal booking stuffs
     // todo error handling for selecting a service
-    // todo may want to pass user firstname and lastname so she knows who she is booking for
 
     const router = useRouter();
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -36,6 +27,8 @@ export default function AdminCreateBooking({
     const [originalTime, setOriginalTime] = useState(0);
     const [customPrice, setCustomPrice] = useState(0);
     const [customTime, setCustomTime] = useState(0);
+    const [textSelect, setTextSelect] = useState<boolean>(false);
+    const [emailSelect, setEmailSelect] = useState<boolean>(true);
 
     const ctx = api.useContext();
     const { data: futureBookings } = api.booking.getFuture.useQuery();
@@ -57,6 +50,33 @@ export default function AdminCreateBooking({
         },
     });
 
+    const { mutate: sendEmail } = api.booking.sendEmailConfirmation.useMutation(
+        {
+            onSuccess: () => {
+                toast.success("Email Sent!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
+            },
+        }
+    );
+    const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
+        onSuccess: () => {
+            toast.success("Text Sent!", {
+                icon: "👏",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
+        },
+    });
+
     const checkConflicts = () => {
         if (!date) return true;
         if (!timeSlot) return true;
@@ -74,12 +94,52 @@ export default function AdminCreateBooking({
                 startDate,
                 endDate: addMinutes(timeSlot ?? date, customTime),
                 type,
-                userId,
+                userId: user.id,
                 price: customPrice,
             };
 
             setDate(undefined);
             mutate(data);
+
+            const formattedDate = startDate.toLocaleString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+            });
+
+            if (emailSelect && user.firstName && user.lastName) {
+                const emailData = {
+                    userEmail: user.email as string,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    startDate,
+                    displayDate: formattedDate,
+                    type,
+                    classification: "create",
+                };
+                sendEmail(emailData);
+            }
+
+            if (
+                textSelect &&
+                user.firstName &&
+                user.lastName &&
+                user.phoneNumber
+            ) {
+                const textData = {
+                    phoneNumber: `+1${user.phoneNumber}`,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    displayDate: formattedDate,
+                    startDate,
+                    type,
+                    classification: "create",
+                };
+                sendText(textData);
+            }
         } else {
             throw new Error("Hot Toast Incoming!!!");
         }
@@ -130,8 +190,12 @@ export default function AdminCreateBooking({
         );
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            <div className="mb-3 text-5xl">{`${firstName} ${lastName}`} </div>
+        <div className="flex flex-col items-center justify-center text-xl">
+            {user && user.firstName && user.lastName && (
+                <div className="mb-3 text-5xl">
+                    {`${user.firstName} ${user.lastName}`}
+                </div>
+            )}
             <AdminBookingSelectService
                 selectedServices={selectedServices}
                 setSelectedServices={setSelectedServices}
@@ -154,7 +218,26 @@ export default function AdminCreateBooking({
                 totalTime={customTime}
                 bookedDates={futureBookings}
             />
-
+            {user.phoneNumber !== null && (
+                <div className="my-5 flex gap-5 text-sm">
+                    <button
+                        className={`rounded-lg ${
+                            textSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setTextSelect(!textSelect)}
+                    >
+                        Text Confirmation
+                    </button>
+                    <button
+                        className={`rounded-lg ${
+                            emailSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setEmailSelect(!emailSelect)}
+                    >
+                        Email Confirmation
+                    </button>
+                </div>
+            )}
             <button
                 disabled={checkConflicts()}
                 className="mt-4 rounded-lg bg-violet-300 px-4 py-2 transition-all duration-200 enabled:hover:scale-105 enabled:hover:bg-violet-300 disabled:bg-violet-200 disabled:text-slate-200"

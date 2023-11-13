@@ -9,7 +9,15 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import type { Booking } from "@prisma/client";
 
-export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
+interface AdminUpdateBookingProps {
+    booking: Booking;
+    closeModal: () => void;
+}
+
+export default function AdminUpdateBooking({
+    booking,
+    closeModal,
+}: AdminUpdateBookingProps) {
     // TODO CUSTOM TIME SELECTION -- KEEPS TRACK OF OTHER BOOKINGS BUT DOESNT HAVE SCHEDULE TIME CONSTRAINTS
     // TODO have default service times as well as custom????
 
@@ -17,7 +25,6 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
     // todo error handling for selecting a service
     // todo may want to pass user firstname and lastname so she knows who she is booking for
 
-    const router = useRouter();
     const [selectedServices, setSelectedServices] = useState<string[]>(
         booking.type.split(", ")
     );
@@ -27,13 +34,21 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
     const [originalTime, setOriginalTime] = useState(0);
     const [customPrice, setCustomPrice] = useState(0);
     const [customTime, setCustomTime] = useState(0);
+    const [textSelect, setTextSelect] = useState<boolean>(false);
+    const [emailSelect, setEmailSelect] = useState<boolean>(true);
 
     const ctx = api.useContext();
     const { data: futureBookings } = api.booking.getFuture.useQuery();
     const { data: serviceData } = api.service.getAllNormalized.useQuery();
-    const { mutate } = api.booking.create.useMutation({
+    const { data: user } = api.user.getUserById.useQuery(booking.userId);
+
+    const { mutate } = api.booking.update.useMutation({
         onSuccess: () => {
             void ctx.booking.getFuture.invalidate();
+            void ctx.booking.getPast.invalidate();
+            void ctx.schedule.getNormalizedDays.invalidate();
+            void ctx.schedule.getAllDays.invalidate();
+
             toast.success("Booking Updated!", {
                 icon: "👏",
                 style: {
@@ -42,7 +57,33 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
                     color: "#fff",
                 },
             });
-            void router.push("/admin/bookings");
+            closeModal();
+        },
+    });
+    const { mutate: sendEmail } = api.booking.sendEmailConfirmation.useMutation(
+        {
+            onSuccess: () => {
+                toast.success("Email Sent!", {
+                    icon: "👏",
+                    style: {
+                        borderRadius: "10px",
+                        background: "#333",
+                        color: "#fff",
+                    },
+                });
+            },
+        }
+    );
+    const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
+        onSuccess: () => {
+            toast.success("Text Sent!", {
+                icon: "👏",
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff",
+                },
+            });
         },
     });
 
@@ -60,6 +101,7 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
             const startDate = timeSlot ?? date;
             const type = selectedServices.join(", ");
             const data = {
+                id: booking.id,
                 startDate,
                 endDate: addMinutes(timeSlot ?? date, customTime),
                 type,
@@ -69,6 +111,46 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
 
             setDate(undefined);
             mutate(data);
+
+            const formattedDate = startDate.toLocaleString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+            });
+
+            if (emailSelect && user && user.firstName && user.lastName) {
+                const emailData = {
+                    userEmail: user.email as string,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    startDate,
+                    displayDate: formattedDate,
+                    type,
+                    classification: "update",
+                };
+                sendEmail(emailData);
+            }
+            if (
+                textSelect &&
+                user &&
+                user.firstName &&
+                user.lastName &&
+                user.phoneNumber
+            ) {
+                const textData = {
+                    phoneNumber: `+1${user.phoneNumber}`,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    displayDate: formattedDate,
+                    startDate,
+                    type,
+                    classification: "update",
+                };
+                sendText(textData);
+            }
         } else {
             throw new Error("Hot Toast Incoming!!!");
         }
@@ -120,6 +202,11 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
 
     return (
         <div className="flex flex-col items-center justify-center">
+            {user && (
+                <div className="mb-2 text-5xl">
+                    {user.firstName} {user.lastName}
+                </div>
+            )}
             <AdminBookingSelectService
                 selectedServices={selectedServices}
                 setSelectedServices={setSelectedServices}
@@ -144,6 +231,26 @@ export default function AdminUpdateBooking({ booking }: { booking: Booking }) {
                     (el) => el.id !== booking.id
                 )}
             />
+            {user && user.phoneNumber !== null && (
+                <div className="my-5 flex gap-5 text-sm">
+                    <button
+                        className={`rounded-lg ${
+                            textSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setTextSelect(!textSelect)}
+                    >
+                        Text Confirmation
+                    </button>
+                    <button
+                        className={`rounded-lg ${
+                            emailSelect ? "bg-violet-300" : "bg-darkGlass"
+                        } px-4 py-2 `}
+                        onClick={() => setEmailSelect(!emailSelect)}
+                    >
+                        Email Confirmation
+                    </button>
+                </div>
+            )}
 
             <button
                 disabled={checkConflicts()}

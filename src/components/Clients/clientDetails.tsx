@@ -3,10 +3,11 @@ import { useState } from "react";
 import { DotLoader } from "react-spinners";
 import { api } from "~/utils/api";
 import ModalDialog from "~/components/Modal";
-import EditUserNotes from "./updateNotes";
+import EditUser from "./updateUser";
 import ClientBookings from "./ClientBookings";
 import { motion } from "framer-motion";
 import AdminCreateBooking from "../Bookings/AdminCreate";
+import { displaySvg } from "../Svgs";
 
 export default function ClientDetails({ userId }: { userId: string }) {
     const { data: user, isLoading } = api.user.getUserById.useQuery(userId);
@@ -42,7 +43,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
 
     return (
         <div className="flex w-full flex-col items-center rounded-2xl bg-glass p-10 text-5xl text-white shadow-2xl ">
-            <div className=" mb-5 flex gap-5  font-bold">
+            <div className=" mb-5 flex gap-5 text-6xl  font-bold">
                 <div>{user.firstName}</div>
                 <div>{user.lastName}</div>
             </div>
@@ -61,25 +62,28 @@ export default function ClientDetails({ userId }: { userId: string }) {
                     ))}
                 </div>
             )}
-            <div className=" font-bold">Contact</div>
-            <div className=" mt-3 text-2xl">{user.email}</div>
+            <div className=" mt-3 rounded-2xl bg-darkGlass px-6 py-2 text-2xl ">
+                {user.email}
+            </div>
             {user.phoneNumber !== null && (
-                <div className=" mt-3 text-2xl">{user.phoneNumber}</div>
+                <div className=" mt-3 rounded-2xl bg-darkGlass px-6 py-2 text-2xl">
+                    {user.phoneNumber}
+                </div>
             )}
 
-            <div className="mt-5 flex gap-5 font-bold">
+            <div className="mt-5 flex gap-5 ">
                 Notes
                 <motion.button
                     onClick={openModal}
-                    className="rounded-full bg-glass p-2 px-3 text-3xl shadow-sm"
+                    className="rounded-2xl bg-glass p-2 px-3 text-3xl shadow-sm"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                 >
-                    🧐
+                    {displaySvg("adminEdit")}
                 </motion.button>
                 {user && (
                     <ModalDialog isOpen={isModalOpen} onClose={closeModal}>
-                        <EditUserNotes
+                        <EditUser
                             closeModal={closeModal}
                             user={user}
                             isLoading={isLoading}
@@ -109,12 +113,7 @@ export default function ClientDetails({ userId }: { userId: string }) {
                 isOpen={isBookingModalOpen}
                 onClose={closeBookingModal}
             >
-                <AdminCreateBooking
-                    closeModal={closeBookingModal}
-                    userId={user.id}
-                    firstName={user.firstName || ""}
-                    lastName={user.lastName || ""}
-                />
+                <AdminCreateBooking user={user} />
             </ModalDialog>
 
             {userId && <ClientBookings userId={userId} />}

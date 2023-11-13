@@ -4,6 +4,7 @@ interface EmailConfirmationProps {
     startDate: Date;
     displayDate: string;
     type: string;
+    classification: string;
 }
 
 export default function EmailConfirmation({
@@ -12,12 +13,31 @@ export default function EmailConfirmation({
     type,
     startDate,
     displayDate,
+    classification,
 }: EmailConfirmationProps) {
     return (
-        <div>
-            {`Hi ${firstName} ${lastName}, This is an confirmation for your ${type} appointment with Genevieve at ${displayDate}. Thank you for booking! 
-                - Geni
-            `}
-        </div>
+        <>
+            {classification === "create" && (
+                <div>
+                    {`Hi ${firstName} ${lastName}, This is a confirmation for your ${type} appointment with Genevieve at ${displayDate}. Thank you for booking! 
+                    - Geni
+                `}
+                </div>
+            )}
+            {classification === "update" && (
+                <div>
+                    {`Hi ${firstName} ${lastName}, This is a confirmation for your updated ${type} appointment with Genevieve at ${displayDate}. Thank you for booking! 
+                    - Geni
+                `}
+                </div>
+            )}
+            {classification === "delete" && (
+                <div>
+                    {`Hi ${firstName} ${lastName}, This is a confirmation that your ${type} appointment with Genevieve at ${displayDate} has been cancelled. If you have any questions, please reach out!
+                    - Geni
+                `}
+                </div>
+            )}
+        </>
     );
 }

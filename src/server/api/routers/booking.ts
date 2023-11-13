@@ -50,6 +50,29 @@ export const bookingRouter = createTRPCRouter({
 
         return bookedArr;
     }),
+    getReminderTextBookings: publicProcedure.query(async ({ ctx }) => {
+        const oneWeekLater = new Date();
+        oneWeekLater.setDate(oneWeekLater.getDate() + 7);
+
+        const upcomingBookings = await ctx.prisma.booking.findMany({
+            where: {
+                startDate: {
+                    gte: new Date(),
+                    lte: oneWeekLater,
+                },
+                user: {
+                    phoneNumber: {
+                        not: null,
+                    },
+                },
+            },
+            orderBy: {
+                startDate: "asc",
+            },
+        });
+
+        return upcomingBookings;
+    }),
 
     getByDate: publicProcedure
         .input(z.date().optional())
@@ -118,6 +141,7 @@ export const bookingRouter = createTRPCRouter({
                 startDate: z.date(),
                 displayDate: z.string(),
                 type: z.string(),
+                classification: z.string(),
             })
         )
         .mutation(async ({ input }) => {
@@ -128,6 +152,7 @@ export const bookingRouter = createTRPCRouter({
                 type,
                 startDate,
                 displayDate,
+                classification,
             } = input;
             try {
                 const data = await resend.emails.send({
@@ -140,6 +165,7 @@ export const bookingRouter = createTRPCRouter({
                         startDate,
                         displayDate,
                         type,
+                        classification,
                     }),
                 });
 
@@ -150,6 +176,55 @@ export const bookingRouter = createTRPCRouter({
         }),
 
     sendTextConfirmation: protectedProcedure
+        .input(
+            z.object({
+                phoneNumber: z.string(),
+                firstName: z.string(),
+                lastName: z.string(),
+                startDate: z.date(),
+                displayDate: z.string(),
+                type: z.string(),
+                classification: z.string(),
+            })
+        )
+        .mutation(async ({ input }) => {
+            const {
+                phoneNumber,
+                firstName,
+                lastName,
+                type,
+                startDate,
+                displayDate,
+                classification,
+            } = input;
+
+            let body = "";
+
+            // Determine the body variable based on the classification
+            if (classification === "create") {
+                body = `Hi ${firstName} ${lastName}, This is a confirmation for your ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
+            } else if (classification === "update") {
+                body = `Hi ${firstName} ${lastName}, This is a confirmation for your updated ${type} appointment with Genevieve at ${displayDate}. Thank you for booking!`;
+            } else if (classification === "delete") {
+                body = `Hi ${firstName} ${lastName}, This is a confirmation that your ${type} appointment with Genevieve at ${displayDate} has been cancelled. If you have any questions, please reach out!`;
+            } else {
+                throw new Error("Invalid classification value");
+            }
+
+            try {
+                const message = await twilioClient.messages.create({
+                    body: body,
+                    to: phoneNumber,
+                    from: "+18447346903",
+                });
+
+                return { message };
+            } catch (error) {
+                console.error("Error sending text message:", error);
+                throw new Error("Text did not send");
+            }
+        }),
+    sendTextReminder: protectedProcedure
         .input(
             z.object({
                 phoneNumber: z.string(),
@@ -177,12 +252,6 @@ export const bookingRouter = createTRPCRouter({
 
             if (timeDifference > oneDayInMilliseconds) {
                 try {
-                    const message = await twilioClient.messages.create({
-                        body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
-                        to: phoneNumber,
-                        from: "+18447346903",
-                    });
-
                     const reminder = await twilioClient.messages.create({
                         body: `Hello ${firstName} ${lastName}, this is a reminder for your ${type} appointment with Genevieve at ${displayDate}. Thank you!`,
                         to: phoneNumber,
@@ -192,20 +261,7 @@ export const bookingRouter = createTRPCRouter({
                         scheduleType: "fixed",
                     });
 
-                    return { message, reminder };
-                } catch (error) {
-                    console.error("Error sending text message:", error);
-                    throw new Error("Text did not send");
-                }
-            } else {
-                try {
-                    const message = await twilioClient.messages.create({
-                        body: `Hello ${firstName} ${lastName}, your ${type} appointment with Genevieve at ${displayDate} is confirmed. Thank you!`,
-                        to: phoneNumber,
-                        from: "+18447346903",
-                    });
-
-                    return { message };
+                    return reminder;
                 } catch (error) {
                     console.error("Error sending text message:", error);
                     throw new Error("Text did not send");
