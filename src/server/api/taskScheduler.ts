@@ -1,30 +1,17 @@
-// npm install node-schedule
-// npm install --save-dev @types/node-schedule
 import * as schedule from "node-schedule";
 import { prisma } from "../db";
 import { Twilio } from "twilio";
 import { env } from "~/env.mjs";
+// npm install node-schedule
+// npm install --save-dev @types/node-schedule
 
 const twilioSid = env.TWILIO_SID_KEY;
 const twilioAuth = env.TWILIO_AUTH_TOKEN;
 const twilioMessagingService = env.TWILIO_MESSAGING_SERVICE;
 const twilioClient = new Twilio(twilioSid, twilioAuth);
 
-const reminderJob = schedule.scheduleJob(
-    { hour: 6, minute: 0, dayOfWeek: 0 },
-    async () => {
-        try {
-            await scheduleReminders();
-            console.log("Reminder job completed successfully");
-        } catch (error) {
-            console.error("Error in reminder job:", error);
-        }
-    }
-);
-
-console.log("Reminder job scheduled:", reminderJob.name);
-
 const scheduleReminders = async () => {
+    console.log("uhhh hellllooooo");
     const oneWeekLater = new Date();
     oneWeekLater.setDate(oneWeekLater.getDate() + 7);
 
@@ -53,6 +40,7 @@ const scheduleReminders = async () => {
             },
         },
     });
+    console.log("hello upcoming", upcomingBookings);
 
     for (const booking of upcomingBookings) {
         const {
@@ -100,3 +88,14 @@ const scheduleReminders = async () => {
         }
     }
 };
+
+const reminderJob = async () => {
+    try {
+        await scheduleReminders();
+        console.log("Reminder job completed successfully");
+    } catch (error) {
+        console.error("Error in reminder job:", error);
+    }
+};
+
+console.log("Reminder job scheduled:", reminderJob);
