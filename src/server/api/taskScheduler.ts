@@ -1,9 +1,6 @@
-import * as schedule from "node-schedule";
 import { prisma } from "../db";
 import { Twilio } from "twilio";
 import { env } from "~/env.mjs";
-// npm install node-schedule
-// npm install --save-dev @types/node-schedule
 
 const twilioSid = env.TWILIO_SID_KEY;
 const twilioAuth = env.TWILIO_AUTH_TOKEN;
