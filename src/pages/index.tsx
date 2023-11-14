@@ -10,12 +10,15 @@ import Link from "next/link";
 import downArrow from "@public/svgs/angles-down-solid.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
-import { useInView } from "react-intersection-observer";
 import Footer from "~/components/HomePage/footer";
 import "react-day-picker/dist/style.css";
+import { useRouter } from "next/router";
 
 export default function Home() {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const router = useRouter();
+    const isHome = router.asPath === "/";
+
     const images = [lsp1, lsp2, lsp3];
     const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
     const script = useMemo(
@@ -36,13 +39,8 @@ export default function Home() {
         }
     };
 
-    const [ref, inView] = useInView({
-        triggerOnce: true,
-        threshold: 0.5,
-    });
-
     useEffect(() => {
-        if (inView) {
+        if (isHome) {
             const interval = setInterval(() => {
                 setCurrentScriptIndex((prevIndex) =>
                     prevIndex === script.length - 1 ? 0 : prevIndex + 1
@@ -53,7 +51,7 @@ export default function Home() {
                 clearInterval(interval);
             };
         }
-    }, [inView, script]);
+    }, [isHome, script]);
 
     const bounceVariants = {
         initial: { opacity: 1, y: 20, rotate: 0 },
@@ -67,7 +65,7 @@ export default function Home() {
     };
 
     return (
-        <div className=" flex w-full flex-col items-center overflow-x-hidden  text-white">
+        <div className=" flex w-full flex-col overflow-x-hidden text-white">
             <div className="flex w-full justify-between ">
                 <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
                     <div
@@ -184,66 +182,62 @@ export default function Home() {
                 </div>
             </div>
 
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={currentScriptIndex}
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 50 }}
-                    transition={{ duration: 1 }}
-                    className="mt-20 text-8xl"
-                    ref={ref}
-                >
-                    {script[currentScriptIndex]}
-                </motion.div>
-            </AnimatePresence>
+            {isHome && (
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentScriptIndex}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 50 }}
+                        transition={{ duration: 1 }}
+                        className="mt-20 flex justify-center text-8xl"
+                    >
+                        {script[currentScriptIndex]}
+                    </motion.div>
+                </AnimatePresence>
+            )}
 
-            <h1 className="m-20 mt-44 text-8xl">
+            <h1 className="mt-44 flex justify-center text-8xl">
                 hi, im geni and I do hair stuff
             </h1>
-            <div className="mb-32 flex p-10  ">
-                <div className=" mx-40 flex flex-col gap-5 text-4xl">
-                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
-                        Genevieve (Geni) Evanson is a hairstylist based out of
-                        Bellevue, Washington and has been styling hair
-                        professionally since 2017.
-                    </div>
-                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
-                        Whilst she completed cosmetology school in Washington,
-                        she went through specialized training in Dallas, Texas.
-                        After her move back to Washington in 2020, Geni took on
-                        the daunting task of covid color corrections. During
-                        this time, she became an expert at being able to match
-                        the color, style, and flow of ones hair to the person;
-                        not the trends.{" "}
-                    </div>
-                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
-                        Geni has always believed that your hair should be a
-                        reflection of who you are, not always what&apos;s
-                        popular.
-                    </div>
-                    <div className="rounded-3xl bg-darkGlass p-4 shadow-lg">
-                        With extensive experience in carving and sculpting hair
-                        in her cutting techniques, Geni finds great joy in all
-                        things hair.
-                    </div>
+            <div className="mt-20 flex w-full justify-center gap-20 ">
+                <div className="w-1/2 flex-shrink-0 rounded-3xl bg-darkGlass p-10 text-4xl shadow-lg">
+                    Genevieve (Geni) Evanson is a hairstylist based out of
+                    Bellevue, Washington and has been styling hair
+                    professionally since 2017. <br />
+                    <br />
+                    Whilst she completed cosmetology school in Washington, she
+                    went through specialized training in Dallas, Texas. After
+                    her move back to Washington in 2020, Geni took on the
+                    daunting task of covid color corrections. During this time,
+                    she became an expert at being able to match the color,
+                    style, and flow of ones hair to the person; not the trends.
+                    <br />
+                    <br />
+                    Geni has always believed that your hair should be a
+                    reflection of who you are, not always what&apos;s popular.
+                    With extensive experience in carving and sculpting hair in
+                    her cutting techniques, Geni finds great joy in all things
+                    hair.
                 </div>
-
-                <Image
-                    src={holo}
-                    alt="geni"
-                    width={600}
-                    height={600}
-                    className="object-cover w-auto"
-                    // style={{ borderRadius: "60px" }}
-                />
+                <div className="w-1/3 overflow-hidden">
+                    <Image
+                        src={holo}
+                        alt="geni"
+                        width={600}
+                        height={600}
+                        className="rounded-3xl object-cover"
+                    />
+                </div>
             </div>
 
-            <div className="mb-20 flex w-3/4 justify-center px-20">
-                <div className=" text-6xl">
-                    Picture your <span className="text-violet-300">dream</span>{" "}
-                    look, and let Genevieve Clare Hair make that{" "}
-                    <span className="text-violet-300">dream</span> your reality.
+            <div className="my-20 flex w-full justify-center text-6xl">
+                <div className="w-2/3">
+                    Picture your
+                    <span className="text-violet-300">{` dream `}</span>
+                    look, and let Genevieve Clare Hair make that
+                    <span className="text-violet-300">{` dream `}</span> your
+                    reality.
                 </div>
             </div>
             <Footer />
