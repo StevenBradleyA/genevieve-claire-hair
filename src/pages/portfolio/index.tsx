@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { env } from "~/env.mjs";
 import Image from "next/image";
-import instagramLogo from "../../../public/icons/insta.png";
-import blonding from "../../../public/portfolio/blonding.png";
-import vivids from "../../../public/portfolio/vivids.png";
-import slc from "../../../public/portfolio/slc.png";
-import newColorCorrection from "../../../public/portfolio/newCorrection.png";
+import instagramLogo from "@public/icons/insta.png";
+import blonding from "@public/portfolio/blonding.png";
+import vivids from "@public/portfolio/vivids.png";
+import colorCorrection from "@public/Portfolio/colorCorrection.png";
+import slc from "@public/Portfolio/haircut.png";
 
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion } from "framer-motion";
@@ -109,7 +109,7 @@ export default function Portfolio() {
                         <h1>Color Correction</h1>
                     </div>
                     <Image
-                        src={newColorCorrection}
+                        src={colorCorrection}
                         alt="color correction"
                         className="w-auto rounded-2xl"
                     />
@@ -200,7 +200,7 @@ export default function Portfolio() {
                             </h1>
                         </div>
                         <Image
-                            src={newColorCorrection}
+                            src={colorCorrection}
                             alt="color correction"
                             className="w-auto rounded-2xl"
                         />
