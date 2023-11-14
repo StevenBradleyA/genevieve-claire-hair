@@ -8,7 +8,6 @@ const twilioMessagingService = env.TWILIO_MESSAGING_SERVICE;
 const twilioClient = new Twilio(twilioSid, twilioAuth);
 
 const scheduleReminders = async () => {
-    console.log("uhhh hellllooooo");
     const oneWeekLater = new Date();
     oneWeekLater.setDate(oneWeekLater.getDate() + 7);
 
@@ -37,7 +36,6 @@ const scheduleReminders = async () => {
             },
         },
     });
-    console.log("hello upcoming", upcomingBookings);
 
     for (const booking of upcomingBookings) {
         const {
@@ -89,7 +87,7 @@ const scheduleReminders = async () => {
 const reminderJob = async () => {
     try {
         await scheduleReminders();
-        console.log("Reminder job completed successfully");
+        console.log("Text Reminders successfully completed");
     } catch (error) {
         console.error("Error in reminder job:", error);
     }
