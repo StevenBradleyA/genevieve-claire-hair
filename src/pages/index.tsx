@@ -10,7 +10,7 @@ import Link from "next/link";
 import downArrow from "@public/svgs/angles-down-solid.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import BookNowSvg from "~/components/HomePage/bookNowSvg";
-import Footer from "~/components/HomePage/footer";
+import Footer from "~/components/Footer/footer";
 import "react-day-picker/dist/style.css";
 import { useRouter } from "next/router";
 

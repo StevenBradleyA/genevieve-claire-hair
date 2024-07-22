@@ -14,6 +14,7 @@ export default {
                 lightPurple: "#E5DFFF",
                 glass: "rgba(255, 255, 255, 0.2)",
                 darkGlass: "rgba(0, 0, 0, 0.05)",
+                darkerGlass: "rgba(0, 0, 0, 0.15)",
                 clear: "rgba(255, 255, 255, 0)",
                 hackingtime: "#222",
             },

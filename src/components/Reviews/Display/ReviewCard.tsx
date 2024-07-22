@@ -107,7 +107,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                             ? review.user.lastName[0]
                                             : ""}
                                     </div>
-                                    <div className="text-image flex gap-1">
+                                    <div className="holo-gradient-text flex gap-1">
                                         {Array(review.starRating).fill("⭐️")}
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                                 ? review.user.lastName[0]
                                                 : ""}
                                         </div>
-                                        <div className="text-image flex gap-1">
+                                        <div className="holo-gradient-text flex gap-1">
                                             {Array(review.starRating).fill(
                                                 "⭐️"
                                             )}

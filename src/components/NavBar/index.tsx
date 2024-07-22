@@ -1,11 +1,17 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import homeLogo from "../../../public/HomePage/home-logo.png";
-import holoColumn from "../../../public/Holographic/holo-column.png";
-import geniSignature from "../../../public/icons/signature.png";
+import homeLogo from "@public/HomePage/home-logo.png";
+import holoColumn from "@public/Holographic/holo-column.png";
+import geniSignature from "@public/icons/signature.png";
+import giraffe from "@public/Logos/giraffe-black.png";
+import homeText from "@public/Logos/home-text.png";
+import homeBackground from "@public/Logos/home-background-whitened.png";
+
 import { useState, useEffect } from "react";
 import { useMobile } from "../MobileContext";
+import { motion } from "framer-motion";
+
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -32,10 +38,12 @@ export default function NavBar() {
         };
     }, []);
 
+    // animation
+
     return isMobile ? (
         <nav
-            className="z-20 mb-10 flex items-center justify-between
-            overflow-auto bg-glass px-5 text-white"
+            className="overflow-a z-20 mb-10 flex items-center
+            justify-between px-5 text-white"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
@@ -124,74 +132,141 @@ export default function NavBar() {
             </div>
         </nav>
     ) : (
-        <div className="sticky -top-5 z-20 p-5">
+        <div className="sticky -top-5 z-20">
             <nav
                 className={` ${
-                    isScrolled ? `bg-darkGlass` : `bg-glass`
-                } rounded-2xlbg-glass mb-5 flex items-center justify-between py-2 text-white shadow-sm`}
+                    isScrolled
+                        ? `bg-darkerGlass text-white`
+                        : `mx-5 bg-white/30 text-purple-300 shadow-sm `
+                } my-5  flex items-center justify-between rounded-xl px-10 py-6 text-2xl `}
                 aria-label="Main Navigation -z-30"
             >
-                <Link href="/" aria-label="Home">
-                    <Image alt="home" src={homeLogo} className="mb-2 w-32" />
-                </Link>
-
-                <div className="mr-16 flex items-center gap-10 text-2xl">
-                    <div className="group relative">
-                        <Link href="/bookings" aria-label="Bookings">
-                            Book Your Appointment
-                        </Link>
-                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                    </div>
-                    <div className="group relative">
-                        <Link href="/portfolio" aria-label="Images">
-                            Portfolio
-                        </Link>
-                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                    </div>
-                    <div className=" flex justify-center sm:w-40 md:w-60 full:w-80">
-                        <Link href="/" aria-label="Home">
-                            <div className="diagonal-image-container">
-                                <div className="holo-column-container -z-10">
-                                    <Image
-                                        alt="holo column graphic"
-                                        src={holoColumn}
-                                        className=" object-cover sm:h-40 sm:w-4 md:h-60 md:w-5 full:h-80 full:w-6"
-                                        priority={true}
-                                    />
-                                </div>
-                                <Image
-                                    src={geniSignature}
-                                    alt="art"
-                                    width={geniSignature.width}
-                                    height={geniSignature.height}
-                                    className=" z-30 object-cover"
-                                    priority={true}
-                                />
-                            </div>
-                        </Link>
-                    </div>
-                    <div className="group relative ">
-                        <Link href="/pricing" aria-label="Pricing">
-                            Pricing
-                        </Link>
-                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                    </div>
-
-                    <div className="group relative ">
-                        <Link href="/reviews" aria-label="Feature">
-                            Reviews
-                        </Link>
-                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-pink-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                    </div>
-                </div>
-                {sessionData?.user && sessionData.user.isAdmin && (
-                    <div className="group relative text-3xl text-violet-300">
-                        <Link href="/admin" aria-label="Feature">
+                {sessionData?.user && sessionData.user.isAdmin ? (
+                    <Link
+                        href="/admin"
+                        aria-label="Feature"
+                        className="relative rounded-2xl bg-white px-4 py-1 hover:opacity-70"
+                    >
+                        <Image
+                            alt="admin logo"
+                            className="image-black-to-purple absolute -right-10 -top-5 h-20 w-20 object-contain"
+                            src={giraffe}
+                        />
+                        <div className="bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-2xl text-transparent  ease-in ">
                             Admin
-                        </Link>
-                        <div className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transform bg-violet-200 transition-transform duration-300 group-hover:scale-x-100"></div>
-                    </div>
+                        </div>
+                    </Link>
+                ) : (
+                    <Link
+                        href="/"
+                        aria-label="Home"
+                        className="ease-in hover:opacity-70"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-14 w-14"
+                            viewBox="0 0 24 24"
+                            version="1.1"
+                        >
+                            <defs>
+                                <linearGradient
+                                    x1="0"
+                                    y1="0"
+                                    x2="100%"
+                                    y2="0"
+                                    id="gradientText"
+                                >
+                                    <stop offset="0%" stop-color="#c7d2fe" />
+                                    <stop offset="50%" stop-color="#f5d0fe" />
+                                    <stop offset="100%" stop-color="#d8b4fe" />
+                                </linearGradient>
+                            </defs>
+                            <g
+                                stroke="none"
+                                strokeWidth="1"
+                                fill="none"
+                                fillRule="evenodd"
+                            >
+                                <g>
+                                    <rect
+                                        id="Rectangle"
+                                        fillRule="nonzero"
+                                        x="0"
+                                        y="0"
+                                        width="24"
+                                        height="24"
+                                    ></rect>
+                                    <path
+                                        d="M5,10 L5,19 C5,19.5523 5.44772,20 6,20 L18,20 C18.5523,20 19,19.5523 19,19 L19,10"
+                                        id="Path"
+                                        stroke="url(#gradientText)"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                    ></path>
+                                    <path
+                                        d="M21,11 L12.307,4.23875 C12.1264,4.09832 11.8736,4.09832 11.693,4.23875 L3,11"
+                                        id="Path"
+                                        stroke="url(#gradientText)"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                    ></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </Link>
                 )}
+
+                <div className=" flex items-center gap-10 ">
+                    <Link
+                        href="/bookings"
+                        aria-label="Bookings"
+                        className="  bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent ease-in  hover:text-purple-300"
+                    >
+                        Book Your Appointment
+                    </Link>
+
+                    <Link
+                        href="/portfolio"
+                        aria-label="Images"
+                        className="  bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent ease-in  hover:text-purple-300"
+                    >
+                        Portfolio
+                    </Link>
+                    <Link
+                        href="/"
+                        aria-label="Home"
+                        className="home-button relative -mt-2 "
+                    >
+                        <Image
+                            alt="home button"
+                            src={homeBackground}
+                            className="h-full w-80 opacity-30 "
+                            priority={true}
+                        />
+                        <Image
+                            alt="home button"
+                            src={homeText}
+                            className="home-button-text  absolute left-0 top-0 h-full w-80"
+                            priority={true}
+                        />
+                    </Link>
+                    <Link
+                        href="/pricing"
+                        aria-label="Pricing"
+                        className="  bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent ease-in  hover:text-purple-300"
+                    >
+                        Pricing
+                    </Link>
+
+                    <Link
+                        href="/reviews"
+                        aria-label="Feature"
+                        className="  bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent ease-in  hover:text-purple-300"
+                    >
+                        Reviews
+                    </Link>
+                </div>
+
                 <AuthController />
             </nav>
         </div>
@@ -201,18 +276,54 @@ export default function NavBar() {
 function AuthController() {
     const { data: sessionData } = useSession();
 
+    const arrowEffects = {
+        initial: { x: 0 },
+        hover: { x: 8 },
+    };
+    const tailEffects = {
+        initial: { opacity: 0 },
+        hover: { opacity: 1 },
+    };
+
     return (
-        <div className=" mr-10 flex flex-col items-center justify-center gap-1 text-white ">
-            <button
+        <div className=" flex flex-col items-center justify-center gap-1 text-lg text-white">
+            <motion.button
                 aria-label={sessionData ? "Sign out" : "Sign in"}
-                className=" mobile:mb-5 mobile:text-3xl sm:mb-0 sm:text-3xl "
+                className=" relative flex items-center rounded-2xl bg-white  py-[6px] pl-4 pr-8 text-purple-300"
                 onClick={
                     sessionData ? () => void signOut() : () => void signIn()
                 }
+                whileHover="hover"
+                initial="initial"
             >
                 {sessionData ? "Sign out" : "Sign in"}
-            </button>
-            <p className=" opacity-70">
+                <motion.svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="absolute right-3 top-[10px] flex h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    variants={arrowEffects}
+                >
+                    <motion.path
+                        d="M9 6L15 12L9 18"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+
+                    <motion.path
+                        d="M16 13H2v-2h13v2z"
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="1"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        variants={tailEffects}
+                    />
+                </motion.svg>
+            </motion.button>
+            <p className="text-white ">
                 {sessionData && <span>Hello {sessionData.user?.name}!</span>}
             </p>
         </div>

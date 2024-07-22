@@ -3,7 +3,7 @@ import DisplayReviews from "~/components/Reviews/Display";
 import { useMobile } from "~/components/MobileContext";
 import ChooseReview from "~/components/Reviews/Create/chooseReview";
 import ScriptButton from "./scriptButton";
-import Footer from "~/components/HomePage/footer";
+import Footer from "~/components/Footer/footer";
 
 export default function Reviews() {
     // TODO Give admin god power to delete a review

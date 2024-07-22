@@ -1,6 +1,6 @@
 import { api } from "~/utils/api";
 import EachClientCard from "~/components/Clients";
-import giraffe from "@public/icons/giraffe.png";
+import giraffe from "@public/Logos/giraffe.png";
 import Image from "next/image";
 import AdminLayout from "../layout";
 import { DotLoader } from "react-spinners";

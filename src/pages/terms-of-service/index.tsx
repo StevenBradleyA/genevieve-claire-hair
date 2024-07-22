@@ -1,4 +1,4 @@
-import Footer from "~/components/HomePage/footer";
+import Footer from "~/components/Footer/footer";
 import Link from "next/link";
 
 export default function TermsOfService() {

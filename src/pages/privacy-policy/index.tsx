@@ -1,4 +1,4 @@
-import Footer from "~/components/HomePage/footer";
+import Footer from "~/components/Footer/footer";
 
 export default function PrivacyPolicy() {
     return (

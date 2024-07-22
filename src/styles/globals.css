@@ -2,14 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -------------       Fonts       ------------- */
 @import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Dancing+Script");
 
 .grand-hotel {
     font-family: "Grand Hotel", cursive;
 }
 
-/* -------------       Scroll Bar       ------------- */
+.image-black-to-purple {
+    filter: invert(72%) sepia(30%) saturate(849%) hue-rotate(212deg)
+        brightness(103%) contrast(99%);
+}
+.image-black-to-white {
+    filter: invert(100%) sepia(8%) saturate(31%) hue-rotate(228deg)
+        brightness(106%) contrast(110%);
+}
+
+.pastel-text-gradient {
+    background: linear-gradient(to right, #87cefa, #d8bfd8, #da70d6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ----------      Scroll Bar       ---------- */
+/* ----------      Scroll Bar       ---------- */
+/* ----------      Scroll Bar       ---------- */
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -28,7 +44,20 @@
     background: #ab98cc;
 }
 
-/* -------------       NavBar       ------------- */
+/* ----------      Nav Bar       ---------- */
+/* ----------      Nav Bar       ---------- */
+/* ----------      Nav Bar       ---------- */
+
+.home-button-text {
+    filter: invert(100%) sepia(8%) saturate(31%) hue-rotate(228deg)
+        brightness(106%) contrast(110%);
+}
+.home-button:hover .home-button-text {
+    filter: invert(72%) sepia(30%) saturate(849%) hue-rotate(212deg)
+        brightness(103%) contrast(99%);
+}
+
+
 
 .diagonal-image-container {
     position: relative;
@@ -229,7 +258,9 @@
     }
 }
 
-/* -------------       Home       ------------- */
+/* ----------      home       ---------- */
+/* ----------      home       ---------- */
+/* ----------      home       ---------- */
 
 .portfolio-button:hover .portfolio-button-span {
     color: #be93fd;
@@ -283,16 +314,20 @@
     }
 }
 
-/* -------------       Pricing       ------------- */
+/* ----------      pricing       ---------- */
+/* ----------      pricing       ---------- */
+/* ----------      pricing       ---------- */
 
-.text-image {
+.holo-gradient-text {
     background-image: url("../../public/Holographic/holo-crinkle.png");
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
 
-/* -------------       Reviews       ------------- */
+/* ----------      reviews       ---------- */
+/* ----------      reviews       ---------- */
+/* ----------      reviews       ---------- */
 
 .overlay {
     position: fixed;
