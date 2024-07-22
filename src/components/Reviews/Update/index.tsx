@@ -41,7 +41,7 @@ interface ReviewData {
 }
 
 const Star = ({ rating, starRating, hover, starHover, onClick }: StarProps) => {
-    const filled = "cursor-pointer text-image";
+    const filled = "cursor-pointer holo-gradient-text";
     const empty = "cursor-pointer star-image opacity-50";
 
     const starClasses = rating <= starRating ? filled : empty;

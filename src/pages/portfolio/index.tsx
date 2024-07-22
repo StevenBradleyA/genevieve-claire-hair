@@ -10,7 +10,7 @@ import slc from "@public/Portfolio/haircut.png";
 import { fetchInstagramFeed } from "../api/insta/utils";
 import { motion } from "framer-motion";
 import { useMobile } from "~/components/MobileContext";
-import Footer from "~/components/HomePage/footer";
+import Footer from "~/components/Footer/footer";
 
 interface InstagramFeedItem {
     id: string;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import Image from "next/image";
-import giraffe from "@public/icons/giraffe.png";
+import giraffe from "@public/Logos/giraffe.png";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 

@@ -40,61 +40,61 @@ export default function Pricing() {
             </div>
             <div className="flex justify-between">
                 <div className="mb-5 flex w-1/2 flex-col p-2 text-[10px]">
-                    <h2 className=" text-image mb-3">
+                    <h2 className=" holo-gradient-text mb-3">
                         +All prices are considered a starting point and are
                         subject to change based on color usage and extra time
                     </h2>
-                    <h2 className=" text-image mb-1">I do not offer</h2>
-                    <h2 className=" text-image mt-1">
+                    <h2 className=" holo-gradient-text mb-1">I do not offer</h2>
+                    <h2 className=" holo-gradient-text mt-1">
                         Permanent services such as perms, relaxers, or keratin
                         smoothing services.
                     </h2>
-                    <h2 className=" text-image mt-1">
+                    <h2 className=" holo-gradient-text mt-1">
                         Hand tied, beaded, and/or fusion bonded extensions.
                         Treatments
                     </h2>
                 </div>
                 <ul className=" mb-3 w-1/2 rounded-2xl bg-glass p-2 text-[11px] text-white shadow-md">
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Short Length H/C - ${" "}
                         <span>
                             <span>{pricingData.Haircut.Short}</span>
                         </span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Long Length H/C - $
                         <span>{pricingData.Haircut.Long}</span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Transformative H/C - $
                         <span>{pricingData.Haircut.Transformative}</span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         All Over Color - $
                         <span>
                             {pricingData["All Over Color"]["Roots to ends"]}
                         </span>
                         +
                     </li>
-                    <li className=" text-image mb-1 ml-5">
+                    <li className=" holo-gradient-text mb-1 ml-5">
                         Roots Only - $
                         <span>
                             {pricingData["All Over Color"]["Roots only"]}
                         </span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Partial Blonding - $
                         <span>{pricingData.Blonding.Partial}</span>+
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Full Blonding - ${" "}
                         <span>{pricingData.Blonding.Full}</span>+
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Vivid Colors - $<span>{pricingData.Vivids}</span> an
                         hour*
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Color Corrections - $
                         <span>{pricingData["Color Corrections"]}</span> an hour*
                     </li>
@@ -119,19 +119,19 @@ export default function Pricing() {
                             Pricing
                         </h1>
 
-                        <h2 className=" text-image mb-5 w-96 text-2xl">
+                        <h2 className=" holo-gradient-text mb-5 w-96 text-2xl">
                             +All prices are considered a starting point and are
                             subject to change based on color usage and extra
                             time
                         </h2>
-                        <h2 className=" text-image mb-5 w-96 text-lg">
+                        <h2 className=" holo-gradient-text mb-5 w-96 text-lg">
                             I do not offer
                         </h2>
-                        <h2 className=" text-image mt-1 w-96 text-lg">
+                        <h2 className=" holo-gradient-text mt-1 w-96 text-lg">
                             Permanent services such as perms, relaxers, or
                             keratin smoothing services.
                         </h2>
-                        <h2 className=" text-image mt-1 w-96 text-lg">
+                        <h2 className=" holo-gradient-text mt-1 w-96 text-lg">
                             Hand tied, beaded, and/or fusion bonded extensions.
                             Treatments
                         </h2>
@@ -145,44 +145,44 @@ export default function Pricing() {
                     />
                 </div>
                 <ul className="z-20 mt-10 text-4xl text-white">
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Short Length H/C - $
                         <span>{pricingData.Haircut.Short}</span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Long Length H/C - $
                         <span>{pricingData.Haircut.Long}</span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Transformative H/C - $
                         <span>{pricingData.Haircut.Transformative}</span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         All Over Color - $
                         <span>
                             {pricingData["All Over Color"]["Roots to ends"]}
                         </span>
                         +
                     </li>
-                    <li className=" text-image mb-1 ml-12 text-3xl">
+                    <li className=" holo-gradient-text mb-1 ml-12 text-3xl">
                         Roots Only - $
                         <span>
                             {pricingData["All Over Color"]["Roots only"]}
                         </span>
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Partial Blonding - $
                         <span>{pricingData.Blonding.Partial}</span>+
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Full Blonding - $
                         <span>{pricingData.Blonding.Full}</span>+
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Vivid Colors - $<span>{pricingData.Vivids}</span> an
                         hour*
                     </li>
-                    <li className=" text-image mb-1">
+                    <li className=" holo-gradient-text mb-1">
                         Color Corrections - $
                         <span>{pricingData["Color Corrections"]}</span> an hour*
                     </li>
