@@ -68,8 +68,8 @@ export default function ExtraDetails({
                     icon: "👏",
                     style: {
                         borderRadius: "10px",
-                        background: "#333",
-                        color: "#fff",
+                        background: "#ffffff",
+                        color: "#d8b4fe",
                     },
                 });
                 void ctx.user.getAllUsers.invalidate();

@@ -50,11 +50,10 @@ export default function AdminUpdateBooking({
             void ctx.schedule.getAllDays.invalidate();
 
             toast.success("Booking Updated!", {
-                icon: "👏",
                 style: {
                     borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
                 },
             });
             closeModal();
@@ -64,11 +63,10 @@ export default function AdminUpdateBooking({
         {
             onSuccess: () => {
                 toast.success("Email Sent!", {
-                    icon: "👏",
                     style: {
                         borderRadius: "10px",
-                        background: "#333",
-                        color: "#fff",
+                        background: "#ffffff",
+                        color: "#d8b4fe",
                     },
                 });
             },
@@ -77,11 +75,10 @@ export default function AdminUpdateBooking({
     const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
         onSuccess: () => {
             toast.success("Text Sent!", {
-                icon: "👏",
                 style: {
                     borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
                 },
             });
         },

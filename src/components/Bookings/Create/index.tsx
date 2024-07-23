@@ -231,11 +231,10 @@ export default function CreateBooking({
             localStorage.removeItem("Services");
             localStorage.removeItem("Specifications");
             toast.success("Booking Confirmed!", {
-                icon: "👏",
                 style: {
                     borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
                 },
             });
             void router.push("/bookings/confirmed");
@@ -246,11 +245,10 @@ export default function CreateBooking({
         {
             onSuccess: () => {
                 toast.success("Email Sent!", {
-                    icon: "👏",
                     style: {
                         borderRadius: "10px",
-                        background: "#333",
-                        color: "#fff",
+                        background: "#ffffff",
+                        color: "#d8b4fe",
                     },
                 });
             },
@@ -259,11 +257,10 @@ export default function CreateBooking({
     const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
         onSuccess: () => {
             toast.success("Text Sent!", {
-                icon: "👏",
                 style: {
                     borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
                 },
             });
         },
