@@ -21,6 +21,7 @@ export default function ScriptButton() {
         buttonScript[0]
     );
 
+
     const handleButtonClick = () => {
         if (buttonText) {
             const nextPosition =
@@ -31,7 +32,7 @@ export default function ScriptButton() {
 
     return (
         <button
-            className="inline-block h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-6 text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+            className="inline-block h-8 laptop:h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-4 laptop:px-6 text-sm laptop:text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
             onClick={handleButtonClick}
         >
             {buttonText}
