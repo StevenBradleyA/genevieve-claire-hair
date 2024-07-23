@@ -35,8 +35,8 @@ export default function BookingCard({ booking }: { booking: Booking }) {
                 icon: "🗑️",
                 style: {
                     borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
                 },
             });
             void ctx.booking.getFuture.invalidate();

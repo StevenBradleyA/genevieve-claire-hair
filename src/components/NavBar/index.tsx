@@ -1,9 +1,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import homeLogo from "@public/HomePage/home-logo.png";
-import holoColumn from "@public/Holographic/holo-column.png";
-import geniSignature from "@public/icons/signature.png";
 import giraffe from "@public/Logos/giraffe-black.png";
 import homeText from "@public/Logos/home-text.png";
 import homeBackground from "@public/Logos/home-background-whitened.png";
@@ -207,10 +204,16 @@ export default function NavBar() {
                             <Link
                                 href="/admin"
                                 aria-label="Feature"
-                                className="flex justify-center rounded-2xl bg-glass px-6 py-2 shadow-sm"
                                 onClick={toggleMenu}
                             >
-                                Admin
+                                <motion.div
+                                    whileTap={{ opacity: 0.7 }}
+                                    className="flex justify-center rounded-2xl bg-white px-6 py-2 shadow-sm "
+                                >
+                                    <div className="bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent ease-in ">
+                                        Admin
+                                    </div>
+                                </motion.div>
                             </Link>
                         )}
                         <div className=" flex flex-col items-center justify-center gap-1 text-lg text-white">
@@ -256,11 +259,6 @@ export default function NavBar() {
                                     />
                                 </motion.svg>
                             </motion.button>
-                            <p className="text-white ">
-                                {sessionData && (
-                                    <span>Hello {sessionData.user?.name}!</span>
-                                )}
-                            </p>
                         </div>
                     </div>
                 )}

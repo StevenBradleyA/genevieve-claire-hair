@@ -39,11 +39,10 @@ export default function AdminCreateBooking({ user }: AdminCreateBookingProps) {
             localStorage.removeItem("Services");
             localStorage.removeItem("Specifications");
             toast.success("Booking Confirmed!", {
-                icon: "👏",
                 style: {
                     borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
                 },
             });
             void router.push("/bookings/confirmed");
@@ -54,11 +53,10 @@ export default function AdminCreateBooking({ user }: AdminCreateBookingProps) {
         {
             onSuccess: () => {
                 toast.success("Email Sent!", {
-                    icon: "👏",
                     style: {
                         borderRadius: "10px",
-                        background: "#333",
-                        color: "#fff",
+                        background: "#ffffff",
+                        color: "#d8b4fe",
                     },
                 });
             },
@@ -67,11 +65,10 @@ export default function AdminCreateBooking({ user }: AdminCreateBookingProps) {
     const { mutate: sendText } = api.booking.sendTextConfirmation.useMutation({
         onSuccess: () => {
             toast.success("Text Sent!", {
-                icon: "👏",
                 style: {
                     borderRadius: "10px",
-                    background: "#333",
-                    color: "#fff",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
                 },
             });
         },
