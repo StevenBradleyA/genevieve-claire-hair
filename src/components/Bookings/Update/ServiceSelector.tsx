@@ -9,8 +9,6 @@ export default function ServiceSelector({
 }) {
     const mainServices = Object.keys(serviceData);
 
-    console.log(mainServices);
-
     return (
         <div className="flex gap-5 text-2xl">
             {mainServices.map((main, i) => {

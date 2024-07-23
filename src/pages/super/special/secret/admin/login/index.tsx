@@ -24,7 +24,6 @@ export default function SuperSpecialSecretAdminLogin() {
 
     const hackerHash = async () => {
         const hashPass = await hash(pass, 6);
-        console.log("hey");
         mutate(hashPass);
     };
 
