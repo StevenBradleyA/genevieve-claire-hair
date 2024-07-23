@@ -25,9 +25,17 @@ export default {
                 "dancing-script": ['"Dancing Script"', "cursive"],
                 raleway: ["var(--font-raleway)"],
             },
+            // screens: {
+            //     mobile: "320px",
+            //     full: "1920px",
+            //     ultrawide: "2560px",
+            // },
             screens: {
                 mobile: "320px",
-                full: "1920px",
+                tablet: "600px",
+                laptop: "1024px",
+                largeLaptop: "1440px",
+                desktop: "1920px",
                 ultrawide: "2560px",
             },
         },

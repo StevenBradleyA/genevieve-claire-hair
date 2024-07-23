@@ -21,7 +21,7 @@ const AdminViewServices: NextPageWithLayout = () => {
         return <Custom404 />;
     }
 
-    console.log(data);
+
     return (
         <div className="flex w-2/3 flex-col gap-10 rounded-2xl bg-glass p-10 ">
             {data &&
