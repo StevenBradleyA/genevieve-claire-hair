@@ -19,6 +19,7 @@ export default function NavBar() {
     const { data: sessionData } = useSession();
     const { isMobile } = useMobile();
     const menuRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+    const exitRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
     const toggleMenu = () => {
         setIsMenuOpen((prevOpen) => !prevOpen);
@@ -35,6 +36,8 @@ export default function NavBar() {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 menuRef.current &&
+                exitRef.current &&
+                !exitRef.current.contains(event.target as Node) &&
                 !menuRef.current.contains(event.target as Node)
             ) {
                 setIsMenuOpen(false);
@@ -123,6 +126,7 @@ export default function NavBar() {
                     className={`burger-container ${
                         isMenuOpen ? "is-open" : "is-closed"
                     }`}
+                    ref={exitRef}
                     onClick={toggleMenu}
                 >
                     <div className="line-top"></div>
@@ -347,17 +351,14 @@ export default function NavBar() {
                                         y2="0"
                                         id="gradientText"
                                     >
-                                        <stop
-                                            offset="0%"
-                                             stopColor="#c7d2fe"
-                                        />
+                                        <stop offset="0%" stopColor="#c7d2fe" />
                                         <stop
                                             offset="50%"
-                                             stopColor="#f5d0fe"
+                                            stopColor="#f5d0fe"
                                         />
                                         <stop
                                             offset="100%"
-                                             stopColor="#d8b4fe"
+                                            stopColor="#d8b4fe"
                                         />
                                     </linearGradient>
                                 </defs>
