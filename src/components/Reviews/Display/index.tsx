@@ -10,7 +10,6 @@ export default function DisplayReviews() {
     if (isLoading)
         return (
             <div className=" mt-10 flex flex-col items-center justify-center gap-16">
-                <div className="text-lg text-white">Reviews are loading</div>{" "}
                 <DotLoader size={50} color={"#ffffff"} loading={isLoading} />
             </div>
         );

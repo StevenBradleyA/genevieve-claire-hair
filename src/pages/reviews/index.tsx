@@ -12,36 +12,40 @@ export default function Reviews() {
     const { isMobile } = useMobile();
 
     return (
-        <div className="flex w-full flex-col items-center">
-            {isMobile ? (
-                <div className="flex flex-col items-center gap-10">
-                    <h1 className="font-grand-hotel text-8xl text-white ">
-                        Reviews
-                    </h1>
-                    <div className="flex w-[400px] justify-center">
-                        {session && session.user ? (
-                            <ChooseReview session={session} />
-                        ) : (
-                            <ScriptButton />
-                        )}
+        <>
+            <div className="flex w-full flex-col items-center">
+                {isMobile ? (
+                    <div className="flex flex-col items-center gap-5">
+                        <h1 className="font-grand-hotel text-6xl text-white ">
+                            Reviews
+                        </h1>
+                        <div className="flex w-[400px] justify-center">
+                            {session && session.user ? (
+                                <ChooseReview session={session} />
+                            ) : (
+                                <ScriptButton />
+                            )}
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div className="flex items-center gap-32">
-                    <h1 className="font-grand-hotel text-9xl text-white ">
-                        Reviews
-                    </h1>
-                    <div className="flex w-[400px] justify-center">
-                        {session && session.user ? (
-                            <ChooseReview session={session} />
-                        ) : (
-                            <ScriptButton />
-                        )}
+                ) : (
+                    <div className="flex items-center gap-32">
+                        <h1 className="font-grand-hotel text-9xl text-white ">
+                            Reviews
+                        </h1>
+                        <div className="flex w-[400px] justify-center">
+                            {session && session.user ? (
+                                <ChooseReview session={session} />
+                            ) : (
+                                <ScriptButton />
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
-            <DisplayReviews />
-            <Footer />
-        </div>
+                )}
+                <DisplayReviews />
+            </div>
+            <div className="mt-[28rem] w-full">
+                <Footer />
+            </div>
+        </>
     );
 }

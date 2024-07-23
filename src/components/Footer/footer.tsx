@@ -10,9 +10,8 @@ export default function Footer() {
     const [giraffeIndex, setGiraffeIndex] = useState<number>(0);
     const { isMobile } = useMobile();
 
-    console.log(giraffeIndex);
     return isMobile ? (
-        <div className="flex w-full flex-col  bg-darkGlass p-5 text-sm text-white">
+        <div className="flex w-full flex-col  overflow-hidden bg-darkGlass px-5 pb-1 pt-5 text-sm text-white">
             <div className="flex w-full items-center justify-between">
                 <div className="flex flex-col items-start gap-1">
                     <h2 className=" text-xl text-purple-300">Explore</h2>
@@ -74,110 +73,108 @@ export default function Footer() {
                             ry="8.916"
                         />
                     </svg>
-                    <AnimatePresence>
-                        {giraffeIndex >= 1 && (
-                            <Link
-                                className="absolute right-0 top-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
-                                key={0}
-                                href={"/bookings"}
-                                aria-label="book an appointment"
+                    {giraffeIndex >= 1 && (
+                        <Link
+                            className="absolute right-0 top-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                            key={0}
+                            href={"/bookings"}
+                            aria-label="book an appointment"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-8 w-8 "
+                                viewBox="0 0 24 24"
+                                fill="none"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                            </Link>
-                        )}
-                        {giraffeIndex >= 2 && (
-                            <Link
-                                className="absolute bottom-0 left-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
-                                key={1}
-                                aria-label="book an appointment"
-                                href={"/bookings"}
+                                <path
+                                    d="M7 17L17 7M17 7H8M17 7V16"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </Link>
+                    )}
+                    {giraffeIndex >= 2 && (
+                        <Link
+                            className="absolute bottom-0 left-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                            key={1}
+                            aria-label="book an appointment"
+                            href={"/bookings"}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-8 w-8 "
+                                viewBox="0 0 24 24"
+                                fill="none"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                            </Link>
-                        )}
-                        {giraffeIndex >= 3 && (
-                            <Link
-                                className="absolute bottom-0 right-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
-                                key={2}
-                                aria-label="book an appointment"
-                                href={"/bookings"}
+                                <path
+                                    d="M7 17L17 7M17 7H8M17 7V16"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </Link>
+                    )}
+                    {giraffeIndex >= 3 && (
+                        <Link
+                            className="absolute bottom-0 right-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                            key={2}
+                            aria-label="book an appointment"
+                            href={"/bookings"}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-8 w-8 "
+                                viewBox="0 0 24 24"
+                                fill="none"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                            </Link>
-                        )}
-                        {giraffeIndex >= 4 && (
-                            <Link
-                                className="absolute left-0 top-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
-                                key={3}
-                                aria-label="book an appointment"
-                                href={"/bookings"}
+                                <path
+                                    d="M7 17L17 7M17 7H8M17 7V16"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </Link>
+                    )}
+                    {giraffeIndex >= 4 && (
+                        <Link
+                            className="absolute left-0 top-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                            key={3}
+                            aria-label="book an appointment"
+                            href={"/bookings"}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-8 w-8 "
+                                viewBox="0 0 24 24"
+                                fill="none"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                            </Link>
-                        )}
-                        {giraffeIndex === 5 && (
-                            <Link
-                                className="absolute bottom-16 left-0 flex  w-full justify-center font-dancing-script text-base text-purple-300 hover:opacity-70"
-                                key={4}
-                                aria-label="book an appointment"
-                                href={"/bookings"}
-                            >
-                                BOOK AN APPOINTMENT
-                            </Link>
-                        )}
-                    </AnimatePresence>
+                                <path
+                                    d="M7 17L17 7M17 7H8M17 7V16"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </Link>
+                    )}
+                    {giraffeIndex === 5 && (
+                        <Link
+                            className="absolute bottom-16 left-0 flex  w-full justify-center font-dancing-script text-base text-purple-300 hover:opacity-70"
+                            key={4}
+                            aria-label="book an appointment"
+                            href={"/bookings"}
+                        >
+                            BOOK AN APPOINTMENT
+                        </Link>
+                    )}
                 </div>
             </div>
 
@@ -240,7 +237,7 @@ export default function Footer() {
                         Cookies
                     </Link>
                 </div>
-                <div className="mt-1 text-xs">Powered by Hacktime</div>
+                <div className="mt-2">Powered by Hacktime</div>
             </div>
         </div>
     ) : (
@@ -315,94 +312,138 @@ export default function Footer() {
                     <AnimatePresence>
                         {giraffeIndex >= 1 && (
                             <Link
-                                className="absolute right-0 top-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                                className="absolute right-0 top-0 hover:opacity-70"
                                 key={0}
                                 href={"/bookings"}
                                 aria-label="book an appointment"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
+                                <motion.button
+                                    className="rounded-full bg-purple-300 p-1 text-white shadow-md ease-in"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [0, 1.2, 1] }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 200,
+                                    }}
+                                    exit={{ scale: [1, 1.2, 0] }}
                                 >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-8 w-8 "
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M7 17L17 7M17 7H8M17 7V16"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </motion.button>
                             </Link>
                         )}
                         {giraffeIndex >= 2 && (
                             <Link
-                                className="absolute bottom-0 left-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                                className="absolute bottom-0 left-0 hover:opacity-70"
                                 key={1}
                                 aria-label="book an appointment"
                                 href={"/bookings"}
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
+                                <motion.button
+                                    className="rounded-full bg-purple-300 p-1 text-white shadow-md ease-in"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [0, 1.2, 1] }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 200,
+                                    }}
+                                    exit={{ scale: [1, 1.2, 0] }}
                                 >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-8 w-8 "
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M7 17L17 7M17 7H8M17 7V16"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </motion.button>
                             </Link>
                         )}
                         {giraffeIndex >= 3 && (
                             <Link
-                                className="absolute bottom-0 right-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                                className="absolute bottom-0 right-0 hover:opacity-70"
                                 key={2}
                                 aria-label="book an appointment"
                                 href={"/bookings"}
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
+                                <motion.button
+                                    className="rounded-full bg-purple-300 p-1 text-white shadow-md ease-in"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [0, 1.2, 1] }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 200,
+                                    }}
+                                    exit={{ scale: [1, 1.2, 0] }}
                                 >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-8 w-8 "
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M7 17L17 7M17 7H8M17 7V16"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </motion.button>
                             </Link>
                         )}
                         {giraffeIndex >= 4 && (
                             <Link
-                                className="absolute left-0 top-0 rounded-full bg-purple-300 p-1 text-white shadow-md ease-in hover:opacity-70"
+                                className="absolute left-0 top-0 hover:opacity-70"
                                 key={3}
                                 aria-label="book an appointment"
                                 href={"/bookings"}
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-8 w-8 "
-                                    viewBox="0 0 24 24"
-                                    fill="none"
+                                <motion.button
+                                    className="rounded-full bg-purple-300 p-1 text-white shadow-md ease-in"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [0, 1.2, 1] }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 200,
+                                    }}
+                                    exit={{ scale: [1, 1.2, 0] }}
                                 >
-                                    <path
-                                        d="M7 17L17 7M17 7H8M17 7V16"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-8 w-8 "
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M7 17L17 7M17 7H8M17 7V16"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </motion.button>
                             </Link>
                         )}
                         {giraffeIndex === 5 && (
@@ -412,7 +453,17 @@ export default function Footer() {
                                 aria-label="book an appointment"
                                 href={"/bookings"}
                             >
-                                BOOK AN APPOINTMENT
+                                <motion.button
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [0, 1.2, 1] }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 200,
+                                    }}
+                                    exit={{ scale: [1, 1.2, 0] }}
+                                >
+                                    BOOK AN APPOINTMENT
+                                </motion.button>
                             </Link>
                         )}
                     </AnimatePresence>
