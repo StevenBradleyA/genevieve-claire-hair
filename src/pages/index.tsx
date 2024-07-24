@@ -13,6 +13,8 @@ import BookNowSvg from "~/components/HomePage/bookNowSvg";
 import Footer from "~/components/Footer/footer";
 import "react-day-picker/dist/style.css";
 import { useRouter } from "next/router";
+import leftIndent from "@public/HomePage/home-left-indent.png";
+import rightIndent from "@public/HomePage/home-right-indent.png";
 
 export default function Home() {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -20,6 +22,9 @@ export default function Home() {
     const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
     const router = useRouter();
     const isHome = router.asPath === "/";
+
+    const [bannerScriptIndex, setBannerScriptIndex] = useState(0);
+
     const script = useMemo(
         () => [
             "blonding",
@@ -64,7 +69,80 @@ export default function Home() {
     };
 
     return (
-        <div className=" flex w-full flex-col overflow-x-hidden text-white">
+        <div className=" flex w-full flex-col text-white">
+            {/* <h1 className="-mt-10 flex w-full justify-center bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-[10rem] text-transparent"> */}
+            <h1 className="-mt-10 flex w-full justify-center font-archivo text-[10rem] text-white">
+                GENEVIEVE CLARE
+            </h1>
+            <div className="flex flex-col px-32 text-2xl">
+                <div className="z-40 flex w-[40%]   justify-start text-3xl">
+                    {/* <div className=" bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent"> */}
+                    <div className=" text-white">
+                        {`Hi, I'm Geni an Issaquah based hair stylist who
+                        specializes in color, low maintenance hair and giving
+                        you the hair you've always wanted.`}
+                    </div>
+                </div>
+                <div className="mt-10 flex gap-5">
+                    <button className="rounded-3xl bg-purple-300 px-6 py-2 text-white ">
+                        Book Now
+                    </button>
+                    <button className="rounded-3xl bg-white px-6 py-2 text-purple-300 ">
+                        Portfolio
+                    </button>
+                </div>
+            </div>
+            <div className="relative mt-40 flex items-center ">
+                <Image
+                    src={leftIndent}
+                    className=" absolute left-0 w-40"
+                    alt="left indent"
+                />
+                <div className="flex h-16 w-full items-center justify-center bg-purple-300 font-archivo">
+                    <div className="text-3xl text-black">
+                        {" "}
+                        COLOR + COLOR + COLOR + COLOR + COLOR
+                    </div>
+                </div>
+                <Image
+                    src={rightIndent}
+                    className=" absolute right-0 w-40"
+                    alt="left indent"
+                />
+
+                <div className="absolute left-24 rounded-full bg-purple-300 p-2 ">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-10 w-10 rotate-180 text-black"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                        <path
+                            d="M6 12H18M18 12L13 7M18 12L13 17"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+                <div className="absolute right-24 rounded-full bg-purple-300 p-2 ">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-10 w-10  text-black"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                        <path
+                            d="M6 12H18M18 12L13 7M18 12L13 17"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+            </div>
             {/* <div className="flex w-full justify-between ">
                 <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
                     <div
@@ -160,7 +238,7 @@ export default function Home() {
                     })}
                 </div>
 
-                <div className="absolute flex items-center justify-center sm:right-5 sm:top-12 sm:w-2/5 sm:text-5xl full:right-28 full:top-20 full:w-1/3  full:text-6xl ">
+                <div className="full:right-28 full:top-20 full:w-1/3 full:text-6xl absolute flex items-center justify-center sm:right-5 sm:top-12 sm:w-2/5  sm:text-5xl ">
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
