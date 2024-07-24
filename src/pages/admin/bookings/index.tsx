@@ -168,7 +168,6 @@ const AdminViewBookings: NextPageWithLayout = () => {
     return (
         <div className=" mb-20 flex w-3/4 flex-col items-center rounded-2xl bg-glass p-10  text-white shadow-2xl">
             <div className="mb-5 text-5xl font-bold">Schedule</div>
-            <div>this will show all appointments for the day selected</div>
             <div className="flex items-center justify-center gap-10 rounded-2xl bg-darkGlass p-10 shadow-lg">
                 <DayPicker
                     mode="single"

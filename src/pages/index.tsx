@@ -65,7 +65,7 @@ export default function Home() {
 
     return (
         <div className=" flex w-full flex-col overflow-x-hidden text-white">
-            <div className="flex w-full justify-between ">
+            {/* <div className="flex w-full justify-between ">
                 <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
                     <div
                         className="flex w-full rounded-2xl bg-lightPurple p-4 "
@@ -107,8 +107,8 @@ export default function Home() {
                         <BookNowSvg />
                     </Link>
                 </div>
-            </div>
-            <div className="relative mt-32 flex w-full">
+            </div> */}
+            <div className="relative mt-[40rem] flex w-full">
                 <div className=" relative flex h-96 w-3/4">
                     {images.map((image, index) => {
                         const distanceFromCenter = index - currentIndex;
