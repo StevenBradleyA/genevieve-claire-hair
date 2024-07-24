@@ -7,6 +7,11 @@
 .grand-hotel {
     font-family: "Grand Hotel", cursive;
 }
+@font-face {
+    font-family: 'Archivo';
+    src: url('/fonts/ArchivoBlack-Regular.ttf') format('truetype');
+    font-style: normal;
+}
 
 .image-black-to-purple {
     filter: invert(72%) sepia(30%) saturate(849%) hue-rotate(212deg)

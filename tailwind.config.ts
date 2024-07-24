@@ -24,6 +24,7 @@ export default {
                 "grand-hotel": ["Grand Hotel", "cursive"],
                 "dancing-script": ['"Dancing Script"', "cursive"],
                 raleway: ["var(--font-raleway)"],
+                archivo: ["Archivo", "sans-serif"],
             },
             // screens: {
             //     mobile: "320px",
