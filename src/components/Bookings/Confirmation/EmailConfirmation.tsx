@@ -19,14 +19,14 @@ export default function EmailConfirmation({
         <>
             {classification === "create" && (
                 <div>
-                    {`Hi ${firstName} ${lastName}, This is a confirmation for your ${type} appointment with Genevieve at ${displayDate}. Thank you for booking! 
+                    {`Hi ${firstName} ${lastName}, This is a confirmation for your ${type} appointment with Genevieve at ${displayDate}. The address is 160 NW Gilman Blvd Suite 418 Issaquah, WA. The Keypad code is #1111. Thank you for booking! 
                     - Geni
                 `}
                 </div>
             )}
             {classification === "update" && (
                 <div>
-                    {`Hi ${firstName} ${lastName}, This is a confirmation for your updated ${type} appointment with Genevieve at ${displayDate}. Thank you for booking! 
+                    {`Hi ${firstName} ${lastName}, This is a confirmation for your updated ${type} appointment with Genevieve at ${displayDate}. The address is 160 NW Gilman Blvd Suite 418 Issaquah, WA. The Keypad code is #1111. Thank you for booking! 
                     - Geni
                 `}
                 </div>

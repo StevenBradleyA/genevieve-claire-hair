@@ -230,14 +230,29 @@ export default function Booking() {
                     )}
 
                     <div className="mb-20 mt-10 flex items-center justify-center gap-10 text-2xl text-white">
-                        <button
+                        <motion.button
                             onClick={() => changePages(-1)}
                             className={`transform rounded-full bg-glass p-2 ${
-                                page === 0 ? "text-gray-300" : "text-purple-300"
+                                page === 0 ? "text-white/30" : "text-purple-300"
                             } shadow-md transition-transform hover:scale-105 active:scale-95`}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            Back
-                        </button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-10 w-10 rotate-180"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+                                <path
+                                    d="M6 12H18M18 12L13 7M18 12L13 17"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </motion.button>
                         {requireConsult ? (
                             <button
                                 // TODO: Submit partial booking and redirect back home
@@ -247,12 +262,27 @@ export default function Booking() {
                                 Submit
                             </button>
                         ) : page !== form.length - 1 ? (
-                            <button
+                            <motion.button
                                 onClick={() => changePages(1)}
-                                className="transform rounded-md bg-glass px-6 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                                className=" flex items-center gap-6 rounded-full bg-glass p-2  text-violet-300 shadow-md"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
                             >
-                                Next
-                            </button>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-10 w-10 "
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M6 12H18M18 12L13 7M18 12L13 17"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </motion.button>
                         ) : null}
                     </div>
                 </div>
@@ -354,18 +384,63 @@ export default function Booking() {
 
                     <div>
                         {requireConsult ? (
-                            <div className=" flex flex-col items-center gap-10 rounded-2xl bg-glass p-10 text-3xl text-white shadow-xl">
-                                <div>
-                                    {
-                                        "Let's touch base before this appointment!"
-                                    }
-                                </div>
-                                <div>
-                                    Text me at{" "}
-                                    <span className="rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 px-4 py-2 shadow-lg">
-                                        {" "}
-                                        (425) 241-7865{" "}
-                                    </span>{" "}
+                            <div className="flex w-full justify-center px-5 ">
+                                <div className="mt-10 flex h-72 w-2/3  overflow-hidden  rounded-3xl bg-glass text-lg text-white shadow-xl">
+                                    <div className="flex w-1/2 flex-col items-center justify-center bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 p-10">
+                                        <Image
+                                            src={heart}
+                                            alt="heart logo"
+                                            className="image-black-to-white h-10 w-10 object-contain"
+                                        />
+
+                                        <h1 className="mt-3 text-lg text-white">
+                                            {`Let's touch base before booking!`}
+                                        </h1>
+
+                                        <div className="mt-3 flex flex-col items-center gap-1 text-purple-300">
+                                            <div className="rounded-full bg-white p-2">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="h-5 w-5"
+                                                    viewBox="0 -0.5 20 20"
+                                                    version="1.1"
+                                                >
+                                                    <g
+                                                        stroke="none"
+                                                        strokeWidth="1"
+                                                        fill="none"
+                                                        fillRule="evenodd"
+                                                    >
+                                                        <g
+                                                            transform="translate(-260.000000, -2759.000000)"
+                                                            fill="currentColor"
+                                                        >
+                                                            <g transform="translate(56.000000, 160.000000)">
+                                                                <path d="M222,2612.40709 C222,2612.84565 221.729,2613.23594 221.324,2613.3787 L215,2615.60539 L215,2603.71501 L215,2603.53322 L220.676,2601.53454 C221.325,2601.3055 222,2601.80055 222,2602.50615 L222,2612.40709 Z M213,2603.71501 L213,2615.60539 L206.676,2613.3787 C206.271,2613.23594 206,2612.84565 206,2612.40709 L206,2602.50615 C206,2601.80055 206.675,2601.3055 207.324,2601.53454 L213,2603.53322 L213,2603.71501 Z M221.337,2599.11785 L214.331,2601.64444 C214.117,2601.72147 213.883,2601.72147 213.669,2601.64444 L206.663,2599.11785 C205.362,2598.64847 204,2599.6396 204,2601.05592 L204,2613.11577 C204,2613.997 204.547,2614.78065 205.36,2615.06207 L213.68,2617.94608 C213.888,2618.01797 214.112,2618.01797 214.32,2617.94608 L222.64,2615.06207 C223.453,2614.78065 224,2613.997 224,2613.11577 L224,2601.05592 C224,2599.6396 222.638,2598.64847 221.337,2599.11785 L221.337,2599.11785 Z"></path>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                            </div>
+
+                                            <h2 className="rounded-3xl bg-white px-4 py-1 text-xs">
+                                                Bookings
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div className="flex w-1/2 flex-col items-center justify-center px-5 ">
+                                        <div className="text-xl text-white">
+                                            {` Color corrections or vivids can be more
+                                            intricate than you might expect.
+                                            Let's schedule a consultation!
+                                            Please text me at`}
+                                        </div>
+                                        <div className="mt-5 rounded-3xl bg-white px-4 py-2 font-sans text-xl">
+                                            <div className="bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+                                                (425) 241-7865
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         ) : (
