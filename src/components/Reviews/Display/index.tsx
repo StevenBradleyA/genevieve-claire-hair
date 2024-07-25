@@ -20,7 +20,7 @@ export default function DisplayReviews() {
             </div>
         );
 
-    if (!reviews) return <div>Oops</div>;
+    if (!reviews) return null;
 
     const reversedReviews = [...reviews].reverse();
 

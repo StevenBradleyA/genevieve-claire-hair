@@ -8,7 +8,7 @@ import Image from "next/image";
 import heart from "@public/Logos/heart-logo.png";
 import leftIndent from "@public/HomePage/home-left-indent.png";
 import rightIndent from "@public/HomePage/home-right-indent.png";
-
+import { motion } from "framer-motion";
 export default function Reviews() {
     // TODO Give admin god power to delete a review
 
@@ -53,7 +53,7 @@ export default function Reviews() {
                                 />
                             </div>
                         </h1>
-                        <div className="relative mt-5 h-20 w-full bg-white">
+                        <div className="relative mt-5 flex h-20 w-full items-center justify-center bg-white">
                             <Image
                                 src={leftIndent}
                                 className=" absolute -top-[30px] left-0  w-40"
@@ -70,6 +70,59 @@ export default function Reviews() {
                                 ) : (
                                     <ScriptButton />
                                 )}
+                            </div>
+                            <div className="overflow-hidden">
+                                <motion.div
+                                    className="z-40 flex items-center gap-5 font-archivo text-4xl  text-black"
+                                    animate={{ x: [0, -400] }}
+                                    transition={{
+                                        duration: 16,
+                                        ease: "linear",
+                                        repeat: Infinity,
+                                        repeatType: "loop",
+                                    }}
+                                >
+                                    <p className=" flex-shrink-0 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+                                        tell me what you think
+                                    </p>
+                                    <Image
+                                        alt="heart logo"
+                                        src={heart}
+                                        className="image-black-to-purple h-8 w-8 object-contain"
+                                    />
+                                    <p className=" flex-shrink-0 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+                                        tell me what you think
+                                    </p>
+                                    <Image
+                                        alt="heart logo"
+                                        src={heart}
+                                        className="image-black-to-purple h-8 w-8 object-contain"
+                                    />
+                                    <p className=" flex-shrink-0 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+                                        tell me what you think
+                                    </p>
+                                    <Image
+                                        alt="heart logo"
+                                        src={heart}
+                                        className="image-black-to-purple h-8 w-8 object-contain"
+                                    />
+                                    <p className=" flex-shrink-0 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+                                        tell me what you think
+                                    </p>
+                                    <Image
+                                        alt="heart logo"
+                                        src={heart}
+                                        className="image-black-to-purple h-8 w-8 object-contain"
+                                    />
+                                    <p className=" flex-shrink-0 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+                                        tell me what you think
+                                    </p>
+                                    <Image
+                                        alt="heart logo"
+                                        src={heart}
+                                        className="image-black-to-purple h-8 w-8 object-contain"
+                                    />
+                                </motion.div>
                             </div>
                         </div>
                     </>
