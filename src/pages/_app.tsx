@@ -31,12 +31,10 @@ const MyApp: AppType<SessionType> = ({
 
     return (
         <SessionProvider session={session}>
-            <div>
-                <Toaster />
-                <MobileProvider>
-                    <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
-                </MobileProvider>
-            </div>
+            <Toaster />
+            <MobileProvider>
+                <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
+            </MobileProvider>
         </SessionProvider>
     );
 };
