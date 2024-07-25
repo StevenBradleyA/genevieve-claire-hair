@@ -20,7 +20,7 @@ export default function Reviews() {
             <div className="flex w-full flex-col items-center">
                 {isMobile ? (
                     <div className="flex flex-col items-center gap-5">
-                        <h1 className="font-grand-hotel text-6xl text-white ">
+                        <h1 className="font-grandHotel text-6xl text-white ">
                             Reviews
                         </h1>
                         <div className="flex w-[400px] justify-center">

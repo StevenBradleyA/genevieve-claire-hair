@@ -21,16 +21,11 @@ export default {
             fontFamily: {
                 "dm-serif-display": ['"DM Serif Display"', "serif"],
                 cookie: ['"Cookie"', "cursive"],
-                "grand-hotel": ["Grand Hotel", "cursive"],
                 "dancing-script": ['"Dancing Script"', "cursive"],
-                raleway: ["Raleway", 'sans-serif'],
+                raleway: ["Raleway", "sans-serif"],
                 archivo: ["Archivo", "sans-serif"],
+                grandHotel: ["Grand", "sans-serif"],
             },
-            // screens: {
-            //     mobile: "320px",
-            //     full: "1920px",
-            //     ultrawide: "2560px",
-            // },
             screens: {
                 mobile: "320px",
                 tablet: "600px",

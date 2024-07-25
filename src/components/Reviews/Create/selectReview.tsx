@@ -42,12 +42,12 @@ export default function SelectService({
     return (
         <div
             className={`flex h-[500px] ${
-                isMobile ? "w-[250px]" : "w-[500px]"
+                isMobile ? "w-[250px]" : "w-[450px]"
             } flex-col items-center`}
         >
             {selectedBooking ? (
                 <div className=" flex flex-col items-center text-3xl text-white laptop:text-5xl">
-                    <h1 className="font-grand-hotel">Leave a Review</h1>
+                    <h1 className="font-grandHotel">Leave a Review</h1>
                     <div className="rounded-full bg-white p-2">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ export default function SelectService({
                 </div>
             ) : (
                 <div className=" flex flex-col items-center text-2xl text-white laptop:text-5xl">
-                    <h1 className="font-grand-hotel">
+                    <h1 className="font-grandHotel">
                         Select a Service to Review
                     </h1>
 
@@ -90,7 +90,7 @@ export default function SelectService({
                 </div>
             )}
             {bookings ? (
-                <div className="mt-5 flex w-full flex-col gap-5 overflow-y-scroll rounded-3xl bg-white p-5">
+                <div className="mt-5 flex h-[400px] w-full flex-col gap-5 overflow-y-auto rounded-3xl bg-white p-5">
                     {selectedBooking ? (
                         <EachBookingCard
                             booking={selectedBooking}
@@ -113,7 +113,9 @@ export default function SelectService({
                     )}
                 </div>
             ) : (
-                <div>No services to review</div>
+                <div className="mt-5 text-purple-300">
+                    No services to review
+                </div>
             )}
         </div>
     );
