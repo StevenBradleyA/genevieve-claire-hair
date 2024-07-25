@@ -112,7 +112,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                     </div>
                                 </div>
                                 {images && images.length > 0 && (
-                                    <h1 className="font-grand-hotel text-4xl ">
+                                    <h1 className="font-grandHotel text-4xl ">
                                         Click me
                                     </h1>
                                 )}
@@ -129,7 +129,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
 
             {session && session.user.id === review.userId && (
                 <div className="mt-5 flex justify-center gap-5">
-                    {!showDelete && (
+                    {showDelete === false && (
                         <div>
                             <button
                                 onClick={openModal}
@@ -219,7 +219,7 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
                                             <p className="bg-gradient-to-r from-violet-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">
                                                 View Images
                                             </p>
-                                            <h1 className="font-grand-hotel text-4xl ">
+                                            <h1 className="font-grandHotel text-4xl ">
                                                 Click me
                                             </h1>
                                         </div>
@@ -239,26 +239,28 @@ export default function ReviewCard({ review }: { review: ReviewWithUser }) {
             {session &&
                 (session.user.id === review.userId || session.user.isAdmin) && (
                     <div className="flex justify-center gap-5">
-                        <div>
-                            {session.user.id === review.userId && (
-                                <button
-                                    onClick={openModal}
-                                    className="flex transform justify-center rounded-xl bg-glass p-3 px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                        {showDelete === false && (
+                            <div>
+                                {session.user.id === review.userId && (
+                                    <button
+                                        onClick={openModal}
+                                        className="flex transform justify-center rounded-xl bg-glass p-3 px-4  py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
+                                    >
+                                        Edit Review
+                                    </button>
+                                )}
+                                <ModalDialog
+                                    isOpen={isModalOpen}
+                                    onClose={closeModal}
                                 >
-                                    Edit Review
-                                </button>
-                            )}
-                            <ModalDialog
-                                isOpen={isModalOpen}
-                                onClose={closeModal}
-                            >
-                                <UpdateReview
-                                    review={review}
-                                    session={session}
-                                    closeModal={closeModal}
-                                />
-                            </ModalDialog>
-                        </div>
+                                    <UpdateReview
+                                        review={review}
+                                        session={session}
+                                        closeModal={closeModal}
+                                    />
+                                </ModalDialog>
+                            </div>
+                        )}
 
                         <DeleteReview
                             id={review.id}

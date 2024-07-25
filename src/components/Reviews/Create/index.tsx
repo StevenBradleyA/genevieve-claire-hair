@@ -5,6 +5,7 @@ import React from "react";
 import { uploadFileToS3 } from "~/pages/api/aws/utils";
 import Image from "next/image";
 import { useMobile } from "~/components/MobileContext";
+import toast from "react-hot-toast";
 
 interface StarProps {
     rating: number;
@@ -94,6 +95,13 @@ export default function CreateReview({
             closeModal();
             void ctx.review.getAll.invalidate();
             void ctx.booking.getAllBookingsWithoutReviewsByUserId.invalidate();
+            toast.success("Review Posted!", {
+                style: {
+                    borderRadius: "10px",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
+                },
+            });
         },
     });
 
@@ -206,7 +214,7 @@ export default function CreateReview({
             </div>
             <div className="flex flex-col items-center justify-center text-lg laptop:text-2xl">
                 <h2 className="bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
-                    Show Off Your Awesome Hair!
+                    Show Off Your Hair!
                 </h2>
                 <h3 className="text-xs laptop:text-base">(optional)</h3>
             </div>
@@ -294,7 +302,7 @@ export default function CreateReview({
                         (hasSubmitted || Object.values(errors).length > 0)) ||
                     (!isSubmitting && (!starRating || !text))
                 }
-                className={`flex transform gap-2 rounded-md bg-purple-200 px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
+                className={`flex transform items-center gap-2 rounded-md bg-purple-200 px-4 py-2 shadow-md transition-transform hover:scale-105 active:scale-95 ${
                     (hasSubmitted && Object.values(errors).length > 0) ||
                     isSubmitting ||
                     (imageFiles.length > 0 &&
@@ -330,7 +338,6 @@ export default function CreateReview({
                             </svg>
                         ))}
                 </div>
-                {/* {isSubmitting ? "Uploading..." : "Submit Review"} */}
             </button>
         </form>
     );

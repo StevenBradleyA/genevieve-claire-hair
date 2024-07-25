@@ -76,7 +76,6 @@ export default function Home() {
 
     return (
         <div className=" flex w-full flex-col text-white">
-            {/* <h1 className="-mt-10 flex w-full justify-center bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-[10rem] text-transparent"> */}
             <h1 className="mt-5 flex w-full justify-center font-archivo text-5xl text-white laptop:text-[7rem] desktop:text-[10rem]">
                 GENEVIEVE CLARE
             </h1>
@@ -355,7 +354,7 @@ export default function Home() {
             </div>
 
             <div className="relative mt-20 flex h-32 items-center justify-center bg-white">
-                <h2 className="mt-10 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-9xl text-transparent z-10">
+                <h2 className="z-10 mt-10 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-9xl text-transparent">
                     BE UNIQUELY YOU
                 </h2>
                 <Image

@@ -1,6 +1,7 @@
 import { api } from "~/utils/api";
 import type { Session } from "next-auth";
 import type { Images } from "@prisma/client";
+import toast from "react-hot-toast";
 
 interface DeleteProps {
     id: string;
@@ -27,6 +28,13 @@ export default function DeleteReview({
             void ctx.review.getAll.invalidate();
             void ctx.booking.getAllBookingsWithoutReviewsByUserId.invalidate();
             void ctx.review.hasReviewed.invalidate();
+            toast.success("Review Deleted!", {
+                style: {
+                    borderRadius: "10px",
+                    background: "#ffffff",
+                    color: "#d8b4fe",
+                },
+            });
         },
     });
 
@@ -51,7 +59,6 @@ export default function DeleteReview({
                     onClick={() => setShowDelete(true)}
                     className="flex transform justify-center rounded-xl bg-glass p-3 px-4  py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
                 >
-                    {" "}
                     Delete Review
                 </button>
             )}

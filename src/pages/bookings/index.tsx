@@ -207,7 +207,7 @@ export default function Booking() {
             </>
         ) : (
             <div className="flex flex-col items-center justify-center gap-5">
-                <h1 className="mb-5 font-grand-hotel text-5xl text-white">
+                <h1 className="mb-5 font-grandHotel text-5xl text-white">
                     Book An Appointment
                 </h1>
 
@@ -378,7 +378,7 @@ export default function Booking() {
                 </>
             ) : (
                 <div className="flex flex-col items-center justify-center gap-5">
-                    <h1 className="mb-5 font-grand-hotel text-8xl text-white">
+                    <h1 className="mb-5 font-grandHotel text-8xl text-white">
                         Book An Appointment
                     </h1>
 

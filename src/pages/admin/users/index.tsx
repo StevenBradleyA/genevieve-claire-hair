@@ -32,7 +32,7 @@ const AdminViewUsers: NextPageWithLayout = () => {
 
     return (
         <div className="flex flex-col text-white ">
-            <div className="mb-10 flex items-end justify-center gap-5 font-grand-hotel text-6xl">
+            <div className="mb-10 flex items-end justify-center gap-5 font-grandHotel text-6xl">
                 Clients
                 <Image
                     src={giraffe}

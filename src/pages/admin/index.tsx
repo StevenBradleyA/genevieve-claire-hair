@@ -32,7 +32,7 @@ const AdminPage: NextPageWithLayout = () => {
     return (
         <div className="flex w-2/3 flex-col items-center text-2xl text-white ">
             <div className="flex items-center gap-5">
-                <div className="font-grand-hotel text-8xl">Admin </div>
+                <div className="font-grandHotel text-8xl">Admin </div>
                 <Image src={logo} alt="logo" width={100} height={100} />
             </div>
 

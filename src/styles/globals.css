@@ -28,7 +28,7 @@ body::before {
 
 @import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Dancing+Script");
 
-.grand-hotel {
+.grandHotel {
     font-family: "Grand Hotel", cursive;
 }
 @font-face {
@@ -39,6 +39,11 @@ body::before {
 @font-face {
     font-family: "Archivo";
     src: url("/fonts/ArchivoBlack-Regular.ttf") format("truetype");
+    font-style: normal;
+}
+@font-face {
+    font-family: "Grand";
+    src: url("/fonts/GrandHotel-Regular.ttf") format("truetype");
     font-style: normal;
 }
 
