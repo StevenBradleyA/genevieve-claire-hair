@@ -448,7 +448,7 @@ export default function Footer() {
                         )}
                         {giraffeIndex === 5 && (
                             <Link
-                                className="absolute bottom-16 left-0 flex  w-full justify-center font-dancing-script text-3xl text-purple-300 hover:opacity-70"
+                                className="absolute bottom-12 left-0 flex  w-full justify-center font-dancing-script text-3xl text-purple-300 hover:opacity-70"
                                 key={4}
                                 aria-label="book an appointment"
                                 href={"/bookings"}

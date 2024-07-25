@@ -61,8 +61,8 @@ export default function NavBar() {
 
     return isMobile ? (
         <nav
-            className="overflow-a z-20 mb-10 flex items-center
-            justify-between px-5 text-white"
+            className=" z-40 mb-10 flex w-full
+            items-center justify-between px-5 text-white"
             aria-label="Main Navigation"
         >
             <Link href="/" aria-label="Home">
@@ -132,7 +132,7 @@ export default function NavBar() {
                 </div>
                 {isMenuOpen && (
                     <div
-                        className="absolute right-5 top-20 z-40 flex flex-col items-center gap-5 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 text-lg shadow-2xl"
+                        className="absolute right-5 top-20 z-50 flex flex-col items-center gap-5 rounded-2xl bg-gradient-to-br from-fuchsia-100 to-blue-200 p-5 text-lg shadow-2xl"
                         ref={menuRef}
                     >
                         {sessionData && sessionData.user ? (
@@ -265,7 +265,7 @@ export default function NavBar() {
             </div>
         </nav>
     ) : (
-        <div className="sticky -top-5 z-20">
+        <div className="sticky -top-5 z-40">
             <nav
                 className={` ${
                     isScrolled
