@@ -355,17 +355,17 @@ export default function Home() {
             </div>
 
             <div className="relative mt-20 flex h-32 items-center justify-center bg-white">
-                <h2 className="mt-10 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-9xl text-transparent">
+                <h2 className="mt-10 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-9xl text-transparent z-10">
                     BE UNIQUELY YOU
                 </h2>
                 <Image
                     src={leftIndent}
-                    className=" absolute -top-[30px] left-0 z-20 w-40"
+                    className=" absolute -top-[30px] left-0 w-40"
                     alt="left indent"
                 />
                 <Image
                     src={rightIndent}
-                    className=" absolute -top-[30px] right-0 z-20 w-40"
+                    className=" absolute -top-[30px] right-0 w-40"
                     alt="left indent"
                 />
             </div>
@@ -396,7 +396,7 @@ export default function Home() {
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
-                            className="w-40 h-40 absolute bottom-0 left-1/2 -translate-x-1/2"
+                            className="absolute bottom-0 left-1/2 h-40 w-40 -translate-x-1/2"
                             version="1.2"
                             baseProfile="tiny"
                             id="Layer_1"

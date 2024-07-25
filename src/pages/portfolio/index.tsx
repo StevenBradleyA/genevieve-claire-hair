@@ -1,6 +1,5 @@
 // import { useEffect, useState } from "react";
 // import { env } from "~/env.mjs";
-// import Image from "next/image";
 // import instagramLogo from "@public/icons/insta.png";
 // import blonding from "@public/portfolio/blonding.png";
 // import vivids from "@public/portfolio/vivids.png";
@@ -10,7 +9,10 @@
 import { motion } from "framer-motion";
 import { useMobile } from "~/components/MobileContext";
 import Footer from "~/components/Footer/footer";
-import { useEffect, useRef } from "react";
+import leftIndent from "@public/HomePage/home-left-indent.png";
+import rightIndent from "@public/HomePage/home-right-indent.png";
+import Image from "next/image";
+import heart from "@public/Logos/heart-logo.png";
 
 interface InstagramFeedItem {
     id: string;
@@ -49,47 +51,86 @@ export default function Portfolio() {
 
     return (
         <>
-            <div className=" w-full p-10">
-                <h1 className="font-archivo text-9xl text-white/50">
-                    PORTFOLIO
-                </h1>
-                <div className="flex w-full gap-5  rounded-3xl bg-white px-20 py-10">
-                    <div className="flex w-96 flex-col gap-5">
-                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
-                    </div>
-                    <div className="flex w-96 flex-col gap-5">
-                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[400px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
-                    </div>
-                    <div className="flex w-96 flex-col gap-5">
-                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
-                    </div>
-                    <div className="flex w-96 flex-col gap-5">
-                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
-                    </div>
-                    <div className="flex w-96 flex-col gap-5">
-                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
-                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
-                    </div>
+            <h1 className="relative mt-5 flex w-full justify-center font-archivo text-9xl text-white">
+                PORTFOLIO
+                <div className=" absolute right-20 flex flex-col gap-5">
+                    <Image
+                        alt="heart logo"
+                        src={heart}
+                        className="image-black-to-white h-6 w-6 object-contain ease-in hover:opacity-70"
+                    />
+                    <Image
+                        alt="heart logo"
+                        src={heart}
+                        className="image-black-to-white h-6 w-6 object-contain ease-in hover:opacity-70"
+                    />
+                    <Image
+                        alt="heart logo"
+                        src={heart}
+                        className="image-black-to-white h-6 w-6 object-contain ease-in hover:opacity-70"
+                    />
                 </div>
+            </h1>
+            <div className="relative mt-10 h-12 w-full bg-white">
+                <Image
+                    src={leftIndent}
+                    className=" absolute -top-[30px] left-0  w-40"
+                    alt="left indent"
+                />
+                <Image
+                    src={rightIndent}
+                    className=" absolute -top-[30px] right-0  w-40"
+                    alt="left indent"
+                />
+            </div>
+            <div className="flex w-full gap-5   bg-white px-20 py-10 ">
+                <div className="flex w-96 flex-col gap-5">
+                    <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                </div>
+                <div className="flex w-96 flex-col gap-5">
+                    <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[400px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                </div>
+                <div className="flex w-96 flex-col gap-5">
+                    <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                </div>
+                <div className="flex w-96 flex-col gap-5">
+                    <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[180px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                </div>
+                <div className="flex w-96 flex-col gap-5">
+                    <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                    <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                </div>
+            </div>
+            <div className="relative h-12 w-full bg-white">
+                <Image
+                    src={leftIndent}
+                    className=" absolute -bottom-[30px] left-0  w-40"
+                    alt="left indent"
+                />
+                <Image
+                    src={rightIndent}
+                    className=" absolute -bottom-[30px] right-0  w-40"
+                    alt="left indent"
+                />
             </div>
 
             <div className="mt-72 w-full">

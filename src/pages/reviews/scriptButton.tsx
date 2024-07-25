@@ -14,13 +14,12 @@ export default function ScriptButton() {
         "alright, I'm gonna leave now",
         "you really thought 💀",
         "okay okay okay fine",
-        "ya know, this actually works",
-        "when you're qualified to review",
+        "this actually works",
+        "when you're qualified to review <3",
     ];
     const [buttonText, setButtonText] = useState<string | undefined>(
         buttonScript[0]
     );
-
 
     const handleButtonClick = () => {
         if (buttonText) {
@@ -32,7 +31,7 @@ export default function ScriptButton() {
 
     return (
         <button
-            className="inline-block h-8 laptop:h-12 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-4 laptop:px-6 text-sm laptop:text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105"
+            className="inline-block h-8 transform cursor-pointer select-none appearance-none rounded-full bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 px-4 text-sm text-white shadow-none transition-transform hover:scale-110 active:scale-105 laptop:h-12 laptop:px-6 laptop:text-xl "
             onClick={handleButtonClick}
         >
             {buttonText}
