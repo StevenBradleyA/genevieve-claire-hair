@@ -32,12 +32,6 @@ export default function Reviews() {
                         </div>
                     </div>
                 ) : (
-                    // <div className="flex items-center gap-32">
-                    //     <h1 className="font-grand-hotel text-9xl text-white ">
-                    //         Reviews
-                    //     </h1>
-                    //
-                    // </div>
                     <>
                         <h1 className="relative mt-5 flex w-full justify-center font-archivo text-9xl text-white">
                             REVIEWS
@@ -70,7 +64,7 @@ export default function Reviews() {
                                 className=" absolute -top-[30px] right-0  w-40"
                                 alt="left indent"
                             />
-                            <div className="flex w-[400px] justify-center absolute right-40 bottom-28 font-raleway">
+                            <div className="absolute bottom-28 right-40 flex w-[400px] justify-center font-raleway">
                                 {session && session.user ? (
                                     <ChooseReview session={session} />
                                 ) : (

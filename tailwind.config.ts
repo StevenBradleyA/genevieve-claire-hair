@@ -23,7 +23,7 @@ export default {
                 cookie: ['"Cookie"', "cursive"],
                 "grand-hotel": ["Grand Hotel", "cursive"],
                 "dancing-script": ['"Dancing Script"', "cursive"],
-                raleway: ["var(--font-raleway)"],
+                raleway: ["Raleway", 'sans-serif'],
                 archivo: ["Archivo", "sans-serif"],
             },
             // screens: {
