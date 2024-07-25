@@ -10,6 +10,7 @@
 import { motion } from "framer-motion";
 import { useMobile } from "~/components/MobileContext";
 import Footer from "~/components/Footer/footer";
+import { useEffect, useRef } from "react";
 
 interface InstagramFeedItem {
     id: string;
@@ -48,7 +49,50 @@ export default function Portfolio() {
 
     return (
         <>
-            <div className="mt-[40rem] w-full">
+            <div className=" w-full p-10">
+                <h1 className="font-archivo text-9xl text-white/50">
+                    PORTFOLIO
+                </h1>
+                <div className="flex w-full gap-5  rounded-3xl bg-white px-20 py-10">
+                    <div className="flex w-96 flex-col gap-5">
+                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                    </div>
+                    <div className="flex w-96 flex-col gap-5">
+                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[400px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                    </div>
+                    <div className="flex w-96 flex-col gap-5">
+                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                    </div>
+                    <div className="flex w-96 flex-col gap-5">
+                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                    </div>
+                    <div className="flex w-96 flex-col gap-5">
+                        <div className="h-[300px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[200px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[350px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[150px] w-full rounded-xl bg-lightPurple"></div>
+                        <div className="h-[250px] w-full rounded-xl bg-lightPurple"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-72 w-full">
                 <Footer />
             </div>
         </>
