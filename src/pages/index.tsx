@@ -2,8 +2,11 @@ import Image from "next/image";
 import lsp1 from "@public/HomePage/1.png";
 import lsp2 from "@public/HomePage/2.png";
 import lsp3 from "@public/HomePage/3.png";
-import holo from "@public/HomePage/geniWithText.png";
-import geni from "@public/HomePage/geni-main.png";
+import showcaseOne from "@public/HomePage/showcase-1.png";
+import showcaseTwo from "@public/HomePage/showcase-2.png";
+import showcaseThree from "@public/HomePage/showcase-3.png";
+
+import geni from "@public/HomePage/geni.png";
 import { useEffect, useMemo, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
@@ -16,9 +19,10 @@ import { useRouter } from "next/router";
 import leftIndent from "@public/HomePage/home-left-indent.png";
 import rightIndent from "@public/HomePage/home-right-indent.png";
 import heart from "@public/Logos/heart-logo.png";
+
 export default function Home() {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const images = [lsp1, lsp2, lsp3];
+    const images = [showcaseThree, showcaseTwo, showcaseOne];
     const router = useRouter();
     const isHome = router.asPath === "/";
 
@@ -263,8 +267,14 @@ export default function Home() {
                         </svg>
                     </button>
                 </div>
-                <div className="mt-20 flex w-full justify-between px-20 text-3xl">
-                    <div>150+ happy clients</div>
+                <div className="relative mt-20 flex w-full justify-between px-20 text-3xl">
+                    <Image
+                        alt="geni"
+                        src={geni}
+                        className="absolute -bottom-24 right-96 w-[25rem] "
+                    />
+
+                    <div>150 + happy clients</div>
                     <div className="flex gap-5">
                         <a
                             href="https://www.instagram.com/genevieveclare.hair/"
