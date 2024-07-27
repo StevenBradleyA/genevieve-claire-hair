@@ -48,7 +48,7 @@ export default function Portfolio() {
         <>
             <h1 className="relative mt-5 flex w-full justify-center font-archivo text-5xl text-white laptop:text-9xl">
                 PORTFOLIO
-                <div className=" absolute right-3 -top-3 laptop:top-0 flex flex-col gap-5 laptop:right-20">
+                <div className=" absolute -top-3 right-5 flex flex-col gap-5 laptop:right-20 laptop:top-0">
                     <Image
                         alt="heart log rounded-xlo"
                         src={heart}
@@ -78,229 +78,254 @@ export default function Portfolio() {
                     alt="left indent"
                 />
             </div>
-            <div className="flex w-full gap-5 bg-white px-20 py-10">
-                <div className="flex w-96 flex-col gap-5">
-                    <div className="h-[450px] w-full overflow-hidden rounded-xl">
+            <div className="z-40 flex w-full flex-wrap justify-center gap-5 bg-white p-5 laptop:py-10 desktop:px-20">
+                <motion.div
+                    className="flex w-full flex-col gap-5 laptop:w-80"
+                    initial={{ y: 300, opacity: 0 }}
+                    animate={{ y: 0, opacity: 100 }}
+                    transition={{ delay: 0 }}
+                >
+                    <div className="h-[450px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentySix}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwo}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioThree}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[500px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioThirtyOne}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioOne}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioSix}
                             alt="portfolio photo"
                         />
                     </div>
-                </div>
-                <div className="flex w-96 flex-col gap-5">
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                </motion.div>
+                <motion.div
+                    className="flex w-full flex-col gap-5 laptop:w-80"
+                    initial={{ y: 300, opacity: 0 }}
+                    animate={{ y: 0, opacity: 100 }}
+                    transition={{ delay: 0.25 }}
+                >
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioEleven}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioSeven}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[500px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioNine}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioEight}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTen}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwelve}
                             alt="portfolio photo"
                         />
                     </div>
-                </div>
-                <div className="flex w-96 flex-col gap-5">
-                    <div className="h-[400px] w-full overflow-hidden rounded-xl">
+                </motion.div>
+                <motion.div
+                    className="flex w-full flex-col gap-5 laptop:w-80"
+                    initial={{ y: 300, opacity: 0 }}
+                    animate={{ y: 0, opacity: 100 }}
+                    transition={{ delay: 0.5 }}
+                >
+                    <div className="h-[400px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioFive}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[450px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[450px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioSixteen}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioThirteen}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[250px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[250px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioFourteen}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[200px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[200px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioFifteen}
                             alt="portfolio photo"
                         />
                     </div>
 
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioSeventeen}
                             alt="portfolio photo"
                         />
                     </div>
-                </div>
-                <div className="flex w-96 flex-col gap-5">
-                    <div className="h-[250px] w-full overflow-hidden rounded-xl">
+                </motion.div>
+                <motion.div
+                    className="flex w-full flex-col gap-5 laptop:w-80"
+                    initial={{ y: 300, opacity: 0 }}
+                    animate={{ y: 0, opacity: 100 }}
+                    transition={{ delay: 0.75 }}
+                >
+                    <div className="h-[250px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentyThree}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioEighteen}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[380px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[380px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioNineteen}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[300px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwenty}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[450px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[450px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentyOne}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioThirtyThree}
                             alt="portfolio photo"
                         />
                     </div>
-                </div>
-                <div className="flex w-96 flex-col gap-5">
-                    <div className="h-[500px] w-full overflow-hidden rounded-xl">
+                </motion.div>
+                <motion.div
+                    className="flex w-full flex-col gap-5 laptop:w-80"
+                    initial={{ y: 300, opacity: 0 }}
+                    animate={{ y: 0, opacity: 100 }}
+                    transition={{ delay: 1 }}
+                >
+                    <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentyEight}
                             alt="portfolio photo"
                             priority
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentyFive}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioThirtyFive}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[150px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[150px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentySeven}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[500px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentyFour}
                             alt="portfolio photo"
                         />
                     </div>
-                    <div className="h-[350px] w-full overflow-hidden rounded-xl">
+                    <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 bg-lightPurple"
+                            className=" w-full scale-150 "
                             src={portfolioTwentyNine}
                             alt="portfolio photo"
                         />
                     </div>
-                </div>
+                </motion.div>
             </div>
             <div className="relative h-12 w-full bg-white">
                 <Image

@@ -85,7 +85,7 @@ export default function Home() {
                     GENEVIEVE CLARE
                 </h1>
                 <div className="mt-10 flex w-full justify-between px-32 text-2xl">
-                    <div className="z-40 flex w-[40%]   flex-col justify-start text-3xl">
+                    <div className="z-40 flex w-[40%]  flex-col justify-start desktop:text-3xl">
                         <div className=" text-white">
                             {`Hi, I'm Geni an Issaquah based hair stylist who
                         specializes in color, low maintenance hair and giving
@@ -109,7 +109,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="mt-20 flex flex-col gap-10">
+                    <div className=" mt-10 flex flex-col gap-10 desktop:mt-20">
                         <Image
                             alt="heart logo"
                             src={heart}
@@ -127,7 +127,7 @@ export default function Home() {
                         />
                     </div>
                 </div>
-                <div className="relative mt-40 flex items-center ">
+                <div className="relative mt-20 flex items-center desktop:mt-40 ">
                     <Image
                         src={leftIndent}
                         className=" absolute left-0 z-20 w-40"
@@ -271,7 +271,7 @@ export default function Home() {
                     <Image
                         alt="geni"
                         src={geni}
-                        className="absolute -bottom-24 right-96 w-[25rem] "
+                        className="absolute -bottom-24 right-96 w-[20rem] desktop:w-[25rem] "
                     />
 
                     <div>150 + happy clients</div>
@@ -479,7 +479,7 @@ export default function Home() {
                                             width={600}
                                             height={600}
                                             alt={`review photo ${index + 1}`}
-                                            className={` w-1/3 cursor-pointer rounded-2xl object-cover transition-transform duration-300 ${
+                                            className={` w-[45%] desktop:w-1/3 cursor-pointer rounded-2xl object-cover transition-transform duration-300 ${
                                                 distanceFromCenter === 0
                                                     ? "active"
                                                     : ""
@@ -506,7 +506,7 @@ export default function Home() {
                                 })}
                             </div>
                         </div>
-                        <div className="relative flex h-[30rem] w-1/3 flex-col items-start justify-between rounded-3xl bg-gradient-to-l from-lightPurple to-blue-200 p-10 ">
+                        <div className="relative flex h-[30rem] w-1/3 flex-col items-start justify-between rounded-3xl bg-gradient-to-l from-lightPurple to-blue-200 px-5 py-10 desktop:p-10 ">
                             <Link
                                 className="absolute right-5 top-5 z-30 rounded-full bg-purple-300 p-2 ease-in hover:opacity-70"
                                 href="/portfolio"
@@ -690,14 +690,6 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* <div className="mt-20 flex w-full justify-between px-20">
-                <div>{`You're pretty when you get here, prettier when you leave`}</div>
-
-                <div className=" flex  w-2/3 overflow-hidden rounded-3xl bg-lightPurple shadow-xl">
-                    <Spline scene="https://draft.spline.design/IyXwTM8Xes7VfH7t/scene.splinecode" />
-                </div>
-            </div> */}
-
                 {/* <div className="flex w-full justify-between ">
                 <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
                     <div
@@ -741,9 +733,6 @@ export default function Home() {
                     </Link>
                 </div>
             </div> */}
-                {/* <div className="relative mt-[40rem] flex w-full">
-                 */}
-                {/* </div> */}
 
                 {/* <AnimatePresence mode="wait">
                 <motion.div className="flex w-full justify-center">
@@ -760,41 +749,7 @@ export default function Home() {
                 </motion.div>
             </AnimatePresence> */}
 
-                {/* <h1 className="mt-44 flex justify-center text-8xl">
-                hi, im geni and I do hair stuff
-            </h1>
-            <div className="mt-20 flex w-full justify-center gap-20 ">
-                <div className="w-1/2 flex-shrink-0 rounded-3xl bg-darkGlass p-10 text-4xl shadow-lg">
-                    Genevieve (Geni) Evanson is a hairstylist based out of
-                    Bellevue, Washington and has been styling hair
-                    professionally since 2017. <br />
-                    <br />
-                    Whilst she completed cosmetology school in Washington, she
-                    went through specialized training in Dallas, Texas. After
-                    her move back to Washington in 2020, Geni took on the
-                    daunting task of covid color corrections. During this time,
-                    she became an expert at being able to match the color,
-                    style, and flow of ones hair to the person; not the trends.
-                    <br />
-                    <br />
-                    Geni has always believed that your hair should be a
-                    reflection of who you are, not always what&apos;s popular.
-                    With extensive experience in carving and sculpting hair in
-                    her cutting techniques, Geni finds great joy in all things
-                    hair.
-                </div>
-                <div className="w-1/3 overflow-hidden">
-                    <Image
-                        src={holo}
-                        alt="geni"
-                        width={600}
-                        height={600}
-                        className="rounded-3xl object-cover"
-                    />
-                </div>
-            </div> */}
-
-                <div className="my-20 flex w-full justify-center text-6xl">
+                <div className="my-20 flex w-full justify-center text-center text-4xl desktop:text-6xl">
                     <div className="w-2/3">
                         Picture your
                         <span className="text-violet-300">{` dream `}</span>
