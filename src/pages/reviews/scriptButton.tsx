@@ -31,7 +31,7 @@ export default function ScriptButton() {
 
     return (
         <button
-            className="rounded-full bg-blue-200 inline-block h-8 transform cursor-pointer select-none appearance-none px-4 text-sm text-white shadow-none transition-transform hover:scale-110 active:scale-105 laptop:h-12 laptop:px-6 laptop:text-xl "
+            className="inline-block h-10 transform cursor-pointer select-none appearance-none rounded-full bg-blue-200 px-4  text-xl text-white shadow-none transition-transform hover:scale-110 active:scale-105 laptop:h-12 laptop:px-6 "
             onClick={handleButtonClick}
         >
             {buttonText}
