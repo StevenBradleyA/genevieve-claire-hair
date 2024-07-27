@@ -81,48 +81,48 @@ export default function Portfolio() {
             <div className="z-40 flex w-full flex-wrap justify-center gap-5 bg-white p-5 laptop:py-10 desktop:px-20">
                 <motion.div
                     className="flex w-full flex-col gap-5 laptop:w-80"
-                    initial={{ y: 300, opacity: 0 }}
-                    animate={{ y: 0, opacity: 100 }}
+                    initial={{  opacity: 0 }}
+                    animate={{ opacity: 100 }}
                     transition={{ delay: 0 }}
                 >
                     <div className="h-[450px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentySix}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwo}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioThree}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioThirtyOne}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioOne}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioSix}
                             alt="portfolio photo"
                         />
@@ -130,48 +130,48 @@ export default function Portfolio() {
                 </motion.div>
                 <motion.div
                     className="flex w-full flex-col gap-5 laptop:w-80"
-                    initial={{ y: 300, opacity: 0 }}
-                    animate={{ y: 0, opacity: 100 }}
+                    initial={{  opacity: 0 }}
+                    animate={{ opacity: 100 }}
                     transition={{ delay: 0.25 }}
                 >
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioEleven}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioSeven}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioNine}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioEight}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTen}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwelve}
                             alt="portfolio photo"
                         />
@@ -179,41 +179,41 @@ export default function Portfolio() {
                 </motion.div>
                 <motion.div
                     className="flex w-full flex-col gap-5 laptop:w-80"
-                    initial={{ y: 300, opacity: 0 }}
-                    animate={{ y: 0, opacity: 100 }}
+                    initial={{  opacity: 0 }}
+                    animate={{ opacity: 100 }}
                     transition={{ delay: 0.5 }}
                 >
                     <div className="h-[400px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioFive}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[450px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioSixteen}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioThirteen}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[250px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioFourteen}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[200px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioFifteen}
                             alt="portfolio photo"
                         />
@@ -221,7 +221,7 @@ export default function Portfolio() {
 
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioSeventeen}
                             alt="portfolio photo"
                         />
@@ -229,48 +229,48 @@ export default function Portfolio() {
                 </motion.div>
                 <motion.div
                     className="flex w-full flex-col gap-5 laptop:w-80"
-                    initial={{ y: 300, opacity: 0 }}
-                    animate={{ y: 0, opacity: 100 }}
+                    initial={{  opacity: 0 }}
+                    animate={{ opacity: 100 }}
                     transition={{ delay: 0.75 }}
                 >
                     <div className="h-[250px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentyThree}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioEighteen}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[380px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioNineteen}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[300px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwenty}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[450px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentyOne}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioThirtyThree}
                             alt="portfolio photo"
                         />
@@ -278,13 +278,13 @@ export default function Portfolio() {
                 </motion.div>
                 <motion.div
                     className="flex w-full flex-col gap-5 laptop:w-80"
-                    initial={{ y: 300, opacity: 0 }}
-                    animate={{ y: 0, opacity: 100 }}
+                    initial={{  opacity: 0 }}
+                    animate={{ opacity: 100 }}
                     transition={{ delay: 1 }}
                 >
                     <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentyEight}
                             alt="portfolio photo"
                             priority
@@ -292,35 +292,35 @@ export default function Portfolio() {
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentyFive}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioThirtyFive}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[150px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentySeven}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[500px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentyFour}
                             alt="portfolio photo"
                         />
                     </div>
                     <div className="h-[350px] w-full overflow-hidden rounded-xl bg-lightPurple">
                         <Image
-                            className=" w-full scale-150 "
+                            className=" w-full scale-150 hover:brightness-105 "
                             src={portfolioTwentyNine}
                             alt="portfolio photo"
                         />
