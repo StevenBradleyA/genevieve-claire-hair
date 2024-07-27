@@ -185,8 +185,8 @@ export default function Footer() {
                     className="image-black-to-purple h-12 w-12 object-contain"
                 />
                 <p className="w-full">
-                    genevieveclare.hair is my site where clients can book and
-                    see my work
+                    {` Hi, I'm Geni. This is my site where clients can book and
+                    see my work!`}
                 </p>
 
                 <a
@@ -252,8 +252,8 @@ export default function Footer() {
                         />
                     </Link>
                     <p className="w-80">
-                        genevieveclare.hair is my site where clients can book
-                        and see my work
+                        {` Hi, I'm Geni. This is my site where clients can book and
+                    see my work!`}
                     </p>
 
                     <a

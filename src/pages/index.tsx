@@ -81,26 +81,26 @@ export default function Home() {
     return (
         <>
             <div className=" flex w-full flex-col text-white">
-                <h1 className="mt-5 flex w-full justify-center font-archivo text-5xl text-white laptop:text-[7rem] desktop:text-[10rem]">
+                <h1 className=" flex w-full justify-center font-archivo text-[2rem] text-white laptop:text-[7rem] desktop:text-[10rem]">
                     GENEVIEVE CLARE
                 </h1>
-                <div className="mt-10 flex w-full justify-between px-32 text-2xl">
-                    <div className="z-40 flex w-[40%]  flex-col justify-start desktop:text-3xl">
+                <div className="  flex w-full justify-between px-5 text-sm  laptop:px-32 laptop:text-2xl">
+                    <div className="z-40 flex w-52 flex-col  justify-start laptop:w-[40%] desktop:text-3xl">
                         <div className=" text-white">
                             {`Hi, I'm Geni an Issaquah based hair stylist who
                         specializes in color, low maintenance hair and giving
                         you the hair you've always wanted.`}
                         </div>
-                        <div className="mt-10 flex gap-5">
+                        <div className="mt-5 flex gap-5 laptop:mt-10">
                             <Link
-                                className="rounded-3xl bg-purple-300 px-6 py-2 text-white ease-in hover:opacity-70 "
+                                className="flex items-center rounded-3xl bg-purple-300 px-2 py-2 text-white ease-in hover:opacity-70 laptop:px-6"
                                 href="/bookings"
                                 aria-label="Book a hair appointment with Geni"
                             >
                                 Book Now
                             </Link>
                             <Link
-                                className="rounded-3xl bg-white px-6 py-2 text-purple-300 ease-in hover:opacity-70 "
+                                className="flex items-center rounded-3xl bg-white px-2 py-2 text-purple-300 ease-in hover:opacity-70 laptop:px-6"
                                 href="/portfolio"
                                 aria-label="See Geni's work"
                             >
@@ -109,33 +109,33 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className=" mt-10 flex flex-col gap-10 desktop:mt-20">
+                    <div className=" flex flex-col gap-5 laptop:mt-10 laptop:gap-10 desktop:mt-20">
                         <Image
                             alt="heart logo"
                             src={heart}
-                            className="image-black-to-white h-6 w-6 object-contain ease-in hover:opacity-70"
+                            className="image-black-to-white h-4 w-4 object-contain ease-in hover:opacity-70 laptop:h-6 laptop:w-6"
                         />
                         <Image
                             alt="heart logo"
                             src={heart}
-                            className="image-black-to-white h-6 w-6 object-contain ease-in hover:opacity-70"
+                            className="image-black-to-white h-4 w-4 object-contain ease-in hover:opacity-70 laptop:h-6 laptop:w-6"
                         />
                         <Image
                             alt="heart logo"
                             src={heart}
-                            className="image-black-to-white h-6 w-6 object-contain ease-in hover:opacity-70"
+                            className="image-black-to-white h-4 w-4 object-contain ease-in hover:opacity-70 laptop:h-6 laptop:w-6"
                         />
                     </div>
                 </div>
-                <div className="relative mt-20 flex items-center desktop:mt-40 ">
+                <div className="relative mt-10 flex h-24 w-full items-center overflow-hidden  laptop:h-40  ">
                     <Image
                         src={leftIndent}
-                        className=" absolute left-0 z-20 w-40"
+                        className=" absolute -left-12 z-20 w-28 laptop:left-0 laptop:w-40"
                         alt="left indent"
                     />
-                    <div className="flex h-16 w-full items-center justify-center overflow-hidden bg-purple-300 font-archivo ">
+                    <div className="flex h-10 w-full items-center justify-center overflow-hidden bg-purple-300 font-archivo laptop:h-16 ">
                         <motion.div
-                            className="flex flex-nowrap items-center justify-center gap-5 text-4xl text-black"
+                            className="flex flex-nowrap items-center justify-center gap-2 text-xl text-black laptop:gap-5 laptop:text-4xl"
                             animate={{ x: [0, -400] }}
                             transition={{
                                 duration: 16,
@@ -148,78 +148,78 @@ export default function Home() {
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                             {bannerScriptWords[bannerScriptIndex]}
                             <Image
                                 alt="heart logo"
                                 src={heart}
-                                className="h-8 w-8 object-contain"
+                                className="h-6 w-6 object-contain laptop:h-8 laptop:w-8"
                             />
                         </motion.div>
                     </div>
                     <Image
                         src={rightIndent}
-                        className=" absolute right-0 z-20 w-40"
+                        className=" absolute -right-12 z-20 w-28 laptop:right-0 laptop:w-40"
                         alt="left indent"
                     />
 
                     <button
-                        className="absolute left-24 z-30 rounded-full bg-purple-300 p-2 ease-in hover:opacity-70"
+                        className="absolute left-4 z-30 rounded-full bg-purple-300 p-1 ease-in hover:opacity-70 laptop:left-24 laptop:p-2"
                         onClick={() => {
                             if (bannerScriptIndex === 0) {
                                 setBannerScriptIndex(3);
@@ -230,7 +230,7 @@ export default function Home() {
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-10 w-10 rotate-180 text-black"
+                            className="h-8 w-8 rotate-180 text-black laptop:h-10 laptop:w-10"
                             viewBox="0 0 24 24"
                             fill="none"
                         >
@@ -244,7 +244,7 @@ export default function Home() {
                         </svg>
                     </button>
                     <button
-                        className="absolute right-24 z-30 rounded-full bg-purple-300 p-2 ease-in hover:opacity-70"
+                        className="absolute right-4 z-30 rounded-full bg-purple-300 p-1 ease-in hover:opacity-70 laptop:right-24 laptop:p-2"
                         onClick={() => {
                             setBannerScriptIndex(
                                 (prev) => (prev + 1) % bannerScriptWords.length
@@ -253,7 +253,7 @@ export default function Home() {
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-10 w-10  text-black"
+                            className="h-8 w-8 text-black laptop:h-10  laptop:w-10"
                             viewBox="0 0 24 24"
                             fill="none"
                         >
@@ -267,24 +267,24 @@ export default function Home() {
                         </svg>
                     </button>
                 </div>
-                <div className="relative mt-20 flex w-full justify-between px-20 text-3xl">
+                <div className="relative mt-0 flex  w-full items-center justify-between px-5 text-sm laptop:mt-5 laptop:px-20 laptop:text-3xl">
                     <Image
                         alt="geni"
                         src={geni}
-                        className="absolute -bottom-24 right-96 w-[20rem] desktop:w-[25rem] "
+                        className="absolute bottom-24 right-12 w-32 laptop:-bottom-24 laptop:right-96 laptop:w-[20rem] desktop:w-[25rem] "
                     />
 
                     <div>150 + happy clients</div>
-                    <div className="flex gap-5">
+                    <div className="flex gap-2 laptop:gap-5">
                         <a
                             href="https://www.instagram.com/genevieveclare.hair/"
                             target="_blank"
                             aria-label="Visit Genevieve Clare Hair on Instagram"
-                            className="rounded-full border-2 border-white p-2 ease-in hover:border-purple-300 hover:text-purple-300"
+                            className="rounded-full border-2 border-white p-1 ease-in hover:border-purple-300 hover:text-purple-300 laptop:p-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 "
+                                className="h-4 w-4  laptop:h-6 laptop:w-6 "
                                 viewBox="0 0 20 20"
                                 version="1.1"
                             >
@@ -304,11 +304,11 @@ export default function Home() {
                         <Link
                             href="/bookings"
                             aria-label="Book a hair appointment with Geni"
-                            className="rounded-full border-2 border-white p-2 ease-in hover:border-purple-300 hover:text-purple-300"
+                            className="rounded-full border-2 border-white p-1 ease-in hover:border-purple-300 hover:text-purple-300 laptop:p-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
+                                className="h-4 w-4  laptop:h-6 laptop:w-6 "
                                 viewBox="0 -0.5 20 20"
                                 version="1.1"
                             >
@@ -332,11 +332,11 @@ export default function Home() {
                         <Link
                             href="/reviews"
                             aria-label="Read Reviews about Geni"
-                            className="rounded-full border-2 border-white p-2 ease-in hover:border-purple-300 hover:text-purple-300"
+                            className="rounded-full border-2 border-white p-1 ease-in hover:border-purple-300 hover:text-purple-300 laptop:p-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 "
+                                className="h-4 w-4  laptop:h-6 laptop:w-6 "
                                 viewBox="0 0 24 24"
                                 fill="none"
                             >
@@ -352,11 +352,11 @@ export default function Home() {
                         <a
                             href="mailto:genevieveclarehair@outlook.com"
                             aria-label="Email Genevieve Clare Hair"
-                            className="rounded-full border-2 border-white p-2 hover:border-purple-300 hover:text-purple-300"
+                            className="rounded-full border-2 border-white p-1 hover:border-purple-300 hover:text-purple-300 laptop:p-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 "
+                                className="h-4 w-4  laptop:h-6 laptop:w-6 "
                                 viewBox="0 0 24 24"
                                 fill="none"
                             >
@@ -372,8 +372,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="relative mt-20 flex h-32 items-center justify-center bg-white">
-                    <h2 className="z-10 mt-10 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-9xl text-transparent">
+                <div className="relative mt-10 flex h-10 items-center justify-center bg-white laptop:mt-20 laptop:h-32">
+                    <h2 className="z-10 mt-10 bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text font-archivo text-2xl text-transparent tablet:text-5xl laptop:text-6xl largeLaptop:text-9xl">
                         BE UNIQUELY YOU
                     </h2>
                     <Image
@@ -388,9 +388,9 @@ export default function Home() {
                     />
                 </div>
 
-                <div className="flex flex-col gap-10 bg-white px-10 py-10 pb-20">
-                    <div className="flex gap-10">
-                        <div className="relative flex h-[35rem] w-1/3 flex-col items-center justify-center rounded-3xl bg-gradient-to-r from-blue-200 to-lightPurple p-10">
+                <div className="flex flex-col gap-2 bg-white px-2 py-10 pb-10 laptop:gap-10 laptop:px-10 laptop:pb-20">
+                    <div className="flex flex-wrap gap-2 laptop:flex-nowrap laptop:gap-10">
+                        <div className="relative flex h-[20rem] w-full flex-col items-center justify-center rounded-3xl bg-gradient-to-r from-blue-200 to-lightPurple p-10 laptop:h-[35rem] laptop:w-1/3">
                             <Link
                                 className="absolute right-5 top-5 z-30 rounded-full bg-purple-300 p-2 ease-in hover:opacity-70"
                                 href="/portfolio"
@@ -412,13 +412,12 @@ export default function Home() {
                                 </svg>
                             </Link>
 
-                            <p className="text-3xl">{`I've always believed that your hair should be a
+                            <p className=" text-xl laptop:text-3xl">{`I've always believed that your hair should be a
                         reflection of who you are, not always what's popular `}</p>
-
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"
-                                className="absolute bottom-0 left-1/2 h-40 w-40 -translate-x-1/2"
+                                className="absolute bottom-0 left-1/2 h-24 w-24 -translate-x-1/2 laptop:h-40 laptop:w-40"
                                 version="1.2"
                                 baseProfile="tiny"
                                 id="Layer_1"
@@ -441,13 +440,13 @@ export default function Home() {
                                 <path d="M-743.1,979.8c28.6,0.3,51.5-23.4,51.6-51.4c0.3-28.6-22.7-51.4-51.4-51.6c-28.7-0.2-51.5,23.4-51.6,51.4  C-794.8,956.8-771.1,979.6-743.1,979.8z M-722.6,907.8c5.1,0.3,8.8,3.9,8.6,9c-0.3,5.1-3.9,8.8-9,8.6c-5.1-0.3-8.8-3.9-8.6-9  C-731.4,911.3-727.7,907.6-722.6,907.8z M-742.9,965.8c-12.5-0.1-23.7-7.4-29.4-19.5c-1-2.4,0.3-5.1,2.6-6.1c2.4-1,5.1,0.3,6.8,2.8  c3.7,8,11.5,13.2,20.3,13.4c8.8,0.2,16.4-5,20.1-13.1c1.3-2.7,4.3-3.6,6.4-2.5c2.7,1.3,3.8,3.7,2.5,6.4  C-718.7,958.5-730.4,966-742.9,965.8z M-761.7,907.8c5.1,0.3,8.8,3.9,8.6,9c-0.3,5.1-3.9,8.8-9,8.6c-4.4-0.1-8.8-3.9-8.6-9  C-770.6,912-766.8,907.6-761.7,907.8z" />
                             </svg>
                         </div>
-                        <div className="h-[35rem] w-2/3 overflow-hidden rounded-3xl">
+                        <div className="h-[15rem] w-full overflow-hidden rounded-3xl laptop:h-[35rem] laptop:w-2/3">
                             <Spline scene="https://draft.spline.design/IyXwTM8Xes7VfH7t/scene.splinecode" />
                         </div>
                     </div>
-                    <div className="flex gap-10">
-                        <div className="flex h-[30rem] w-2/3 items-center justify-center rounded-3xl bg-gradient-to-r from-lightPurple to-blue-200">
-                            <div className=" relative mt-20 flex h-96 w-full ">
+                    <div className="flex flex-wrap gap-2 laptop:flex-nowrap laptop:gap-10">
+                        <div className="flex h-[15rem] w-full items-center justify-center rounded-3xl bg-gradient-to-r from-lightPurple to-blue-200 laptop:h-[30rem] laptop:w-2/3">
+                            <div className=" relative mt-20 flex h-48 w-full laptop:h-96 ">
                                 {images.map((image, index) => {
                                     const distanceFromCenter =
                                         index - currentIndex;
@@ -479,7 +478,7 @@ export default function Home() {
                                             width={600}
                                             height={600}
                                             alt={`review photo ${index + 1}`}
-                                            className={` w-[45%] desktop:w-1/3 cursor-pointer rounded-2xl object-cover transition-transform duration-300 ${
+                                            className={` w-[45%] cursor-pointer rounded-2xl object-cover transition-transform duration-300 desktop:w-1/3 ${
                                                 distanceFromCenter === 0
                                                     ? "active"
                                                     : ""
@@ -506,7 +505,7 @@ export default function Home() {
                                 })}
                             </div>
                         </div>
-                        <div className="relative flex h-[30rem] w-1/3 flex-col items-start justify-between rounded-3xl bg-gradient-to-l from-lightPurple to-blue-200 px-5 py-10 desktop:p-10 ">
+                        <div className=" relative flex h-[25rem] w-full flex-col items-start justify-between rounded-3xl bg-gradient-to-l from-lightPurple to-blue-200 px-5 py-10 text-xs laptop:h-[30rem] laptop:w-1/3 laptop:text-lg desktop:p-10 ">
                             <Link
                                 className="absolute right-5 top-5 z-30 rounded-full bg-purple-300 p-2 ease-in hover:opacity-70"
                                 href="/portfolio"
@@ -534,7 +533,7 @@ export default function Home() {
                                         version="1.1"
                                         id="Layer_1"
                                         viewBox="0 0 512.001 512.001"
-                                        className="h-10 w-10 text-purple-300"
+                                        className="h-6 w-6 text-purple-300 laptop:h-10 laptop:w-10"
                                         fill="currentColor"
                                     >
                                         <g>
@@ -562,11 +561,11 @@ export default function Home() {
                                 <p>Experience with most hair types</p>
                             </div>
                             <div className="flex items-center gap-5">
-                                <div className="rounded-full bg-white p-3 hover:opacity-70">
+                                <div className="rounded-full bg-white p-2 hover:opacity-70 laptop:p-3">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="currentColor"
-                                        className="h-10 w-10 text-purple-300"
+                                        className="h-8 w-8 text-purple-300 laptop:h-10 laptop:w-10"
                                         viewBox="0 0 24 24"
                                     >
                                         <path d="M12 18c4 0 5-4 5-4H7s1 4 5 4z" />
@@ -578,11 +577,11 @@ export default function Home() {
                             </div>
 
                             <div className="flex items-center gap-5">
-                                <div className="rounded-full bg-white p-2 hover:opacity-70">
+                                <div className="rounded-full bg-white p-1 hover:opacity-70 laptop:p-2">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="currentColor"
-                                        className="h-12 w-12 text-purple-300"
+                                        className="h-10 w-10 text-purple-300"
                                         version="1.1"
                                         id="Layer_1"
                                         viewBox="0 0 512 512"
@@ -602,10 +601,10 @@ export default function Home() {
                             </div>
 
                             <div className="flex items-center gap-5">
-                                <div className="rounded-full bg-white p-3 hover:opacity-70">
+                                <div className="rounded-full bg-white p-2 hover:opacity-70 laptop:p-3">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="h-10 w-10 text-purple-300"
+                                        className="h-8 w-8 text-purple-300 laptop:h-10 laptop:w-10"
                                         fill="currentColor"
                                         version="1.1"
                                         id="Layer_1"
@@ -639,10 +638,10 @@ export default function Home() {
                                 </p>
                             </div>
                             <div className="flex items-center gap-5">
-                                <div className="rounded-full bg-white p-3 hover:opacity-70">
+                                <div className="rounded-full bg-white  p-2 hover:opacity-70 laptop:p-3">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="h-10 w-10 text-purple-300"
+                                        className="h-8 w-8 text-purple-300 laptop:h-10 laptop:w-10"
                                         viewBox="0 0 48 48"
                                         fill="none"
                                     >
@@ -690,66 +689,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* <div className="flex w-full justify-between ">
-                <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
-                    <div
-                        className="flex w-full rounded-2xl bg-lightPurple p-4 "
-                        style={{
-                            boxShadow: "10px 10px 20px rgba(0, 0, 0, 0.1)",
-                        }}
-                    >
-                        <Spline scene="https://draft.spline.design/IyXwTM8Xes7VfH7t/scene.splinecode" />
-                    </div>
-                    <motion.div
-                        className="mt-20 flex items-center gap-2"
-                        initial="initial"
-                        animate="bobble"
-                        exit="exit"
-                        variants={bounceVariants}
-                    >
-                        <div className="text-4xl">scroll down </div>
-                        <Image
-                            src={downArrow as string}
-                            alt="down arrow"
-                            className="w-6"
-                        />
-                    </motion.div>
-                </div>
-                <div className="relative h-1/2 w-1/3 ">
-                    <Image
-                        src={geni}
-                        alt="geni"
-                        width={geni.width}
-                        height={geni.height}
-                        className=" w-full object-cover "
-                        style={{ borderBottomLeftRadius: "30px" }}
-                        priority={true}
-                    />
-                    <Link
-                        href="/bookings"
-                        className="absolute -bottom-40 left-5"
-                    >
-                        <BookNowSvg />
-                    </Link>
-                </div>
-            </div> */}
-
-                {/* <AnimatePresence mode="wait">
-                <motion.div className="flex w-full justify-center">
-                    <motion.div
-                        key={currentScriptIndex}
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 50 }}
-                        transition={{ duration: 1 }}
-                        className="mt-20 flex w-2/3 justify-center text-8xl"
-                    >
-                        {script[currentScriptIndex]}
-                    </motion.div>
-                </motion.div>
-            </AnimatePresence> */}
-
-                <div className="my-20 flex w-full justify-center text-center text-4xl desktop:text-6xl">
+                <div className="my-10 flex w-full justify-center text-center text-xl laptop:my-20 laptop:text-4xl desktop:text-6xl">
                     <div className="w-2/3">
                         Picture your
                         <span className="text-violet-300">{` dream `}</span>
@@ -763,3 +703,62 @@ export default function Home() {
         </>
     );
 }
+
+//  {/* <div className="flex w-full justify-between ">
+//                 <div className="flex h-1/3 w-2/3 flex-col items-center p-10">
+//                     <div
+//                         className="flex w-full rounded-2xl bg-lightPurple p-4 "
+//                         style={{
+//                             boxShadow: "10px 10px 20px rgba(0, 0, 0, 0.1)",
+//                         }}
+//                     >
+//                         <Spline scene="https://draft.spline.design/IyXwTM8Xes7VfH7t/scene.splinecode" />
+//                     </div>
+//                     <motion.div
+//                         className="mt-20 flex items-center gap-2"
+//                         initial="initial"
+//                         animate="bobble"
+//                         exit="exit"
+//                         variants={bounceVariants}
+//                     >
+//                         <div className="text-4xl">scroll down </div>
+//                         <Image
+//                             src={downArrow as string}
+//                             alt="down arrow"
+//                             className="w-6"
+//                         />
+//                     </motion.div>
+//                 </div>
+//                 <div className="relative h-1/2 w-1/3 ">
+//                     <Image
+//                         src={geni}
+//                         alt="geni"
+//                         width={geni.width}
+//                         height={geni.height}
+//                         className=" w-full object-cover "
+//                         style={{ borderBottomLeftRadius: "30px" }}
+//                         priority={true}
+//                     />
+//                     <Link
+//                         href="/bookings"
+//                         className="absolute -bottom-40 left-5"
+//                     >
+//                         <BookNowSvg />
+//                     </Link>
+//                 </div>
+//             </div> */}
+
+//     {/* <AnimatePresence mode="wait">
+//     <motion.div className="flex w-full justify-center">
+//         <motion.div
+//             key={currentScriptIndex}
+//             initial={{ opacity: 0, x: -50 }}
+//             animate={{ opacity: 1, x: 0 }}
+//             exit={{ opacity: 0, x: 50 }}
+//             transition={{ duration: 1 }}
+//             className="mt-20 flex w-2/3 justify-center text-8xl"
+//         >
+//             {script[currentScriptIndex]}
+//         </motion.div>
+//     </motion.div>
+// </AnimatePresence> */}
