@@ -66,13 +66,13 @@ export default function ChemHair({ setNotes, setReady }: FirstTimeClientProps) {
         setFormData(newData);
     };
 
-    return isMobile ? (
-        <form className="flex flex-col items-center justify-center  text-xl text-white">
-            <div className="w-72 text-center text-lg">
+    return (
+        <form className="flex w-full flex-col items-center  justify-center rounded-3xl bg-white p-10 text-base text-violet-300 laptop:text-xl">
+            <h1 className="flex justify-center bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-center text-2xl text-transparent laptop:text-3xl">
                 Have you had any chemical treatments done on your hair?
-            </div>
+            </h1>
 
-            <div className=" mt-5 flex justify-center gap-10">
+            <div className=" mb-5 mt-5 flex flex-wrap justify-between gap-5">
                 <label className="flex cursor-pointer items-center justify-center gap-5">
                     Yes
                     <input
@@ -95,8 +95,8 @@ export default function ChemHair({ setNotes, setReady }: FirstTimeClientProps) {
                 </label>
             </div>
             {formData.yes && (
-                <div className=" mt-5 flex flex-col justify-center gap-3">
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
+                <div className=" my-5 flex  flex-wrap justify-between gap-5">
+                    <label className="flex cursor-pointer items-center justify-center gap-2">
                         Keratin Treatment
                         <input
                             type="checkbox"
@@ -106,7 +106,7 @@ export default function ChemHair({ setNotes, setReady }: FirstTimeClientProps) {
                             className="custom-checkbox"
                         ></input>
                     </label>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
+                    <label className="flex cursor-pointer items-center justify-center gap-2">
                         Permanent waves
                         <input
                             type="checkbox"
@@ -116,70 +116,7 @@ export default function ChemHair({ setNotes, setReady }: FirstTimeClientProps) {
                             className="custom-checkbox"
                         ></input>
                     </label>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        Relaxers
-                        <input
-                            type="checkbox"
-                            name="relaxers"
-                            checked={formData.relaxers}
-                            onChange={() => toggle("relaxers")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                </div>
-            )}
-        </form>
-    ) : (
-        <form className="flex flex-col items-center justify-center  text-3xl text-white">
-            <div className="text-4xl">
-                Have you had any chemical treatments done on your hair?
-            </div>
-
-            <div className=" mb-5 mt-5 flex justify-center gap-10">
-                <label className="flex cursor-pointer items-center justify-center gap-5">
-                    Yes
-                    <input
-                        type="checkbox"
-                        name="yes"
-                        checked={formData.yes}
-                        onChange={() => toggle("yes")}
-                        className="custom-checkbox"
-                    ></input>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        No
-                        <input
-                            type="checkbox"
-                            name="no"
-                            checked={formData.no}
-                            onChange={() => toggle("no")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                </label>
-            </div>
-            {formData.yes && (
-                <div className=" mb-5 mt-5 flex justify-center gap-10">
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        Keratin Treatment
-                        <input
-                            type="checkbox"
-                            name="keratin"
-                            checked={formData.keratin}
-                            onChange={() => toggle("keratin")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        Permanent waves
-                        <input
-                            type="checkbox"
-                            name="waves"
-                            checked={formData.waves}
-                            onChange={() => toggle("waves")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
+                    <label className="flex cursor-pointer items-center justify-center gap-2">
                         Relaxers
                         <input
                             type="checkbox"

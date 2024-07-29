@@ -76,40 +76,62 @@ export default function FirstTimeClient() {
     ];
 
     return isNew ? (
-        <div className="flex flex-col items-center justify-center gap-5">
-            <h1 className="font-grandHotel text-white mobile:text-3xl sm:text-8xl">
+        <>
+            <h1 className="font-archivo text-white text-4xl laptop:text-8xl">
                 First Time Client
             </h1>
+            <div className="flex  w-full justify-center ">
+                <div className="mt-5 laptop:mt-10 w-full laptop:w-2/3 desktop:w-1/2">
+                    <div className="flex w-full flex-col items-center px-2 laptop:px-10">
+                        {form[page]}
+                    </div>
 
-            <div className="w-full">
-                <div className="flex w-full flex-col items-center px-10">
-                    {form[page]}
-                </div>
-
-                <div className="full:text-2xl mb-20 mt-10 flex items-center justify-center  gap-10 text-white mobile:text-sm sm:text-lg">
-                    <button
-                        onClick={() => changePages(-1)}
-                        className="transform rounded-md bg-glass px-4 py-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
-                    >
-                        Back
-                    </button>
-
-                    {page === form.length - 1 ? null : (
+                    <div className="full:text-2xl mb-20 mt-10 flex items-center justify-center  gap-10 text-white mobile:text-sm sm:text-lg">
                         <button
-                            onClick={() => changePages(1)}
-                            className="transform rounded-md bg-glass px-4 py-2 text-violet-300 shadow-md transition-transform hover:scale-105 active:scale-95"
-                            disabled={!ready}
+                            onClick={() => changePages(-1)}
+                            className="transform rounded-full bg-glass  p-2 text-purple-300 shadow-md transition-transform hover:scale-105 active:scale-95"
                         >
-                            Next
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-10 w-10 rotate-180"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+                                <path
+                                    d="M6 12H18M18 12L13 7M18 12L13 17"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
                         </button>
-                    )}
+
+                        {page === form.length - 1 ? null : (
+                            <button
+                                onClick={() => changePages(1)}
+                                className="transform rounded-full bg-glass p-2 text-violet-300 shadow-md transition-transform hover:opacity-70"
+                                disabled={!ready}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-10 w-10 "
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M6 12H18M18 12L13 7M18 12L13 17"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
-    ) : (
-        <div className="mt-20 text-3xl text-white">
-            {" "}
-            New Client Form Completed 😊
-        </div>
-    );
+        </>
+    ) : null;
 }

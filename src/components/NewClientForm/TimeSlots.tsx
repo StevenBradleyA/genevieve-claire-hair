@@ -87,181 +87,91 @@ export default function TimeSlots({
         setFormData(newData);
     };
 
-    return isMobile ? (
-        <form className="flex flex-col text-xl text-white">
-            <div className="mb-5 w-72 text-center text-lg">
+    return (
+        <form className="flex w-full flex-col items-center rounded-3xl bg-white p-10 text-base text-violet-300 laptop:text-xl">
+            <h1 className="flex justify-center bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-center text-2xl text-transparent laptop:text-3xl">
                 What days/times are you most likely to book?
-            </div>
-            <div className="flex w-72 flex-col items-start text-xl">
-                <label className="mb-2 flex cursor-pointer items-center gap-5">
+            </h1>
+            <div className="mt-5 flex w-full flex-col gap-3 laptop:mt-10">
+                <label className="flex cursor-pointer items-center gap-5">
+                    Monday
+                    <input
+                        type="checkbox"
+                        name="mon"
+                        checked={formData.mon}
+                        onChange={() => toggle("mon")}
+                        className="custom-checkbox"
+                    ></input>
+                </label>
+                <label className="flex cursor-pointer items-center gap-5">
+                    Tuesday
+                    <input
+                        type="checkbox"
+                        name="tues"
+                        checked={formData.tues}
+                        onChange={() => toggle("tues")}
+                        className="custom-checkbox"
+                    ></input>
+                </label>
+                <label className="flex cursor-pointer items-center gap-5">
+                    Wednesday
+                    <input
+                        type="checkbox"
+                        name="wed"
+                        checked={formData.wed}
+                        onChange={() => toggle("wed")}
+                        className="custom-checkbox"
+                    ></input>
+                </label>
+                <label className="flex cursor-pointer items-center gap-5">
+                    Thursday
+                    <input
+                        type="checkbox"
+                        name="thur"
+                        checked={formData.thur}
+                        onChange={() => toggle("thur")}
+                        className="custom-checkbox"
+                    ></input>
+                </label>
+                <label className="flex cursor-pointer items-center gap-5">
+                    Friday
+                    <input
+                        type="checkbox"
+                        name="fri"
+                        checked={formData.fri}
+                        onChange={() => toggle("fri")}
+                        className="custom-checkbox"
+                    ></input>
+                </label>
+                <label className="flex cursor-pointer items-center gap-5">
+                    Saturday
+                    <input
+                        type="checkbox"
+                        name="sat"
+                        checked={formData.sat}
+                        onChange={() => toggle("sat")}
+                        className="custom-checkbox"
+                    ></input>
+                </label>
+                <label className="flex cursor-pointer items-center gap-5">
+                    Sunday
+                    <input
+                        type="checkbox"
+                        name="sun"
+                        checked={formData.sun}
+                        onChange={() => toggle("sun")}
+                        className="custom-checkbox"
+                    ></input>
+                </label>
+                <label className="flex cursor-pointer items-center gap-5">
                     Time
                     <input
                         type="time"
                         name="time"
                         value={formData.time}
                         onChange={(e) => setTime(e.target.value)}
-                        className="block rounded-md bg-glass px-4 py-2 text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-300"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Monday
-                    <input
-                        type="checkbox"
-                        name="mon"
-                        checked={formData.mon}
-                        onChange={() => toggle("mon")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Tuesday
-                    <input
-                        type="checkbox"
-                        name="tues"
-                        checked={formData.tues}
-                        onChange={() => toggle("tues")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Wednesday
-                    <input
-                        type="checkbox"
-                        name="wed"
-                        checked={formData.wed}
-                        onChange={() => toggle("wed")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Thursday
-                    <input
-                        type="checkbox"
-                        name="thur"
-                        checked={formData.thur}
-                        onChange={() => toggle("thur")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Friday
-                    <input
-                        type="checkbox"
-                        name="fri"
-                        checked={formData.fri}
-                        onChange={() => toggle("fri")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Saturday
-                    <input
-                        type="checkbox"
-                        name="sat"
-                        checked={formData.sat}
-                        onChange={() => toggle("sat")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Sunday
-                    <input
-                        type="checkbox"
-                        name="sun"
-                        checked={formData.sun}
-                        onChange={() => toggle("sun")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-            </div>
-        </form>
-    ) : (
-        <form className="flex flex-col items-center  text-3xl text-white">
-            <div className="mb-5 flex justify-center text-4xl">
-                What days/times are you most likely to book?
-            </div>
-            <div className="flex w-1/3 flex-col text-3xl">
-                <label className="flex cursor-pointer items-center gap-5">
-                    Monday
-                    <input
-                        type="checkbox"
-                        name="mon"
-                        checked={formData.mon}
-                        onChange={() => toggle("mon")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Tuesday
-                    <input
-                        type="checkbox"
-                        name="tues"
-                        checked={formData.tues}
-                        onChange={() => toggle("tues")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Wednesday
-                    <input
-                        type="checkbox"
-                        name="wed"
-                        checked={formData.wed}
-                        onChange={() => toggle("wed")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Thursday
-                    <input
-                        type="checkbox"
-                        name="thur"
-                        checked={formData.thur}
-                        onChange={() => toggle("thur")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Friday
-                    <input
-                        type="checkbox"
-                        name="fri"
-                        checked={formData.fri}
-                        onChange={() => toggle("fri")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Saturday
-                    <input
-                        type="checkbox"
-                        name="sat"
-                        checked={formData.sat}
-                        onChange={() => toggle("sat")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Sunday
-                    <input
-                        type="checkbox"
-                        name="sun"
-                        checked={formData.sun}
-                        onChange={() => toggle("sun")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Time
-                    <div className="w-96">
-                        <input
-                            type="time"
-                            name="time"
-                            value={formData.time}
-                            onChange={(e) => setTime(e.target.value)}
-                            className=" rounded-xl bg-glass px-6 py-2 text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-300"
-                        ></input>
-                    </div>
+                        className=" w-full rounded-xl bg-purple-200 px-6 py-2 text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-300 laptop:w-1/3"
+                    />
                 </label>
             </div>
         </form>
