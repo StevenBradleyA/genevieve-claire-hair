@@ -69,10 +69,7 @@ export default function Pricing() {
                             Long Length H/C - $
                             <span>{pricingData.Haircut.Long}</span>
                         </li>
-                        <li className=" holo-gradient-text mb-1">
-                            Transformative H/C - $
-                            <span>{pricingData.Haircut.Transformative}</span>
-                        </li>
+
                         <li className=" holo-gradient-text mb-1">
                             All Over Color - $
                             <span>
@@ -163,10 +160,7 @@ export default function Pricing() {
                             Long Length H/C - $
                             <span>{pricingData.Haircut.Long}</span>
                         </li>
-                        <li className=" holo-gradient-text mb-1">
-                            Transformative H/C - $
-                            <span>{pricingData.Haircut.Transformative}</span>
-                        </li>
+
                         <li className=" holo-gradient-text mb-1">
                             All Over Color - $
                             <span>

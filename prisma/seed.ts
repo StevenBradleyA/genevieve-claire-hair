@@ -11,13 +11,13 @@ async function main() {
                 create: [
                     {
                         name: "Partial",
-                        price: 170,
+                        price: 200,
                         time: 180,
                         bundleTime: 30,
                     },
                     {
                         name: "Full",
-                        price: 220,
+                        price: 250,
                         time: 210,
                         bundleTime: 30,
                     },
@@ -34,19 +34,19 @@ async function main() {
                 create: [
                     {
                         name: "Gloss and toner only",
-                        price: 50,
+                        price: 65,
                         time: 60,
                         bundleTime: 30,
                     },
                     {
                         name: "Roots only",
-                        price: 80,
+                        price: 90,
                         time: 90,
                         bundleTime: 30,
                     },
                     {
                         name: "Roots to ends",
-                        price: 115,
+                        price: 135,
                         time: 120,
                         bundleTime: 30,
                     },
@@ -79,12 +79,6 @@ async function main() {
                         time: 60,
                         bundleTime: 30,
                     },
-                    {
-                        name: "Transformative",
-                        price: 90,
-                        time: 90,
-                        bundleTime: 60,
-                    },
                 ],
             },
         },
@@ -98,7 +92,7 @@ async function main() {
                 create: [
                     {
                         name: "Blowout",
-                        price: 45, // starting at
+                        price: 45, 
                         time: 40,
                         bundleTime: 60,
                     },
@@ -147,7 +141,7 @@ async function main() {
     await prisma.serviceCategory.create({
         data: {
             name: "Vivids",
-            price: 135,
+            price: 150,
             requireConsult: true,
         },
     });
@@ -156,7 +150,7 @@ async function main() {
     await prisma.serviceCategory.create({
         data: {
             name: "Color Corrections",
-            price: 150,
+            price: 175,
             requireConsult: true,
         },
     });
