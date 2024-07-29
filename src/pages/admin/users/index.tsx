@@ -9,6 +9,7 @@ import type { NextPageWithLayout } from "~/pages/_app";
 import type { ReactElement } from "react";
 import { useSession } from "next-auth/react";
 import Custom404 from "~/pages/404";
+import Footer from "~/components/Footer/footer";
 
 const AdminViewUsers: NextPageWithLayout = () => {
     const { data: users, isLoading } = api.user.getAllUsers.useQuery();
@@ -31,28 +32,30 @@ const AdminViewUsers: NextPageWithLayout = () => {
     if (!users) return <div>Oops</div>;
 
     return (
-        <div className="flex flex-col text-white ">
-            <div className="mb-10 flex items-end justify-center gap-5 font-grandHotel text-6xl">
-                Clients
-                <Image
-                    src={giraffe}
-                    alt="giraffe"
-                    width={giraffe.width}
-                    height={giraffe.height}
-                    className="w-24 object-cover"
-                />
+        <>
+            <h1 className="mb-10 flex items-end justify-center gap-5 font-archivo text-8xl text-white">
+                CLIENTS
+            </h1>
+            <div className="flex w-full justify-center text-white">
+                <div className=" mb-20 flex w-2/3 flex-col items-center justify-center rounded-2xl bg-glass p-20 text-2xl shadow-xl ">
+                    {users.map((user: User, i: number) => {
+                        return <EachClientCard key={i} user={user} i={i} />;
+                    })}
+                </div>
             </div>
-            <div className=" mb-20 flex flex-col justify-center rounded-2xl bg-glass p-20 text-2xl shadow-xl">
-                {users.map((user: User, i: number) => {
-                    return <EachClientCard key={i} user={user} i={i} />;
-                })}
-            </div>
-        </div>
+        </>
     );
 };
 
 AdminViewUsers.getLayout = function getLayout(page: ReactElement) {
-    return <AdminLayout>{page}</AdminLayout>;
+    return (
+        <>
+            <AdminLayout>{page}</AdminLayout>;
+            <div className="mt-60 w-full">
+                <Footer />
+            </div>
+        </>
+    );
 };
 
 export default AdminViewUsers;
