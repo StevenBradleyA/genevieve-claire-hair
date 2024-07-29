@@ -3,7 +3,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-    //? Blonding
+    // Clear existing data
+    await prisma.schedule.deleteMany();
+
+    // Blonding
     await prisma.serviceCategory.create({
         data: {
             name: "Blonding",
@@ -26,7 +29,7 @@ async function main() {
         },
     });
 
-    //? All Over Color
+    // All Over Color
     await prisma.serviceCategory.create({
         data: {
             name: "All Over Color",
@@ -55,7 +58,7 @@ async function main() {
         },
     });
 
-    //? Haircut
+    // Haircut
     await prisma.serviceCategory.create({
         data: {
             name: "Haircut",
@@ -84,7 +87,7 @@ async function main() {
         },
     });
 
-    //? Styling
+    // Styling
     await prisma.serviceCategory.create({
         data: {
             name: "Styling",
@@ -92,7 +95,7 @@ async function main() {
                 create: [
                     {
                         name: "Blowout",
-                        price: 45, 
+                        price: 45,
                         time: 40,
                         bundleTime: 60,
                     },
@@ -114,7 +117,7 @@ async function main() {
         },
     });
 
-    //? Quiet
+    // Quiet
     await prisma.serviceCategory.create({
         data: {
             name: "Quiet",
@@ -137,7 +140,7 @@ async function main() {
         },
     });
 
-    //? Vivids
+    // Vivids
     await prisma.serviceCategory.create({
         data: {
             name: "Vivids",
@@ -146,7 +149,7 @@ async function main() {
         },
     });
 
-    //? Color Corrections
+    // Color Corrections
     await prisma.serviceCategory.create({
         data: {
             name: "Color Corrections",
@@ -170,28 +173,6 @@ async function main() {
             data,
         });
     }
-
-    // //? Geni
-    // await prisma.user.create({
-    //     data: {
-    //         firstName: "Geni",
-    //         lastName: "Evanson",
-    //         email: "genevieveclare.hair@outlook.com",
-    //         isAdmin: true,
-    //         isNew: false,
-    //     },
-    // });
-
-    // //? Zaviar
-    // await prisma.user.create({
-    //     data: {
-    //         firstName: "Zaviar",
-    //         lastName: "Brown",
-    //         email: "brown.zaviar@gmail.com",
-    //         isAdmin: true,
-    //         isNew: false,
-    //     },
-    // });
 }
 
 main()
