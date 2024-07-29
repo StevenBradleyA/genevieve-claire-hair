@@ -44,11 +44,11 @@ export default function EditUserNotes({ closeModal }: UserNotesProps) {
     };
 
     return (
-        <form className="flex w-[600px] flex-col items-center justify-center text-xl text-white">
+        <form className="flex w-[300px] h-[500px] flex-col items-center justify-center text-xl text-purple-300 laptop:w-[800px]">
             <textarea
                 value={notes || ""}
                 onChange={(e) => setNotes(e.target.value)}
-                className=" h-96 w-full rounded-2xl bg-darkGlass p-10 shadow-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                className=" h-full w-full resize-none rounded-2xl bg-white p-10 shadow-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-200 "
             />
             <div className="mt-5 flex justify-center">
                 <motion.button
@@ -57,7 +57,7 @@ export default function EditUserNotes({ closeModal }: UserNotesProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                 >
-                    Submit
+                    Update
                 </motion.button>
             </div>
         </form>

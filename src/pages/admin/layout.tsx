@@ -47,7 +47,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                 custom={5}
                                 initial="hidden"
                                 animate="visible"
-                                // transition={{ delay: 0.5, duration: 0.3 }}
                             >
                                 <Link href="/admin">
                                     <Image

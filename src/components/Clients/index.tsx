@@ -16,7 +16,7 @@ export default function EachClientCard({ user }: EachClientCardProps) {
         >
             <Link
                 href={`/admin/users/${user.id}`}
-                className="mb-5 flex rounded-2xl bg-glass px-6 py-2 text-white shadow-md"
+                className="mb-5 flex rounded-2xl bg-darkGlass px-6 py-2 text-white shadow-md"
             >
                 {user.firstName} {user.lastName}
             </Link>

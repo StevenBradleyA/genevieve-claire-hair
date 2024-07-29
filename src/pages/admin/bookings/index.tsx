@@ -15,6 +15,7 @@ import type { DaysType, ScheduleType } from "~/server/api/routers/schedule";
 import AdminBookingSelectUser from "~/components/Bookings/AdminCreate/userSelect";
 import Custom404 from "~/pages/404";
 import { useSession } from "next-auth/react";
+import Footer from "~/components/Footer/footer";
 
 export interface CalendarOptions {
     disabled: Matcher[];
@@ -261,7 +262,14 @@ const AdminViewBookings: NextPageWithLayout = () => {
 };
 
 AdminViewBookings.getLayout = function getLayout(page: ReactElement) {
-    return <AdminLayout>{page}</AdminLayout>;
+    return (
+        <>
+            <AdminLayout>{page}</AdminLayout>;
+            <div className="mt-60 w-full">
+                <Footer />
+            </div>
+        </>
+    );
 };
 
 export default AdminViewBookings;

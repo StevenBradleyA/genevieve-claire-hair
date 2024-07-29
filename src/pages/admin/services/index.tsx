@@ -9,6 +9,7 @@ import type { ServicesType } from "~/server/api/routers/service";
 import UpdateMainService from "~/components/Services/UpdateMainService";
 import { useSession } from "next-auth/react";
 import Custom404 from "~/pages/404";
+import Footer from "~/components/Footer/footer";
 
 const AdminViewServices: NextPageWithLayout = () => {
     const { data } = api.service.getAll.useQuery();
@@ -20,7 +21,6 @@ const AdminViewServices: NextPageWithLayout = () => {
     if (accessDenied) {
         return <Custom404 />;
     }
-
 
     return (
         <div className="flex w-2/3 flex-col gap-10 rounded-2xl bg-glass p-10 ">
@@ -119,7 +119,14 @@ const SubcategoryView = ({ subCat }: { subCat: ServiceSubcategory }) => {
 };
 
 AdminViewServices.getLayout = function getLayout(page: ReactElement) {
-    return <AdminLayout>{page}</AdminLayout>;
+    return (
+        <>
+            <AdminLayout>{page}</AdminLayout>;
+            <div className="mt-60 w-full">
+                <Footer />
+            </div>
+        </>
+    );
 };
 
 export default AdminViewServices;
