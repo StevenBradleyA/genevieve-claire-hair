@@ -75,7 +75,6 @@ body::before {
 ::-webkit-scrollbar-track {
     /* background: rgb(67, 67, 67); */
     background: rgb(255, 255, 255);
-
 }
 
 ::-webkit-scrollbar-thumb {
@@ -113,26 +112,6 @@ body::before {
     opacity: 0.3;
 }
 
-.holo-column-container {
-    position: absolute;
-    bottom: 25px;
-    left: 0;
-    transform: rotate(90deg);
-    transform-origin: bottom left;
-    opacity: 0.3;
-}
-
-@media (min-width: 1280px) {
-    .holo-column-container {
-        bottom: 20px;
-    }
-}
-@media (min-width: 1920px) {
-    .holo-column-container {
-        bottom: 25px;
-    }
-}
-
 .diagonal-image-small {
     position: absolute;
     top: -51px;
@@ -140,14 +119,6 @@ body::before {
     transform: rotate(90deg);
     opacity: 0.3;
     z-index: -1;
-}
-
-.sign-in-header {
-    background: url("../../public/Holographic/holo-column-flipped.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.3;
 }
 
 /* mobile Burger */
@@ -372,53 +343,6 @@ body::before {
     color: #be93fd;
     /* text-decoration: underline;
     text-decoration-thickness: 4px;  */
-}
-
-/* -------------       Portfolio       ------------- */
-
-/* end */
-.zoom-effect {
-    transition: transform 0.3s ease;
-}
-.zoom-effect:hover {
-    transform: scale(1.1);
-}
-
-.instagram-header {
-    background-image: url("../../public/Holographic/glass-1.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.5;
-}
-
-.insta-image-sizing {
-    width: 200px;
-    height: 200px;
-}
-
-.insta-image-sizing-mobile {
-    width: 75px;
-    height: 75px;
-}
-
-@media (min-width: 1280px) {
-    .insta-image-sizing {
-        width: 250px;
-        height: 250px;
-    }
-}
-@media (min-width: 1920px) {
-    .insta-image-sizing {
-        width: 275px;
-        height: 275px;
-    }
-}
-@media (min-width: 2560px) {
-    .insta-image-sizing {
-        width: 300px;
-        height: 300px;
-    }
 }
 
 /* ----------      pricing       ---------- */
