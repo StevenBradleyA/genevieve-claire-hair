@@ -29,6 +29,7 @@ class MyDocument extends Document {
                         content="black-translucent"
                     />
                     <link rel="icon" href="/favicon.ico" />
+                    <link rel="apple-touch-icon" href="/apple-icon.png" />
                     <meta property="og:type" content="website" />
                     <meta
                         property="og:url"

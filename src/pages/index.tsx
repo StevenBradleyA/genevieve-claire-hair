@@ -1,18 +1,12 @@
 import Image from "next/image";
-import lsp1 from "@public/HomePage/1.png";
-import lsp2 from "@public/HomePage/2.png";
-import lsp3 from "@public/HomePage/3.png";
 import showcaseOne from "@public/HomePage/showcase-1.png";
 import showcaseTwo from "@public/HomePage/showcase-2.png";
 import showcaseThree from "@public/HomePage/showcase-3.png";
-
 import geni from "@public/HomePage/geni.png";
 import { useEffect, useMemo, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
-import downArrow from "@public/svgs/angles-down-solid.svg";
-import { AnimatePresence, motion } from "framer-motion";
-import BookNowSvg from "~/components/HomePage/bookNowSvg";
+import { motion } from "framer-motion";
 import Footer from "~/components/Footer/footer";
 import "react-day-picker/dist/style.css";
 import { useRouter } from "next/router";
