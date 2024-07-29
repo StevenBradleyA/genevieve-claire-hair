@@ -60,16 +60,17 @@ export default function ServiceOptions({
         setFormData(newData);
     };
 
-    return isMobile ? (
-        <form className="flex flex-col items-center justify-center  text-xl text-white">
-            <div className="flex flex-col items-center gap-1">
-                <div className="text-sm">
-                    Which services do you see yourself using?
-                </div>
-                <div className="text-sm">(Select all that you might want)</div>
-            </div>
-            <div className="mt-5 flex flex-col gap-3">
-                <label className="flex cursor-pointer items-center justify-center gap-5">
+    return (
+        <form className="flex w-full flex-col items-center rounded-3xl bg-white p-5 text-base text-violet-300 laptop:p-10 laptop:text-2xl">
+            <h1 className="bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-center text-xl text-transparent laptop:text-3xl">
+                Which services do you see yourself using?
+            </h1>
+            <h2 className="bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+                ( Select all that you might want )
+            </h2>
+
+            <div className="mt-5 flex w-full flex-wrap justify-between gap-2 laptop:mt-10">
+                <label className="flex cursor-pointer items-center justify-center gap-2">
                     Haircuts
                     <input
                         type="checkbox"
@@ -79,7 +80,7 @@ export default function ServiceOptions({
                         className="custom-checkbox"
                     />
                 </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
+                <label className="flex cursor-pointer items-center justify-center gap-2">
                     Color
                     <input
                         type="checkbox"
@@ -89,7 +90,7 @@ export default function ServiceOptions({
                         className="custom-checkbox"
                     />
                 </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
+                <label className="flex cursor-pointer items-center justify-center gap-2">
                     Vivid
                     <input
                         type="checkbox"
@@ -99,7 +100,7 @@ export default function ServiceOptions({
                         className="custom-checkbox"
                     />
                 </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
+                <label className="flex cursor-pointer items-center justify-center gap-2">
                     Highlights/Balayage
                     <input
                         type="checkbox"
@@ -109,68 +110,7 @@ export default function ServiceOptions({
                         className="custom-checkbox"
                     />
                 </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
-                    Toner/Gloss
-                    <input
-                        type="checkbox"
-                        name="tonorGloss"
-                        checked={formData.tonorGloss}
-                        onChange={(e) => toggle(e.target.name)}
-                        className="custom-checkbox"
-                    />
-                </label>
-            </div>
-        </form>
-    ) : (
-        <form className="flex flex-col items-center justify-center text-3xl text-white">
-            <div className="flex items-center gap-5">
-                <div className="text-4xl">
-                    Which services do you see yourself using?
-                </div>
-                <div className="text-2xl">(Select all that you might want)</div>
-            </div>
-            <div className="mt-5 flex gap-10">
-                <label className="flex cursor-pointer items-center justify-center gap-5">
-                    Haircuts
-                    <input
-                        type="checkbox"
-                        name="haircuts"
-                        checked={formData.haircuts}
-                        onChange={(e) => toggle(e.target.name)}
-                        className="custom-checkbox"
-                    />
-                </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
-                    Color
-                    <input
-                        type="checkbox"
-                        name="color"
-                        checked={formData.color}
-                        onChange={(e) => toggle(e.target.name)}
-                        className="custom-checkbox"
-                    />
-                </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
-                    Vivid
-                    <input
-                        type="checkbox"
-                        name="vivid"
-                        checked={formData.vivid}
-                        onChange={(e) => toggle(e.target.name)}
-                        className="custom-checkbox"
-                    />
-                </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
-                    Highlights/Balayage
-                    <input
-                        type="checkbox"
-                        name="highlightsBalayage"
-                        checked={formData.highlightsBalayage}
-                        onChange={(e) => toggle(e.target.name)}
-                        className="custom-checkbox"
-                    />
-                </label>
-                <label className="flex cursor-pointer items-center justify-center gap-5">
+                <label className="flex cursor-pointer items-center justify-center gap-2">
                     Toner/Gloss
                     <input
                         type="checkbox"

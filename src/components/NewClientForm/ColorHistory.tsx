@@ -90,76 +90,14 @@ export default function ColorHistory({
         setFormData(newData);
     };
 
-    return isMobile ? (
-        <form className="flex flex-col items-center text-xl text-white">
-            <div className="flex justify-center text-lg">
+    return (
+        <form className="flex w-full flex-col items-center rounded-3xl bg-white p-10 text-base text-violet-300 laptop:text-xl">
+            <h1 className="flex justify-center bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-center text-2xl text-transparent laptop:text-3xl">
                 Have you had color before?
-            </div>
-            <div>
-                <div className=" mt-5 flex flex-col justify-center gap-3">
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        Yes
-                        <input
-                            type="checkbox"
-                            name="yes"
-                            checked={formData.yes}
-                            onChange={() => toggle("yes")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        No
-                        <input
-                            type="checkbox"
-                            name="no"
-                            checked={formData.no}
-                            onChange={() => toggle("no")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                </div>
-            </div>
-            {formData.yes && (
-                <div className="mt-3 flex flex-col gap-3">
-                    <label className="flex justify-center">How long ago?</label>
-                    <input
-                        name="ago"
-                        type="input"
-                        value={formData.ago}
-                        onChange={(e) => setAgo(e.target.value)}
-                        className="rounded-md p-2 text-sm text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                    ></input>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        Professionally
-                        <input
-                            type="checkbox"
-                            name="prof"
-                            checked={formData.prof}
-                            onChange={() => toggle("prof")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
-                        At home
-                        <input
-                            type="checkbox"
-                            name="home"
-                            checked={formData.home}
-                            onChange={() => toggle("home")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                </div>
-            )}
-        </form>
-    ) : (
-        <form className="flex flex-col items-center text-3xl text-white">
-            <div className="flex justify-center text-4xl">
-                Have you had color before?
-            </div>
+            </h1>
             <div>
                 <div className=" mb-5 mt-5 flex justify-center gap-10">
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
+                    <label className="flex cursor-pointer items-center justify-center gap-2">
                         Yes
                         <input
                             type="checkbox"
@@ -169,7 +107,7 @@ export default function ColorHistory({
                             className="custom-checkbox"
                         ></input>
                     </label>
-                    <label className="flex cursor-pointer items-center justify-center gap-5">
+                    <label className="flex cursor-pointer items-center justify-center gap-2">
                         No
                         <input
                             type="checkbox"
@@ -182,15 +120,18 @@ export default function ColorHistory({
                 </div>
             </div>
             {formData.yes && (
-                <div className="flex gap-5">
-                    <label>How long ago?</label>
-                    <input
-                        name="ago"
-                        type="input"
-                        value={formData.ago}
-                        onChange={(e) => setAgo(e.target.value)}
-                        className=" rounded-md p-2 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                    ></input>
+                <div className="flex w-full flex-wrap items-center justify-between gap-5 ">
+                    <label className="flex items-center gap-2">
+                        How long ago?
+                        <input
+                            name="ago"
+                            type="input"
+                            value={formData.ago}
+                            onChange={(e) => setAgo(e.target.value)}
+                            className=" w-1/2 rounded-md bg-purple-200  p-2 text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                            placeholder="6 months..."
+                        />
+                    </label>
                     <label className="flex cursor-pointer items-center justify-center gap-5">
                         Professionally
                         <input

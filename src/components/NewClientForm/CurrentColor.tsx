@@ -83,88 +83,12 @@ export default function CurrentColor({
         setFormData(newData);
     };
 
-    return isMobile ? (
-        <form className="flex flex-col items-center text-xl text-white">
-            <div className="mb-5 text-center text-lg">
+    return (
+        <form className="flex w-full flex-col items-center rounded-3xl bg-white p-10 text-base text-violet-300 laptop:text-xl">
+            <h1 className="flex justify-center bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-purple-300 bg-clip-text text-center text-2xl text-transparent laptop:text-3xl">
                 What is your current hair color?
-            </div>
-            <div className="flex w-72 flex-col gap-1 text-xl">
-                <label className="flex cursor-pointer items-center gap-5">
-                    Black/Dark Brown
-                    <input
-                        type="checkbox"
-                        name="blackBrown"
-                        checked={formData.blackBrown}
-                        onChange={() => singleToggle("blackBrown")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Brown
-                    <input
-                        type="checkbox"
-                        name="brown"
-                        checked={formData.brown}
-                        onChange={() => singleToggle("brown")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Light Brown/Dark Blonde
-                    <input
-                        type="checkbox"
-                        name="lightBrownDarkBlonde"
-                        checked={formData.lightBrownDarkBlonde}
-                        onChange={() => singleToggle("lightBrownDarkBlonde")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Blonde
-                    <input
-                        type="checkbox"
-                        name="blonde"
-                        checked={formData.blonde}
-                        onChange={() => singleToggle("blonde")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <label className="flex cursor-pointer items-center gap-5">
-                    Gray/White
-                    <input
-                        type="checkbox"
-                        name="white"
-                        checked={formData.grayWhite}
-                        onChange={() => singleToggle("grayWhite")}
-                        className="custom-checkbox"
-                    ></input>
-                </label>
-                <div className="flex flex-col">
-                    <label className="flex cursor-pointer items-center gap-5">
-                        Other (Please Specify)
-                        <input
-                            type="checkbox"
-                            name="other"
-                            checked={formData.other}
-                            onChange={() => singleToggle("other")}
-                            className="custom-checkbox"
-                        ></input>
-                    </label>
-                    <input
-                        name="input"
-                        value={formData.input}
-                        onChange={(e) => setInput(e.target.value)}
-                        className=" rounded-md p-2 text-sm text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
-                    ></input>
-                </div>
-            </div>
-        </form>
-    ) : (
-        <form className="flex flex-col items-center text-3xl text-white">
-            <div className="mb-5 flex justify-center text-4xl">
-                What is your current hair color?
-            </div>
-            <div className="flex flex-col text-3xl ">
+            </h1>
+            <div className="mt-5 flex w-full flex-col gap-2 laptop:mt-10 ">
                 <label className="flex cursor-pointer items-center gap-5">
                     Black/Dark Brown
                     <input
@@ -216,19 +140,20 @@ export default function CurrentColor({
                     ></input>
                 </label>
                 <label className="flex cursor-pointer items-center gap-5">
-                    Other (Please Specify)
+                    Other
                     <input
                         type="checkbox"
                         name="other"
                         checked={formData.other}
                         onChange={() => singleToggle("other")}
-                        className="custom-checkbox"
+                        className="custom-checkbox flex-shrink-0"
                     ></input>
                     <input
                         name="input"
                         value={formData.input}
                         onChange={(e) => setInput(e.target.value)}
-                        className=" rounded-md p-2 text-xl text-purple-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200"
+                        className=" w-full rounded-md bg-purple-200 p-2 text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-200 laptop:w-1/3"
+                        placeholder="Please Specify"
                     ></input>
                 </label>
             </div>
