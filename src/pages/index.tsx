@@ -18,7 +18,7 @@ export default function Home() {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const images = [showcaseThree, showcaseTwo, showcaseOne];
     const router = useRouter();
-    const isHome = router.asPath === "/";
+    // const isHome = router.asPath === "/";
 
     const bannerScriptWords = [
         "COLOR",
@@ -28,18 +28,18 @@ export default function Home() {
     ];
     const [bannerScriptIndex, setBannerScriptIndex] = useState(0);
 
-    const script = useMemo(
-        () => [
-            "blonding",
-            "vivids",
-            "color correction",
-            "all over color",
-            "blowouts",
-            "haircuts",
-        ],
-        []
-    );
-    const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
+    // const script = useMemo(
+    //     () => [
+    //         "blonding",
+    //         "vivids",
+    //         "color correction",
+    //         "all over color",
+    //         "blowouts",
+    //         "haircuts",
+    //     ],
+    //     []
+    // );
+    // const [currentScriptIndex, setCurrentScriptIndex] = useState(0);
 
     const handleCarouselClick = (index: number): void => {
         if (index !== currentIndex) {
@@ -47,30 +47,30 @@ export default function Home() {
         }
     };
 
-    useEffect(() => {
-        if (isHome) {
-            const interval = setInterval(() => {
-                setCurrentScriptIndex((prevIndex) =>
-                    prevIndex === script.length - 1 ? 0 : prevIndex + 1
-                );
-            }, 3000);
+    // useEffect(() => {
+    //     if (isHome) {
+    //         const interval = setInterval(() => {
+    //             setCurrentScriptIndex((prevIndex) =>
+    //                 prevIndex === script.length - 1 ? 0 : prevIndex + 1
+    //             );
+    //         }, 3000);
 
-            return () => {
-                clearInterval(interval);
-            };
-        }
-    }, [isHome, script]);
+    //         return () => {
+    //             clearInterval(interval);
+    //         };
+    //     }
+    // }, [isHome, script]);
 
-    const bounceVariants = {
-        initial: { opacity: 1, y: 20, rotate: 0 },
-        bobble: {
-            opacity: 1,
-            y: [0, 10, 0],
-            rotate: [0, -5, 0],
-            transition: { duration: 2, yoyo: "loop", repeat: 7 },
-        },
-        exit: { opacity: 1, y: -20, rotate: 5 },
-    };
+    // const bounceVariants = {
+    //     initial: { opacity: 1, y: 20, rotate: 0 },
+    //     bobble: {
+    //         opacity: 1,
+    //         y: [0, 10, 0],
+    //         rotate: [0, -5, 0],
+    //         transition: { duration: 2, yoyo: "loop", repeat: 7 },
+    //     },
+    //     exit: { opacity: 1, y: -20, rotate: 5 },
+    // };
 
     return (
         <>
@@ -266,6 +266,7 @@ export default function Home() {
                         alt="geni"
                         src={geni}
                         className="absolute bottom-24 right-12 w-32 laptop:-bottom-24 laptop:right-96 laptop:w-[20rem] desktop:w-[25rem] "
+                        priority
                     />
 
                     <div>150 + happy clients</div>
